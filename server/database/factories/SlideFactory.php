@@ -1,0 +1,31 @@
+<?php
+
+namespace Database\Factories;
+
+use DateTime;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ */
+class SlideFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'title'=>fake()->name(),
+            'descriptions'=>fake()->sentence(20),
+            'img'=>fake()->imageUrl(),
+            'categories_id'=>mt_rand(1,10),
+            'start_day'=>fake()->dateTime(),
+            'end_day'=>fake()->dateTime(),
+
+            //
+        ];
+    }
+}

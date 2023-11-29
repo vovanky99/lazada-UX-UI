@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status',
+        'level',
     ];
 
     /**
@@ -29,6 +31,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'phone_number',
         'password',
         'remember_token',
     ];
@@ -42,4 +45,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function decentralization(){
+        return $this->belongsTo(Decentralization::class,'decentralization_id','id');
+    }
+    public function shop(){
+        return $this->hasOne(Shop::class,'users_id','id');
+    }
+    public function reviews(){
+        return $this->hasOne(Reviews::class,'users_id','id');
+    }
 }
