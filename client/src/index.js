@@ -3,13 +3,16 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'tippy.js/dist/tippy.css';
-import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import SSRProvider from 'react-bootstrap/SSRProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <SSRProvider>
+      <App />
+    </SSRProvider>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

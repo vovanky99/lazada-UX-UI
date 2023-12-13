@@ -20,6 +20,7 @@ class ProductsFactory extends Factory
             'title'=>fake()->name(),
             'image'=>fake()->imageUrl(),
             'price'=>mt_rand(1000,10000000),
+            'discount'=>mt_rand(1,100),
             'quantities'=>mt_rand(1,1000),
             'descriptions'=>fake()->sentence(20),
             'reviews_stars'=>mt_rand(1,5),

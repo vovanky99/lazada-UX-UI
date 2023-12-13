@@ -13,6 +13,7 @@ class Products extends Model
         'title',
         'image',
         'price',
+        'discount',
         'quantities',
         'products_sold',
         'reviews_star',

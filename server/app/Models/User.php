@@ -21,7 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'decentralization_id',
+        'phone_number',
         'status',
+        'avatar',
         'level',
     ];
 

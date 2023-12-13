@@ -1,0 +1,52 @@
+.wrapper {
+  width: var(--media_width);
+  margin: 0 auto;
+  display: flex;
+  background-color: var(--white);
+  border-radius: 12px;
+  margin-bottom: 25px;
+  div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.rax-view {
+  flex: 1;
+  height: 36px;
+  padding-left: 30px;
+  display: flex;
+  flex-direction: column;
+
+  &:hover span {
+    color: var(--orange);
+  }
+  img {
+    width: 120px;
+    height: 18px;
+    background-color: transparent;
+    resize: contain;
+    object-fit: contain;
+  }
+  span {
+    color: #999;
+    font-size: 1.2rem;
+    margin-top: 4px;
+  }
+}
+
+.top-up {
+  .rax-view:hover span {
+    color: #50e3e0;
+  }
+}
+
+.lazmall {
+  .rax-view:hover span {
+    color: var(--red);
+  }
+}

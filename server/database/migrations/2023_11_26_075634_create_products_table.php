@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title',50);
             $table->string('image');
             $table->double('price');
+            $table->double('discount',100);
             $table->double('quantities');
             $table->double('reviews_stars',5);
             $table->bigInteger('products_sold');

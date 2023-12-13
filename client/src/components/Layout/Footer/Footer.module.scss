@@ -1,0 +1,130 @@
+.ft-first {
+  background-color: var(--background_home_grey);
+  > div {
+    margin: 0 auto !important;
+    padding-bottom: 40px;
+    width: var(--media_width);
+    flex-direction: row;
+    > div {
+      padding: 0 !important;
+      > div {
+        flex-direction: column;
+        > div {
+          a {
+            font-weight: 200;
+            line-height: 1.7rem;
+            color: #0f136d;
+            font-size: 1.2rem;
+            text-transform: capitalize;
+          }
+          a:hover {
+            text-decoration: underline !important;
+          }
+        }
+      }
+    }
+  }
+}
+.ft-first-title {
+  font-size: 1.6rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  line-height: 3.5rem;
+  margin: 0;
+  color: #0f136d;
+}
+.lzd-footer-app-downloads {
+  flex-direction: row !important;
+  margin-top: 30px;
+  > div {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.lzd-footer-appicon {
+  margin-right: 15px;
+}
+.lzd-app-download-text {
+  .title {
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: #f36f36;
+  }
+  .text {
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: #0f136d;
+    padding-top: 2px;
+  }
+}
+
+.pull-left {
+  flex-wrap: wrap;
+  a {
+    background-image: url(https://lzd-img-global.slatic.net/g/tps/tfs/TB1dFECEMTqK1RjSZPhXXXfOFXa-986-931.png);
+    display: inline-block;
+  }
+  .icon-appStore-footer {
+    background-position: -190px -124px;
+    width: 126px;
+    height: 42px;
+    margin: 1px 0 0 20px;
+  }
+  .icon-android-footer {
+    background-position: -568px -374px;
+    width: 128px;
+    height: 43px;
+    margin-left: 10px;
+  }
+  .icon-huawei-footer {
+    width: 126px;
+    height: 42px;
+    margin: 10px 0 0 20px;
+    background-color: transparent;
+    background-image: url(https://lzd-img-global.slatic.net/g/tps/imgextra/i1/O1CN01brmkRW21eAmpV4slQ_!!6000000007009-2-tps-126-42.png);
+  }
+}
+
+//ft-second
+.ft-second {
+  background-color: var(--white);
+  padding: 20px 0;
+}
+
+.ft-second-wrapper {
+  width: var(--media_width);
+  margin: 0 auto !important;
+  > div {
+    h3 {
+      margin: 5px 10px 5px 0;
+      color: #2a2a2a;
+      font-weight: 300;
+      font-size: 1.6rem;
+      line-height: 2rem;
+      text-transform: capitalize;
+    }
+    > div {
+      > div {
+        width: 32px;
+        flex: none !important;
+        a {
+          img {
+            width: 32px;
+            height: 32px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ft-second-p {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  p {
+    text-transform: capitalize;
+    font-size: 1.4rem;
+  }
+}

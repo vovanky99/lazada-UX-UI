@@ -1,0 +1,46 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000008;
+  span,
+  a {
+    color: #0f1568;
+    font-size: 1.3rem;
+    padding: 3px 0;
+  }
+}
+
+.link-list {
+  width: var(--media_width);
+  max-width: 1180px;
+  align-items: center;
+  display: grid;
+  justify-content: right;
+  grid-template-columns: auto auto auto auto auto auto auto auto;
+  > div {
+    padding: 0 17px;
+    display: flex;
+    justify-content: center;
+    a.cursor,
+    span.cursor {
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    a.grey,
+    span.grey {
+      color: var(--grey);
+    }
+    .cursor:hover {
+      color: #e36707;
+    }
+  }
+}
+
+.get-the-app {
+  padding-top: 10px;
+  background-color: #fff;
+  position: relative;
+  border: 1px solid #bfbfbf;
+}

@@ -1,0 +1,51 @@
+.wrapper {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 340px;
+}
+.title {
+  margin-bottom: 20px;
+  color: #3a3a3a;
+  font-weight: 300;
+  text-align: left;
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+}
+.get-the-app-promotion {
+  margin-bottom: 28px;
+}
+.promotion-text {
+  display: inline-block;
+  white-space: normal;
+  font-size: 1.4rem;
+  line-height: 1.5rem;
+  padding: 0 0 0 10px;
+  max-width: 180px;
+  a {
+    display: block;
+    color: #199cb7;
+    font-size: 1.4rem;
+  }
+}
+ul {
+  list-style: inside;
+  list-style-position: inherit;
+}
+.app-apple,
+.app-google {
+  display: inline-block;
+  width: 136px;
+  height: 46px;
+}
+.app-store {
+  display: flex;
+  align-items: center;
+}
+.app-apple {
+  background: url(//lzd-img-global.slatic.net/g/tps/tfs/TB1nQJUcwmTBuNjy1XbXXaMrVXa-986-930.png) -529px -625px no-repeat;
+}
+.app-google {
+  background: url(//lzd-img-global.slatic.net/g/tps/tfs/TB1nQJUcwmTBuNjy1XbXXaMrVXa-986-930.png) -530px -578px no-repeat;
+}

@@ -1,0 +1,54 @@
+.logo-bars-content {
+  margin: 0 auto !important;
+  width: var(--media_width);
+  padding: 10px 0 20px;
+  .search-content {
+    input {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      width: 90%;
+      background-color: #eff0f5;
+      outline: none;
+      border: none;
+      height: 40px;
+      text-indent: 15px;
+      font-size: 1.4rem;
+      line-height: 1;
+      letter-spacing: 0.5px;
+    }
+    button {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      width: 35px;
+      border: none;
+      height: 40px;
+      background-color: #f57226;
+      font-size: 1.6rem;
+      color: var(--white);
+    }
+  }
+  .nav-cars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    a {
+      display: flex;
+      margin-left: 15px;
+      font-size: 2.4rem;
+      color: #0a1569;
+    }
+  }
+  > div {
+    padding: 0 !important;
+    flex: none !important;
+    a {
+      width: 100%;
+      img {
+        width: 65%;
+      }
+    }
+  }
+}
+.hdbn-img {
+  width: 100% !important;
+}

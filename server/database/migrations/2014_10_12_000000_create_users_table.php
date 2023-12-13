@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('username')->Unique();
             $table->string('email')->Unique();
-            $table->string('password');
+            $table->text('password');
             $table->bigInteger('phone_number');
+            $table->string('avatar');
             $table->double('level',10);
             $table->string('status');
             $table->boolean('gender');
@@ -30,6 +31,9 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        // Procedure
+        
     }
 
     /**
