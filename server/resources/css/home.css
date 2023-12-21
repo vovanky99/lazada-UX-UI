@@ -1,0 +1,213 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  color: #343a40;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+html {
+  font-size: 62.5%;
+}
+
+.header-nav {
+  background-color: white;
+  height: 70px;
+}
+.header-nav .navbar-brand-wrapper {
+  width: 260px;
+}
+.header-nav .navbar-menu-wrapper {
+  width: calc(100% - 260px);
+  padding: 0 24px;
+  color: #9c9fa6;
+}
+
+.brand-logo {
+  width: 100%;
+}
+
+.brand-logo img {
+  width: calc(260px - 120px);
+  max-width: 100%;
+}
+.header-nav .navbar-menu-wrapper .lz-menu {
+  font-size: 1.6rem;
+  color: inherit;
+  padding-right: 20px;
+}
+.header-nav .navbar-menu-wrapper .search-field .input-group {
+  width: 240px;
+  height: 100%;
+}
+.header-nav .navbar-menu-wrapper .search-field .input-group .input-group-prepend {
+  border: none;
+  color: inherit;
+  font-size: 1.2rem;
+}
+.header-nav .navbar-menu-wrapper .search-field .input-group input {
+  height: 100%;
+  letter-spacing: 0.5px;
+  font-size: 1.2rem;
+  padding-left: 20px;
+}
+.header-nav .navbar-menu-wrapper .search-field .input-group input:placeholder-shown {
+  font-size: 1.4rem;
+}
+.header-nav .navbar-menu-wrapper .search-field .input-group input:focus {
+  border-color: transparent !important;
+  box-shadow: none;
+}
+.header-nav .header-nav-left .profile {
+  width: 230px;
+}
+
+.profile a {
+  display: flex;
+}
+.profile a .nav-profile-img {
+  display: block;
+  width: 35px;
+  height: 35px;
+  position: relative;
+}
+.profile a .nav-profile-img img {
+  width: 100%;
+}
+.profile a .nav-profile-img .availability-status {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  border: 2px solid #ffffff;
+  bottom: 5px;
+  right: -5px;
+}
+.profile a .nav-profile-img .availability-status.online {
+  background: #1bcfb4;
+}
+.header-nav .header-nav-left .profile .navlink {
+  align-items: center;
+}
+.header-nav .header-nav-left .profile a .nav-profile-img {
+  margin-right: 15px;
+}
+.header-nav .header-nav-left .profile a .nav-profile-text {
+  color: black;
+  font-size: 1.5rem;
+}
+
+.header-nav .header-nav-left .profile a .nav-profile-text p {
+  margin-right: 5px;
+  margin-bottom: 0;
+}
+
+.header-nav .header-nav-left .profile a .nav-profile-text i {
+  font-size: 1rem;
+  color: #b9a7a6;
+  padding-top: 7px;
+}
+
+.dropdown-menu {
+  position: absolute !important;
+  font-size: 0.9rem;
+  margin-top: 10px !important;
+  padding: 5px;
+  box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  border: none;
+}
+.dropdown-menu li {
+  margin-bottom: 1px;
+}
+.dropdown-menu li a {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  border-radius: 5px;
+  text-transform: capitalize;
+}
+.dropdown-menu li a i {
+  color: #1bcfb4 !important;
+  margin-right: 5px;
+}
+.lz-messenger,
+.lz-bell {
+  display: flex;
+  align-items: center;
+  width: 60px;
+}
+.lz-messenger a,
+.lz-bell a {
+  font-size: 1.6rem;
+  position: relative;
+  color: #b9a7a6;
+}
+
+.lz-messenger ul,
+.lz-bell ul {
+  left: auto !important;
+  right: 0 !important;
+}
+
+.lz-messenger ul li,
+.lz-bell ul li {
+}
+
+.lz-messenger ul .lz-mesenger-title,
+.lz-bell ul .lz-bell-title {
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.lz-messenger ul a,
+.lz-bell ul a {
+  padding: 11px 13px;
+  cursor: pointer;
+}
+.lz-messenger ul a img,
+.lz-bell ul a img {
+  height: 35px;
+  width: 35px;
+}
+
+.lz-messenger ul a div,
+.lz-bell ul a div {
+  padding-left: 15px;
+}
+
+.lz-messenger ul a div h6,
+.lz-bell ul a div h6 {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 160px;
+  font-size: 1.4rem;
+}
+
+.lz-bell ul a div p {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 160px;
+}
+
+.lz-messenger ul a div p,
+.lz-bell ul a div p {
+  color: #8c8c8c;
+}
+.count-symbol {
+  top: -5px;
+  right: -3px;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  border-radius: 100%;
+  border: 2px solid #ffffff;
+}
+
+.bg-warning {
+  background-color: #fed713 !important;
+}
+.bg-danger {
+  background-color: #fe7c96 !important;
+}

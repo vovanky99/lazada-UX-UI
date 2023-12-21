@@ -4,7 +4,12 @@
 <section id="main-content" class="col-10">
     {!! Form::open(['method'=>'GET','route'=>['users.create']]) !!}
         <button type="submit" class="btn btn-primary">create</button>
+        @csrf
     {!! Form::close() !!}
+    @if (session()->has('delete'))
+        {   <span class="text-success">{{{ $delete }}}</span> }
+    @endif
+  
     <table class="table table-bordered border-primary">
         <thead>
             <tr>
@@ -20,7 +25,7 @@
             </tr>
         </thead>
 
-        <?php $i=1 ?>
+        <?php $i=1;  ?>
         @foreach($users as $user)
         <tbody>
             <tr>
@@ -37,14 +42,23 @@
                 <td>
 
                 {!! Form::open(['method'=>'GET','route'=>['users.show',$user->id]]) !!}
+                @csrf
                     <button type="submit" class="btn btn-primary">show</button>
                 {!! Form::close() !!}
-                    <button type="submit" class="btn btn-danger">delete</button>
+                {!! Form::open(['method'=>'DELETE','route'=>['users.destroy',$user->id]]) !!}
+                @csrf
+                {!! Form::button('delete',['type' => 'submit',
+                'class' => 'btn btn-danger',
+                'onclick' => "return confirm('Are you sure?')"]) !!}
+                {!! Form::close() !!}
+                    
                 </td>
-                
             </tr>
         </tbody>
         @endforeach
+        <div class="pagination" >
+         {{$users->links()}}
+        </div>
     </table>
 </section>
 @endsection

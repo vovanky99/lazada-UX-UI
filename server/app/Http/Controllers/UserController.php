@@ -17,7 +17,7 @@ class UserController extends Controller
     }
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(15);
         return view('users/index',compact('users'));
     }
 
@@ -27,6 +27,7 @@ class UserController extends Controller
     public function create()
     {
         //
+
         $decentralization = Decentralization::all();
         return view('users.create',compact('decentralization'));
     }
@@ -64,7 +65,7 @@ class UserController extends Controller
                 'new_avatar.max'=>`avatar can't limit 9MB `,
             ]);
             $avatar = $request->new_avatar;
-            $getavatar = time().'_'.$avatar->getClientOriginalName();
+            $getavatar = $avatar->getClientOriginalName();
             $destinationPath = public_path('upload/images');
             $avatar->move($destinationPath,$getavatar);
             
@@ -81,7 +82,7 @@ class UserController extends Controller
         $user->birthday = $request->birthday;
         $user->address = $request->address;
         $user->save();
-        $users = User::all();
+        $users = User::paginate(15);;
         return view('users/index',compact('users'))->with('success','update user success');
     }
 
@@ -137,7 +138,7 @@ class UserController extends Controller
                 'new_avatar.max'=>`avatar can't limit 9MB `,
             ]);
             $avatar = $request->new_avatar;
-            $getavatar = time().'_'.$avatar->getClientOriginalName();
+            $getavatar = $avatar->getClientOriginalName();
             $destinationPath = public_path('upload/images');
             $avatar->move($destinationPath,$getavatar);
             
@@ -153,7 +154,7 @@ class UserController extends Controller
         $user->birthday = $request->birthday;
         $user->address = $request->address;
         $user->save();
-        $users = User::all();
+        $users = User::paginate(15);
         return view('users/index',compact('users'))->with('success','update user success');
     }
 
@@ -163,5 +164,9 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+        $user = User::findOrFail($id);
+        $user->delete();
+        $users = User::paginate(15);
+        return view('users/index',compact('users'))->with('delete','delete user success');
     }
 }

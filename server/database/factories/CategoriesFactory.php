@@ -19,7 +19,7 @@ class CategoriesFactory extends Factory
     public function definition(): array
     {
         return [
-            'tittle'=>fake()->name(),
+            'title'=>fake()->name(),
             'parent_id'=>mt_rand(1,10),
             //
         ];

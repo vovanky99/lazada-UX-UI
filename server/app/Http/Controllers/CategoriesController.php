@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categories;
+use Illuminate\Auth\Events\Validated;
 
 class CategoriesController extends Controller
 {
@@ -12,8 +13,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Categories::all();
-        return response()->json($categories);
+        $categories = Categories::paginate(15);
+        return view('categories/index',compact('categories'));
     }
 
     /**
@@ -22,6 +23,8 @@ class CategoriesController extends Controller
     public function create()
     {
         //
+        $cat = Categories::all();
+        return view('categories/create',compact('cat'));
     }
 
     /**
@@ -30,6 +33,26 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         //
+        $validateData = $request->validate([
+            'title' =>'bail|required|min:6|max:20',
+        ]);
+        if($request->id){
+            $target = Categories::find($request->cat_id);
+            if($target && $request->cat_id!=0){
+                $node = new Categories([
+                    'title' =>$request->title,
+                    'parent_id' =>$request->cat_id,
+                ]);
+                $node->appendToNode($target)->save();
+            }
+        }
+        else{
+            $cat = Categories::create([
+                'title' => $request->title,
+            ]);
+        }
+        $categories = Categories::paginate(15);
+        return view('categories/index',compact('categories'));
     }
 
     /**
