@@ -12,16 +12,21 @@ class DecentralizationController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
-        // $this->middleware('log')->only('index');
-        // $this->middleware('subscribed')->except('store');
-    
+        return $this->middleware('auth');
     }
     public function index()
     {
         //
         $decentralization = Decentralization::paginate(15);
-        return view('decentralization/index',compact('decentralization'));
+        $count_role = Decentralization::count();
+        return view('decentralization/index',compact('decentralization','count_role'));
+    }
+
+    public function search(Request $request){
+        $decentralization = Decentralization::where('name','like','%'.$request->search.'%');
+        $count_role = $decentralization->count();
+        $decentralization = $decentralization->paginate(15);
+        return view('decentralization/index',compact('decentralization','count_role'));
     }
 
     /**

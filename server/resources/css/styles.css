@@ -1,0 +1,118 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  color: #343a40;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+html {
+  font-size: 62.5%;
+}
+/* default css */
+table.lz-border-secondary,
+th,
+td {
+  border: 1px solid #c3bdbd;
+}
+table {
+  border-collapse: collapse;
+}
+.wh-35 {
+  width: 35px;
+  height: 35px;
+}
+.bg-gray {
+  background-color: #f2edf3;
+}
+.lz-border-secondary {
+  border: 1px solid #c3bdbd;
+}
+.lz-btn-outline-primary {
+  border: 1px solid #9a55ff;
+  color: #9a55ff;
+}
+.lz-btn-outline-primary:hover {
+  background-color: #9a55ff;
+  color: #ffffff;
+}
+.lz-btn-outline-danger {
+  border: 1px solid #fe8dab;
+  color: #fe8dab;
+}
+.lz-btn-outline-danger:hover {
+  background-color: #fe8dab;
+  color: #ffffff;
+}
+.bg-gradient-primary {
+  background-image: linear-gradient(to right, #da8cff, #9a55ff);
+}
+.bg-gradient-danger {
+  background-image: linear-gradient(to right, #ffbe96, #fe8dab);
+}
+.bg-gradient-info {
+  background-image: linear-gradient(to right, #8cc8f8, #3899e6);
+}
+
+.bg-gradient-success {
+  background-image: linear-gradient(to right, #84d9d2, #3ad7be);
+}
+.outline-none {
+  outline: none !important;
+}
+td {
+  vertical-align: middle;
+}
+.h-50 {
+  height: 50px !important;
+}
+.mb-32 {
+  margin-bottom: 32px;
+}
+.p-40 {
+  padding: 40px !important;
+}
+.p-15 {
+  padding: 15px !important;
+}
+.px-20 {
+  padding: 0 20px !important;
+}
+.lz-py-6 {
+  padding: 6px 0px;
+}
+.lz-px-9 {
+  padding-left: 9px !important;
+  padding-right: 9px !important;
+}
+
+.fs-16 {
+  font-size: 1.6rem !important;
+}
+.fs-18 {
+  font-size: 1.8rem !important;
+}
+.fs-22 {
+  font-size: 2.2rem !important;
+}
+.fs-30 {
+  font-size: 3rem !important;
+}
+.fs-35 {
+  font-size: 3.5rem !important;
+}
+.fs-120 {
+  font-size: 12rem;
+}
+.rounded-10 {
+  border-radius: 1rem !important;
+}
+.text-black {
+  color: black;
+}
+.lt-sp-1 {
+  letter-spacing: 0.5px;
+}
+.img {
+  width: 100%;
+}
+/* end default css */

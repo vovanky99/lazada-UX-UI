@@ -21,7 +21,7 @@ return new class extends Migration
             $table->bigInteger('phone_number');
             $table->string('avatar');
             $table->double('level',10);
-            $table->string('status');
+            $table->double('status');
             $table->boolean('gender');
             $table->date('birthday');
             $table->string('address');

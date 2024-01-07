@@ -17,6 +17,7 @@ use \App\Models\Blogs;
 use \App\Models\Products;
 use \App\Models\Reviews;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 
 class DatabaseSeeder extends Seeder
@@ -43,9 +44,14 @@ class DatabaseSeeder extends Seeder
             array('id' => 11, 'title' => 'store_2', '_lft' => 21, '_rgt' => 22, 'parent_id' => null),
         );
         DB::table('categories')->insert($data);
+        Decentralization::factory()->count(100)->create();
+        $users = array(
+            array('name'=>'maihoangha','username'=>'maihoangha','email'=>'maihoangha','password'=>Hash::make('123456789'),'phone_number'=>'0123456789','avatar'=>'dasde','level'=>1,'status'=>'1','gender'=>1,'birthday'=>'','address'=>'','decentralization_id'=>1),
+        );
+        DB::table('users')->insert($users);
         
         /*seeder factory */
-        Decentralization::factory()->count(100)->create();
+       
         // Categories::factory()->count(100)->create();
         User::factory()->count(100)->create();
         Shop::factory()->count(100)->create();

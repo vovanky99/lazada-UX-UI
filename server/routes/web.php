@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\UserController;
+use \App\Http\Controllers\loginController;
 use \App\Http\Controllers\DecentralizationController;
 use \App\Http\Controllers\CategoriesController;
 /*
@@ -15,12 +16,27 @@ use \App\Http\Controllers\CategoriesController;
 |
 */
 
+
 Route::get('/', function () {
     return view('Home');
-});
+})->middleware('auth');
+
+
+
+/* route login */
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+Route::get('logintest',[loginController::class,'getLogin'])->name('getlogin');
+Route::get('/logout',[loginController::class,'Logout'])->name('logout');
+
+Route::GET('/404', function () {
+    return view('404');
+})->name('404');
+
 
 /*route users */
-Route::controller(UserController::class,)->group(function(){
+Route::controller(UserController::class)->group(function(){
     Route::GET('/users','index')->name('users.index');
     Route::GET('/users/create','create')->name('users.create');
     Route::POST('/users','store')->name('users.store');
@@ -31,7 +47,7 @@ Route::controller(UserController::class,)->group(function(){
 });
 
 /*route decentralization or dt */
-Route::controller( DecentralizationController::class)->group(function(){
+Route::controller(DecentralizationController::class)->group(function(){
     Route::GET('/dt','index')->name('dt.index');
     Route::GET('/dt/create','create')->name('dt.create');
     Route::POST('/dt','store')->name('dt.store');
@@ -42,7 +58,7 @@ Route::controller( DecentralizationController::class)->group(function(){
 });
 
 /*route decentralization or dt */
-Route::controller( CategoriesController::class)->group(function(){
+Route::controller(CategoriesController::class)->group(function(){
     Route::GET('/cat','index')->name('cat.index');
     Route::GET('/cat/create','create')->name('cat.create');
     Route::POST('/cat','store')->name('cat.store');
@@ -51,3 +67,8 @@ Route::controller( CategoriesController::class)->group(function(){
     Route::PATCH('/cat/{id}','update')->name('cat.update');
     Route::DELETE('/cat/{id}','destroy')->name('cat.destroy');
 });
+
+/* search */
+ROUTE::GET('/search/cat',[CategoriesController::class,'search'])->name('cat.search');
+ROUTE::GET('/search/users',[UserController::class,'search'])->name('users.search');
+ROUTE::GET('/search/dt',[DecentralizationController::class,'search'])->name('dt.search');

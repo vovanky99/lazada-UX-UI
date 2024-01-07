@@ -14,29 +14,12 @@ class Categories extends Model
         'title',
         'parent_id',
     ];
-    public function getLftName()
-    {
-        return '_lft';
-    }
-
-    public function getRgtName()
-    {
-        return '_rgt';
-    }
-
-    public function getParentIdName()
-    {
-        return 'parent_id';
-    }
-
-    // Specify parent id attribute mutator
-    public function setParentAttribute($value)
-    {
-        $this->setParentIdAttribute($value);
-    }
-    public function categories()
+    public function children()
     {
         return $this->hasMany(Categories::class,'parent_id','id');
+    }
+    public function parent(){
+        return $this->belongsTo(Categories::class,'parent_id','id');
     }
     public function blogs(){
         return $this->hasMany(Blogs::class,'categories_id','id');
