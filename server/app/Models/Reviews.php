@@ -11,14 +11,15 @@ class Reviews extends Model
     public $table = 'reviews';
     protected $fillable = [
         'title',
+        'reviews_star',
         'content_reviews',
         'users_id',
-        'product_id',
+        'products_id',
     ];
     public function users(){
         return $this->belongsTo(User::class,'users_id','id');
     }
     public function products(){
-        return $this->belongsTo(Products::class,'product_id','id');
+        return $this->belongsTo(Products::class,'products_id','id');
     }
 }

@@ -23,10 +23,11 @@ class ProductsFactory extends Factory
             'discount'=>mt_rand(1,100),
             'quantities'=>mt_rand(1,1000),
             'descriptions'=>fake()->sentence(20),
-            'reviews_stars'=>mt_rand(1,5),
             'categories_id'=>mt_rand(1,10),
-            'shop_id'=>mt_rand(1,10),
-            'products_type_id'=>mt_rand(1,10),
+            'shop_id'=>mt_rand(1,100),
+            'products_type_id'=>mt_rand(1,5),
+            'products_type_id1'=>mt_rand(6,10),
+            'products_type_id2'=>mt_rand(15,20),
             //
         ];
     }

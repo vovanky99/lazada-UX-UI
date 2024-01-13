@@ -174,7 +174,7 @@
                             <i class="fa-solid fa-table-cells"></i>
                         </div>
                     </a>
-                    <ul class="collapse sidebar-toggle" id="sidebar-toggle">
+                    <ul class="collapse sidebar-toggle text-capitalize" id="sidebar-toggle">
                         <li ><a href="/users" class="dropdown-item">Users</a></li>
                         <li ><a href="/cat" class="dropdown-item">Categories</a></li>
                         <li ><a href="/dt" class="dropdown-item">Decentralization</a></li>
@@ -185,9 +185,9 @@
                         <li ><a href="/shop" class="dropdown-item">shop</a></li>
                         <li ><a href="/slide" class="dropdown-item">slide</a></li>
                         <li ><a href="/voucher" class="dropdown-item">voucher</a></li>
-                        <li ><a href="/pd_type" class="dropdown-item">products_type</a></li>
-                        <li ><a href="/pd_type" class="dropdown-item">payment_method</a></li>
-
+                        <li ><a href="/pd_type" class="dropdown-item">products type</a></li>
+                        <li ><a href="/payment" class="dropdown-item">payment</a></li>
+                        <li ><a href="/pd_type_detail" class="dropdown-item">products type detail</a></li>
                     </ul>
                 </li>
                 <li class="nav-item py-4">

@@ -24,7 +24,7 @@
             <div class="mb-3">
                 {!! Form::open(['method'=>'GET','route'=>['dt.edit',$decentralization->id]]) !!}
                 @csrf
-                <button class="btn lz-btn-outline-primary" >Edit</button>
+                <button class="btn lz-btn-outline-primary text-capitalize fs-5" >Edit</button>
                 {!! Form::close() !!}
             </div>
         </div>

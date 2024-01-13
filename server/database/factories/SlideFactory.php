@@ -22,9 +22,8 @@ class SlideFactory extends Factory
             'descriptions'=>fake()->sentence(20),
             'img'=>fake()->imageUrl(),
             'categories_id'=>mt_rand(1,10),
-            'start_day'=>fake()->dateTime(),
-            'end_day'=>fake()->dateTime(),
-
+            'start_day'=>fake()->date(),
+            'end_day'=>fake()->date(),
             //
         ];
     }

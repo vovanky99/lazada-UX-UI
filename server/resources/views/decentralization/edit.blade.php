@@ -31,7 +31,7 @@
             </div>
             <div class="mb-3">
 
-                <button type="submit" class="btn lz-btn-outline-primary text-capitalize" >update</button>
+                <button type="submit" class="btn lz-btn-outline-primary text-capitalize fs-5" >update</button>
             </div>
             {!! Form::close() !!}
         </div>

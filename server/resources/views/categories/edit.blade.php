@@ -34,8 +34,7 @@
                 </select>
             </div>
             <div class="mb-3">
-
-                <button type="submit" class="btn btn-primary" >update</button>
+                <button type="submit" class="btn btn-primary text-capitalize fs-5" >update</button>
             </div>
             {!! Form::close() !!}
         </div>

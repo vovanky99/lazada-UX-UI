@@ -18,9 +18,10 @@ class ReviewsFactory extends Factory
     {
         return [
             'title'=>fake()->name(),
+            'reviews_stars'=>mt_rand(1,5),
             'content_reviews'=>fake()->sentence(),
-            'users_id'=>mt_rand(1,10),
-            'product_id'=>mt_rand(1,10),
+            'users_id'=>mt_rand(1,100),
+            'products_id'=>mt_rand(1,100),
             //
         ];
     }

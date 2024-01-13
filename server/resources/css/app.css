@@ -71,6 +71,14 @@
   color: black;
   text-decoration: underline !important;
 }
+.max-width-300 {
+  max-width: 30rem;
+}
+/* .text-eclipses {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+} */
 /*End Login*/
 /*404 page*/
 .lz-body-404 {

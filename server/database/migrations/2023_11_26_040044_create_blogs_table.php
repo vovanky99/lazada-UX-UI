@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->bigIncrements('id')->Unique();
             $table->string('title',50);
-            $table->text('desciption',200);
+            $table->text('descriptions',200);
             $table->longText('content');
             $table->boolean('status');
             $table->string('img');

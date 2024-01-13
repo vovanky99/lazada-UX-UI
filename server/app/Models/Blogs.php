@@ -11,13 +11,13 @@ class Blogs extends Model
     public $table = 'blogs';
     protected $fillable = [
         'title',
-        'description',
+        'descriptions',
         'content',
         'img',
         'status',
         'categories_id',
     ];
     public function categories(){
-        return $this->belongsTo(Blogs::class,'categories_id','id');
+        return $this->belongsTo(Categories::class,'categories_id','id');
     }
 }

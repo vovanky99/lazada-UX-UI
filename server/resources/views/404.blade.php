@@ -14,7 +14,6 @@
 </head>
 
 <body>
-
     <div class="container-fluid lz-body-404"  >
         <div class="content-wrapper d-flex align-items-center text-center error-page ">
             <div class="row flex-gow lz-error">

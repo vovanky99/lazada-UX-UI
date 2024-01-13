@@ -30,7 +30,7 @@
             <div class="mb-3">
                 {!! Form::open(['method'=>'GET','route'=>['cat.edit',$cat->id]]) !!}
                 @csrf
-                <button class="btn btn-primary" >Edit</button>
+                <button class="btn btn-primary text-capitalize fs-5" >Edit</button>
                 {!! Form::close() !!}
             </div>
         </div>        

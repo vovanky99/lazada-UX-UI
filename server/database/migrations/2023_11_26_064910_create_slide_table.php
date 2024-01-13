@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('descriptions');
             $table->string('img');
             $table->foreignId('categories_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->datetime('start_day');
-            $table->datetime('end_day');
+            $table->date('start_day');
+            $table->date('end_day');
             $table->timestamps();
         });
     }

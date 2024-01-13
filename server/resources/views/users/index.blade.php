@@ -24,10 +24,12 @@
         <div class="mb-3 align-items-center d-flex">
             {{-- {!! Form::open(['method'=>'GET','route'=>['users.search']]) !!} --}}
             @csrf
-            <select name="search_users" class="px-2 py-2 lz-border-secondary outline-none ">
+            <select name="search_role" class="px-2 py-2 lz-border-secondary outline-none ">
                 <option value="0" selected>null</option>
                 @foreach ($decentralization as $role)
-                <option value="<?php echo $role->id ?>"><?php echo $role->name ?></option>
+                <option value="<?php echo $role->id ?>" @if (!empty($selected_role) && $selected_role == $role->id)
+                    selected
+                @endif><?php echo $role->name ?></option>
                 @endforeach
             </select>
             {!! Form::submit('Change',['class'=>' lz-btn-outline-primary px-5 py-2']) !!}
@@ -81,24 +83,9 @@
             
         </table>
         <div class="row">
-            <div class="col-6">
-                <div class="mt-2 align-items-center d-flex">
-                    {{-- {!! Form::open(['method'=>'GET','route'=>['users.search']]) !!}
-                    @csrf
-                    <select name="search_role" class="px-2 py-2 lz-border-secondary outline-none ">
-                        <option value="0" selected>null</option>
-                        @foreach ($decentralization as $role)
-                        <option value="{{echo $role->id }}"> {{echo $role->name}}</option>
-                        @endforeach
-                    </select>
-                    {!! Form::submit('Change',['class'=>' lz-btn-outline-primary px-5 py-2']) !!}
-        
-                    {!! Form::close() !!} --}}
-                </div>
-            </div>
-            <div class="col-6">
+            <div class="col-12">
                 <div class="pagination" >
-                    {{$users->links()}}
+                    {{$users->appends(Request::except('page'))->links()}}
                 </div>
             </div>
         </div>

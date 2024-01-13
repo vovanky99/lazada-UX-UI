@@ -47,11 +47,17 @@ class CreatePostProcedure extends Migration
         UPDATE categories set  _lft=_lft - @mywidth where _lft>@myright;
         UPDATE categories set _rgt=_rgt - @mywidth where _rgt>@myright;
         END";
+        $getallproducts = "DROP PROCEDURE IF EXISTS `getAllProductsReviews`;
+        CREATE PROCEDURE `getAllProductsReviews`()
+        BEGIN
+        SELECT (SELECT round(AVG(reviews.reviews_stars),1) FROM reviews where products.id=reviews.products_id group by products.id ) as avg_stars,products.*,categories.title as cat_title,shop.name as shop_name FROM products,categories,shop WHERE products.categories_id=categories.id AND shop.id=products.shop_id ORDER BY avg_stars desc;
+        END";
         DB::unprepared($procedure_get_table);
         DB::unprepared($createCat);
         DB::unprepared($createCatnotchild);
         // DB::unprepared($updateCat);
         DB::unprepared($deleteCat);
+        DB::unprepared($getallproducts);
     }
 
     /**

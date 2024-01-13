@@ -48,6 +48,11 @@
                             {!! Form::password('password',['class' => 'form-control p-3 form-control-lg lz-login-password mb-5','placeholder'=>'Password']) !!}
                             
                         </div>
+                        @if (session()->has('error'))
+                        <div class="alert alert-success text-center fs-5 text-capitalize">
+                            {{ session()->get('error') }}
+                        </div>
+                        @endif
                         
                         <div class="form-group mb-4">
                             {!! Form::submit('Sign in',['class' => 'form-control form-control-lg lz-login-submit py-4 text-white text-uppercase fw-bold mb-5 bg-gradient-primary']) !!}
@@ -55,7 +60,8 @@
                         <div class="my-2 mb-5 d-flex justify-content-between align-items-center">
                             <div class="form-check">
                                 <label class="form-check-label text-muted fs-4 lz-checkbox-login">
-                                <input name="remember" type="checkbox" class="form-check-input  lz-border-primary"> Keep me signed in<i class="input-helper"></i></label>
+                                <input name="remember" type="checkbox" class="form-check-input  lz-border-primary"> keep singin login
+                                <i class="input-helper"></i></label>
                             </div>
                             <a href="#" class="lz-forgot-pass auth-link text-black fs-4 text-decoration-none text-black">Forgot password?</a>
                         </div>

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->double('price');
             $table->double('discount',100);
             $table->double('quantities');
-            $table->double('reviews_stars',5);
             $table->bigInteger('products_sold');
             $table->string('descriptions');
             // $table->integer('categories_id')->unsigned();
@@ -27,6 +26,8 @@ return new class extends Migration
             $table->foreignId('shop_id')->references('id')->on('shop')->onDelete('cascade');
             // $table->integer('product_types_id')->unsigned()->nullable();
             $table->foreignId('products_type_id')->references('id')->on('products_type')->onDelete('cascade')->nullable();
+            $table->foreignId('products_type_id1')->references('id')->on('products_type')->onDelete('cascade')->null();
+            $table->foreignId('products_type_id2')->references('id')->on('products_type')->onDelete('cascade')->null();
             $table->timestamps();
         });
     }

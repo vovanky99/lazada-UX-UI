@@ -8,12 +8,10 @@
             <h3>
                 create user
             </h3>
-            
             {!! Form::open(['method'=>'POST','route'=>['users.store'],'enctype'=>'multipart/form-data']) !!}
             @method('POST')
             @csrf
             <div class="mb-3">
-
                 {!! Form::label('profile_name','name: ',['class'=>'form-label']) !!}
                 {!! Form::text('name','',['class'=>'form-control',] ) !!}
                 @error('name')
@@ -36,7 +34,7 @@
             </div>
             <div class="mb-3">
                 {!! Form::label('profile_password','password :',['class'=>'form-label']) !!}
-                {!! Form::text('password','',['class'=>'form-control',] ) !!}
+                {!! Form::password('password',['class'=>'form-control',] ) !!}
                 @error('password')
                 <div class="alert text-danger">{{ $message }}</div>
                 @enderror
@@ -57,8 +55,8 @@
             </div>
             <div class="mb-3">
                 {!! Form::label('profile_decentralization','Role: ',['class'=>'form-label ']) !!}
-                <select name="role" id="gender" class="lz-border-secondary outline-none">
-                    <option class="text-capitalize" value="#" selected>select role</option>
+                <select name="role" id="gender" class="lz-border-secondary outline-none form-control">
+                    <option class="text-capitalize " value="#" selected>select role</option>
                     @foreach ($decentralization as $dt)
                     <option value="{{$dt->id}}" >{{$dt->name}}</option>
                     @endforeach
@@ -69,12 +67,12 @@
             </div>
             <div class="mb-3">
                 {!! Form::label('profile_level','Level :',['class'=>'form-label']) !!}
-                {!! Form::number('level','1',['class'=>'lz-border-secondary outline-none',]) !!}
+                {!! Form::number('level','1',['class'=>'lz-border-secondary outline-none form-control',]) !!}
             </div>
 
             <div class="mb-3">
                 {!! Form::label('profile_status','status :',['class'=>'form-label']) !!}
-                <select class="lz-border-secondary outline-none text-capitalize" name="status" id="gender">
+                <select class="lz-border-secondary outline-none text-capitalize form-control" name="status" id="gender">
                     <option value="#" selected>select status</option>
                     <option value="1" >show</option>
                     <option value="0" >hide</option>
@@ -85,7 +83,7 @@
             </div>
             <div class="mb-3">
                 {!! Form::label('profile_gender','gender :',['class'=>'form-label']) !!}
-                <select class="lz-border-secondary outline-none text-capitalize" name="gender" id="gender">
+                <select class="lz-border-secondary outline-none text-capitalize form-control" name="gender" id="gender">
                     <option value="#" selected>select gender</option>
                     <option value="1" >male</option>
                     <option value="0" >female</option>
@@ -97,7 +95,7 @@
             
             <div class="mb-3">
                 {!! Form::label('profile_birthday','birthday :',['class'=>'form-label']) !!}
-                {!! Form::date('birthday','dd/mm/yyyy',['class'=>'lz-border-secondary outline-none',]) !!}
+                {!! Form::date('birthday','dd/mm/yyyy',['class'=>'lz-border-secondary outline-none form-control',]) !!}
                 @error('birthday')
                 <div class="alert text-danger">{{ $message }}</div>
                 @enderror
@@ -111,7 +109,7 @@
             </div>
             <div class="mb-3">
 
-                <button class="btn btn-primary" >create</button>
+                <button class="btn lz-btn-outline-primary text-capitalize fs-5" >create</button>
             </div>
             {!! Form::close() !!}
         </div>

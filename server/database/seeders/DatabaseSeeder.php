@@ -12,9 +12,10 @@ use \App\Models\ProductsType;
 use \App\Models\Manufacturer;
 use \App\Models\Slide;
 use \App\Models\Voucher;
-use \App\Models\PaymentMethod;
+use \App\Models\Payment;
 use \App\Models\Blogs;
 use \App\Models\Products;
+use App\Models\ProductsTypeDetail;
 use \App\Models\Reviews;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -47,6 +48,7 @@ class DatabaseSeeder extends Seeder
         Decentralization::factory()->count(100)->create();
         $users = array(
             array('name'=>'maihoangha','username'=>'maihoangha','email'=>'maihoangha','password'=>Hash::make('123456789'),'phone_number'=>'0123456789','avatar'=>'dasde','level'=>1,'status'=>'1','gender'=>1,'birthday'=>'','address'=>'','decentralization_id'=>1),
+            array('name'=>'maihoanghanh','username'=>'maihoanghanh','email'=>'maihoangha','password'=>Hash::make('123456789'),'phone_number'=>'0123456789','avatar'=>'dasde','level'=>1,'status'=>'1','gender'=>1,'birthday'=>'','address'=>'','decentralization_id'=>2),
         );
         DB::table('users')->insert($users);
         
@@ -60,15 +62,9 @@ class DatabaseSeeder extends Seeder
         Voucher::factory()->count(100)->create();
         Blogs::factory()->count(100)->create();
         Slide::factory()->count(100)->create();
-        PaymentMethod::factory()->count(100)->create();
-        Products::factory()->count(100)->create();
+        Payment::factory()->count(100)->create();
+        Products::factory()->count(5000)->create();
         Reviews::factory()->count(100)->create();
-
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        ProductsTypeDetail::factory()->count(100)->create();
     }
 }

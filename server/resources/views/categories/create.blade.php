@@ -34,7 +34,7 @@
                 <option value="" selected></option>
             </div>
             <div class="mb-3">
-                <button class="btn lz-btn-outline-primary text-capitalize" >create</button>
+                <button class="btn lz-btn-outline-primary text-capitalize fs-5" >create</button>
             </div>
             {!! Form::close() !!}
         </div>

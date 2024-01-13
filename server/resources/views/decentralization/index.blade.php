@@ -60,7 +60,7 @@
         
     </table>
     <div class="pagination" >
-        {{$decentralization->links()}}
+        {{$decentralization->appends(Request::except('page'))->links()}}
     </div>
     </div>
 </section>

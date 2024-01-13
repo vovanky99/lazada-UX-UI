@@ -16,6 +16,15 @@ class ProductsType extends Model
     public function products(){
         return $this->hasMany(Products::class,'products_type_id','id');
     }
+    public function products1(){
+        return $this->hasMany(Products::class,'products_type_id1','id');
+    }
+    public function products2(){
+        return $this->hasMany(Products::class,'products_type_id2','id');
+    }
+    public function ProductsTypeDetail(){
+        return $this->hasMany(ProductsTypeDetail::class,'products_type_id','id');
+    }
     public function voucher(){
         return $this->hasMany(Voucher::class,'products_type_id','id');
     }

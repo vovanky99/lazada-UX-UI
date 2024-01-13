@@ -5,11 +5,12 @@
     <div class="content-wrapper">
         <div class="mb-5 align-items-center d-flex">
             {!! Form::open(['method'=>'GET','route'=>['cat.create']]) !!}
+            {!! Form::label('cat','',['class'=>'me-2 text-capitalize fs-22 align-middle']) !!}
             <button type="submit" class="btn lz-btn-outline-primary px-5 py-2 text-capitalize">create</button>
             @csrf
             {!! Form::close() !!}
         </div>
-        <div class="mb-3 align-items-center d-flex justify-content-between ">
+        <div class="mb-3 align-items-center d-flex justify-content-between">
             <span class="fs-4">All(<?php echo $count_cat ?>)</span>
             <div class="search-cat">
                 {!! Form::open(['method'=>'GET','route'=>['cat.search']]) !!}
@@ -54,7 +55,7 @@
             @endforeach
             <div class="pagination" >
           
-            {{$categories->links();}}
+            {{$categories->appends(Request::except('page'))->links();}}
             
            
             </div>
