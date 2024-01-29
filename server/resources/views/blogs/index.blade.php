@@ -18,11 +18,13 @@
                 {!! Form::text('search','',['class'=>'px-2 py-2 lz-border-secondary search-users']) !!}
                 {!! Form::submit('Search Shop',['class'=>' lz-btn-outline-primary px-5 py-2 text-capitalize']) !!}
 
-                {{-- {!! Form::close() !!} --}}
+                {!! Form::close() !!}
             </div>
         </div>
         <div class="mb-3 align-items-center d-flex">
-            {{-- {!! Form::open(['method'=>'GET','route'=>['users.search']]) !!} --}}
+            {!! Form::button('delete',['type' => 'submit',
+            'class' => 'delete_all delete_all-blogs btn lz-btn-outline-danger text-capitalize fs-5  px-4 py-2 me-3']) !!}
+            {!! Form::open(['method'=>'GET','route'=>['blogs.search'] ,'class'=>' d-flex']) !!}
             @csrf
             <select name="search_cat" class="px-2 py-2 lz-border-secondary outline-none fs-5 me-3">
                 <option value="0" >Categories</option>
@@ -32,6 +34,7 @@
                 ?> ><?php echo $c->title ?></option>
                 @endforeach
             </select>
+            
             <div class="text-success">
                 @if (session()->has('success'))
                 {{ session()->get('success') }}
@@ -45,6 +48,7 @@
         <table class="table table-bordered lz-border-secondary">
             <thead class="bg-white">
                 <tr class="fs-4 text-capitalize">
+                    <th><input id="check_all" type="checkbox"></th>
                     <th scope="col">name</th>
                     <th scope="col">logo</th>
                     <th scope="col">descriptions</th>
@@ -58,6 +62,7 @@
             @foreach($blogs as $b)
             <tbody class="bg-light">
                 <tr class="fs-5 h-50">
+                    <td class=" align-middle "><input class="checkbox"  data-id="{{$b->id}}" id="cb-select-{{$b->id}}" type="checkbox"></td>
                     <td><?php echo $b->title ?></td>
                     <td>
                         <img class="img" src="{{asset('upload/images/blogs')}}/{{$b->img}}" />

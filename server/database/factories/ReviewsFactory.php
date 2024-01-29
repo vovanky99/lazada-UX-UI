@@ -20,6 +20,7 @@ class ReviewsFactory extends Factory
             'title'=>fake()->name(),
             'reviews_stars'=>mt_rand(1,5),
             'content_reviews'=>fake()->sentence(),
+            'parent_id'=>mt_rand(0,100),
             'users_id'=>mt_rand(1,100),
             'products_id'=>mt_rand(1,100),
             //

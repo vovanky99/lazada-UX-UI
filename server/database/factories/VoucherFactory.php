@@ -20,6 +20,7 @@ class VoucherFactory extends Factory
             'title'=>fake()->name(),
             'descriptions'=>fake()->sentence(),
             'percents'=>mt_rand(1,100),
+            'status'=>fake()->boolean(),
             'code'=>fake()->isbn13(),
             'quantity'=>mt_rand(1,1000),
             'categories_id'=>mt_rand(1,10),

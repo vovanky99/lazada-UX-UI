@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Validation\Rules\Unique;
 
 return new class extends Migration
 {
@@ -12,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('decentralization', function (Blueprint $table) {
-            $table->bigIncrements('id')->Unique();
-            $table->string('name');
-            $table->string('description',100)->nullable();
+        Schema::create('order_products', function (Blueprint $table) {
+            $table->foreignId('order_id')->unsigned()->references('id')->on('order')->onDelete('cascade');
+            $table->foreignId('production_id')->unsigned()->references('id')->on('products')->onDelete('cascade');
+            $table->integer('quantity')->unsigned();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('decentralization');
+        Schema::dropIfExists('order_products');
     }
 };

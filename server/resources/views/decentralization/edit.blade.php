@@ -10,21 +10,21 @@
             </h3>
             {!! Form::open(['method'=>'GET','route'=>['dt.index']]) !!}
             @csrf
-                <button type="submit" class="btn lz-btn-outline-primary mb-3">Decentralization All</button>
+                <button type="submit" class="btn lz-btn-outline-primary mb-3">Role All</button>
             {!! Form::close() !!}
-            {!! Form::open(['method'=>'PATCH','route'=>['dt.update',$decentralization->id],'enctype'=>'multipart/form-data']) !!}
+            {!! Form::open(['method'=>'PATCH','route'=>['dt.update',$role->id],'enctype'=>'multipart/form-data']) !!}
             @method('PATCH')
             @csrf
             <div class="mb-3">
                 {!! Form::label('name','name :',['class'=>'form-label']) !!}
-                {!! Form::text('name',$decentralization->name.'',['class'=>'form-control',] ) !!}
+                {!! Form::text('name',$role->name.'',['class'=>'form-control',] ) !!}
                 @error('name')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
                 {!! Form::label('description','description :',['class'=>'form-label']) !!}
-                {!! Form::textarea('description',$decentralization->description.'',['class'=>'form-control','rows'=>'3']) !!}
+                {!! Form::textarea('description',$role->description.'',['class'=>'form-control','rows'=>'3']) !!}
                 @error('description')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror

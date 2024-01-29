@@ -11,11 +11,10 @@ class Products extends Model
     public $table = 'products';
     protected $fillable = [
         'title',
-        'image',
+        'images',
         'price',
         'discount',
         'quantities',
-        'products_sold',
         'descriptions',
         'categories_id',
         'shop_id',
@@ -23,6 +22,16 @@ class Products extends Model
         'products_type_id1',
         'products_type_id2',
     ];
+    
+    public function reviews(){
+        return $this->hasMany(Reviews::class,'products_id','id');
+    }
+    public function images(){
+        return $this->hasMany(Images::class,'products_id','id');
+    }
+    public function orderProducts(){
+        return $this->hasMany(OrderProducts::class,'production_id','id');
+    }
     public function categories(){
         return $this->belongsTo(Categories::class,'categories_id','id');
     }
@@ -37,11 +46,5 @@ class Products extends Model
     }
     public function productsTyp2(){
         return $this->belongsTo(ProductsType::class,'products_type_id2','id');
-    }
-    // public function products_type_detail(){
-    //     return $this->belongsToMany(ProductsTypeDetail::class,'products_type_id','id');
-    // }
-    public function reviews(){
-        return $this->hasMany(Reviews::class,'products_id','id');
     }
 }

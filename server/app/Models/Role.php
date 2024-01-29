@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Decentralization extends Model
+class Role extends Model
 {
     use HasFactory;
-    public $table = 'decentralization';
+    public $table = 'role';
     protected $fillable = [
         'name',
         'description',
     ];
     public function users(){
-        return $this->hasOne(User::class,'decentralization_id','id');
+        return $this->hasOne(User::class,'role_id','id');
     }
 }

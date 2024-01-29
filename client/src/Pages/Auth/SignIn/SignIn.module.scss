@@ -1,0 +1,68 @@
+.wrapper {
+  background-color: #eff0f5;
+}
+.main-content {
+  overflow: hidden;
+  width: var(--media_width_signin);
+  .header {
+    margin: 50px auto 15px;
+  }
+  .register {
+    font-size: 1.2rem;
+  }
+  .login-content {
+    margin: 24px auto;
+    background-color: #ffffff;
+    padding: 12px 140px 24px;
+    box-sizing: border-box !important;
+    .password label,
+    .email label {
+      font-size: 1.2rem;
+    }
+    .password input,
+    .email input {
+      box-sizing: border-box !important;
+      font-size: 1.5rem;
+    }
+    .password input::placeholder,
+    .email input::placeholder {
+      font-size: 1.5rem;
+      opacity: 0.8;
+    }
+  }
+  .login_account {
+    font-size: 1.6rem;
+  }
+}
+.btn_submit {
+  background-color: #da6520 !important;
+  box-sizing: border-box !important;
+  border: none !important;
+  color: white;
+}
+.btn_submit:hover {
+  background-color: #d0611e !important;
+}
+.login_wrap {
+  opacity: 0.8;
+}
+.login_third {
+  button {
+    width: 49%;
+  }
+}
+.btn-lz-gray {
+  background-color: #ffffff !important;
+  border: 0.5px solid #858b9c !important;
+  color: #2e3346 !important;
+  font-size: 1.6rem !important;
+  :hover {
+    border-color: none !important;
+  }
+}
+.fa_google {
+  color: red;
+}
+.fa_facebook {
+  color: #1877f2;
+}

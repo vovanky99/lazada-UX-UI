@@ -17,8 +17,10 @@ class PaymentFactory extends Factory
     public function definition(): array
     {
         return [
-            'type'=>fake()->sentence(),
+            'status'=>fake()->sentence(),
             'payment_datetime'=>fake()->dateTimeAD(),
+            'cod_id'=>mt_rand(1,100),
+            'momo_id'=>mt_rand(1,100)
             //
         ];
     }

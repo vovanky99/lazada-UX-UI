@@ -1,0 +1,37 @@
+* {
+  box-sizing: border-box !important;
+}
+
+.highlight {
+  margin-bottom: 5px;
+}
+.slide-show {
+  box-sizing: content-box !important;
+  position: relative;
+  margin: 0 -5px;
+}
+.container-img {
+  padding: 5px;
+}
+.next,
+.left {
+  position: absolute;
+  z-index: 99;
+  border: none;
+  padding: 10px 5px;
+  background-color: transparent;
+  background-color: #00000044;
+  top: 25%;
+  font-size: 1.8rem;
+  color: white;
+}
+
+.left {
+  left: 5px;
+}
+.next {
+  right: 5px;
+}
+.active {
+  border: 2px solid var(--brand-primary-color, #ee4d2d);
+}

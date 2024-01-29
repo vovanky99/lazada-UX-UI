@@ -15,11 +15,8 @@
   width: var(--media_width);
   max-width: 1180px;
   align-items: center;
-  display: grid;
   justify-content: right;
-  grid-template-columns: auto auto auto auto auto auto auto auto;
   > div {
-    padding: 0 17px;
     display: flex;
     justify-content: center;
     a.cursor,

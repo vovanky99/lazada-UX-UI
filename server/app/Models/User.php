@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'decentralization_id',
+        'role_id',
         'phone_number',
         'status',
         'avatar',
@@ -48,13 +48,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function decentralization(){
-        return $this->belongsTo(Decentralization::class,'decentralization_id','id');
+    public function role(){
+        return $this->belongsTo(Role::class,'role_id','id');
     }
     public function shop(){
         return $this->hasOne(Shop::class,'users_id','id');
     }
     public function reviews(){
         return $this->hasOne(Reviews::class,'users_id','id');
+    }
+    public function order(){
+        return $this->hasMany(Order::class,'users_id','id');
     }
 }

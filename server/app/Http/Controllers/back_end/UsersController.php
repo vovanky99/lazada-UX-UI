@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 
 use App\Models\User;
-use App\Models\Decentralization;
+use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -21,13 +21,13 @@ class UsersController extends Controller
     {
         $users = User::paginate(15);
         $count_users = User::count();
-        $decentralization = Decentralization::all();
-        return view('users/index',compact('users','count_users','decentralization'));
+        $role = Role::all();
+        return view('users/index',compact('users','count_users','role'));
     }
 
     public function search(Request $request){
         if($request->search_role>0){
-            $users = User::where('decentralization_id','=',$request->search_role)->where('name','like','%'.$request->search.'%');
+            $users = User::where('role_id','=',$request->search_role)->where('name','like','%'.$request->search.'%');
             $count_users = $users->count();
             $users = $users->paginate(15);
         }
@@ -37,8 +37,8 @@ class UsersController extends Controller
             $users = $users->paginate(15);
         }
         $selected_role = $request->search_role;
-        $decentralization = Decentralization::all();
-        return view('users/index',compact('users','count_users','decentralization','selected_role'));
+        $role = Role::all();
+        return view('users/index',compact('users','count_users','role','selected_role'));
     }
 
 
@@ -49,8 +49,8 @@ class UsersController extends Controller
     {
         //
 
-        $decentralization = Decentralization::all();
-        return view('users.create',compact('decentralization'));
+        $role = Role::all();
+        return view('users.create',compact('role'));
     }
 
     /**
@@ -83,7 +83,7 @@ class UsersController extends Controller
         $user->password = Hash::make($request->password);
         $user->email = $request->email;
         $user->phone_number = $request->phone_number;
-        $user->decentralization_id = $request->role;
+        $user->role_id = $request->role;
         $user->level = $request->level;
         $user->status = $request->status;
         $user->gender = $request->gender;
@@ -91,9 +91,9 @@ class UsersController extends Controller
         $user->address = $request->address;
         $user->save();
         $count_users = User::count();
-        $decentralization = Decentralization::all();
+        $role = Role::all();
         $users = User::paginate(15);;
-        return view('users/index',compact('users','count_users','decentralization'));
+        return view('users/index',compact('users','count_users','role'));
     }
 
     /**

@@ -72,7 +72,7 @@
                     @csrf
                     <select name="search_role" class="px-2 py-2 lz-border-secondary outline-none ">
                         <option value="0" selected>null</option>
-                        @foreach ($decentralization as $role)
+                        @foreach ($role as $role)
                         <option value="{{echo $role->id }}"> {{echo $role->name}}</option>
                         @endforeach
                     </select>

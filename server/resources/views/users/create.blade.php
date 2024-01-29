@@ -54,10 +54,10 @@
                 @enderror
             </div>
             <div class="mb-3">
-                {!! Form::label('profile_decentralization','Role: ',['class'=>'form-label ']) !!}
+                {!! Form::label('profile_role','Role: ',['class'=>'form-label ']) !!}
                 <select name="role" id="gender" class="lz-border-secondary outline-none form-control">
                     <option class="text-capitalize " value="#" selected>select role</option>
-                    @foreach ($decentralization as $dt)
+                    @foreach ($role as $dt)
                     <option value="{{$dt->id}}" >{{$dt->name}}</option>
                     @endforeach
                 </select>

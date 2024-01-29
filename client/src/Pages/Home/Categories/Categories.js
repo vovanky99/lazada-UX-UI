@@ -2,98 +2,31 @@ import classNames from 'classnames/bind';
 import style from './Categories.module.scss';
 import { Col, Image, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from '~/api/axios';
 
 const cx = classNames.bind(style);
 
-const categories = [
-  {
-    id: 1,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 2,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 3,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 4,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 5,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 6,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 7,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 8,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 9,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 10,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 11,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 12,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 13,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 14,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 15,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-  {
-    id: 16,
-    title: 'Wireless and Bluetooth Speakers',
-    images: 'https://lzd-img-global.slatic.net/g/p/7798493caebb76b50b8a5aa8f290ddad.jpg_170x170q80.jpg_.webp',
-  },
-];
-
 function Categories() {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        await axios
+          .get('http://127.0.0.1:8000/api/posts/cat')
+          .then((res) => setData(res.data))
+          .catch((error) => console.log(error));
+      } catch (error) {
+        console.log('Network Error:', error.message);
+      }
+    };
+    fetch();
+  }, []);
   return (
     <div className={cx('wrapper')}>
       <span className={cx('cat-title')}>Categories</span>
       <Row className={cx('cat-content')}>
-        {categories.map((cat) => (
+        {data.map((cat) => (
           <Col className={cx('cat-content-container')} key={cat.id}>
             <Link>
               <div className={cx('cat-img')}>

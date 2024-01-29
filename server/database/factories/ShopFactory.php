@@ -20,6 +20,7 @@ class ShopFactory extends Factory
             'name'=>fake()->name(),
             'logo'=>fake()->imageUrl(),
             'img_cover'=>fake()->imageUrl(),
+            'status'=>fake()->boolean(),
             'descriptions'=>fake()->sentence(),
             'address'=>fake()->address(),
             'users_id'=>mt_rand(1,10),

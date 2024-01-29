@@ -10,7 +10,7 @@
             </h3>
             {!! Form::open(['method'=>'GET','route'=>['dt.index']]) !!}
             @csrf
-                <button type="submit" class="btn lz-btn-outline-primary mb-3">Decentralization All</button>
+                <button type="submit" class="btn lz-btn-outline-primary mb-3">Role All</button>
                 
             {!! Form::close() !!}
             

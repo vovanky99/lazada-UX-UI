@@ -3,8 +3,8 @@
 use App\Http\Controllers\back_end\BlogsController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\back_end\UsersController;
-use \App\Http\Controllers\LoginController;
-use \App\Http\Controllers\back_end\DecentralizationController;
+use \App\Http\Controllers\back_end\LoginController;
+use \App\Http\Controllers\back_end\RoleController;
 use \App\Http\Controllers\back_end\CategoriesController;
 use \App\Http\Controllers\back_end\ShopController;
 use \App\Http\Controllers\back_end\ManufacturerController;
@@ -28,7 +28,7 @@ use App\Http\Controllers\back_end\VoucherController;
 
 Route::get('/', function () {
     return view('Home');
-})->middleware('auth');
+})->middleware('auth')->name('home');
 
 
 
@@ -38,6 +38,7 @@ Route::get('/login', function () {
 })->name('login');
 Route::get('logintest',[LoginController::class,'getLogin'])->name('getlogin');
 Route::get('/logout',[LoginController::class,'Logout'])->name('logout');
+Route::post('/register', [LoginController::class,'register']);
 
 Route::GET('/404', function () {
     // abort(404);
@@ -56,8 +57,8 @@ Route::controller(UsersController::class)->group(function(){
     Route::DELETE('/users/{id}','destroy')->name('users.destroy');
 });
 
-/*route decentralization or dt */
-Route::controller(DecentralizationController::class)->group(function(){
+/*route role or dt */
+Route::controller(RoleController::class)->group(function(){
     Route::GET('/dt','index')->name('dt.index');
     Route::GET('/dt/create','create')->name('dt.create');
     Route::POST('/dt','store')->name('dt.store');
@@ -67,7 +68,7 @@ Route::controller(DecentralizationController::class)->group(function(){
     Route::DELETE('/dt/{id}','destroy')->name('dt.destroy');
 });
 
-/*route decentralization or dt // role */
+/*route role or dt // role */
 Route::controller(CategoriesController::class)->group(function(){
     Route::GET('/cat','index')->name('cat.index');
     Route::GET('/cat/create','create')->name('cat.create');
@@ -185,7 +186,7 @@ Route::controller(ReviewsController::class)->group(function(){
 Route::prefix('/search')->group(function(){
     ROUTE::GET('/cat',[CategoriesController::class,'search'])->name('cat.search');
     ROUTE::GET('/users',[UsersController::class,'search'])->name('users.search');
-    ROUTE::GET('/dt',[DecentralizationController::class,'search'])->name('dt.search');
+    ROUTE::GET('/dt',[RoleController::class,'search'])->name('dt.search');
     ROUTE::GET('/shop',[ShopController::class,'search'])->name('shop.search');
     ROUTE::GET('/mft',[ManufacturerController::class,'search'])->name('mft.search');
     ROUTE::GET('/pd_type',[ProductsTypeController::class,'search'])->name('pd_type.search');
@@ -195,4 +196,10 @@ Route::prefix('/search')->group(function(){
     ROUTE::GET('/payment',[PaymentController::class,'search'])->name('payment.search');
     ROUTE::GET('/products',[ProductsController::class,'search'])->name('products.search');
     ROUTE::GET('/reviews',[ReviewsController::class,'search'])->name('reviews.search');
+});
+
+Route::prefix('/delete')->group(function(){
+    Route::DELETE('/products_mutitple',[ProductsController::class,'delete_multiple'])->name('products.dl_multiple');
+    Route::DELETE('/blogs_mutitple',[BlogsController::class,'delete_multiple'])->name('blogs.dl_multiple');
+    Route::DELETE('/reviews_mutitple',[ReviewsController::class,'delete_multiple'])->name('reviews.dl_multiple');
 });

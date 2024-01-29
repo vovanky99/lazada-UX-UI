@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('payment', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('type');
+            $table->integer('status');
+            $table->foreignId('cod_id')->nullable()->unsigned()->references('id')->on('cod')->onDelete('cascade');
+            $table->foreignId('momo_id')->nullable()->unsigned()->references('id')->on('momo')->onDelete('cascade');
             $table->dateTimeTz('payment_datetime');
             $table->timestamps();
         });

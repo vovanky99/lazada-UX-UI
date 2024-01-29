@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name',50);
             $table->string('logo');
             $table->string('img_cover');
+            $table->boolean('status');
             $table->string('descriptions');
             $table->string('address',100);
             // $table->integer('users_id');

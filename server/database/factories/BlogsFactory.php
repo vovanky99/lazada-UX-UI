@@ -19,6 +19,7 @@ class BlogsFactory extends Factory
         return [
             'title'=>fake()->name(),
             'descriptions'=>fake()->sentence(),
+            'status'=>fake()->boolean(),
             'content'=>fake()->sentence(1000),
             'img'=>fake()->imageUrl(),
             'status'=>fake()->boolean(),

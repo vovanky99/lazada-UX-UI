@@ -5,61 +5,26 @@ import styles from './FlashSaleHome.module.scss';
 import Timer from '~/components/Timer';
 import { Link } from 'react-router-dom';
 import { Col, Image, Row } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import axios from '~/api/axios';
 
 const cx = classNames.bind(styles);
 
-const products = [
-  {
-    id: 1,
-    title: `điện thoại Vivo Y11 2sim ram 6G/128G máy Chính Hãng, Cày Game lướt Wed Tiktok Facebook Youtube đỉnh
-    chất, Bảo hành 12 tháng - TTN 01`,
-    image: 'https://lzd-img-global.slatic.net/g/p/1302e7de2d8f357dc2dda3542d628f00.jpg_400x400q80.jpg_.webp',
-    price: 500000,
-    discount: 50,
-  },
-  {
-    id: 5,
-    title: `điện thoại Vivo Y11 2sim ram 6G/128G máy Chính Hãng, Cày Game lướt Wed Tiktok Facebook Youtube đỉnh
-    chất, Bảo hành 12 tháng - TTN 01`,
-    image: 'https://lzd-img-global.slatic.net/g/p/1302e7de2d8f357dc2dda3542d628f00.jpg_400x400q80.jpg_.webp',
-    price: 500000,
-    discount: 50,
-  },
-  {
-    id: 4,
-    title: `điện thoại Vivo Y11 2sim ram 6G/128G máy Chính Hãng, Cày Game lướt Wed Tiktok Facebook Youtube đỉnh
-    chất, Bảo hành 12 tháng - TTN 01`,
-    image: 'https://lzd-img-global.slatic.net/g/p/1302e7de2d8f357dc2dda3542d628f00.jpg_400x400q80.jpg_.webp',
-    price: 500000,
-    discount: 50,
-  },
-  {
-    id: 3,
-    title: `điện thoại Vivo Y11 2sim ram 6G/128G máy Chính Hãng, Cày Game lướt Wed Tiktok Facebook Youtube đỉnh
-    chất, Bảo hành 12 tháng - TTN 01`,
-    image: 'https://lzd-img-global.slatic.net/g/p/1302e7de2d8f357dc2dda3542d628f00.jpg_400x400q80.jpg_.webp',
-    price: 500000,
-    discount: 50,
-  },
-  {
-    id: 2,
-    title: `điện thoại Vivo Y11 2sim ram 6G/128G máy Chính Hãng, Cày Game lướt Wed Tiktok Facebook Youtube đỉnh
-    chất, Bảo hành 12 tháng - TTN 01`,
-    image: 'https://lzd-img-global.slatic.net/g/p/1302e7de2d8f357dc2dda3542d628f00.jpg_400x400q80.jpg_.webp',
-    price: 500000,
-    discount: 50,
-  },
-  {
-    id: 6,
-    title: `điện thoại Vivo Y11 2sim ram 6G/128G máy Chính Hãng, Cày Game lướt Wed Tiktok Facebook Youtube đỉnh
-    chất, Bảo hành 12 tháng - TTN 01`,
-    image: 'https://lzd-img-global.slatic.net/g/p/1302e7de2d8f357dc2dda3542d628f00.jpg_400x400q80.jpg_.webp',
-    price: 500000,
-    discount: 50,
-  },
-];
-
 function FlashSaleHome() {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        await axios
+          .get('http://127.0.0.1:8000/api/posts/flashsale')
+          .then((res) => setProducts(res.data))
+          .catch((error) => console.log(error));
+      } catch (error) {
+        console.log('network error: ', error.message);
+      }
+    };
+    fetch();
+  }, []);
   return (
     <div className={cx('wrapper')}>
       <span className={cx('title-flash-sale')}>flash sale</span>
@@ -80,12 +45,12 @@ function FlashSaleHome() {
             </Button>
           </div>
         </div>
-        <Row className={cx('flash-sale-content-body')}>
+        <Row className={cx('flash-sale-content-body', 'flex-wrap gap-3')}>
           {products.map((product) => (
-            <Col className={cx('fs-content-body-container')} key={product.id}>
+            <Col className={cx('fs-content-body-container', 'p-0')} key={product.id}>
               <Link className={cx(`fs-content-body-unit`)}>
                 <div className={cx('fs-img-container')}>
-                  <Image src={product.image} />
+                  <Image src={product.images} />
                 </div>
                 <div className={cx('fs-card-text')}>
                   <span className={cx('fs-card-title')} style={{ WebkitLineClamp: '2', lineClamp: '2' }}>
@@ -100,7 +65,7 @@ function FlashSaleHome() {
                       <span className={cx('currency')}>₫</span>
                       <span className={cx('price')}>{product.price}</span>
                     </div>
-                    <span className={cx('itemdiscount')}>-{product.discount}%</span>
+                    <span className={cx('itemdiscount', 'pb-5')}>-{product.discount}%</span>
                   </div>
                 </div>
               </Link>

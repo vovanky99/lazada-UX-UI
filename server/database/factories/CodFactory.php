@@ -3,16 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Decentralization;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class DecentralizationFactory extends Factory
+class CodFactory extends Factory
 {
-    
-    protected $model = Decentralization::class;
     /**
      * Define the model's default state.
      *
@@ -21,9 +17,10 @@ class DecentralizationFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>fake()->name(),
-            'description'=>fake()->sentence(),
             //
+            'txn_id'=>fake()->iban(),
+            'status'=>fake()->boolean(),
+            'amount'=>mt_rand(1000,1000000)
         ];
     }
 }

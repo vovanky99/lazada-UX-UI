@@ -4,14 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>LZ ADMIN</title> 
+    {{-- font-awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    {{-- bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        @vite('resources/css/styles.css')
-        @vite('resources/css/home.css')
-        @vite('resources/css/app.css')
-        
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    @vite('resources/css/styles.css')
+    @vite('resources/css/home.css')
+    @vite('resources/css/app.css')
 </head>
 
 <body>
@@ -154,7 +156,7 @@
                                 echo auth()->user()->name;
                                  ?></span>
                             <span class="nav-profile-positions text-secondary text-small fs-5 fw-normal"><?php 
-                            echo auth()->user()->decentralization->name;  
+                            echo auth()->user()->role->name;  
                             ?></span>
                         </div>
                         <i class="fa-solid fa-square-check"></i>
@@ -177,7 +179,7 @@
                     <ul class="collapse sidebar-toggle text-capitalize" id="sidebar-toggle">
                         <li ><a href="/users" class="dropdown-item">Users</a></li>
                         <li ><a href="/cat" class="dropdown-item">Categories</a></li>
-                        <li ><a href="/dt" class="dropdown-item">Decentralization</a></li>
+                        <li ><a href="/dt" class="dropdown-item">Role</a></li>
                         <li ><a href="/blogs" class="dropdown-item">Blogs</a></li>
                         <li ><a href="/mft" class="dropdown-item">manufacturer</a></li>
                         <li ><a href="/products" class="dropdown-item">products</a></li>
@@ -206,13 +208,145 @@
         </nav>
         @yield('main_content')
     </main>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+    </script>
     {{-- chart.js  --}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js">
+    </script>
+    @vite('resources/js/app.js')    
     @vite('resources/js/main.js')
-</body>
+    <script>
+    //products check all
+    $(document).ready(function () {
+    $('#check_all').on('click', function (e) {
+      if ($(this).is(':checked', true)) {
+        $('.checkbox').prop('checked', true);
+      } else {
+        $('.checkbox').prop('checked', false);
+      }
+    });
 
+    $('.checkbox').on('click', function () {
+      if ($('.checkbox:checked').length == $('.checkbox').length) {
+        $('#check_all').prop('checked', true);
+      } else {
+        $('#check_all').prop('checked', false);
+      }
+    });
+    $('.delete_all').on('click', function (e) {
+        var idsArr = [];
+        $('.checkbox:checked').each(function () {
+            idsArr.push($(this).attr('data-id'));
+        });
+
+        if (idsArr.length <= 0) {
+            alert('Please select atleast one record to delete.');
+        } 
+        //delete all products 
+        else if(  $('button').hasClass('delete_all-products') && idsArr.length > 0  )
+        {
+            if (confirm('Are you sure, you want to delete the selected products?')) {
+            var strIds = idsArr.join(',');
+            $.ajax({
+                url: "{{ route('products.dl_multiple') }}",
+                method: 'DELETE',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                data: 'ids=' + strIds,
+                success: function (data) {
+                if (data['status'] == true) {
+                    $('.checkbox:checked').each(function () {
+                    $(this).parents('tr').remove();
+                    });
+
+                    alert(data['message']);
+                } else {
+                    alert('Whoops Something went wrong!!');
+                }
+                },
+
+                error: function (data) {
+                alert(data.responseText);
+                },
+            });
+            }
+        }
+        //end delete all products
+        //delete all blogs 
+        else if( $('button').hasClass('delete_all-blogs') && idsArr.length > 0)
+        {
+            if (confirm('Are you sure, you want to delete the selected blogs?')) {
+            var strIds = idsArr.join(',');
+            $.ajax({
+                url: "{{ route('blogs.dl_multiple') }}",
+                method: 'DELETE',
+                type: 'DELETE',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                data: 'ids=' + strIds,
+                success: function (data) {
+                if (data['status'] == true) {
+                    $('.checkbox:checked').each(function () {
+                    $(this).parents('tr').remove();
+                    });
+
+                    alert(data['message']);
+                } else {
+                    alert('Whoops Something went wrong!!');
+                }
+                },
+
+                error: function (data) {
+                alert(data.responseText);
+                },
+            });
+            }
+        }
+        //end delete all blogs 
+        //delete all reviews 
+        else if( $('button').hasClass('delete_all-reviews') && idsArr.length > 0)
+        {
+            if ( confirm('Are you sure, you want to delete the selected Reviews?')) {
+            var strIds = idsArr.join(',');
+            $.ajax({
+                url: "{{ route('reviews.dl_multiple') }}",
+                method: 'DELETE',
+                type: 'DELETE',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                data: 'ids=' + strIds,
+                success: function (data) {
+                if (data['status'] == true) {
+                    $('.checkbox:checked').each(function () {
+                    $(this).parents('tr').remove();
+                    });
+
+                    alert(data['message']);
+                } else {
+                    alert('Whoops Something went wrong!!');
+                }
+                },
+
+                error: function (data) {
+                alert(data.responseText);
+                },
+            });
+            }
+        }
+        //end delete all reviews 
+    });
+        
+    $('[data-toggle=confirmation]').confirmation({
+      rootSelector: '[data-toggle=confirmation]',
+      onConfirm: function (event, element) {
+        element.closest('form').submit();
+      },
+    });
+    });
+    </script>
+</body>
+    
 </html>

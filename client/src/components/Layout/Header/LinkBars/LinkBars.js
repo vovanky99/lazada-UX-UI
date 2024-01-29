@@ -4,14 +4,24 @@ import { Row, Col, Stack } from 'react-bootstrap';
 
 import styles from './LinkBars.module.scss';
 import GetTheApp from './GetTheApp';
+import { Link } from 'react-router-dom';
+import useAuthContext from '~/contexts/Auth/AuthContent';
+
+import routes from '~/config/routes';
+import { useEffect } from 'react';
 const cx = classNames.bind(styles);
 
 function LinkBars() {
-  // const [name, setName] = useState(['']);
-  // console.log(GetTheApp);
+  const { user, getUser } = useAuthContext();
+
+  useEffect(() => {
+    if (!user) {
+      getUser();
+    }
+  }, []);
   return (
     <div className={cx('wrapper')}>
-      <div className={cx('link-list')} xs={'auto'}>
+      <div className={cx('link-list', 'd-flex gap-5')} xs={'auto'}>
         <div>
           <span className={cx('cursor')}></span>
         </div>
@@ -38,12 +48,26 @@ function LinkBars() {
         <div>
           <span className={cx('cursor', 'grey')}>Track My Order</span>
         </div>
-        <div>
-          <a className={cx('cursor', 'grey')}>Login</a>
-        </div>
-        <div>
-          <a className={cx('cursor', 'grey')}>Sigup</a>
-        </div>
+        {user?.name ? (
+          <div>
+            <Link to={routes.signIn} className={cx('cursor', 'grey')}>
+              {user?.name}
+            </Link>
+          </div>
+        ) : (
+          <div className={cx('d-flex gap-5')}>
+            <div>
+              <Link to={routes.signIn} className={cx('cursor', 'grey')}>
+                Login
+              </Link>
+            </div>
+            <div>
+              <Link to={routes.register} className={cx('cursor', 'grey')}>
+                Sigup
+              </Link>
+            </div>
+          </div>
+        )}
         <div>
           <span className={cx('cursor', 'grey')}>Change Language</span>
         </div>

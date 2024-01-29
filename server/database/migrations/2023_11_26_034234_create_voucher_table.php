@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title',50);
             $table->string('descriptions',200);
             $table->string('code',20);
+            $table->boolean('status');
             $table->double('percents',2);
             $table->integer('quantity');
             $table->foreignId('categories_id')->references('id')->on('categories')->onDelete('cascade')->nullable();

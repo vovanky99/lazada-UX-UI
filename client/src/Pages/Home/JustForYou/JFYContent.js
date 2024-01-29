@@ -4,297 +4,45 @@ import { Button, Col, Image, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from '~/api/axios';
 
 const cx = classNames.bind(styles);
-
-const products = [
-  {
-    id: 1,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 2,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 3,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 4,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 5,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 6,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 7,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 8,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 9,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 10,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 11,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 12,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 13,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 14,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 15,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 16,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 17,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 18,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 19,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 20,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 21,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 22,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 23,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-  {
-    id: 24,
-    title: 'Tai nghe chụp tai F10+ màu Trắng (gấp gọn được)',
-    img: 'https://lzd-img-global.slatic.net/g/p/10fb9d5dc553a9869e4ada56413054df.jpg_200x200q80.jpg_.webp',
-    price: 100000,
-    discount: 50,
-    reviews_star: 5,
-    total_reviews: 1000,
-    event: true,
-    overseas: true,
-  },
-];
 
 //jfy allow products show
 const totalLoadMore = 12;
 
 function JFYContent() {
   const [loadMore, setLoadMore] = useState(1);
+  const [products, setProducts] = useState([]);
   const handleLoadMore = () => {
-    if (products.length > loadMore * totalLoadMore) {
+    if (products.length >= loadMore * totalLoadMore) {
       setLoadMore(loadMore + 1);
     }
   };
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        await axios
+          .get('http://127.0.0.1:8000/api/posts/products')
+          .then((res) => setProducts(res.data))
+          .catch((error) => console.log(error));
+      } catch (error) {
+        console.log('network error: ', error.message);
+      }
+    };
+    fetch();
+  }, []);
   return (
     <div>
       <Row className={cx('jfy-content')}>
         {products
-          .filter((product) => product.id <= loadMore * totalLoadMore)
+          .filter((product, index) => index <= loadMore * totalLoadMore - 1)
           .map((product) => (
             <Col className={cx('jfy-content-container')} key={product.id}>
               <Link>
                 <div className={cx('jfy-content-img')}>
-                  <Image src={product.img} />
+                  <Image src={product.images} />
                 </div>
                 <div style={{ padding: '4px 8px 12px' }}>
                   <div className={cx('jfy-product-title')}>
@@ -308,9 +56,11 @@ function JFYContent() {
                     )}
                     {product.title}
                   </div>
-                  <span className={cx('jfy-price-discounted')}>{(product.price * product.discount) / 100}</span>
+                  <span className={cx('jfy-price-discounted')}>
+                    {product.discount > 0 ? (product.price * product.discount) / 100 : product.price}
+                  </span>
                   <div className={cx('jfy-price-discount')}>
-                    <span className={cx('jfy-price')}>{product.price}</span>
+                    <span className={cx('jfy-price')}>{product.discount > 0 ? product.price : ''}</span>
                     <span className={cx('jfy-discount')}>{product.discount}</span>
                   </div>
                   <div className={cx('jfy-reviews-star')}>

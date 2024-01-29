@@ -26,7 +26,7 @@
             @csrf
             <select name="search_role" class="px-2 py-2 lz-border-secondary outline-none ">
                 <option value="0" selected>null</option>
-                @foreach ($decentralization as $role)
+                @foreach ($role as $role)
                 <option value="<?php echo $role->id ?>" @if (!empty($selected_role) && $selected_role == $role->id)
                     selected
                 @endif><?php echo $role->name ?></option>
@@ -59,7 +59,7 @@
                     </td>
                     <td><?php echo $user->username ?></td>
                     <td><?php echo $user->email ?></td>
-                    <td><?php echo $user->decentralization->name ?></td>
+                    <td><?php echo $user->role->name ?></td>
                     <td><?php echo $user->status ?></td>
                     <td >
                         <div class="d-flex flex-row gap-2 justify-content-center">

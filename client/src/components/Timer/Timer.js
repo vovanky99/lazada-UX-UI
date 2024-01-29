@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-function Timer({ deadline, day = false, text = false }) {
+function Timer({ deadline, day = false, text = false, className }) {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -26,31 +26,31 @@ function Timer({ deadline, day = false, text = false }) {
     return () => clearInterval(interval);
   }, []);
   return (
-    <Row>
+    <Row className={className}>
       {days >= -365 || day == false ? (
         ''
       ) : (
         <Col>
-          <div className="box">
+          <div className="box d-flex">
             <p id="day">{days + 365}</p>
             {text ? <span className="text">D</span> : <span className="text">:</span>}
           </div>
         </Col>
       )}
       <Col>
-        <div className="box">
+        <div className="box d-flex">
           <p id="hour">{hours}</p>
           {text ? <span className="text">H</span> : <span className="text">:</span>}
         </div>
       </Col>
       <Col>
-        <div className="box">
+        <div className="box d-flex">
           <p id="minute">{minutes == 0 ? 0 : minutes + 60}</p>
           {text ? <span className="text">M</span> : <span className="text">:</span>}
         </div>
       </Col>
       <Col>
-        <div className="box">
+        <div className="box d-flex ">
           <p id="second">{seconds + 60}</p>
           {text && <span className="text">S</span>}
         </div>

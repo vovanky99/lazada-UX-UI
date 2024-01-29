@@ -1,16 +1,22 @@
 import React from 'react';
+import { BrowserRouter as Routers } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'tippy.js/dist/tippy.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SSRProvider from 'react-bootstrap/SSRProvider';
+import { AuthProvider } from './contexts/Auth/AuthContent';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <SSRProvider>
-      <App />
+      <Routers>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </Routers>
     </SSRProvider>
   </React.StrictMode>,
 );

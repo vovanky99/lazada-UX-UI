@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'level'=>mt_rand(1,10),
             'address'=>fake()->address(),
             'register_date'=>fake()->date(),
-            'decentralization_id'=>mt_rand(1,10),
+            'role_id'=>mt_rand(1,10),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

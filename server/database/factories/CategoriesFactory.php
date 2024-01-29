@@ -21,6 +21,7 @@ class CategoriesFactory extends Factory
         return [
             'title'=>fake()->name(),
             'parent_id'=>mt_rand(1,10),
+            'status'=>fake()->boolean()
             //
         ];
     }

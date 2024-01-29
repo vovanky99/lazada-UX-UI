@@ -1,5 +1,6 @@
 <?php
 
+// use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -163,14 +164,16 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         // ...
         /*
-         * Application Service Providers...
-         */
+        * Application Service Providers...
+        */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-    ])->toArray(),
+        App\Providers\HelperServiceProvider::class,
+        \Laravel\Sanctum\SanctumServiceProvider::class,
+        ])->toArray(),
 
     /*
     |--------------------------------------------------------------------------
@@ -186,7 +189,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         // ...
-        
+        // 'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        // 'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         // ...

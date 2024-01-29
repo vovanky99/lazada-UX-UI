@@ -15,18 +15,19 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id')->Unique();
             $table->string('name');
-            $table->string('username')->Unique();
+            $table->string('username')->nullable();
             $table->string('email')->Unique();
+            $table->string('phone_number')->nullable();
             $table->text('password');
-            $table->bigInteger('phone_number');
-            $table->string('avatar');
-            $table->double('level',10);
-            $table->double('status');
+            $table->string('avatar')->nullable();
+            $table->double('level',10)->nullable();
+            $table->double('status')->nullable();
             $table->boolean('gender');
-            $table->date('birthday');
-            $table->string('address');
-            $table->datetime('register_date');
-            $table->foreignId('decentralization_id')->references('id')->on('decentralization')->onDelete('cascade');
+            $table->date('birthday')->nullable();
+            $table->string('address')->nullable();
+            $table->datetime('register_date')->nullable();
+            $table->text('auth_token')->nullable();
+            $table->foreignId('role_id')->default('2')->references('id')->on('role')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

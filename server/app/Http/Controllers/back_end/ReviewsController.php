@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\back_end;
 
 use App\Http\Controllers\Controller;
+use App\Models\Products;
+use App\Models\Reviews;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ReviewsController extends Controller
@@ -12,13 +15,21 @@ class ReviewsController extends Controller
      */
     public function __construct()
     {
-       return $this->middleware('auth');
+        $users = User::all();
+        $this->middleware('auth');
+        view()->share(compact('users'));
     }
     public function index()
     {
         //
+        $reviews = Reviews::paginate(30);
+        $count_reviews = Reviews::count();
+        return view('reviews/index',compact('reviews','count_reviews'));
     }
 
+    public function search(){
+        
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -65,5 +76,12 @@ class ReviewsController extends Controller
     public function destroy(string $id)
     {
         //
+        Reviews::find($id)->delete();
+        return redirect()->route('reviews.index');
+    }
+    public function delete_multiple(Request $request){
+        $ids = request('ids');
+        Reviews::whereIn('id',explode(',',$ids))->delete();
+        return response()->json(['status'=>true, 'message'=>'succes deleted reviews']);
     }
 }

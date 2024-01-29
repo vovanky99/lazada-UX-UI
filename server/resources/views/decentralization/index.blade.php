@@ -34,7 +34,7 @@
         </thead>
 
         <?php $i=1;  ?>
-        @foreach($decentralization as $dt)
+        @foreach($role as $dt)
         <tbody>
             <tr>
                 <th><?php echo $i++ ?></th>
@@ -60,7 +60,7 @@
         
     </table>
     <div class="pagination" >
-        {{$decentralization->appends(Request::except('page'))->links()}}
+        {{$role->appends(Request::except('page'))->links()}}
     </div>
     </div>
 </section>

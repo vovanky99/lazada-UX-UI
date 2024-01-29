@@ -149,4 +149,9 @@ class BlogsController extends Controller
         Blogs::find($id)->delete();
         return redirect()->route('blogs.index');
     }
+    public function delete_multiple(Request $request){
+        $ids = $request->ids;
+        Blogs::whereIn('id',explode(",",$ids))->delete();
+        return response()->json(['status'=>true,'message'=>"blogs deleted successfully."]);
+    }
 }

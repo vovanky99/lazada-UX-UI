@@ -13,6 +13,7 @@ class Categories extends Model
     protected $fillable = [
         'title',
         'parent_id',
+        'status'
     ];
     public function children()
     {

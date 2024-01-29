@@ -1,53 +1,31 @@
 import classNames from 'classnames/bind';
 
 import style from './LazMall.module.scss';
-import { Button, Col, Image, Row } from 'react-bootstrap';
+import { Col, Image, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { faArrowRight, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from '~/api/axios';
+
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(style);
 
-const lzShop = [
-  {
-    id: 1,
-    name: 'Thảo Nguyên Shop',
-    logo: 'https://lzd-img-global.slatic.net/g/shop/85843141db5651c3e46c8c63072e9bb9.jpeg_2200x2200q80.jpg_.webp',
-    cover_image: 'https://lzd-img-global.slatic.net/g/p/cec3573ae164b42fc902773a7d69f3d5.png_400x400q80.png_.webp',
-  },
-  {
-    id: 2,
-    name: 'Thảo Nguyên Shop',
-    logo: 'https://lzd-img-global.slatic.net/g/shop/85843141db5651c3e46c8c63072e9bb9.jpeg_2200x2200q80.jpg_.webp',
-    cover_image: 'https://lzd-img-global.slatic.net/g/p/cec3573ae164b42fc902773a7d69f3d5.png_400x400q80.png_.webp',
-  },
-  {
-    id: 3,
-    name: 'Thảo Nguyên Shop',
-    logo: 'https://lzd-img-global.slatic.net/g/shop/85843141db5651c3e46c8c63072e9bb9.jpeg_2200x2200q80.jpg_.webp',
-    cover_image: 'https://lzd-img-global.slatic.net/g/p/cec3573ae164b42fc902773a7d69f3d5.png_400x400q80.png_.webp',
-  },
-  {
-    id: 4,
-    name: 'Thảo Nguyên Shop',
-    logo: 'https://lzd-img-global.slatic.net/g/shop/85843141db5651c3e46c8c63072e9bb9.jpeg_2200x2200q80.jpg_.webp',
-    cover_image: 'https://lzd-img-global.slatic.net/g/p/cec3573ae164b42fc902773a7d69f3d5.png_400x400q80.png_.webp',
-  },
-  {
-    id: 5,
-    name: 'Thảo Nguyên Shop',
-    logo: 'https://lzd-img-global.slatic.net/g/shop/85843141db5651c3e46c8c63072e9bb9.jpeg_2200x2200q80.jpg_.webp',
-    cover_image: 'https://lzd-img-global.slatic.net/g/p/cec3573ae164b42fc902773a7d69f3d5.png_400x400q80.png_.webp',
-  },
-  {
-    id: 6,
-    name: 'Thảo Nguyên Shop',
-    logo: 'https://lzd-img-global.slatic.net/g/shop/85843141db5651c3e46c8c63072e9bb9.jpeg_2200x2200q80.jpg_.webp',
-    cover_image: 'https://lzd-img-global.slatic.net/g/p/cec3573ae164b42fc902773a7d69f3d5.png_400x400q80.png_.webp',
-  },
-];
-
 function LazMall() {
+  const [data, setdata] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await axios
+          .get('http://127.0.0.1:8000/api/posts/shop')
+          .then((res) => setdata(res.data))
+          .catch((error) => console.log(error));
+      } catch (error) {
+        console.log('Network Error:', error.message);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('lz-container')}>
@@ -59,12 +37,12 @@ function LazMall() {
             </span>
           </Link>
         </div>
-        <Row className={cx('lz-content')}>
-          {lzShop.map((lzs) => (
-            <Col className={cx('lz-content-container')} key={lzs.id}>
+        <Row className={cx('lz-content', 'gap-3 flex-wrap')}>
+          {data.map((lzs) => (
+            <Col className={cx('lz-content-container', 'p-0')} key={lzs.id}>
               <Link>
                 <div className={cx('lz-img-cover')}>
-                  <Image src={lzs.cover_image} />
+                  <Image src={lzs.img_cover} />
                 </div>
                 <div className={cx('lz-logo')}>
                   <Image src={lzs.logo} />

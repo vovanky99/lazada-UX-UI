@@ -4,10 +4,10 @@ namespace App\Http\Controllers\back_end;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Decentralization;
+use App\Models\Role;
 use App\Http\Requests\RoleRequest;
 
-class DecentralizationController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,16 +19,16 @@ class DecentralizationController extends Controller
     public function index()
     {
         //
-        $decentralization = Decentralization::paginate(15);
-        $count_role = Decentralization::count();
-        return view('decentralization/index',compact('decentralization','count_role'));
+        $role = Role::paginate(15);
+        $count_role = Role::count();
+        return view('role/index',compact('role','count_role'));
     }
 
     public function search(Request $request){
-        $decentralization = Decentralization::where('name','like','%'.$request->search.'%');
-        $count_role = $decentralization->count();
-        $decentralization = $decentralization->paginate(15);
-        return view('decentralization/index',compact('decentralization','count_role'));
+        $role = Role::where('name','like','%'.$request->search.'%');
+        $count_role = $role->count();
+        $role = $role->paginate(15);
+        return view('role/index',compact('role','count_role'));
     }
 
     /**
@@ -37,7 +37,7 @@ class DecentralizationController extends Controller
     public function create()
     {
         //
-        return view('decentralization/create');
+        return view('role/create');
     }
 
     /**
@@ -46,7 +46,7 @@ class DecentralizationController extends Controller
     public function store(RoleRequest $request)
     {
         //
-        $dt = new Decentralization;
+        $dt = new Role;
         $dt->create($request->all());
         return redirect()->route('dt.index');
     }
@@ -57,8 +57,8 @@ class DecentralizationController extends Controller
     public function show(string $id)
     {
         //
-        $decentralization = Decentralization::find($id);
-        return view('decentralization/show',compact('decentralization'));
+        $role = Role::find($id);
+        return view('role/show',compact('role'));
     }
 
     /**
@@ -67,8 +67,8 @@ class DecentralizationController extends Controller
     public function edit(string $id)
     {
         //
-        $decentralization = Decentralization::find($id);
-        return view('decentralization/edit',compact('decentralization'));
+        $role = Role::find($id);
+        return view('role/edit',compact('role'));
     }
 
     /**
@@ -77,7 +77,7 @@ class DecentralizationController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $dt = Decentralization::find($id);
+        $dt = Role::find($id);
         //validator
         $dt->update($request->all());
         return redirect()->route('voucher.index');
@@ -89,7 +89,7 @@ class DecentralizationController extends Controller
     public function destroy(string $id)
     {
         //
-        Decentralization::find($id)->delete();
+        Role::find($id)->delete();
         return redirect()->route('dt.index');
     }
 }

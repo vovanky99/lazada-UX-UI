@@ -18,11 +18,15 @@
                 {!! Form::text('search',!empty($selected_search)?$selected_search.'':'',['class'=>'px-2 py-2 lz-border-secondary search-users']) !!}
                 {!! Form::submit('Search products',['class'=>' lz-btn-outline-primary px-5 py-2']) !!}
 
-                {{-- {!! Form::close() !!} --}}
+                {!! Form::close() !!}
             </div>
         </div>
         <div class="mb-3 align-items-center d-flex">
-            {{-- {!! Form::open(['method'=>'GET','route'=>['users.search']]) !!} --}}
+            {{-- {!! Form::open(['method'=>'DELETE','route'=>['products.dl_multiple']]) !!} --}}
+            {!! Form::button('delete',['type' => 'submit',
+            'class' => 'delete_all delete_all-products btn lz-btn-outline-danger text-capitalize fs-5  px-4 py-2 me-3']) !!}
+            {{-- {!! Form::close() !!} --}}
+            {!! Form::open(['method'=>'GET','route'=>['products.search']]) !!}
             @csrf
             <select name="search_cat" class=" fs-5  px-2 py-2 lz-border-secondary outline-none me-3">
                 <option value="#">Categories</option>
@@ -41,28 +45,29 @@
         <table class="table table-bordered lz-border-secondary">
             <thead class="bg-white">
                 <tr class="fs-4 text-capitalize">
+                    <th><input id="check_all" type="checkbox"></th>
                     <th scope="col">title</th>
                     <th scope="col">images</th>
                     <th scope="col">price</th>
                     <th scope="col">reviews stars</th>
-                    <th scope="col">products sold</th>
+                    {{-- <th scope="col">products sold</th> --}}
                     <th scope="col">quantities</th> 
                     <th scope="col">cat</th>
                     <th scope="col">shop</th>
                     <th scope="col">tools</th>
                 </tr>
             </thead>
-
             @foreach($products as $pd)
             <tbody class="bg-light">
                 <tr class="fs-5 h-50">
+                    <td class=" align-middle "><input class="checkbox"  data-id="{{$pd->id}}" id="cb-select-{{$pd->id}}" type="checkbox"></td>
                     <td><?php echo $pd->title ?></td>
-                    <td>
-                        <img class="img" src="{{asset('upload/images/products')}}/{{$pd->image}}" />
+                    <td class="col-2">
+                        <img class="img" src="{{asset('upload/images/products')}}/{{$pd->images}}" />
                     </td>
                     <td><?php echo $pd->price ?></td>
-                    <td><?php echo $pd->avg_stars ?></td>
-                    <td><?php echo $pd->products_sold ?></td>
+                    <td><?php echo number_format(get_AvgReviewsStars($pd->id),1) ?></td>
+                    {{-- <td><?php  ?></td> --}}
                     <td><?php echo $pd->quantities ?></td>
                     <td><?php echo !empty($pd->categories->title)?$pd->categories->title:$pd->cat_title ?></td>
                     <td><?php echo !empty($pd->shop->name)?$pd->shop->name:$pd->shop_name ?></td>
@@ -90,7 +95,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="pagination" >
-                    {{-- {{$products->appends(Request::except('page'))->links()}} --}}
+                    {{$products->appends(Request::except('page'))->links()}}
                 </div>
             </div>
         </div>

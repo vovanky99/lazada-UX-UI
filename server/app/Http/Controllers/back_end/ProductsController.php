@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Categories;
 use App\Models\Products;
 use App\Models\ProductsType;
-use App\Models\Reviews;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -22,85 +21,48 @@ class ProductsController extends Controller
      */
     public function __construct()
     {
-       return $this->middleware('auth');
+        $shop = Shop::all();
+        $cat =  Categories::all();
+        $productsType = ProductsType::all();
+        view()->share(compact('shop','cat','productsType'));
+        $this->middleware('auth');
     }
     public function index()
     {
-        $sl = 'SELECT round(AVG(reviews.reviews_stars),1) FROM reviews where products.id=reviews.products_id group by products.id';
-        $products = Products::join('categories','categories.id','=','products.categories_id')
-        ->join('shop','shop.id','=','products.shop_id')
-        ->select($sl,'products.*','categories.title as cat_title','shop.name as shop_name')->orderBy('products.id','asc');
-       
-        //paginate
-        // $totalGroup = count($products);
-        // $perPage = 15;
-        // $page = Paginator::resolveCurrentPage('page'); 
-        // $products = new LengthAwarePaginator($products->forPage($page,$perPage),$totalGroup,$perPage,$page,[
-        //     'path' => Paginator::resolveCurrentPath(),
-        //     'pageName' => 'page',
-        // ]);
-        //end paginate
-        // $products = $products->paginate();
+        $products = Products::paginate(30);
         $count_products = Products::count();
-        $cat =  Categories::all();
-        return view('products/index',compact('count_products','products','cat'));
+        return view('products/index',compact('count_products','products'));
     }
 
     public function search(Request $request){
-        if(!empty($request->search_cat) && !empty($request->search_shop)){
-            // $products = DB::select('call search_name_shop_in_products(?,?,?)',array($request->search_cat,$request->search_shop,$request->search));
-            $products = Products::join('categories','categories.id','=','products.categories_id')
-            ->join('shop','shop.id','=','products.shop_id')
-            ->select('products.*','categories.title as cat_title','shop.name as shop_name')
-            ->where('products.categories_id','=',$request->search_cat)
+        if($request->search_cat>0 && !empty($request->search_shop)){
+            $products = Products::join('shop','shop.id','=','products.shop_id')->where('products.categories_id','=',$request->search_cat)
             ->where('products.title','like','%'.$request->search.'%')
-            ->where('shop.name','like','%'.$request->search_shop.'%')->get();
-            $count_products = $products->count();
+            ->where('shop.name','like','%'.$request->search_shop.'%');
             
         }
-        elseif(!empty($request->search_cat)){
-            $products = Products::join('categories','categories.id','=','products.categories_id')
-            ->join('reviews','reviews.products_id','=','products.id')
-            ->join('shop','shop.id','=','products.shop_id')
-            ->select(DB::raw( 'ROUND(AVG( reviews.reviews_stars ),1) as reviews_stars' ),'products.*','categories.title as cat_title','shop.name as shop_name')->groupBy('products.id')->where('products.title','like','%'.$request->search.'%')->where('products.categories_id','=',$request->search_cat);
-            $count_products = $products->count();
+        elseif($request->search_cat>0){
+            $products = Products::where('products.title','like','%'.$request->search.'%')->where('products.categories_id','=',$request->search_cat);
             
         }
         elseif(!empty($request->search_shop)){
             $products = Products::join('shop','shop.id','=','products.shop_id')
-            ->join('categories','categories.id','=','products.categories_id')
-            ->select('products.*','categories.title as cat_title','shop.name as shop_name')
             ->where('products.title','like','%'.$request->search.'%')
-            ->where('shop.name','like','%'.$request->search_shop.'%')->get();
-            $count_products = $products->count();
+            ->where('shop.name','like','%'.$request->search_shop.'%');
+
         }
         elseif(!empty($request->search)){
             $products = Products::where('title','like','%'.$request->search.'%');
-            $count_products = $products->count();
-            $products = $products->paginate(15);
         }
         else{
-            $products = Products::join('categories','categories.id','=','products.categories_id')
-            ->join('reviews','reviews.products_id','=','products.id')
-            ->join('shop','shop.id','=','products.shop_id')
-            ->select(DB::raw( 'ROUND(AVG( reviews.reviews_stars ),1) as reviews_stars' ),'products.*','categories.title as cat_title','shop.name as shop_name')->groupBy('products.id')->get();
-            $count_products = Products::count();
+            return redirect()->route('products.index');
         }
-        //paginate
-        $totalGroup = count($products);
-        $perPage = 15;
-        $page = Paginator::resolveCurrentPage('page'); 
-        $products = new LengthAwarePaginator($products->forPage($page,$perPage),$totalGroup,$perPage,$page,[
-            'path' => Paginator::resolveCurrentPath(),
-            'pageName' => 'page',
-        ]);
-        //end paginate
-        
+        $count_products = $products->count();
+        $products = $products->paginate(30);
         $selected_cat = $request->search_cat;
         $selected_shop = $request->search_shop;
         $selected_search = $request->search;
-        $cat =  Categories::all();
-        return view('products/index',compact('count_products','products','cat','selected_cat','selected_shop','selected_search'));
+        return view('products/index',compact('count_products','products','selected_cat','selected_shop','selected_search'));
     }
     /**
      * Show the form for creating a new resource.
@@ -108,10 +70,8 @@ class ProductsController extends Controller
     public function create()
     {
         //
-        $shop = Shop::all();
-        $cat =  Categories::all();
-        $productsType = ProductsType::all();
-        return view('products/create',compact('shop','cat','productsType'));
+        
+        return view('products/create');
     }
 
     /**
@@ -120,6 +80,35 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         //
+        $pd = new Products;
+        $getImages = '';
+        if($request->hasFile('new_images')){
+            $this->validate($request,[
+                'new_images' => 'mimes:jpg,jpeg,png,gif|max:10000',
+            ],[
+                'new_images.mimes' =>`avatar don't .jpg .jpeg .png .gif`,
+                'new_images.max'=>`avatar can't limit 9MB `,
+            ]);
+            $images = $request->new_images;
+            $getImages = $images->getClientOriginalName();
+            $despathImages = public_path('upload/images/products');
+            $images->move($despathImages,$getImages);
+        }
+        $pd->create([
+            'title'=>$request->title,
+            'images'=>$getImages,
+            'price'=>$request->price,
+            'discount'=>$request->discount,
+            'quantities'=>$request->quantities,
+            'status'=>$request->status,
+            'descriptions'=>$request->descriptions,
+            'categories_id'=>$request->categories_id,
+            'shop_id'=>$request->shop_id,
+            'products_type_id'=>$request->products_type,
+            'products_type_id1'=>$request->products_type1,
+            'products_type_id2'=>$request->products_type2,
+        ]);
+        return redirect()->route('products.index');
     }
 
     /**
@@ -128,6 +117,8 @@ class ProductsController extends Controller
     public function show(string $id)
     {
         //
+        $pd = Products::find($id);
+        return view('products/show',compact('pd'));
     }
 
     /**
@@ -136,6 +127,8 @@ class ProductsController extends Controller
     public function edit(string $id)
     {
         //
+        $products = Products::find($id);
+        return view('products/show',compact('products'));
     }
 
     /**
@@ -152,5 +145,12 @@ class ProductsController extends Controller
     public function destroy(string $id)
     {
         //
+        Products::find($id)->delete();
+        return redirect()->route('products.index');
+    }
+    public function delete_multiple(Request $request){
+        $ids = $request->ids;
+        Products::whereIn('id',explode(",",$ids))->delete();
+        return response()->json(['status'=>true,'message'=>"products deleted successfully."]);
     }
 }

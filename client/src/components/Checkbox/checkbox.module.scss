@@ -1,0 +1,41 @@
+.container {
+  position: relative;
+  padding-left: 20px;
+}
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  z-index: 9999;
+  left: 0;
+}
+.container input:checked ~ .input-helper {
+  // background-image: #da6520;
+}
+input:checked ~ .input-helper:after {
+  display: block !important;
+}
+.input-helper {
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 15px;
+  width: 15px;
+  border: 1px solid;
+  background-color: transparent;
+}
+.input-helper::after {
+  position: absolute;
+  display: none;
+  content: '';
+  border: solid #da6520;
+  border-width: 0px 2px 2px 0px;
+  width: 6px;
+  height: 10px;
+  -webkit-transform: rotate(45deg);
+  left: 4px;
+  top: 1px;
+}
