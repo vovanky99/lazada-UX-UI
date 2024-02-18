@@ -12,6 +12,7 @@ class Categories extends Model
     public $table = 'categories';
     protected $fillable = [
         'title',
+        'slug',
         'parent_id',
         'status'
     ];
@@ -21,6 +22,9 @@ class Categories extends Model
     }
     public function parent(){
         return $this->belongsTo(Categories::class,'parent_id','id');
+    }
+    public function childrenRecursive(){
+        return $this->children()->with('childrenRecursive');
     }
     public function blogs(){
         return $this->hasMany(Blogs::class,'categories_id','id');

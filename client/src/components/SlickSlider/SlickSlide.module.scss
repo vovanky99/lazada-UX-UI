@@ -11,7 +11,15 @@
   margin: 0 -5px;
 }
 .container-img {
+  width: 100%;
+  height: 100%;
   padding: 5px;
+  picture {
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 .next,
 .left {
@@ -32,6 +40,136 @@
 .next {
   right: 5px;
 }
-.active {
-  border: 2px solid var(--brand-primary-color, #ee4d2d);
+
+//show highlight
+
+.show-highlight-wrapper {
+  position: fixed;
+  overflow: hidden;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background-color: #00000044;
+  .show-hl-content {
+    z-index: 9999;
+    width: 840px;
+    height: 540px;
+    background-color: white;
+    transform: translate(25%, 10%);
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    gap: 15px;
+    .images-highlight {
+      width: 60%;
+      height: 100%;
+      position: relative;
+      button {
+        position: absolute;
+        border: none;
+        padding: 20px 10px;
+        background-color: #00000044;
+        color: white;
+        font-size: 2.6rem;
+      }
+      .img-hl-prev,
+      .img-hl-next {
+        top: 45%;
+      }
+      .img-hl-next {
+        right: 0px;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .img-hl-total {
+      width: calc(100% - (60% + 15px));
+      display: flex;
+
+      h4 {
+        font-size: 1.6rem;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        margin-bottom: 25px;
+      }
+      > div {
+        gap: 15px;
+      }
+      .img-wrapper {
+        width: calc((100% - (15px * 2)) / 3);
+        img {
+          width: 100%;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+//slideReviews
+.wrapper-slideshow {
+  .reviews-img-all {
+    margin-bottom: 20px;
+    div {
+      width: 80px;
+      height: 80px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  .value-zoom-in {
+    display: none;
+    position: relative;
+    margin-bottom: 8px;
+    .value-zoom-in-content {
+      overflow: hidden;
+      width: 400px;
+    }
+    button {
+      position: absolute;
+      z-index: 9;
+      border: none;
+      height: 30px;
+      width: 30px;
+      top: 45%;
+      border-radius: 50%;
+      box-shadow: 0 1px 12px 0 #0000001f;
+      background-color: #fff;
+      transition: all 1000 ease 1s;
+    }
+    .btn-right {
+      left: 390px;
+    }
+    .btn-left {
+      left: -10px;
+    }
+    ul {
+      margin-top: 0;
+      transition: all 1000ms ease 0s;
+      li {
+        padding: 0 0.8rem;
+        flex: 0 1 auto;
+        list-style: none;
+        img {
+          height: 400px;
+          width: 400px;
+        }
+      }
+    }
+    .rating-media-list {
+      display: flex;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+  }
 }

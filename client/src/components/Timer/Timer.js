@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 
-function Timer({ deadline, day = false, text = false, className }) {
+function Timer({ deadline, day = false, text = false, className, textFs, dateClass }) {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -32,37 +31,39 @@ function Timer({ deadline, day = false, text = false, className }) {
       ) : (
         <Col>
           <div className="box d-flex">
-            <p id="day">{days + 365}</p>
-            {text ? <span className="text">D</span> : <span className="text">:</span>}
+            <span id="day" className={dateClass}>
+              {days + 365}
+            </span>
+            {text ? <span className={textFs}>D</span> : <span className={textFs}>:</span>}
           </div>
         </Col>
       )}
       <Col>
         <div className="box d-flex">
-          <p id="hour">{hours}</p>
-          {text ? <span className="text">H</span> : <span className="text">:</span>}
+          <span id="hour" className={dateClass}>
+            {hours}
+          </span>
+          {text ? <span className={textFs}>H</span> : <span className={textFs}>:</span>}
         </div>
       </Col>
       <Col>
         <div className="box d-flex">
-          <p id="minute">{minutes == 0 ? 0 : minutes + 60}</p>
-          {text ? <span className="text">M</span> : <span className="text">:</span>}
+          <span id="minute" className={dateClass}>
+            {minutes == 0 ? 0 : minutes + 60}
+          </span>
+          {text ? <span className={textFs}>M</span> : <span className={textFs}>:</span>}
         </div>
       </Col>
       <Col>
         <div className="box d-flex ">
-          <p id="second">{seconds + 60}</p>
-          {text && <span className="text">S</span>}
+          <span id="second" className={dateClass}>
+            {seconds + 60}
+          </span>
+          {text && <span className={textFs}>S</span>}
         </div>
       </Col>
     </Row>
   );
 }
-
-Timer.propTypes = {
-  deadline: PropTypes.string.isRequired,
-  day: PropTypes.bool,
-  text: PropTypes.bool,
-};
 
 export default Timer;

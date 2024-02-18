@@ -2,6 +2,34 @@
   margin: 0 auto !important;
   width: var(--media_width);
   padding: 10px 0 20px;
+  .search-container {
+    .search-result {
+      outline: none;
+      width: 660px;
+      background-color: white;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.21);
+      .search-result-main {
+        list-style: none;
+        width: 100%;
+        padding: 0;
+        li {
+          cursor: pointer;
+          padding: 5px 15px;
+          &:hover {
+            color: #f57226 !important;
+          }
+          span {
+            font-size: 1.4rem;
+          }
+          svg {
+            color: #d3d7dd;
+            font-size: 2.6rem;
+            padding: 5px;
+          }
+        }
+      }
+    }
+  }
   .search-content {
     input {
       border-top-left-radius: 3px;
@@ -42,9 +70,11 @@
     padding: 0 !important;
     flex: none !important;
     a {
+      display: block;
+      height: 35px;
       width: 100%;
       img {
-        width: 65%;
+        width: 80%;
       }
     }
   }

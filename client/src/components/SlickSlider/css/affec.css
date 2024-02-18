@@ -1,0 +1,14 @@
+img.zoom_in {
+  cursor: zoom-in;
+}
+img.zoom_out {
+  cursor: zoom-out;
+  border: 2px solid #ee4d2d;
+  padding: 2px;
+}
+.images_active {
+  border: 2px solid var(--brand-primary-color, #ee4d2d);
+}
+.img-hl-active {
+  border: 2px solid var(--brand-primary-color, #ee4d2d);
+}

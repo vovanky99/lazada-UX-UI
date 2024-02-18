@@ -11,7 +11,7 @@ import routes from '~/config/routes';
 import { useEffect } from 'react';
 const cx = classNames.bind(styles);
 
-function LinkBars() {
+function LinkBars({ IDLinkBars }) {
   const { user, getUser } = useAuthContext();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function LinkBars() {
     }
   }, []);
   return (
-    <div className={cx('wrapper')}>
+    <div id={IDLinkBars} className={cx('wrapper')}>
       <div className={cx('link-list', 'd-flex gap-5')} xs={'auto'}>
         <div>
           <span className={cx('cursor')}></span>
@@ -39,7 +39,7 @@ function LinkBars() {
           </Tippy>
         </div>
         <div>
-          <a className={cx('cursor')}>Sell On lazada </a>
+          <a className={cx('cursor')}>Sell On Life Circle </a>
         </div>
 
         <div>

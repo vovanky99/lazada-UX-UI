@@ -37,22 +37,21 @@ class DatabaseSeeder extends Seeder
         /*cat seeder data*/
     
         $data =  array(
-            array('id' => 1, 'title' => 'store','status'=>1, '_lft' => 1, '_rgt' => 20, 'parent_id' => null),
-                array('id' => 2, 'title' => 'notebooks','status'=>1, '_lft' => 2, '_rgt' => 7, 'parent_id' => 1),
-                    array('id' => 3, 'title' => 'apple','status'=>1, '_lft' => 3, '_rgt' => 4, 'parent_id' => 2),
-                    array('id' => 4, 'title' => 'lenovo','status'=>1, '_lft' => 5, '_rgt' => 6, 'parent_id' => 2),
-                array('id' => 5, 'title' => 'mobile','status'=>1, '_lft' => 8, '_rgt' => 19, 'parent_id' => 1),
-                    array('id' => 6, 'title' => 'nokia','status'=>1, '_lft' => 9, '_rgt' => 10, 'parent_id' => 5),
-                    array('id' => 7, 'title' => 'samsung','status'=>1, '_lft' => 11, '_rgt' => 14, 'parent_id' => 5),
-                        array('id' => 8, 'title' => 'galaxy','status'=>1, '_lft' => 12, '_rgt' => 13, 'parent_id' => 7),
-                    array('id' => 9, 'title' => 'sony','status'=>1, '_lft' => 15, '_rgt' => 16, 'parent_id' => 5),
-                    array('id' => 10, 'title' => 'lenovo','status'=>1, '_lft' => 17, '_rgt' => 18, 'parent_id' => 5),
-            array('id' => 11, 'title' => 'store_3','status'=>1, '_lft' => 21, '_rgt' => 22, 'parent_id' => null),
-            array('id' => 12, 'title' => 'store_4','status'=>1, '_lft' => 23, '_rgt' => 24, 'parent_id' => null),
-             array('id' => 13, 'title' => 'store_5','status'=>1, '_lft' => 25, '_rgt' => 26, 'parent_id' => null), 
-             array('id' => 14, 'title' => 'store_6','status'=>1, '_lft' => 27, '_rgt' => 28, 'parent_id' => null),
-              array('id' => 15, 'title' => 'store_7','status'=>1, '_lft' => 29, '_rgt' => 30, 'parent_id' => null),
-              array('id' => 16, 'title' => 'store_8','status'=>1, '_lft' => 31, '_rgt' => 32, 'parent_id' => null),
+            array('id' => 1, 'title' => 'store','slug'=>'store','status'=>1, '_lft' => 1, '_rgt' => 20, 'parent_id' => null),
+                array('id' => 2, 'title' => 'notebooks','slug'=>'notebooks','status'=>1, '_lft' => 2, '_rgt' => 7, 'parent_id' => 1),
+                    array('id' => 3, 'title' => 'lenovo','slug'=>'lenovo','status'=>1, '_lft' => 5, '_rgt' => 6, 'parent_id' => 2),
+                array('id' => 4, 'title' => 'mobile','slug'=>'mobile','status'=>1, '_lft' => 8, '_rgt' => 19, 'parent_id' => 1),
+                    array('id' => 5, 'title' => 'nokia','slug'=>'nokia','status'=>1, '_lft' => 9, '_rgt' => 10, 'parent_id' => 2),
+                    array('id' => 6, 'title' => 'samsung','slug'=>'samsung','status'=>1, '_lft' => 11, '_rgt' => 14, 'parent_id' => 2),
+                        array('id' => 7, 'title' => 'galaxy','slug'=>'galaxy','status'=>1, '_lft' => 12, '_rgt' => 13, 'parent_id' => 2),
+                    array('id' => 8, 'title' => 'sony','slug'=>'sony','status'=>1, '_lft' => 15, '_rgt' => 16, 'parent_id' => 2),
+                    array('id' => 9, 'title' => 'lenovo1','slug'=>'lenovo1','status'=>1, '_lft' => 17, '_rgt' => 18, 'parent_id' => 2),
+            array('id' => 10, 'title' => 'store_3','slug'=>'store_3','status'=>1, '_lft' => 21, '_rgt' => 22, 'parent_id' => null),
+            array('id' => 11, 'title' => 'store_4','slug'=>'store_4','status'=>1, '_lft' => 23, '_rgt' => 24, 'parent_id' => null),
+             array('id' => 12, 'title' => 'store_5','slug'=>'store_5','status'=>1, '_lft' => 25, '_rgt' => 26, 'parent_id' => null), 
+             array('id' => 13, 'title' => 'store_6','slug'=>'store_6','status'=>1, '_lft' => 27, '_rgt' => 28, 'parent_id' => null),
+              array('id' => 14, 'title' => 'store_7','slug'=>'store_7','status'=>1, '_lft' => 29, '_rgt' => 30, 'parent_id' => null),
+              array('id' => 15, 'title' => 'store_8','slug'=>'store_8','status'=>1, '_lft' => 31, '_rgt' => 32, 'parent_id' => null),
         );
         DB::table('categories')->insert($data);
         Role::factory()->count(100)->create();
