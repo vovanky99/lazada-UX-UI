@@ -3,9 +3,9 @@ const routes = {
   signIn: '/login',
   register: '/register',
   logout: '/logout',
-  search: '/search',
   productdetails: '/products',
-  Cat: '/Cat',
+  search: '/search',
+  cat: '/cat',
 };
 
 export default routes;

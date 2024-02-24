@@ -4,12 +4,11 @@ import { Button, Form } from 'react-bootstrap';
 
 const cx = classNames.bind(style);
 
-export default function CheckBox({ ClassName, ClassNameCheck, Label = '', styleCheckMark = {} }) {
+export default function CheckBox({ requir = true, ClassName, ClassNameCheck, Label = '', styleCheckMark = {} }) {
   const FormGroup = {};
   return (
     <Form.Group className={cx('container', ClassName)} style={FormGroup}>
-      {/* <Form.Check className={cx('custom_check', ClassNameCheck)} type="checkbox" label={Label} /> */}
-      <input required type="checkbox" />
+      {requir ? <input required type="checkbox" /> : <input type="checkbox" />}
       <label>{Label}</label>
       <span className={cx('input-helper')} style={styleCheckMark}></span>
     </Form.Group>

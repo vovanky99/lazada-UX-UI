@@ -9,11 +9,11 @@
       background-color: white;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.21);
       .search-result-main {
-        list-style: none;
         width: 100%;
         padding: 0;
-        li {
+        a {
           cursor: pointer;
+          color: black;
           padding: 5px 15px;
           &:hover {
             color: #f57226 !important;

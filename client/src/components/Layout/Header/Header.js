@@ -7,7 +7,6 @@ import LinkBars from './LinkBars';
 import LogoBars from './LogoBars';
 import MenuCategory from './MenuCategory';
 import { publicRoutes } from '~/Routes';
-import './header.css';
 
 const cx = classNames.bind(styles);
 
@@ -26,7 +25,7 @@ function Header() {
         header.classList.add('sticky_header');
       } else {
         header.classList.remove('sticky_header');
-        id_linkbars.style['display'] = 'block';
+        id_linkbars.style['display'] = 'flex';
       }
 
       if (window.pageYOffset > 700) {

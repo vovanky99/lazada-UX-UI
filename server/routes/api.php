@@ -3,6 +3,7 @@
 use App\Http\Controllers\front_end\auth\AuthController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::middleware('auth:sanctum')->group(function(){
-    Route::get('/user', [AuthController::class,'user']);
+    Route::get('/user', function(Request $request){
+        $request->user();
+    });
     Route::post('/logout', [AuthController::class,'logout']);
 
 });
@@ -26,6 +29,7 @@ Route::post('/login', [AuthController::class,'login']);
 Route::post('/register', [AuthController::class,'register']); 
 
 Route::prefix('/search')->name('search.')->group(function(){
+    Route::get('',[SearchController::class,'getSearchAll'])->name('result');
     Route::get('/header',[SearchController::class,'getSearchSuggest'])->name('header');
 });
 

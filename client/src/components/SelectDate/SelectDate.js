@@ -13,7 +13,6 @@ export default function SelectDate({ onChangeValue, startingYear, numberOfYears,
     numberOfYears: numberOfYears,
   });
   onChangeValue = selectDate;
-  console.log(onChangeValue);
   const handleDaySelect = (e) => {
     const { value } = e.target;
     const day = parseInt(value, 10);

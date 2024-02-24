@@ -25,8 +25,6 @@ import { useEffect, useRef, useState } from 'react';
 import Timer from '~/components/Timer';
 import LocationShipping from './LocationShipping';
 import { Image } from 'react-bootstrap';
-
-import './active.css';
 import routes from '~/config/routes';
 import ProductsDescriptions from './ProductsDescriptions';
 

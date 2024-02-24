@@ -1,0 +1,102 @@
+.wrapper {
+  .title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    svg {
+      padding-right: 5px;
+      font-size: 1.4rem;
+      color: gray;
+    }
+  }
+  .filter-group_cat {
+    border-bottom: 1px solid #dfdfdf;
+    padding-bottom: 25px;
+    margin-bottom: 20px;
+    .filter-group_header {
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+    .checkbox-filter {
+      .filter-checkbox {
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+      }
+    }
+    .show {
+      border: none;
+      background-color: transparent;
+      font-size: 1.4rem;
+      padding-left: 20px;
+      svg {
+        font-size: 1rem;
+        color: #818181;
+      }
+    }
+    .filter-price {
+      gap: 5px;
+      margin-bottom: 20px;
+
+      input {
+        width: calc((100% - (5px * 2 + 10px)) / 2);
+        border: 1px solid #bdbdbd;
+        height: 2.8rem;
+        outline: none;
+        border-radius: 2px;
+        padding-left: 5px;
+        font-size: 1.2rem;
+      }
+      /* Chrome, Safari, Edge, Opera input number none arrow */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+      /* Firefox */
+      input[type='number'] {
+        -moz-appearance: textfield;
+      }
+      .space {
+        width: 10px;
+        padding-top: 2px;
+        color: #bdbdbd;
+      }
+    }
+    span {
+      margin-bottom: 20px;
+    }
+    .apply {
+      background-color: #ee4d2d;
+      color: white;
+      width: 100%;
+      &:hover {
+        background-color: #ee4d2d;
+        color: white;
+      }
+    }
+    .check-star-filter {
+      cursor: pointer;
+      font-size: 1.3rem;
+      svg {
+        color: #ffba1d;
+      }
+    }
+  }
+  .delete-all {
+    width: 100%;
+    border: none;
+    background-color: #ee4d2d;
+    padding: 10px 0;
+    &:hover {
+      background-color: #ee4d2d;
+    }
+  }
+}
+
+.icon-check {
+  &::after {
+    left: 3px !important;
+    width: 5px !important;
+    height: 9px !important;
+    top: 0px !important;
+  }
+}

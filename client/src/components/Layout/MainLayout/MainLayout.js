@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Footer from '~/components/Layout/Footer';
 import Header from '~/components/Layout/Header';
 import styles from './mainLayout.module.scss';
+import Main from '../Main';
 
 const cx = classNames.bind(styles);
 
@@ -12,7 +13,7 @@ function MainLayout({ children }) {
   return (
     <Container fluid className={cx('wrapper')}>
       <Header />
-      <main>{children}</main>
+      <Main children={children} />
       <Footer />
     </Container>
   );

@@ -6,15 +6,15 @@ export default axios.create({
   //   'Access-Control-Allow-Origin': '*',
   //   'Content-Type': 'application/json',
   //   // 'Access-Control-Request-Headers': 'Content-Type, Authorization',
-  //   // 'X-Requested-With': 'XMLHttpRequest',
+  'X-Requested-With': 'XMLHttpRequest',
   // },
 });
 axios.defaults.withCredentials = true;
 
 // export default axios;
 
-// http.interceptors.response.use(
-//   (response) => response,
-//   (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong!'),
-// );
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong!'),
+);
 // export default http;

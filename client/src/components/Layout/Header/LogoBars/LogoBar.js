@@ -63,11 +63,18 @@ function LogoBars() {
             offset={[-16, 0]}
             render={(attrs) => (
               <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                <ul className={cx('search-result-main')}>
+                <div className={cx('search-result-main')}>
                   {searchResult.map((d, index) => (
-                    <SearchResult title={d.title} key={index} lengthBold={lengthBold} delay={delay} />
+                    <SearchResult
+                      searchValue={searchValue}
+                      title={d.title}
+                      key={index}
+                      lengthBold={lengthBold}
+                      delay={delay}
+                      id={d.id}
+                    />
                   ))}
-                </ul>
+                </div>
               </div>
             )}
             onClickOutside={handleHideResult}
@@ -88,7 +95,7 @@ function LogoBars() {
           </Tippy>
         </Col>
         <Col xl={1} className={cx('nav-cars')}>
-          <Link>
+          <Link className={cx('d-flex align-items-center')}>
             <FontAwesomeIcon icon={faCartShopping} />
           </Link>
         </Col>

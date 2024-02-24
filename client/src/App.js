@@ -1,9 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
+import ThemeProvider from 'react-bootstrap/ThemeProvider';
 
 import './GlobalStyles/GlobalStyles.module.scss';
-import { publicRoutes } from '~/Routes';
+import './GlobalStyles/active.css';
+import { publicRoutes, privateRoutes } from '~/Routes';
 import MainLayout from '~/components/Layout/MainLayout';
-import ThemeProvider from 'react-bootstrap/ThemeProvider';
 
 function App() {
   return (

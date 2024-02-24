@@ -9,24 +9,32 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState('');
 
+  const [searchVl, setSearchVl] = useState();
+
   const csrf = () => axios.get('/sanctum/csrf-cookie');
 
-  useEffect(() => {
-    let token = localStorage.getItem('token');
-    if (token) {
-      navigate('/');
+  const getSearch = async (q) => {
+    try {
+      await axios.get('/api/search', {
+        params: {
+          q,
+        },
+      });
+    } catch (e) {
+      console.log(e);
     }
-  }, []);
+  };
+
   const getUser = async () => {
     try {
-      const { data } = await axios.get('/api/user');
-      setUser(data);
+      let token = localStorage.getItem('token');
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const res = await axios.get('/api/user', { params: { token } });
+      console.log(res.data);
+      setUser(res.data);
+      console.log(user);
     } catch (errors) {
-      // if (errors.response.status == 401) {
-      //   console.log('user empty');
-      // } else {
-      //   console.log(errors);
-      // }
+      console.log(errors);
     }
   };
   const logout = async ({}) => {
@@ -48,15 +56,15 @@ export const AuthProvider = ({ children }) => {
         getUser();
       }
     } catch (e) {
-      if (e.response.status === 422) {
-        setErrors(e.response.data.errors);
+      if (e) {
+        setErrors(e);
       }
     }
   };
   const register = async ({ ...data }) => {
     await csrf();
     try {
-      axios.post('/api/register', data);
+      await axios.post('/api/register', data);
       getUser();
       navigate('/');
     } catch (e) {
@@ -67,7 +75,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, errors, getUser, login, register, logout }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, errors, getUser, getSearch, login, register, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

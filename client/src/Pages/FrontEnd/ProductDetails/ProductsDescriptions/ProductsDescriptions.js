@@ -9,7 +9,6 @@ import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import { useEffect, useState } from 'react';
 import ProductsSuggest from '../ProductsSuggest';
 import SlideReviews from '~/components/SlickSlider/SlideReviews';
-import '../active.css';
 
 const cx = classNames.bind(styles);
 
