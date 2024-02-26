@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from 'react';
 import useDebounce from '~/Hooks/Debounce/Debounce';
 
 import * as SearchServices from '~/Services/SearchServices';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -95,7 +96,7 @@ function LogoBars() {
           </Tippy>
         </Col>
         <Col xl={1} className={cx('nav-cars')}>
-          <Link className={cx('d-flex align-items-center')}>
+          <Link to={config.routes.cart} className={cx('d-flex align-items-center')}>
             <FontAwesomeIcon icon={faCartShopping} />
           </Link>
         </Col>

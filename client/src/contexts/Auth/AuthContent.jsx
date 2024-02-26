@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await axios.get('/api/search', {
         params: {
-          q,
+          q: searchVl,
         },
       });
     } catch (e) {
@@ -30,22 +30,23 @@ export const AuthProvider = ({ children }) => {
       let token = localStorage.getItem('token');
       axios.defaults.headers.common.Authorization = `Bearer ${token}`;
       const res = await axios.get('/api/user', { params: { token } });
-      console.log(res.data);
       setUser(res.data);
-      console.log(user);
     } catch (errors) {
       console.log(errors);
     }
   };
-  const logout = async ({}) => {
+  const Logout = async () => {
     await csrf();
     try {
-      const result = await axios.post('api/logout');
-      if (result) {
+      let token = localStorage.getItem('token');
+      const result = await axios.post('api/logout', { params: { token } });
+      if (result && token) {
         localStorage.removeItem('token');
-        navigate('/login');
+        window.location.reload();
       }
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
   const login = async ({ ...data }) => {
     await csrf();
@@ -54,11 +55,10 @@ export const AuthProvider = ({ children }) => {
       if (result && result.data) {
         localStorage.setItem('token', result.data.authorization.token);
         getUser();
+        navigate('/');
       }
     } catch (e) {
-      if (e) {
-        setErrors(e);
-      }
+      console.log(e);
     }
   };
   const register = async ({ ...data }) => {
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, errors, getUser, getSearch, login, register, logout }}>
+    <AuthContext.Provider value={{ user, errors, getUser, getSearch, login, register, Logout }}>
       {children}
     </AuthContext.Provider>
   );

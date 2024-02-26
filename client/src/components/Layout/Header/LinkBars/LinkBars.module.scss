@@ -41,3 +41,56 @@
   position: relative;
   border: 1px solid #bfbfbf;
 }
+.usersname {
+  cursor: pointer;
+  text-transform: uppercase;
+  color: var(--grey);
+  font-size: 1.3rem;
+  &:hover {
+    color: #e36707;
+  }
+}
+.get-the-user {
+  width: 100px;
+  background-color: white;
+  box-shadow: 0px 1px 3px 0px rgb(172, 170, 170);
+  position: relative;
+  &::before {
+    border-top: 1px solid;
+    border-left: 1px solid;
+    border-color: rgb(218, 214, 214);
+
+    content: '';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    background-color: white;
+    transform: rotate(45deg);
+    z-index: 999;
+    top: -5px;
+    left: 50%;
+  }
+  ul {
+    padding: 10px 10px;
+    margin-bottom: 0;
+    li {
+      a,
+      button {
+        color: #535050;
+        width: 100%;
+        &:hover {
+          color: #e36707;
+          text-decoration: underline !important;
+        }
+      }
+      button {
+        border: none;
+        background-color: transparent;
+        font-size: 1.3rem;
+        padding: 0;
+        text-align: start;
+        display: block;
+      }
+    }
+  }
+}

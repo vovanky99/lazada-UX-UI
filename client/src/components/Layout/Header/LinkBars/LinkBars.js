@@ -1,31 +1,34 @@
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
-import { Row, Col, Stack } from 'react-bootstrap';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import styles from './LinkBars.module.scss';
 import GetTheApp from './GetTheApp';
-import { Link } from 'react-router-dom';
 import useAuthContext from '~/contexts/Auth/AuthContent';
 
 import routes from '~/config/routes';
-import { useEffect } from 'react';
 const cx = classNames.bind(styles);
 
 function LinkBars({ IDLinkBars }) {
-  const { user, getUser } = useAuthContext();
+  const { user, getUser, Logout } = useAuthContext();
 
   useEffect(() => {
     if (!user) {
       getUser();
     }
-  }, []);
+  }, [user]);
+  const handleLogout = () => {
+    Logout();
+  };
+
   return (
     <div id={IDLinkBars} className={cx('wrapper')}>
       <div className={cx('link-list', 'd-flex gap-5')} xs={'auto'}>
         <div>
           <span className={cx('cursor')}></span>
         </div>
-        <div>
+        {/* <div>
           <Tippy
             interactive
             trigger="click"
@@ -47,13 +50,30 @@ function LinkBars({ IDLinkBars }) {
         </div>
         <div>
           <span className={cx('cursor', 'grey')}>Track My Order</span>
-        </div>
+        </div> */}
         {user?.name ? (
-          <div>
-            <Link to={routes.signIn} className={cx('cursor', 'grey')}>
-              {user?.name}
-            </Link>
-          </div>
+          <Tippy
+            interactive
+            offset={[0, 10]}
+            trigger="click"
+            render={(attrs) => (
+              <div className={cx('get-the-user')} tabIndex="-1" {...attrs}>
+                <ul className=" text-capitalize">
+                  <li>
+                    <Link>My Account</Link>
+                  </li>
+                  <li>
+                    <Link>My Order</Link>
+                  </li>
+                  <li>
+                    <button onClick={handleLogout}>Logout</button>
+                  </li>
+                </ul>
+              </div>
+            )}
+          >
+            <div className={cx('usersname', 'grey')}>{user?.name}</div>
+          </Tippy>
         ) : (
           <div className={cx('d-flex gap-5')}>
             <div>

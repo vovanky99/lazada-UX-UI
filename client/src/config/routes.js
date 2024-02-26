@@ -4,7 +4,8 @@ const routes = {
   register: '/register',
   logout: '/logout',
   productdetails: '/products',
-  search: '/search',
+  search: '/search/:title',
+  cart: '/cart',
   cat: '/cat',
 };
 

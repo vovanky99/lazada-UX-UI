@@ -343,7 +343,10 @@ export default function ProductDetails() {
                       id="quantity_order"
                       name="quantity_order"
                       value={quantity}
-                      onChange={(e) => setQuantity(e.target.value.replace(/[^0-9]/g, ''))}
+                      onChange={(e) => {
+                        const value = parseInt(e.target.value.replace(/[^0-9]/g, ''));
+                        setQuantity(value);
+                      }}
                       onKeyUp={(e) => {
                         if (e.target.value > 1000) {
                           setQuantity(1000);

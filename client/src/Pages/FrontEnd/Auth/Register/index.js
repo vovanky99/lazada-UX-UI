@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faFacebook, faFacebookF, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 
 import style from './register.module.scss';
 import routes from '~/config/routes';
@@ -43,8 +43,6 @@ export default function Register() {
   };
 
   const handleSubmit = async (e) => {
-    // error 419
-    // await csrf();
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.preventDefault();

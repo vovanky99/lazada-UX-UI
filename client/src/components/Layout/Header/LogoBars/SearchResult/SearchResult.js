@@ -21,7 +21,7 @@ export default function SearchResult({ title, lengthBold, delay, searchValue, id
 
   return (
     <>
-      <Link to={`/search`} className={cx('search-result-el', 'd-flex justify-content-between')}>
+      <Link to={`/search/${title}`} className={cx('search-result-el', 'd-flex justify-content-between')}>
         <span className={cx('length-bold')}>{title}</span>
         <FontAwesomeIcon icon={faArrowUp} />
       </Link>
