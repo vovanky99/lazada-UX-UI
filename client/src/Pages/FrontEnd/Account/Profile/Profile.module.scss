@@ -1,15 +1,113 @@
 .wrapper {
-  background-color: var(--background_color);
-  padding: 20px 0 50px;
-  .main {
-    width: var(--media_width);
-    margin: 0 auto;
-    .main-left {
-      width: 20%;
+  background-color: white;
+  padding: 25px 30px;
+  .header {
+    border-bottom: 1px solid #efefef;
+    &-title {
     }
-    .main-right {
-      background-color: white;
-      width: 80%;
+    &-note {
+      font-size: 1.4rem;
+      margin-bottom: 25px;
+    }
+  }
+  .footer {
+    padding-top: 3rem;
+    .form-contain {
+      width: calc(100% - 30rem);
+      padding-right: 5rem;
+      form {
+        table {
+          width: 100%;
+          > tr {
+            td {
+              padding-bottom: 30px;
+              font-size: 1.4rem;
+              input {
+                font-size: 1.4rem;
+              }
+              button {
+                font-size: 1.3rem;
+                color: #05a;
+                text-decoration: underline;
+              }
+              select {
+                font-size: 1.4rem;
+              }
+              &:first-child {
+                text-align: right;
+              }
+              &:last-child {
+                padding-left: 20px;
+              }
+              .gender-contain {
+                > div {
+                  gap: 10px;
+                }
+                .stardust-radio {
+                  cursor: pointer;
+                  .outer-circle {
+                    width: 18px;
+                    height: 18px;
+                    border-radius: 50%;
+                    border: 2px solid #00000042;
+                    .inner-circle {
+                      opacity: 0;
+                      transform: translate(65%, 65%);
+                      width: 6px;
+                      height: 6px;
+                      background-color: #ee4d2d;
+                      border-radius: 100%;
+                    }
+                  }
+                }
+              }
+            }
+            .save {
+              background-color: #ee4d2d;
+              color: white;
+              text-decoration: none;
+              padding: 10px 15px;
+              &:hover {
+                opacity: 0.9;
+              }
+            }
+          }
+        }
+      }
+    }
+    .avatar-contain {
+      width: 28rem;
+      border-left: 1px solid #efefef;
+      gap: 15px;
+      &-img {
+        width: 10rem;
+        height: 10rem;
+        img {
+          width: 100%;
+        }
+      }
+      input {
+        display: none;
+      }
+      button {
+        outline: 0;
+        border: 1px solid #00000017;
+        box-shadow: #00000008 0px 1px 1px 0px;
+        color: #555555;
+        background-color: white;
+        padding: 0 20px;
+        font-size: 1.4rem;
+        height: 38px;
+        &:hover {
+          background-color: #00000005;
+        }
+      }
+      .avatar-contain-note {
+        span {
+          font-size: 1.4rem;
+          color: #999;
+        }
+      }
     }
   }
 }

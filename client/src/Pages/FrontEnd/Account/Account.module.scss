@@ -4,12 +4,12 @@
   .main {
     width: var(--media_width);
     margin: 0 auto;
+    gap: 30px;
     .main-left {
-      width: 20%;
+      width: calc(17.5% - 30px);
     }
     .main-right {
-      background-color: white;
-      width: 80%;
+      width: 82.5%;
     }
   }
 }

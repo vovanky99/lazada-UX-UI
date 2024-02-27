@@ -118,7 +118,6 @@ export default function Register() {
                 <Form.Label className="fs-5">Birthday</Form.Label>
                 <SelectDate
                   onChangeValue={handleBirthDayOnchange}
-                  startingYear={1945}
                   numberOfYears={80}
                   selectClassName={cx('select_date', 'py-3')}
                   className={cx('container_select_date')}

@@ -1,0 +1,78 @@
+.wrapper {
+  $color: #888;
+  .account-hd {
+    padding: 15px 0;
+    gap: 15px;
+    border-bottom: 1px solid #efefef;
+    > div {
+      width: 30%;
+      cursor: pointer;
+      .img {
+        width: 100%;
+        img {
+          width: 100%;
+        }
+      }
+    }
+    .nickname {
+      flex-grow: 1;
+      .edit-profile {
+        cursor: pointer;
+      }
+      b {
+        font-size: 1.4rem;
+      }
+      a {
+        color: $color;
+        width: 100%;
+      }
+    }
+  }
+  .acount-ft {
+    margin-top: 27px;
+    .my-account {
+      h4 {
+        font-size: 1.4rem;
+        color: black;
+        cursor: pointer;
+        &:hover {
+          color: #ee4d2d;
+        }
+        svg {
+          color: #1a58b6;
+          font-size: 1.6rem;
+        }
+      }
+      .list-group {
+        display: flex;
+        transition: all 1s ease;
+        padding-left: 22px;
+        a {
+          font-size: 1.4rem;
+          color: #000000a6;
+          padding: 5px 0;
+        }
+      }
+    }
+    .voucher,
+    .notification {
+      svg {
+        color: #f18770;
+      }
+    }
+    > div {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      a {
+        color: black;
+        &:hover {
+          color: #ee4d2d;
+        }
+        svg {
+          font-size: 1.6rem;
+          color: #1a58b6;
+        }
+      }
+    }
+  }
+}

@@ -9,8 +9,12 @@ const routes = {
   cat: '/cat',
   //users needs to login
   profile: '/user/account/profile',
-  order: '/user/account/order',
+  purchaseOrder: '/user/account/purchase',
   address: '/user/account/address',
+  changePassword: '/user/account/change_password',
+  bank: '/user/account/bank',
+  notification: '/user/account/notification',
+  voucher: '/user/account/voucher',
 };
 
 export default routes;

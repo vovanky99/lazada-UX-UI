@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  > div {
+    select {
+      padding: 5px 5px;
+      border: 1px solid #00000017;
+      width: 100%;
+      outline: none;
+    }
+  }
+  .day {
+    width: 30%;
+  }
+  .month {
+    width: 30%;
+  }
+  .year {
+    width: calc((100% - 30% * 2) - 20px);
+  }
+}

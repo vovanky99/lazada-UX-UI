@@ -10,7 +10,7 @@ const Images = forwardRef(
     {
       src,
       alt,
-      classes,
+      className,
       //  fallBack: customFallback = images.noImage,
       ...props
     },
@@ -22,7 +22,7 @@ const Images = forwardRef(
     // };
     return (
       <img
-        className={cx('wrapper', classes)}
+        className={cx('wrapper', className)}
         ref={ref}
         src={src || fallBack}
         alt={alt}

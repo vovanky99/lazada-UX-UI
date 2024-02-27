@@ -19,6 +19,8 @@ const publicRoutes = [
   { path: config.routes.search, components: Search },
   { path: config.routes.cart, components: Cart },
   { path: config.routes.profile, components: Profile },
+  { path: config.routes.address, components: Address },
+  { path: config.routes.purchaseOrder, components: Order },
 ];
 
 const privateRoutes = [];

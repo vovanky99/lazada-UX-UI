@@ -42,3 +42,16 @@
 /* .slide-rv_active {
   display: flex;
 } */
+
+.account_navlink_active {
+  color: var(--default_color) !important;
+}
+
+/*page account*/
+
+.stardust-radio_active .outer-circle_active {
+  border-color: #ee4d2d !important;
+}
+.stardust-radio_active .outer-circle_active .inner-circle_active {
+  opacity: 1 !important;
+}
