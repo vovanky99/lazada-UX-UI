@@ -1,0 +1,15 @@
+.wrapper {
+  background-color: var(--background_color);
+  padding: 20px 0 50px;
+  .main {
+    width: var(--media_width);
+    margin: 0 auto;
+    .main-left {
+      width: 20%;
+    }
+    .main-right {
+      background-color: white;
+      width: 80%;
+    }
+  }
+}

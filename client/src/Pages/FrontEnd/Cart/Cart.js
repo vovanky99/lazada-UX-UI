@@ -36,11 +36,10 @@ export default function Cart() {
     const checkbox_all = document.getElementById('checkbox-all');
     const check_shop = document.querySelectorAll('.checkbox-shop');
     const check_products = document.querySelectorAll('.checkbox-products');
-    const check_products1 = document.querySelectorAll('.products-1 .checkbox-products');
-    const handleChecked = () => {
+    const handleChecked = (e) => {
       for (let i = 0; i < check_shop.length; i++) {
         if (check_shop[i] != checkbox_all) {
-          check_shop[i].checked = checkbox_all.checked;
+          check_shop[i].checked = e.target.checked;
           for (let j = 0; j < check_products.length; j++) {
             if (check_products[j] != check_shop[i]) {
               check_products[j].checked = check_shop[i].checked;
@@ -49,20 +48,32 @@ export default function Cart() {
         }
       }
     };
-    const handleCheckShop = (e) => {
-      for (let j = 0; j < check_products1.length; j++) {
-        check_products1[j].checked = e.target.checked;
-      }
-    };
+
     if (checkbox_all) {
       checkbox_all.addEventListener('click', handleChecked);
     }
-    if (check_shop) {
-      check_shop.forEach((e) => e.addEventListener('click', handleCheckShop));
-    }
+    return () => {
+      if (checkbox_all) {
+        checkbox_all.addEventListener('click', handleChecked);
+      }
+    };
   }, []);
+
+  const handleCheckedShop = (val) => {
+    // const check_products = document.querySelectorAll(`.products-` + val + ` .checkbox-products`);
+    // const check_shop = document.querySelectorAll(`.products-` + val + ` .checkbox-shop`);
+    console.log(val);
+    // for (let j = 0; j < check_products.length; j++) {
+    //   if (check_products[j] != check_shop) {
+    //     check_products[j].checked = check_shop.checked;
+    //   }
+    // }
+  };
   return (
     <div className={cx('wrapper')}>
+      <button className={cx('')} onClick={handleCheckedShop(1)}>
+        onclick
+      </button>
       <div className={cx('content', 'd-flex flex-row')}>
         <div className={cx('cart-left', 'd-flex flex-column')}>
           <div className={cx('list-header', 'd-flex flex-row justify-content-between align-items-center')}>
@@ -81,7 +92,12 @@ export default function Cart() {
           </div>
           <div className={cx('checkout-shop-outer', 'products-1')}>
             <div className={cx('shop-header', 'd-flex flex-row')}>
-              <Checkbox checkboxclass="checkbox-shop" IconCheck={cx('icon-check')} ClassName={cx('checkbox')} />
+              <Checkbox
+                // onClick={handleCheckedShop(1)}
+                checkboxclass="checkbox-shop"
+                IconCheck={cx('icon-check')}
+                ClassName={cx('checkbox')}
+              />
               <div className={cx('shop-name')}>
                 <FontAwesomeIcon icon={faShop} />
                 Tung Dinh Dinh
@@ -135,7 +151,12 @@ export default function Cart() {
           </div>
           <div className={cx('checkout-shop-outer', 'products-2')}>
             <div className={cx('shop-header', 'd-flex flex-row')}>
-              <Checkbox checkboxclass="checkbox-shop" IconCheck={cx('icon-check')} ClassName={cx('checkbox')} />
+              <Checkbox
+                // onClick={handleCheckedShop(2)}
+                checkboxclass="checkbox-shop"
+                IconCheck={cx('icon-check')}
+                ClassName={cx('checkbox')}
+              />
               <div className={cx('shop-name')}>
                 <FontAwesomeIcon icon={faShop} />
                 Tung Dinh Dinh

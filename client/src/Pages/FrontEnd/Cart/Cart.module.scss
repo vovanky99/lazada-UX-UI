@@ -60,12 +60,18 @@
   }
 }
 .checkbox {
-  padding-left: 30px !important;
+  padding-left: 15px !important;
+  margin-right: 15px;
+  label {
+    margin-left: 5px;
+  }
   input:checked ~ .icon-check {
     border-color: #e36707 !important;
   }
-  &:hover .icon-check {
-    border-color: #e36707 !important;
+  input {
+    &:hover ~ .icon-check {
+      border-color: #e36707 !important;
+    }
   }
 }
 

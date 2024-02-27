@@ -4,7 +4,7 @@ import ThemeProvider from 'react-bootstrap/ThemeProvider';
 import './GlobalStyles/GlobalStyles.module.scss';
 import './GlobalStyles/active.css';
 import { publicRoutes, privateRoutes } from '~/Routes';
-import MainLayout from '~/components/Layout/MainLayout';
+import MainLayout from '~/Layout/FrontEnd/MainLayout';
 
 function App() {
   return (

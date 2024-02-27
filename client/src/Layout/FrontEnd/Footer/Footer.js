@@ -37,19 +37,15 @@ const dataFooter = [
     ],
   },
   {
-    title: 'LAZADA VIETNAM',
+    title: 'About Life circle',
     data: [
       {
         title: 'All Categories',
         path: '/all-category',
       },
       {
-        title: 'About Lazada',
-        path: '/about-lazada',
-      },
-      {
-        title: 'Sell on Lazada',
-        path: '/sell-on-lzd',
+        title: 'Sell on Life Circle',
+        path: '/sell-on-lfc',
       },
       {
         title: 'Terms & Conditions',

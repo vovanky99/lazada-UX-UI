@@ -2,8 +2,8 @@ import classNames from 'classnames/bind';
 import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-import Footer from '~/components/Layout/Footer';
-import Header from '~/components/Layout/Header';
+import Footer from '~/Layout/FrontEnd/Footer';
+import Header from '~/Layout/FrontEnd/Header';
 import styles from './mainLayout.module.scss';
 import Main from '../Main';
 
@@ -11,11 +11,11 @@ const cx = classNames.bind(styles);
 
 function MainLayout({ children }) {
   return (
-    <Container fluid className={cx('wrapper')}>
+    <div className={cx('wrapper', 'container-fluid')}>
       <Header />
       <Main children={children} />
       <Footer />
-    </Container>
+    </div>
   );
 }
 

@@ -1,5 +1,7 @@
 .ft-first {
   background-color: var(--background_home_grey);
+  padding-top: 10px;
+  border-top: 1px solid #e2e2e2;
   > div {
     margin: 0 auto !important;
     padding-bottom: 40px;
@@ -89,12 +91,16 @@
 //ft-second
 .ft-second {
   background-color: var(--white);
-  padding: 20px 0;
+  padding-top: 20px;
+  overflow: hidden;
 }
 
 .ft-second-wrapper {
   width: var(--media_width);
   margin: 0 auto !important;
+  .lfc-social-media {
+    gap: 5px;
+  }
   > div {
     h3 {
       margin: 5px 10px 5px 0;

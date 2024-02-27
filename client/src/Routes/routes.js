@@ -6,6 +6,9 @@ import ProductDetails from '~/Pages/FrontEnd/ProductDetails';
 import Cat from '~/Pages/FrontEnd/Cat';
 import Search from '~/Pages/FrontEnd/Search';
 import Cart from '~/Pages/FrontEnd/Cart';
+import Profile from '~/Pages/FrontEnd/Account/Profile';
+import Order from '~/Pages/FrontEnd/Account/Order';
+import Address from '~/Pages/FrontEnd/Account/Address';
 
 const publicRoutes = [
   { path: config.routes.home, components: HomePages },
@@ -15,6 +18,7 @@ const publicRoutes = [
   { path: config.routes.cat, components: Cat },
   { path: config.routes.search, components: Search },
   { path: config.routes.cart, components: Cart },
+  { path: config.routes.profile, components: Profile },
 ];
 
 const privateRoutes = [];

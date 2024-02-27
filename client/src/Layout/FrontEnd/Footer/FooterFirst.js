@@ -8,20 +8,20 @@ const cx = classNames.bind(styles);
 
 function FooterFirst({ dataFooter }) {
   return (
-    <Row>
+    <div className={cx('wrapper', 'd-flex flex-row justify-content-between')}>
       {dataFooter.map((dtft, index) => (
-        <Col xl={3} key={index}>
-          <Row>
+        <div className={cx('')} key={index}>
+          <div className={cx('d-flex flex-column')}>
             <h3 className={cx('ft-first-title')}>{dtft.title} </h3>
             {dtft.data.map((dt, index) => (
               <Col key={index}>
                 <Link to={dt.path}>{dt.title}</Link>
               </Col>
             ))}
-          </Row>
-        </Col>
+          </div>
+        </div>
       ))}
-      <Col xl={6}>
+      <div>
         <Row className={cx('lzd-footer-app-downloads')}>
           <Col>
             <div className={cx('lzd-footer-appicon')}>
@@ -40,8 +40,8 @@ function FooterFirst({ dataFooter }) {
             <a className={cx('icon-huawei-footer')} href="#"></a>
           </Col>
         </Row>
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 }
 
