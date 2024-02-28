@@ -7,7 +7,7 @@ import { faFacebookF, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 
 import style from './register.module.scss';
 import routes from '~/config/routes';
-import SelectDate from '~/components/SelectDate';
+import Date from '~/components/Date';
 import Checkbox from '~/components/Checkbox';
 import axios from '~/api/axios';
 
@@ -116,7 +116,8 @@ export default function Register() {
             <Form.Group className={cx('mb-4 d-flex justify-content-between gap-3')}>
               <Form.Group className={cx('col-9')}>
                 <Form.Label className="fs-5">Birthday</Form.Label>
-                <SelectDate
+                {/* handle select birthday */}
+                <Date
                   onChangeValue={handleBirthDayOnchange}
                   numberOfYears={80}
                   selectClassName={cx('select_date', 'py-3')}

@@ -18,13 +18,20 @@ export default function SelectDate({
   numberOfYears,
   className = '',
   selectClassName = '',
+  setDefault,
 }) {
-  const [selectDate, setSelectedDate] = useState(format(new Date(year, '0', '1'), 'yyyy-MM-dd'));
+  const [selectDate, setSelectedDate] = useState(() => {
+    if (setDefault != '') {
+      return format(new Date(setDefault), 'yyyy-MM-dd');
+    } else {
+      return format(new Date(), 'yyyy-MM-dd');
+    }
+  });
   const dynamicYears = useDynamicYears({
     Year: year,
     numberOfYears: numberOfYears,
   });
-  onChangeValue = selectDate;
+  onChangeValue(selectDate);
   const handleDaySelect = (e) => {
     const { value } = e.target;
     const day = parseInt(value, 10);
@@ -33,12 +40,12 @@ export default function SelectDate({
   const handleMonthSelect = (e) => {
     const { value } = e.target;
     const month = parseInt(value, 10);
-    setSelectedDate(format(new Date(getYear(selectDate), month, getDay(selectDate)), 'yyyy-MM-dd'));
+    setSelectedDate(format(new Date(getYear(selectDate), month, getDate(selectDate)), 'yyyy-MM-dd'));
   };
   const handleYearSelect = (e) => {
     const { value } = e.target;
     const year = parseInt(value, 10);
-    setSelectedDate(format(new Date(year, getMonth(selectDate), getDay(selectDate)), 'yyyy-MM-dd'));
+    setSelectedDate(format(new Date(year, getMonth(selectDate), getDate(selectDate)), 'yyyy-MM-dd'));
   };
   return (
     <div className={cx('wrapper', className + ' ')}>

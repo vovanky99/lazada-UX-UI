@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useDynamicYears = ({ Year = new Date().getFullYear(), numberOfYears }) => {
+export const useDynamicYears = ({ Year, numberOfYears }) => {
   const [years, setYears] = useState(() => {
     const dynamicYears = [];
     for (let year = Year; year >= Year - numberOfYears; year--) {

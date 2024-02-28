@@ -18,57 +18,59 @@
       form {
         table {
           width: 100%;
-          > tr {
-            td {
-              padding-bottom: 30px;
-              font-size: 1.4rem;
-              input {
+          tbody {
+            > tr {
+              td {
+                padding-bottom: 30px;
                 font-size: 1.4rem;
-              }
-              button {
-                font-size: 1.3rem;
-                color: #05a;
-                text-decoration: underline;
-              }
-              select {
-                font-size: 1.4rem;
-              }
-              &:first-child {
-                text-align: right;
-              }
-              &:last-child {
-                padding-left: 20px;
-              }
-              .gender-contain {
-                > div {
-                  gap: 10px;
+                input {
+                  font-size: 1.4rem;
                 }
-                .stardust-radio {
-                  cursor: pointer;
-                  .outer-circle {
-                    width: 18px;
-                    height: 18px;
-                    border-radius: 50%;
-                    border: 2px solid #00000042;
-                    .inner-circle {
-                      opacity: 0;
-                      transform: translate(65%, 65%);
-                      width: 6px;
-                      height: 6px;
-                      background-color: #ee4d2d;
-                      border-radius: 100%;
+                button {
+                  font-size: 1.3rem;
+                  color: #05a;
+                  text-decoration: underline;
+                }
+                select {
+                  font-size: 1.4rem;
+                }
+                &:first-child {
+                  text-align: right;
+                }
+                &:last-child {
+                  padding-left: 20px;
+                }
+                .gender-contain {
+                  > div {
+                    gap: 10px;
+                  }
+                  .stardust-radio {
+                    cursor: pointer;
+                    .outer-circle {
+                      width: 18px;
+                      height: 18px;
+                      border-radius: 50%;
+                      border: 2px solid #00000042;
+                      .inner-circle {
+                        opacity: 0;
+                        transform: translate(65%, 65%);
+                        width: 6px;
+                        height: 6px;
+                        background-color: #ee4d2d;
+                        border-radius: 100%;
+                      }
                     }
                   }
                 }
               }
-            }
-            .save {
-              background-color: #ee4d2d;
-              color: white;
-              text-decoration: none;
-              padding: 10px 15px;
-              &:hover {
-                opacity: 0.9;
+              .save {
+                background-color: #ee4d2d;
+                color: white;
+                text-decoration: none;
+                padding: 10px 15px;
+                &:hover {
+                  opacity: 0.9;
+                }
               }
             }
           }

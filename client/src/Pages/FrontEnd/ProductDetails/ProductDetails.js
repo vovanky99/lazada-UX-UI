@@ -97,7 +97,6 @@ export default function ProductDetails() {
   }, []);
   useEffect(() => {
     const handleOnMouseLeave = (e) => {
-      e.preventDefault();
       setSrcHighlightImgCat('');
     };
     const btnElement = btnHlRef1.current;
