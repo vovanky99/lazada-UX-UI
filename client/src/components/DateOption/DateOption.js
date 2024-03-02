@@ -5,11 +5,11 @@ import { getDay, getMonth, getYear, format, getDate } from 'date-fns';
 import { months } from './Month';
 import { useDynamicYears } from './years';
 import { days } from './days';
-import style from './SelectDate.module.scss';
+import style from './DateOption.module.scss';
 
 const cx = classNames.bind(style);
 
-export default function SelectDate({
+export default function DateOption({
   onChangeValue,
   classDay = '',
   classMonth = '',

@@ -1,30 +1,29 @@
 import classNames from 'classnames/bind';
 import { Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 
 import style from './register.module.scss';
 import routes from '~/config/routes';
-import Date from '~/components/Date';
+import DateOption from '~/components/DateOption';
 import Checkbox from '~/components/Checkbox';
 import axios from '~/api/axios';
+import useAuthContext from '~/contexts/Auth/AuthContent';
 
 const cx = classNames.bind(style);
 
-// error 419
-// const csrf = () => axios.get('/sanctum/csrf-cookie');
+const csrf = () => axios.get('/sanctum/csrf-cookie');
 
 export default function Register() {
-  const navigate = useNavigate();
+  const { Register, errors } = useAuthContext();
   const [validated, setValidated] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [gender, setGender] = useState('');
   const [name, setFullname] = useState('');
   const [birthday, setBirthday] = useState('');
-  const [errors, setErrors] = useState('');
 
   const handleEmailOnchange = (e) => {
     setEmail(e.target.value);
@@ -47,23 +46,16 @@ export default function Register() {
     if (form.checkValidity() === false) {
       e.preventDefault();
       e.stopPropagation();
-    }
-    e.preventDefault();
-
-    try {
-      axios.post('api/register', { email, password, name, gender });
+    } else {
+      Register({ email, password, name, gender });
       setEmail('');
       setFullname('');
       setBirthday('');
       setGender('');
-      navigate('/');
-    } catch (e) {
-      if (e.response.status === 422) {
-        setErrors(e.response.data.errors);
-      }
+      setValidated(true);
     }
-    setValidated(true);
   };
+  console.log(errors);
 
   return (
     <div className={cx('wrapper')}>
@@ -117,7 +109,7 @@ export default function Register() {
               <Form.Group className={cx('col-9')}>
                 <Form.Label className="fs-5">Birthday</Form.Label>
                 {/* handle select birthday */}
-                <Date
+                <DateOption
                   onChangeValue={handleBirthDayOnchange}
                   numberOfYears={80}
                   selectClassName={cx('select_date', 'py-3')}

@@ -8,6 +8,7 @@ const cx = classNames.bind(styles);
 const Images = forwardRef(
   (
     {
+      Id,
       src,
       alt,
       className,
@@ -22,6 +23,7 @@ const Images = forwardRef(
     // };
     return (
       <img
+        id={Id}
         className={cx('wrapper', className)}
         ref={ref}
         src={src || fallBack}

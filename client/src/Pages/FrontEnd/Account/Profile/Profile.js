@@ -3,8 +3,8 @@ import style from './Profile.module.scss';
 import Account from '../Account';
 import { useEffect, useState } from 'react';
 import Images from '~/components/Images';
-import Date from '~/components/Date';
-import { format } from 'date-fns';
+import DateOption from '~/components/DateOption';
+import { indexOf } from 'lodash';
 
 const cx = classNames.bind(style);
 
@@ -12,20 +12,33 @@ function Profile({ data }) {
   const [username, setUsername] = useState('nsjskskw');
   const [avatar, setAvatar] = useState('https://down-vn.img.susercontent.com/file/438ac806ce989d6ef1013207c531b451');
   const [name, setName] = useState('võ văn kỷ');
-  const [email, setEmail] = useState('vo************@gmail.com');
-  const [phoneNumber, setPhoneNumber] = useState('*********57');
+  const [email, setEmail] = useState('vovantriem1965@gmail.com');
+  const [phoneNumber, setPhoneNumber] = useState('0123456757');
   const [gender, setGender] = useState(1);
   const [birthday, setBirthday] = useState('1999-01-05');
 
   //handle change birthday
   const changeBirthday = (val) => {
     setBirthday(val);
-    console.log(birthday);
   };
 
   // handle select gender active
   useEffect(() => {
     let stardust_radio = document.querySelectorAll('.stardust_radio_click');
+
+    //hide phone number
+    let phone = document.getElementById('phone_number');
+    const p = phone.textContent.replace(phone.textContent.slice(0, 8), '********');
+    phone.innerText = p;
+
+    //hide email
+    let email = document.getElementById('email');
+    let parameter = '';
+    for (let i = 2; i < email.textContent.indexOf('@gmail.com'); i++) {
+      parameter += '*';
+    }
+    const e = email.textContent.replace(email.textContent.slice(2, email.textContent.indexOf('@gmail.com')), parameter);
+    email.innerText = e;
 
     // add class active
     const genderActive = () => {
@@ -61,7 +74,14 @@ function Profile({ data }) {
   const handleSaveProfile = (e) => {
     e.preventDefault();
   };
-  const handleAvatar = (e) => {};
+
+  const handleSelectAvatar = () => {
+    document.getElementById('avatar').click();
+    // let temp = document.getElementById('avatar').value;
+    // temp = temp.split('\\');
+    // const url = 'http://localhost:3000/' + temp[temp.length - 1];
+    // setAvatar(window.open(url));
+  };
   return (
     <>
       <Account>
@@ -72,7 +92,7 @@ function Profile({ data }) {
           </div>
           <div className={cx('footer', 'd-flex flex-row')}>
             <div className={cx('form-contain')}>
-              <form className={cx('d-flex flex-row')}>
+              <form className={cx('d-flex flex-row')} onSubmit={handleSaveProfile}>
                 <table>
                   <tbody>
                     <tr>
@@ -105,7 +125,9 @@ function Profile({ data }) {
                       </td>
                       <td>
                         <div className={cx('email', 'd-flex flex-row align-items-center')}>
-                          <div className={cx('email-contain')}>{email}</div>
+                          <div id="email" className={cx('email-contain')}>
+                            {email}
+                          </div>
                           <button className="btn">Change</button>
                         </div>
                       </td>
@@ -116,7 +138,9 @@ function Profile({ data }) {
                       </td>
                       <td>
                         <div className={cx('phone', 'd-flex flex-row align-items-center')}>
-                          <div className={cx('phone-contain')}>{phoneNumber}</div>
+                          <div id="phone_number" className={cx('phone-contain')}>
+                            {phoneNumber}
+                          </div>
                           <button className="btn">Change</button>
                         </div>
                       </td>
@@ -157,7 +181,7 @@ function Profile({ data }) {
                       <td>
                         <div className={cx('gender')}>
                           <div className={cx('gender-contain')}>
-                            <Date setDefault={birthday} onChangeValue={changeBirthday} numberOfYears={80} />
+                            <DateOption setDefault={birthday} onChangeValue={changeBirthday} numberOfYears={80} />
                           </div>
                         </div>
                       </td>
@@ -173,12 +197,12 @@ function Profile({ data }) {
               </form>
             </div>
             <div className={cx('avatar-contain', 'd-flex flex-column align-items-center')}>
-              <div onClick={handleAvatar} className={cx('avatar-contain-img')} style={{ cursor: 'pointer' }}>
-                <Images className={cx('rounded-circle')} src={avatar} alt={avatar} />
+              <div onClick={handleSelectAvatar} className={cx('avatar-contain-img')} style={{ cursor: 'pointer' }}>
+                <Images id="setImg" className={cx('rounded-circle')} src={avatar} alt={avatar} />
               </div>
-              <input type="file" accept=".jpg,.jpeg,.png" />
+              <input name="avatar" id="avatar" type="file" accept=".jpg,.jpeg,.png" />
               <button
-                onClick={handleAvatar}
+                onClick={handleSelectAvatar}
                 type="button"
                 className={cx('avatar-contain-select-image', 'text-capitalize')}
               >

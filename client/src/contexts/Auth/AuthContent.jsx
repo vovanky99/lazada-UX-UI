@@ -26,13 +26,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getUser = async () => {
-    try {
-      let token = localStorage.getItem('token');
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const res = await axios.get('/api/user', { params: { token } });
-      setUser(res.data);
-    } catch (errors) {
-      console.log(errors);
+    let token = localStorage.getItem('token');
+    if (token) {
+      try {
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+        const res = await axios.get('/api/user', { params: { token } });
+        setUser(res.data);
+      } catch (errors) {
+        console.log(errors);
+      }
     }
   };
   const Logout = async () => {
@@ -61,7 +63,7 @@ export const AuthProvider = ({ children }) => {
       console.log(e);
     }
   };
-  const register = async ({ ...data }) => {
+  const Register = async ({ ...data }) => {
     await csrf();
     try {
       await axios.post('/api/register', data);
@@ -75,7 +77,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, errors, getUser, getSearch, login, register, Logout }}>
+    <AuthContext.Provider value={{ user, errors, getUser, getSearch, login, Register, Logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -23,7 +23,18 @@
               td {
                 padding-bottom: 30px;
                 font-size: 1.4rem;
+                .name {
+                  input {
+                    &:focus {
+                      border-color: #dee2e6;
+                      outline: none;
+                      box-shadow: none;
+                    }
+                  }
+                }
                 input {
+                  border-radius: 0;
+                  padding: 8px;
                   font-size: 1.4rem;
                 }
                 button {
