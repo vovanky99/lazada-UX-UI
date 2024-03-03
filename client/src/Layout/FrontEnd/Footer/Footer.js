@@ -1,6 +1,9 @@
 import classNames from 'classnames/bind';
+import { Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import styles from './Footer.module.scss';
+import Images from '~/components/Images';
 
 const cx = classNames.bind(styles);
 
@@ -82,7 +85,7 @@ function Footer() {
             <Row className={cx('lzd-footer-app-downloads')}>
               <Col>
                 <div className={cx('lzd-footer-appicon')}>
-                  <Image src="https://lzd-img-global.slatic.net/g/tps/tfs/TB1iTziekWE3KVjSZSyXXXocXXa-42-42.png" />
+                  <Images src="https://lzd-img-global.slatic.net/g/tps/tfs/TB1iTziekWE3KVjSZSyXXXocXXa-42-42.png" />
                 </div>
                 <div className={cx('lzd-app-download-text')}>
                   <div className={cx('title')}>Go where your heart beats</div>

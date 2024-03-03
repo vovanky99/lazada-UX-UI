@@ -6,6 +6,7 @@ import {
   faBolt,
   faCartPlus,
   faChevronDown,
+  faChevronLeft,
   faChevronRight,
   faMessage,
   faMinus,
@@ -35,7 +36,7 @@ export default function ProductDetails() {
   const btnHlRef2 = useRef();
 
   const [denounce, setDenounce] = useState(false);
-  // const [denounceAnimate, setDenounceAnimate] = useState(false);
+  const [reason, setReason] = useState('');
   const [shipping, setShipping] = useState(false);
   const [location, setLocation] = useState('phuong ky long, thi xa ky anh ');
   const title = 'Giày JOD P.ANDA Giày Thể Thao cao cổ Đen Trắng nam nữ, jd Cổ Cao Hot Trend UU 2';
@@ -43,21 +44,39 @@ export default function ProductDetails() {
   const [srcHL, setSrcHL] = useState('');
   const [quantity, setQuantity] = useState(1);
 
+  // handle scroll body hidden
+  const handleScrollBody = (parameter) => {
+    if (parameter == true) {
+      document.querySelector('body').style['overflowY'] = 'hidden';
+    } else {
+      document.querySelector('body').style['overflowY'] = 'scroll';
+    }
+  };
+  handleScrollBody(denounce || shipping);
+  // handle change value location
   const changeLocationValue = (value) => {
     setLocation(value);
   };
+  // handle show hide denounce
+
+  useEffect(() => {}, [denounce]);
   const handleOnClickDenounce = () => {
     setDenounce(true);
   };
   const handleOnClickDenounceClose = (e) => {
     setDenounce(false);
+    setReason('');
   };
+
+  // handle show hide shipping
   const hanldeShippingShow = () => {
     setShipping(true);
   };
   const handleOnClickShippingClose = () => {
     setShipping(false);
   };
+
+  // handle highlight
   const handleOnClickHighlight = (e) => {
     const btns = document.getElementsByClassName('btn-active');
     e.preventDefault();
@@ -115,9 +134,13 @@ export default function ProductDetails() {
       }
     };
   }, []);
+
+  //handle change default highlight
   const changeSrcHL = (value) => {
     setSrcHL(value);
   };
+
+  //handle active slide with src highlight
   const handleOnclickSize = (e) => {
     const btns = document.getElementsByClassName('btn-size');
     if (e.target.classList.contains('slide_active') == false) {
@@ -131,6 +154,8 @@ export default function ProductDetails() {
       e.target.classList.remove('slide_active');
     }
   };
+
+  // handle increase and decrease
   const handleOnclickQuantityMinus = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
@@ -141,25 +166,61 @@ export default function ProductDetails() {
       setQuantity(quantity + 1);
     }
   };
+
+  //handle send report reason
+  useEffect(() => {
+    const send_reason = document.querySelectorAll('#show-denounce div ul li');
+    let show_denounce = document.getElementById('show-denounce-content');
+    const back_report = document.getElementById('back-report');
+    //handle back report
+    const handleBackReport = () => {
+      setReason('');
+      show_denounce.style['display'] = 'flex';
+    };
+    const handleClickSend = (e) => {
+      setReason(e.target.outerText);
+      show_denounce.style['display'] = 'none';
+    };
+    if (send_reason) {
+      send_reason.forEach((e) => e.addEventListener('click', handleClickSend));
+    }
+    if (back_report) {
+      back_report.addEventListener('click', handleBackReport);
+    }
+    return () => {
+      if (send_reason) {
+        send_reason.forEach((e) => e.addEventListener('click', handleClickSend));
+      }
+      if (back_report) {
+        back_report.removeEventListener('click', handleBackReport);
+      }
+    };
+  }, [reason]);
+
+  //handle submit for report
+  const handleSubmitReport = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <section className={cx('wrapper')}>
       <div className={cx('main-content', 'd-flex flex-column')}>
         <nav className={cx('breadcum', 'py-3')}>
           <ul className={cx('d-flex flex-row fs-5')} style={{ listStyle: 'none', marginBottom: '0' }}>
             <li className={cx('')}>
-              <Link to={config.routes.Cat}>
+              <Link to={config.routes.cat}>
                 Computers & Laptops
                 <FontAwesomeIcon icon={faChevronRight} className="mx-2" />
               </Link>
             </li>
             <li>
-              <Link to={config.routes.Cat}>
+              <Link to={config.routes.cart}>
                 Desktops Computers
                 <FontAwesomeIcon icon={faChevronRight} className="mx-2" />
               </Link>
             </li>
             <li>
-              <Link to={config.routes.Cat}>
+              <Link to={config.routes.cat}>
                 Gaming Desktops
                 <FontAwesomeIcon icon={faChevronRight} className="mx-2" />
               </Link>
@@ -215,24 +276,47 @@ export default function ProductDetails() {
                   Report
                 </button>
                 <div id="show-denounce" className={cx('show-denounce', `${denounce ? 'show' : ''}`)}>
-                  <div className={cx('show-denounce-content', 'text-start')}>
-                    <div className={cx('d-flex justify-content-between')}>
+                  <div id="show-denounce-content" className={cx('show-denounce-content', 'text-start')}>
+                    <div className={cx('show-denounce-title', 'd-flex justify-content-between')}>
                       <span>Select a Reason</span>
-                      <span style={{ cursor: 'pointer' }} onClick={handleOnClickDenounceClose}>
-                        <FontAwesomeIcon icon={faXmark} />
-                      </span>
+                      <button className="btn" onClick={handleOnClickDenounceClose}>
+                        <FontAwesomeIcon icon={faXmark} style={{ fontSize: '2rem', color: '#595959' }} />
+                      </button>
                     </div>
                     <ul className={cx('scroll-denounce')}>
-                      <li>sản phẩm bị cấm buôn bán</li>
-                      <li>sản phẩm bị cấm buôn bán</li>
-                      <li>sản phẩm bị cấm buôn bán</li>
-                      <li>sản phẩm bị cấm buôn bán</li>
-                      <li>sản phẩm bị cấm buôn bán</li>
-                      <li>sản phẩm bị cấm buôn bán</li>
-                      <li>sản phẩm bị cấm buôn bán</li>
-                      <li>sản phẩm bị cấm buôn bán</li>
+                      <li>Sản phẩm bị cấm buôn bán (động vật hoang dã, 18+,...)</li>
+                      <li>Hàng giả, hàng nhái</li>
+                      <li>Sản phẩm không rõ nguồn gốc, xuất xứ</li>
+                      <li>Hình ảnh sản phẩm không rõ ràng</li>
+                      <li>Sản phẩm có hình ảnh, nội dung phản cảm hoặc có thể gây phản cảm</li>
+                      <li>Sản phẩm có dấu hiệu lừa đảo</li>
+                      <li>Khác</li>
+                      <li>Tên sản phẩm (Name) không phù hợp với hình ảnh sản phẩm</li>
+                      <li>Sản phẩm có dấu hiệu tăng đơn ảo</li>
                     </ul>
                   </div>
+                  {reason != '' ? (
+                    <div className={cx('send-reason')}>
+                      <div className={cx('seand-reason-header', 'd-flex flex-row  align-items-center')}>
+                        <button id="back-report" className="btn">
+                          <FontAwesomeIcon icon={faChevronLeft} />
+                        </button>
+                        <span>{reason}</span>
+                        <button className="btn" onClick={handleOnClickDenounceClose}>
+                          <FontAwesomeIcon icon={faXmark} />
+                        </button>
+                      </div>
+                      <form
+                        onSubmit={handleSubmitReport}
+                        className={cx('d-flex flex-column justify-content-end align-items-end')}
+                      >
+                        <textarea placeholder="Report Description (10-50 character allowed)" />
+                        <button className={cx('btn text-capitalize')}>send report</button>
+                      </form>
+                    </div>
+                  ) : (
+                    ''
+                  )}
                 </div>
               </div>
               <div className={cx('flash-sale', 'd-flex flex-row justify-content-between align-items-center')}>

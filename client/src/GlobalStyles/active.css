@@ -1,5 +1,5 @@
 .sticky_header {
-  position: fixed;
+  position: sticky;
   z-index: 999;
   top: 0;
 }

@@ -77,7 +77,9 @@ function Profile({ data }) {
 
   const handleSelectAvatar = () => {
     document.getElementById('avatar').click();
-    // let temp = document.getElementById('avatar').value;
+    let temp = document.getElementById('avatar').value;
+    setAvatar(temp);
+
     // temp = temp.split('\\');
     // const url = 'http://localhost:3000/' + temp[temp.length - 1];
     // setAvatar(window.open(url));
@@ -197,21 +199,23 @@ function Profile({ data }) {
               </form>
             </div>
             <div className={cx('avatar-contain', 'd-flex flex-column align-items-center')}>
-              <div onClick={handleSelectAvatar} className={cx('avatar-contain-img')} style={{ cursor: 'pointer' }}>
-                <Images id="setImg" className={cx('rounded-circle')} src={avatar} alt={avatar} />
-              </div>
-              <input name="avatar" id="avatar" type="file" accept=".jpg,.jpeg,.png" />
-              <button
-                onClick={handleSelectAvatar}
-                type="button"
-                className={cx('avatar-contain-select-image', 'text-capitalize')}
-              >
-                select image
-              </button>
-              <div className={cx('avatar-contain-note', 'd-flex flex-column')}>
-                <span className={cx('note-file-size')}>File size: maximum 1 MB</span>
-                <span className={cx('note-file-extension')}>File extension: .JPEG, .PNG</span>
-              </div>
+              <form encType="application/x-www-form-urlencoded">
+                <div onClick={handleSelectAvatar} className={cx('avatar-contain-img')} style={{ cursor: 'pointer' }}>
+                  <Images id="setImg" className={cx('rounded-circle')} src={avatar} alt={avatar} />
+                </div>
+                <input name="avatar" id="avatar" type="file" accept=".JPG,.jpeg,.png" />
+                <button
+                  onClick={handleSelectAvatar}
+                  type="button"
+                  className={cx('avatar-contain-select-image', 'text-capitalize')}
+                >
+                  select image
+                </button>
+                <div className={cx('avatar-contain-note', 'd-flex flex-column')}>
+                  <span className={cx('note-file-size')}>File size: maximum 1 MB</span>
+                  <span className={cx('note-file-extension')}>File extension: .JPEG, .PNG</span>
+                </div>
+              </form>
             </div>
           </div>
         </div>
