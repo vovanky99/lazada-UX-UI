@@ -15,6 +15,7 @@ const routes = {
   bank: '/user/account/bank',
   notification: '/user/account/notification',
   voucher: '/user/account/voucher',
+  userbank: '/user/account/bank',
 };
 
 export default routes;

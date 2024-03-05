@@ -6,6 +6,7 @@ export default axios.create({
   //   'Access-Control-Allow-Origin': '*',
   //   'Content-Type': 'application/json',
   //   // 'Access-Control-Request-Headers': 'Content-Type, Authorization',
+  // Authorization: `Bearer ${localStorage.getItem('token')}`,
   'X-Requested-With': 'XMLHttpRequest',
   // },
 });
