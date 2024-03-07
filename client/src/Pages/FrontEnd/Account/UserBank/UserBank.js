@@ -14,6 +14,22 @@ export default function UserBank() {
   const [bankAccount, setBankAccount] = useState(false);
   const [creditCard, setCreditCard] = useState(false);
 
+  const [cardNumber, setCardNumber] = useState();
+  const [expiryDate, setExpiryDate] = useState();
+  const [cvv, setCVV] = useState();
+  const [nameOnCard, setNameOnCard] = useState();
+  const [address, setAddress] = useState();
+  const [postalCode, setPostalCode] = useState();
+
+  let [validated, setValidated] = useState({
+    CardNumber: '',
+    ExpiryDate: '',
+    CVV: '',
+    NameOnCard: '',
+    Address: '',
+    PostalCode: '',
+  });
+
   //handle show hide scrollbal body
   const showHideScroll = (parameter) => {
     let body = document.querySelector('body');
@@ -26,20 +42,6 @@ export default function UserBank() {
 
   showHideScroll(bankAccount || creditCard);
 
-  //handle then label click will focus input
-  useEffect(() => {
-    let label = document.querySelectorAll('.form-group label');
-    const handleClick = (e) => {
-      console.log(label);
-    };
-    label.forEach((e) => e.addEventListener('click', handleClick));
-    return () => {
-      if (label) {
-        label.forEach((e) => e.removeEventListener('click', handleClick));
-      }
-    };
-  }, []);
-
   //hanlde credit card
   const handleShowAddCreditCard = (e) => {
     setCreditCard(true);
@@ -49,6 +51,20 @@ export default function UserBank() {
   };
   const handleCancelCreditCard = (e) => {
     setCreditCard(false);
+    setValidated({
+      CardNumber: '',
+      ExpiryDate: '',
+      CVV: '',
+      NameOnCard: '',
+      Address: '',
+      PostalCode: '',
+    });
+    setAddress('');
+    setCardNumber('');
+    setExpiryDate('');
+    setNameOnCard('');
+    setPostalCode('');
+    setCVV('');
   };
 
   //hanlde bank account
@@ -61,6 +77,122 @@ export default function UserBank() {
   const handleCancelBankAccount = (e) => {
     setBankAccount(false);
   };
+  /* handle validated  */
+  //hanlde Card Number
+  useEffect(() => {
+    const card_number = document.getElementById('card_number');
+    const handleBlurCardNumber = (e) => {
+      if (e.target.value == '') {
+        setValidated({ CardNumber: 'Please enter the card number.' });
+        e.currentTarget.classList.add('active_validated');
+      } else if (e.target.value.search(/[a-zA-Z]/gi) >= 0) {
+        setValidated({ CardNumber: 'Value must be numbers.' });
+        e.currentTarget.classList.add('active_validated');
+      } else if (e.target.value.replace(/\s+/g, '').length < 16) {
+        setValidated({ CardNumber: 'Please enter a valid card number..' });
+        e.currentTarget.classList.add('active_validated');
+      } else {
+        setValidated({ CardNumber: '' });
+        setCardNumber(parseInt(e.target.value));
+        e.currentTarget.classList.remove('active_validated');
+      }
+    };
+    const handleOnChangeCardNumber = (e) => {
+      if (e.target.value.search(/[\sa-zA-Z]/gi) >= 0 || e.target.value == '') {
+        setCardNumber(e.target.value);
+      } else if (e.target.value.replace(/\s+/g, '').length == 16) {
+        setCardNumber(parseInt(e.target.value.replace(/\s+/g, '')));
+      }
+    };
+    if (card_number) {
+      card_number.addEventListener('blur', handleBlurCardNumber);
+      card_number.addEventListener('change', handleOnChangeCardNumber);
+    }
+    return () => {
+      if (card_number) {
+        card_number.removeEventListener('blur', handleBlurCardNumber);
+        card_number.removeEventListener('change', handleOnChangeCardNumber);
+      }
+    };
+  }, [validated.CardNumber, cardNumber]);
+
+  //hanlde Expiry Date
+  useEffect(() => {
+    const expiry_date = document.getElementById('expiry_date');
+    const handleBlurExpiryDate = (e) => {
+      if (e.target.value == '') {
+        setValidated({ ExpiryDate: 'Please enter the expiry date.' });
+        e.currentTarget.classList.add('active_validated');
+      } else if (e.target.value.search(/[\sa-zA-Z]/gi) >= 0) {
+        setValidated({ ExpiryDate: 'Value must be numbers.' });
+        e.currentTarget.classList.add('active_validated');
+      } else {
+        setValidated({ ExpiryDate: '' });
+        e.currentTarget.classList.remove('active_validated');
+      }
+    };
+
+    if (expiry_date) {
+      expiry_date.addEventListener('blur', handleBlurExpiryDate);
+    }
+    return () => {
+      if (expiry_date) {
+        expiry_date.removeEventListener('blur', handleBlurExpiryDate);
+      }
+    };
+  }, [validated.ExpiryDate, expiryDate]);
+
+  //hanlde CVV
+  useEffect(() => {
+    const cvv = document.getElementById('cvv');
+    const handleBlurExpiryDate = (e) => {
+      if (e.target.value == '') {
+        setValidated((validated.CVV = 'Please enter the cvv.'));
+        e.currentTarget.classList.add('active_validated');
+      } else if (e.target.value.search(/[\sa-zA-Z]/gi) >= 0) {
+        setValidated((validated.CVV = 'Value must be numbers.'));
+        e.currentTarget.classList.add('active_validated');
+      } else {
+        setValidated((validated.CVV = ''));
+        e.currentTarget.classList.remove('active_validated');
+      }
+    };
+
+    if (cvv) {
+      cvv.addEventListener('blur', handleBlurExpiryDate);
+    }
+    return () => {
+      if (cvv) {
+        cvv.removeEventListener('blur', handleBlurExpiryDate);
+      }
+    };
+  }, [validated.CVV, cvv]);
+  //hanlde Postal Code
+  useEffect(() => {
+    const postal_code = document.getElementById('postal_code');
+    const handleBlurPostalCode = (e) => {
+      if (e.target.value == '') {
+        setValidated({ PostalCode: 'Please enter the postal code.' });
+        e.currentTarget.classList.add('active_validated');
+      } else if (e.target.value.search(/[\sa-zA-Z]/gi) >= 0) {
+        setValidated({ PostalCode: 'Value must be numbers.' });
+        e.currentTarget.classList.add('active_validated');
+      } else {
+        setValidated({ PostalCode: '' });
+        e.currentTarget.classList.remove('active_validated');
+      }
+    };
+
+    if (postal_code) {
+      postal_code.addEventListener('blur', handleBlurPostalCode);
+    }
+    return () => {
+      if (postal_code) {
+        postal_code.removeEventListener('blur', handleBlurPostalCode);
+      }
+    };
+  }, [validated.PostalCode, postalCode]);
+
   return (
     <Account>
       <div className={cx('wrapper', 'd-flex flex-column')}>
@@ -102,38 +234,111 @@ export default function UserBank() {
                       </div>
                     </div>
                     <div className={cx('creadit-card_add_number', 'form-group')}>
-                      <input name="card-number" className={cx('input', 'form-control p-3')} />
+                      <input
+                        type="tel"
+                        id="card_number"
+                        required
+                        name="card-number"
+                        className={cx('input', 'form-control p-3')}
+                        maxLength={19}
+                        onKeyPress={(e) => {
+                          if (e.target.value.length == 4) {
+                            e.target.value += ' ';
+                          } else if (e.target.value.length == 9) {
+                            e.target.value += ' ';
+                          } else if (e.target.value.length == 14) {
+                            e.target.value += ' ';
+                          }
+                        }}
+                      />
                       <label className="text-capitalize">card number</label>
+                      <span className="text-danger ps-3">{validated.CardNumber != '' ? validated.CardNumber : ''}</span>
                     </div>
                     <div className={cx('creadit-card_add_group', 'form-group d-flex gap-4')}>
                       <div className={cx('form-group col-7')}>
                         <input
+                          id="expiry_date"
+                          required
                           autoComplete="off"
                           inputMode="numeric"
-                          type="tel"
                           name="expiry-date"
+                          onChange={(e) => {
+                            setExpiryDate(e.target.value.replace(/[^0-9]/g, ''));
+                          }}
+                          onKeyPress={(e) => {
+                            if (e.target.value.length == 2) {
+                              e.target.value += '/';
+                            }
+                          }}
                           className={cx('input', 'form-control p-3')}
+                          maxLength={5}
                         />
                         <label className="text-capitalize">Expiry Date (MM/YY)</label>
+                        <span className="text-danger ps-3">
+                          {validated.ExpiryDate != '' ? validated.ExpiryDate : ''}
+                        </span>
                       </div>
                       <div className={cx('form-group col')}>
-                        <input name="cvv" className={cx('input', 'form-control p-3')} />
+                        <input
+                          id="cvv"
+                          type="password"
+                          required
+                          name="cvv"
+                          className={cx('input', 'form-control p-3')}
+                          maxLength={3}
+                          onChange={(e) => {
+                            setCVV(e.target.value.replace(/[^0-9]/g, ''));
+                          }}
+                        />
                         <label className="text-upercase">CVV</label>
+                        <span className="text-danger ps-3">{validated.CVV != '' ? validated.CVV : ''}</span>
                       </div>
                     </div>
                     <div className={cx('creadit-card_add_name-card', 'form-group')}>
-                      <input name="" className={cx('input', 'form-control p-3')} />
+                      <input
+                        id="name_on_card"
+                        type="text"
+                        required
+                        name=""
+                        className={cx('input', 'form-control p-3')}
+                        maxLength={100}
+                      />
                       <label className="text-upercase">Name On Card</label>
+                      <span className="text-danger ps-3">{validated.NameOnCard != '' ? validated.NameOnCard : ''}</span>
                     </div>
                   </div>
                   <div className={cx('creadit-card_add_billing-address', 'form-group d-flex flex-column gap-4 mb-5')}>
                     <div className={cx('form-group')}>
-                      <input name="address" className={cx('input', 'form-control p-3')} />
+                      <input
+                        id="address"
+                        type="text"
+                        required
+                        name="address"
+                        className={cx('input', 'form-control p-3')}
+                        maxLength={200}
+                      />
                       <label className="text-capitalize">Address</label>
+                      <span className="text-danger ps-3">{validated.Address != '' ? validated.Address : ''}</span>
                     </div>
                     <div className={cx('form-group')}>
-                      <input name="postal-code" className={cx('input', 'form-control p-3')} />
+                      <input
+                        required
+                        id="postal_code"
+                        type="text"
+                        onChange={(e) => {
+                          if (e.target.value.search(/[\sa-zA-Z]/gi) >= 0 || e.target.value == '') {
+                            setPostalCode(e.target.value);
+                          } else {
+                            setPostalCode(parseInt(e.target.value));
+                          }
+                        }}
+                        name="postal-code"
+                        className={cx('input', 'form-control p-3')}
+                        value={postalCode}
+                        maxLength={5}
+                      />
                       <label className="text-capitalize">postal code</label>
+                      <span className="text-danger ps-3">{validated.PostalCode != '' ? validated.PostalCode : ''}</span>
                     </div>
                   </div>
                   <div className={cx('creadit-card_add_btn', 'd-flex justify-content-end gap-2')}>
