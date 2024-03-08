@@ -198,8 +198,8 @@ function Profile({ data }) {
                 </table>
               </form>
             </div>
-            <div className={cx('avatar-contain', 'd-flex flex-column align-items-center')}>
-              <form encType="application/x-www-form-urlencoded">
+            <form encType="application/x-www-form-urlencoded">
+              <div className={cx('avatar-contain', 'd-flex flex-column align-items-center')}>
                 <div onClick={handleSelectAvatar} className={cx('avatar-contain-img')} style={{ cursor: 'pointer' }}>
                   <Images id="setImg" className={cx('rounded-circle')} src={avatar} alt={avatar} />
                 </div>
@@ -215,8 +215,8 @@ function Profile({ data }) {
                   <span className={cx('note-file-size')}>File size: maximum 1 MB</span>
                   <span className={cx('note-file-extension')}>File extension: .JPEG, .PNG</span>
                 </div>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
       </Account>
