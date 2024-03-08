@@ -2,7 +2,7 @@
   background-color: white;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.13);
   padding: 0px 30px;
-  .creadit-card,
+  .credit-card,
   .bank-account {
     position: relative;
     &_header {
@@ -21,6 +21,9 @@
         padding: 0 20px;
         &:hover {
           opacity: 0.9;
+        }
+        svg {
+          margin-right: 3px;
         }
       }
     }
@@ -148,7 +151,7 @@
       }
     }
   }
-  .creadit-card_add_wrapper {
+  .credit-card_add_wrapper {
     overflow-y: auto;
     max-height: 90vh;
     /* width */
