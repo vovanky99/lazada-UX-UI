@@ -56,7 +56,13 @@
   opacity: 1 !important;
 }
 
-/* add active validated */
+/*add danger login and register*/
+
+input.danger_validated {
+  border-color: #f44336 !important;
+}
+
+/* add active validated page account bank */
 input.active_validated:focus + label,
 input.active_validated:required:valid + label {
   color: #dc3545 !important;
@@ -66,6 +72,7 @@ input.active_validated {
   border-color: #dc3545 !important;
 }
 
+/*active button submit account credit*/
 button.btn-active {
   pointer-events: auto !important;
   opacity: 1 !important;

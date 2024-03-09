@@ -110,6 +110,7 @@ export default function Register() {
                 <Form.Label className="fs-5">Birthday</Form.Label>
                 {/* handle select birthday */}
                 <DateOption
+                  setDefault={new Date()}
                   onChangeValue={handleBirthDayOnchange}
                   numberOfYears={80}
                   selectClassName={cx('select_date', 'py-3')}
@@ -138,14 +139,14 @@ export default function Register() {
               />
               <Form.Control.Feedback type="invalid">Please Enter FullName</Form.Control.Feedback>
             </Form.Group>
-            <Checkbox
+            {/* <Checkbox
               required
               ClassName="mb-4"
               ClassNameCheck="fs-5"
               Label=" I'd like to receive exclusive offers and promotions via SMS "
               // backgroundColor="#F57224"
               styleCheckMark={{ borderColor: '#F57224' }}
-            />
+            /> */}
             <Button noValidate className={cx('btn_submit', 'form-control py-3 fs-4 mb-2')} type="submit">
               Register
             </Button>

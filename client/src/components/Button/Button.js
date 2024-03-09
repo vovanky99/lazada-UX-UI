@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function Button({
-  children,
   to,
-  onClick,
   href,
+  children,
+  onClick,
   className,
   rounded = false,
   primary = false,
@@ -35,7 +35,7 @@ function Button({
 
   if (to) {
     props.to = to;
-    Comp = 'Link';
+    Comp = Link;
   } else if (href) {
     props.href = href;
     Comp = 'a';
