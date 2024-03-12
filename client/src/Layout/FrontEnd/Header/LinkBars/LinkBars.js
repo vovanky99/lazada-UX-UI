@@ -24,8 +24,8 @@ function LinkBars({ IDLinkBars }) {
 
   return (
     <div id={IDLinkBars} className={cx('wrapper')}>
-      <div className={cx('link-list', 'd-flex gap-5')} xs={'auto'}>
-        <div>
+      <div className={cx('link-list', 'd-flex gap-5 justify-content-end')} xs={'auto'}>
+        <div className="">
           <span className={cx('cursor')}></span>
         </div>
         {/* <div>
@@ -72,23 +72,23 @@ function LinkBars({ IDLinkBars }) {
               </div>
             )}
           >
-            <div className={cx('usersname', 'grey')}>{user?.name}</div>
+            <div className={cx('usersname', 'col grey')}>{user?.name}</div>
           </Tippy>
         ) : (
           <div className={cx('d-flex gap-5')}>
-            <div>
-              <Link to={routes.signIn} className={cx('cursor', 'grey')}>
+            <div className="col">
+              <Link to={routes.signIn} className={cx('cursor', ' grey')}>
                 Login
               </Link>
             </div>
-            <div>
-              <Link to={routes.register} className={cx('cursor', 'grey')}>
+            <div className="col">
+              <Link to={routes.register} className={cx('cursor', ' grey')}>
                 Sigup
               </Link>
             </div>
           </div>
         )}
-        <div>
+        <div className="">
           <span className={cx('cursor', 'grey')}>Change Language</span>
         </div>
       </div>

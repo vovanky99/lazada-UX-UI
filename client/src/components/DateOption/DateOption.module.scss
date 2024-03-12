@@ -8,6 +8,10 @@
       border: 1px solid #00000017;
       width: 100%;
       outline: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
     }
   }
   .day {

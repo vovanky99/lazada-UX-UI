@@ -1,3 +1,4 @@
+@import url('../../../../GlobalStyles/GlobalStyles.module.scss');
 .logo-bars-content {
   margin: 0 auto !important;
   width: var(--media_width);
@@ -82,3 +83,15 @@
 .hdbn-img {
   width: 100% !important;
 }
+
+// @media (max-width: --desktop-width-xl) {
+//   .container-img {
+//     display: none !important;
+//   }
+// }
+
+// .container-img {
+//   @include desktop-xl {
+//     display: none !important;
+//   }
+// }

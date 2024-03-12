@@ -14,8 +14,7 @@ axios.defaults.withCredentials = true;
 
 // export default axios;
 
-axios.interceptors.response.use(
-  (response) => response,
-  (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong!'),
-);
-// export default http;
+// axios.interceptors.response.use(
+//   (response) => response,
+//   (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong!'),
+// );

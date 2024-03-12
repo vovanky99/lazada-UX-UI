@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
-import { Button, Form } from 'react-bootstrap';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
@@ -8,54 +7,177 @@ import { faFacebookF, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 import style from './register.module.scss';
 import routes from '~/config/routes';
 import DateOption from '~/components/DateOption';
-import Checkbox from '~/components/Checkbox';
 import axios from '~/api/axios';
 import useAuthContext from '~/contexts/Auth/AuthContent';
+import Button from '~/components/Button';
+import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-regular';
 
 const cx = classNames.bind(style);
 
-const csrf = () => axios.get('/sanctum/csrf-cookie');
-
 export default function Register() {
-  const { Register, errors } = useAuthContext();
-  const [validated, setValidated] = useState(false);
+  const { Register } = useAuthContext();
+  const emailRef = useRef();
+  const passRef = useRef();
+  const genderRef = useRef();
+  const nameRef = useRef();
+  const formRef = useRef();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [gender, setGender] = useState('');
   const [name, setFullname] = useState('');
   const [birthday, setBirthday] = useState('');
+  const [showPass, setShowPass] = useState(false);
 
-  const handleEmailOnchange = (e) => {
-    setEmail(e.target.value);
-  };
-  const handlePasswordOnchange = (e) => {
-    setPassword(e.target.value);
-  };
-  const handleGenderOnchange = (e) => {
-    setGender(e.target.value);
-  };
-  const handleFullNameOnchange = (e) => {
-    setFullname(e.target.value);
-  };
+  const [passwordValid, setPasswordValidate] = useState('');
+  const [emailValid, setEmailValidate] = useState('');
+  const [birthdayValid, setBirthdayValidate] = useState('');
+  const [nameValid, setNameValidate] = useState('');
+  const [genderValid, setGenderValidate] = useState('');
+
+  //handle email validated
+  useEffect(() => {
+    let em = emailRef.current;
+    const handleKeyUpEmail = (e) => {
+      if (e.target.value == '') {
+        setEmailValidate(`You can't leave this empty`);
+        em.classList.add('danger_validated');
+      } else if (
+        !e.target.value.match(
+          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        )
+      ) {
+        setEmailValidate(`email should be @gmail.com`);
+        em.classList.add('danger_validated');
+      } else {
+        setEmailValidate(``);
+        em.classList.remove('danger_validated');
+      }
+    };
+
+    if (em) {
+      em.addEventListener('keyup', handleKeyUpEmail);
+    }
+    return () => {
+      if (em) {
+        em.removeEventListener('keyup', handleKeyUpEmail);
+      }
+    };
+  }, [emailValid]);
+
+  //handle pass validated
+  useEffect(() => {
+    let pass = passRef.current;
+    const handleKeyUpPass = (e) => {
+      if (e.target.value == '') {
+        setPasswordValidate(`You can't leave this empty`);
+        pass.classList.add('danger_validated');
+      } else if (e.target.value.length < 6 || e.target.value.length > 20) {
+        setPasswordValidate(`The length of Password should be 6-50 characters.`);
+        pass.classList.add('danger_validated');
+      } else {
+        setPasswordValidate(``);
+        pass.classList.remove('danger_validated');
+      }
+    };
+    if (pass) {
+      pass.addEventListener('keyup', handleKeyUpPass);
+    }
+    return () => {
+      if (pass) {
+        pass.removeEventListener('keyup', handleKeyUpPass);
+      }
+    };
+  }, [passwordValid]);
+
+  //handle name validate
+  useEffect(() => {
+    let name = nameRef.current;
+    const handleKeyUpName = (e) => {
+      if (e.target.value == '') {
+        setNameValidate(`You can't leave this empty`);
+        name.classList.add('danger_validated');
+      } else if (e.target.value.length < 6 || e.target.value.length > 20) {
+        setNameValidate(`The length of Name should be 6-50 characters.`);
+        name.classList.add('danger_validated');
+      } else {
+        setNameValidate(``);
+        name.classList.remove('danger_validated');
+      }
+    };
+    if (name) {
+      name.addEventListener('keyup', handleKeyUpName);
+    }
+    return () => {
+      if (name) {
+        name.removeEventListener('keyup', handleKeyUpName);
+      }
+    };
+  }, [nameValid]);
+
   const handleBirthDayOnchange = (childData) => {
     setBirthday(childData);
   };
 
-  const handleSubmit = async (e) => {
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
+  // handle form submit
+
+  useEffect(() => {
+    const today = new Date();
+    const d = new Date(birthday);
+    const m = today.getFullYear() - d.getFullYear();
+    console.log(m);
+    let form = formRef.current;
+    let g = genderRef.current;
+    const handleSubmitForm = (e) => {
       e.preventDefault();
-      e.stopPropagation();
+      if (gender == '') {
+        setGenderValidate('Please select gender');
+        g.classList.add('danger_validated');
+      } else {
+        g.classList.remove('danger_validated');
+        setGenderValidate('');
+      }
+      if (m < 14) {
+        setBirthdayValidate('Age must be greater than 14');
+      } else {
+        setBirthdayValidate('');
+      }
+      if (
+        email != '' &&
+        password != '' &&
+        gender != '' &&
+        birthday != '' &&
+        name != '' &&
+        emailValid == '' &&
+        passwordValid == '' &&
+        genderValid == '' &&
+        birthdayValid &&
+        nameValid == ''
+      ) {
+        Register({ name, email, password, gender, birthday });
+      }
+    };
+    if (form) {
+      form.addEventListener('submit', handleSubmitForm);
+    }
+
+    return () => {
+      if (form) {
+        form.removeEventListener('submit', handleSubmitForm);
+      }
+    };
+  }, [email, password, name, gender, birthday]);
+
+  // show hide pass
+  const handleShowHidePass = () => {
+    let pass = passRef.current;
+    if (showPass == false) {
+      setShowPass(true);
+      pass.type = 'text';
     } else {
-      Register({ email, password, name, gender });
-      setEmail('');
-      setFullname('');
-      setBirthday('');
-      setGender('');
-      setValidated(true);
+      setShowPass(false);
+      pass.type = 'password';
     }
   };
-  console.log(errors);
 
   return (
     <div className={cx('wrapper')}>
@@ -63,113 +185,125 @@ export default function Register() {
         <div className={cx('header', 'd-flex justify-content-between')}>
           <h3 className={cx('title', 'fs-1')}>Create your Life Circle Account</h3>
           <div className={cx('login')}>
-            Already member?{' '}
-            <Link to={routes.signIn} style={{ color: '#1a9cb7' }}>
+            Already member?
+            <Button className="fs-5 p-1" to={routes.signIn} style={{ color: '#1a9cb7' }}>
               Login
-            </Link>{' '}
+            </Button>
             Here
           </div>
         </div>
-        <Form
-          validated={validated}
-          noValidate
-          onSubmit={handleSubmit}
-          className={cx('register_content', 'd-flex justify-content-between')}
-        >
-          <Form.Group className={cx('col-6')}>
-            <Form.Group className={cx('mb-4')}>
-              <Form.Label className="fs-5">Email*</Form.Label>
-              <Form.Control
-                onChange={handleEmailOnchange}
+        <form ref={formRef} noValidate className={cx('register_content', 'd-flex justify-content-between')}>
+          <div className={cx('col-6 form-group')}>
+            <div className={cx('mb-4 form-group')}>
+              <label className="fs-5 form-label">Email*</label>
+              <input
+                ref={emailRef}
+                className={cx('form-control py-3')}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 value={email}
                 required
-                className={cx('py-3')}
                 type="text"
                 placeholder="Email..."
               />
-              <Form.Control.Feedback type="invalid">Please Enter Email</Form.Control.Feedback>
-            </Form.Group>
-            {/* <Form.Group className={cx('slide_unlock', 'mb-3')}>
-              <span></span>
-              <div className={cx('slide_unlock_text')}>Slide to get SMS Code</div>
-            </Form.Group> */}
-            <Form.Group className={cx('mb-4')}>
-              <Form.Label className="fs-5">Password*</Form.Label>
-              <Form.Control
-                onChange={handlePasswordOnchange}
+              <span className="text-danger fs-5">{emailValid != '' ? emailValid : ''}</span>
+            </div>
+            <div className={cx('password', 'mb-4 form-group')}>
+              <label className="fs-5 form-label">Password*</label>
+              <input
+                ref={passRef}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 value={password}
                 required
-                className={cx('py-3')}
+                className={cx('py-3 form-control')}
                 type="password"
                 placeholder="Password"
               />
-              <Form.Control.Feedback type="invalid">Please Enter Password</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group className={cx('mb-4 d-flex justify-content-between gap-3')}>
-              <Form.Group className={cx('col-9')}>
-                <Form.Label className="fs-5">Birthday</Form.Label>
+              <div onClick={handleShowHidePass} className={cx('show-hide-pass')}>
+                {showPass ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}
+              </div>
+              <span className="text-danger fs-5">{passwordValid != '' ? passwordValid : ''}</span>
+            </div>
+            <div className={cx('mb-4 d-flex justify-content-between gap-3 form-group')}>
+              <div className={cx('col-9 form-group')}>
+                <label className="fs-5 form-label">Birthday</label>
                 {/* handle select birthday */}
                 <DateOption
                   setDefault={new Date()}
                   onChangeValue={handleBirthDayOnchange}
                   numberOfYears={80}
                   selectClassName={cx('select_date', 'py-3')}
-                  className={cx('container_select_date')}
+                  className={cx('container_select_date', 'mb-1')}
                 />
-              </Form.Group>
-              <Form.Group className={cx('gender')}>
-                <Form.Label className="fs-5">Gender</Form.Label>
-                <Form.Select onChange={handleGenderOnchange} value={gender} className="py-3">
+                <span className="text-danger fs-5">{birthdayValid != '' ? birthdayValid : ''}</span>
+              </div>
+              <div className={cx('gender', 'form-group')}>
+                <label className="fs-5 form-label">Gender</label>
+                <select
+                  onChange={(e) => {
+                    setGender(e.target.value);
+                  }}
+                  ref={genderRef}
+                  className="py-3 form-select"
+                >
+                  <option value="">Select</option>
                   <option value="0">Female</option>
                   <option value="1">Male</option>
-                </Form.Select>
-              </Form.Group>
-            </Form.Group>
-          </Form.Group>
-          <Form.Group className={cx('col-5')}>
-            <Form.Group className={cx('mb-4')}>
-              <Form.Label className="fs-5">Full Name*</Form.Label>
-              <Form.Control
-                onChange={handleFullNameOnchange}
+                </select>
+                <span className="text-danger fs-5">{genderValid != '' ? genderValid : ''}</span>
+              </div>
+            </div>
+          </div>
+          <div className={cx('col-5 form-group')}>
+            <div className={cx('mb-4 form-group')}>
+              <label className="fs-5 form-label">Full Name*</label>
+              <input
+                ref={nameRef}
+                onChange={(e) => {
+                  setFullname(e.target.value);
+                }}
                 value={name}
                 required
-                className={cx('py-3')}
+                className={cx('py-3 form-control')}
                 type="text"
                 placeholder="First Last"
               />
-              <Form.Control.Feedback type="invalid">Please Enter FullName</Form.Control.Feedback>
-            </Form.Group>
-            {/* <Checkbox
-              required
-              ClassName="mb-4"
-              ClassNameCheck="fs-5"
-              Label=" I'd like to receive exclusive offers and promotions via SMS "
-              // backgroundColor="#F57224"
-              styleCheckMark={{ borderColor: '#F57224' }}
-            /> */}
-            <Button noValidate className={cx('btn_submit', 'form-control py-3 fs-4 mb-2')} type="submit">
+              <span className="text-danger fs-5">{nameValid != '' ? nameValid : ''}</span>
+            </div>
+            <Button className={cx('btn_submit', 'form-control text-white py-3 fs-4 mb-2')} type="submit">
               Register
             </Button>
             <div style={{ fontSize: '1.2rem', color: '#757575' }}>
               By proceeding to sign up, I acknowledge that I have read and consented to Lazada’s{' '}
-              <Link style={{ color: '#1a9cb7' }}>Terms of Use</Link> and{' '}
-              <Link style={{ color: '#1a9cb7' }}>Privacy</Link> <Link style={{ color: '#1a9cb7' }}>Policy</Link> , which
-              sets out how Lazada collects, uses and discloses my personal data, and the rights that I have under
-              applicable law.
+              <Button to={'/'} className={cx('fs-5 m-0 p-0')} style={{ color: '#1a9cb7' }}>
+                Terms of Use
+              </Button>{' '}
+              and{' '}
+              <Button to={'/'} className={cx('fs-5 m-0 p-0')} style={{ color: '#1a9cb7' }}>
+                Privacy
+              </Button>
+              <Button to={'/'} className={cx('fs-5 m-0 p-0')} style={{ color: '#1a9cb7' }}>
+                Policy
+              </Button>
+              , which sets out how Lazada collects, uses and discloses my personal data, and the rights that I have
+              under applicable law.
             </div>
             <div className={cx('register_wrap', 'text-start my-3 fs-5')}>Or, register with</div>
-            <Form.Group className={cx('login_third', 'd-flex  justify-content-between')}>
-              <Link className={cx('fa_background', 'py-2 px-0 fs-3 text-white')}>
-                <FontAwesomeIcon className={cx('fa_facebook', 'text-white btn fs-3 pe-2 me-3')} icon={faFacebookF} />
+            <div className={cx('login_third', 'form-group d-flex  justify-content-between')}>
+              <Button className={cx('fa_background', 'py-2 px-0  fs-2 text-white')}>
+                <FontAwesomeIcon className={cx('fa_facebook', 'text-white btn fs-1 pe-2 me-3')} icon={faFacebookF} />
                 Facebook
-              </Link>
-              <Link className={cx('gg_background', 'btn py-2 px-0 fs-3 text-white')}>
+              </Button>
+              <Button className={cx('gg_background', 'btn py-2 px-0 fs-2 text-white')}>
                 <FontAwesomeIcon className={cx('fa_google', 'pe-2 me-3')} icon={faGooglePlusG} />
                 Google
-              </Link>
-            </Form.Group>
-          </Form.Group>
-        </Form>
+              </Button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   );

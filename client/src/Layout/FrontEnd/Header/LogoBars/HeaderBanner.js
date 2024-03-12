@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 function HeaderBanner({ to, src, alt, className }) {
   return (
     <div>
-      <Link to={to}>
+      <Link className={cx('container-img')}>
         <img className={cx('hdbn-img', className)} src={src} alt={alt} />
       </Link>
     </div>

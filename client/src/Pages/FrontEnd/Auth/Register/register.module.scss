@@ -23,7 +23,23 @@
 }
 .select_date {
   font-size: 1.4rem !important;
-  box-sizing: border-box !important;
+  color: #999;
+  option {
+    color: black;
+  }
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #b7b7b7;
+  }
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
 }
 .gender {
   box-sizing: border-box !important;
@@ -48,6 +64,41 @@ input {
 }
 .btn_submit:hover {
   background-color: #d0611e !important;
+}
+div label {
+  font-size: 1.2rem;
+}
+div input {
+  font-size: 1.5rem !important;
+  &:focus {
+    box-shadow: none !important;
+    border: 1px solid #00000017 !important;
+  }
+}
+
+div select {
+  font-size: 1.5rem !important;
+  &:focus {
+    box-shadow: none !important;
+    border: 1px solid #00000017 !important;
+  }
+}
+div input::placeholder {
+  font-size: 1.5rem !important;
+  opacity: 0.8 !important;
+}
+.password {
+  position: relative;
+  .show-hide-pass {
+    position: absolute;
+    right: 10px;
+    top: 35px;
+    svg {
+      font-size: 1.6rem;
+      color: #a4aab4;
+      cursor: pointer;
+    }
+  }
 }
 .register_wrap {
   opacity: 0.8;

@@ -40,14 +40,14 @@ export default function SgnIn() {
   //handle validate email
   useEffect(() => {
     let em = emailRef.current;
-    const handleKeyUpEmail = (e) => {
+    const handleKeyDownEmail = (e) => {
       if (e.target.value == '') {
         setEmailValidate(`You can't leave this empty`);
         em.classList.add('danger_validated');
       } else if (e.target.value.length < 6 || e.target.value > 30) {
         setEmailValidate('The length of the Phone or Email should be 6-30 characters.');
         em.classList.add('danger_validated');
-      } else if (e.target.value.search('@gmail.com') < 0) {
+      } else if (e.target.value.search(/@gmail.com$/i) < 0) {
         setEmailValidate('email should be @gmail.com');
         em.classList.add('danger_validated');
       } else {
@@ -56,8 +56,14 @@ export default function SgnIn() {
       }
     };
     if (em) {
-      em.addEventListener('keyup', handleKeyUpEmail);
+      em.addEventListener('keydown', handleKeyDownEmail);
     }
+
+    return () => {
+      if (em) {
+        em.removeEventListener('keydown', handleKeyDownEmail);
+      }
+    };
   }, [emailValidate]);
 
   //handle validate password
@@ -75,6 +81,11 @@ export default function SgnIn() {
     if (pass) {
       pass.addEventListener('keyup', handleChangePass);
     }
+    return () => {
+      if (pass) {
+        pass.removeEventListener('keyup', handleChangePass);
+      }
+    };
   }, [passwordValidate]);
 
   // show hide pass
@@ -145,7 +156,7 @@ export default function SgnIn() {
           </form>
           <div className={cx('login_wrap', 'text-center my-4 fs-5')}>Or, login with</div>
           <div className={cx('login_third', 'form-group d-flex  justify-content-between')}>
-            <Button className={cx('btn-lfc-gray', 'py-2 px-0')}>
+            <Button onClick="" className={cx('btn-lfc-gray', 'py-2 px-0')}>
               <FontAwesomeIcon className={cx('fa_facebook', 'pe-2')} icon={faFacebook} />
               Facebook
             </Button>

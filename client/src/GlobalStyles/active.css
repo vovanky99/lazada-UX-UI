@@ -61,6 +61,17 @@
 input.danger_validated {
   border-color: #f44336 !important;
 }
+input.danger_validated:focus {
+  border-color: #f44336 !important;
+}
+
+select.danger_validated {
+  border-color: #f44336 !important;
+}
+
+select.danger_validated:focus {
+  border-color: #f44336 !important;
+}
 
 /* add active validated page account bank */
 input.active_validated:focus + label,

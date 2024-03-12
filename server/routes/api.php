@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\front_end\auth\AuthController;
+use App\Http\Controllers\front_end\auth\SocialAuthController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use Illuminate\Http\Request;
@@ -42,3 +43,6 @@ Route::prefix('/posts')->name('posts.')->group(function () {
     Route::get('/flashsale',[HomeController::class,'getflashSale'])->name('get_flashsale'); 
     Route::get('/menu',[HomeController::class,'getMenu'])->name('get_menu'); 
 });
+
+Route::get('/auth/facebook', [SocialAuthController::class,'redirectToProvider']);
+Route::get('/auth/facebook/callback', [SocialAuthController::class,'handleProviderCallback']);
