@@ -47,7 +47,11 @@ export default function SgnIn() {
       } else if (e.target.value.length < 6 || e.target.value > 30) {
         setEmailValidate('The length of the Phone or Email should be 6-30 characters.');
         em.classList.add('danger_validated');
-      } else if (e.target.value.search(/@gmail.com$/i) < 0) {
+      } else if (
+        e.target.value.match(
+          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        )
+      ) {
         setEmailValidate('email should be @gmail.com');
         em.classList.add('danger_validated');
       } else {
