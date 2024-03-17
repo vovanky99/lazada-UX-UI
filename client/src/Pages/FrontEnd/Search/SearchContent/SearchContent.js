@@ -1,5 +1,5 @@
+import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import styles from './SearchContent.module.scss';
 import { Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,17 +9,23 @@ import {
   faChevronRight,
   faExclamation,
   faGrip,
-  faGripVertical,
-  faList,
   faShirt,
 } from '@fortawesome/free-solid-svg-icons';
 import { faClock, faCommentDots, faStar as faStarRegular } from '@fortawesome/fontawesome-free-regular';
-import { useEffect, useState } from 'react';
+
+import styles from './SearchContent.module.scss';
 import Products from '~/Layout/FrontEnd/Products';
 
 const cx = classNames.bind(styles);
 
 export default function SearchContent({ data }) {
+  const [curentPage, setCurrentPage] = useState(1);
+  const [newsPerPage, setNewsPerPage] = useState(16);
+  const [indexOfLastNews, SetIndexOfLastNews] = useState(newsPerPage * curentPage);
+  const [indexOfFirstNews, setIndexOfFirstNews] = useState(indexOfLastNews - newsPerPage);
+  const currentTodos = data.slice(indexOfFirstNews, indexOfLastNews);
+
+  //use style
   const [display, setDisplay] = useState('flex-column');
   const [imgWidth, setImgWidth] = useState('100%');
   const [gap, setGap] = useState('15px');
@@ -112,7 +118,6 @@ export default function SearchContent({ data }) {
       }
     };
   }, []);
-
   return (
     <div className={cx('wrapper', 'd-flex flex-column')}>
       <div className={cx('title')}>
@@ -201,86 +206,13 @@ export default function SearchContent({ data }) {
           </div>
         </div>
         <div id="products-grid-list" className={cx('search-products-content', 'd-flex flex-wrap')}>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
-          <div className={cx('container-products', 'width-product')}>
-            <Link>
-              <Products display={display} imgWidth={imgWidth} Gap={gap} />
-            </Link>
-          </div>
+          {currentTodos.map((pd, index) => (
+            <div key={index} className={cx('container-products', 'width-product')}>
+              <Link>
+                <Products data={pd} display={display} imgWidth={imgWidth} Gap={gap} />
+              </Link>
+            </div>
+          ))}
         </div>
         <div className={cx('search-page-navigate', 'd-flex flex-row justify-content-end')}>
           <button id="prev">

@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
         Momo::factory()->count(1000)->create();
         Payment::factory()->count(100)->create();
         Products::factory()->count(5000)->create();
-        Reviews::factory()->count(100)->create();
+        Reviews::factory()->count(1000)->create();
         ProductsTypeDetail::factory()->count(100)->create();
         Images::factory()->count(1000)->create();
         Order::factory()->count(1000)->create();

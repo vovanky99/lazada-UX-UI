@@ -40,52 +40,6 @@
   <!-- <script type="module">
     import reactBootstrap from 'https://cdn.jsdelivr.net/npm/react-bootstrap@2.9.1/+esm'
     </script> -->
-  <script>
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId: '3288348261471016',
-        channelURL: '', // Channel File, not required so leave empty
-        status: true, // check login status
-        cookie: true, // enable cookies to allow the server to access the session
-        oauth: true, // enable OAuth 2.0
-        xfbml: true,
-        version: '{api-version}',
-      });
 
-      FB.AppEvents.logPageView();
-    };
-    function loginfb() {
-      FB.getLoginStatus(function (r) {
-        //check if user already authorized the app
-        if (r.status === 'connected') {
-          window.location.href = 'fbconnect.php';
-        } else {
-          FB.login(
-            function (response) {
-              // opens the login dialog
-              if (response.authResponse) {
-                // check if user authorized the app
-                window.location.href = 'fbconnect.php';
-              } else {
-              }
-            },
-            { scope: 'email' }, //permission required by the app
-          );
-        }
-      });
-    }
-
-    (function (d, s, id) {
-      var js,
-        fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {
-        return;
-      }
-      js = d.createElement(s);
-      js.id = id;
-      js.src = 'https://connect.facebook.net/en_US/sdk.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, 'script', 'facebook-jssdk');
-  </script>
   <script defer src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js" crossorigin></script>
 </html>

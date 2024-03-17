@@ -2,24 +2,28 @@ import classNames from 'classnames/bind';
 import styles from './Button.module.scss';
 
 import { Link } from 'react-router-dom';
+import { forwardRef } from 'react';
 
 const cx = classNames.bind(styles);
 
-function Button({
-  to,
-  href,
-  children,
-  onClick,
-  className,
-  rounded = false,
-  primary = false,
-  outline = false,
-  disabled = false,
-  text = false,
-  small = false,
-  large = false,
-  ...passProps
-}) {
+const Button = forwardRef(function Button(
+  {
+    to,
+    href,
+    children,
+    onClick,
+    className,
+    rounded = false,
+    primary = false,
+    outline = false,
+    disabled = false,
+    text = false,
+    small = false,
+    large = false,
+    ...passProps
+  },
+  ref,
+) {
   let Comp = 'button';
   const props = {
     onClick,
@@ -51,10 +55,9 @@ function Button({
     [className]: className,
   });
   return (
-    <Comp className={classes} {...props}>
+    <Comp className={classes} {...props} ref={ref}>
       {children}
     </Comp>
   );
-}
-
+});
 export default Button;

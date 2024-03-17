@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import axios from '~/api/axios';
 import { useNavigate } from 'react-router-dom';
+import routes from '~/config/routes';
 
 const AuthContext = createContext({});
 
@@ -9,17 +10,19 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState('');
 
-  const [searchVl, setSearchVl] = useState();
+  const [searchVl, setSearchVl] = useState(null);
 
   const csrf = () => axios.get('/sanctum/csrf-cookie');
 
-  const getSearch = async (q) => {
+  const getSearch = async (value) => {
     try {
-      await axios.get('/api/search', {
+      const res = await axios.get('/api/search', {
         params: {
-          q: searchVl,
+          q: value,
         },
       });
+      setSearchVl(res.data);
+      navigate('/search/' + value);
     } catch (e) {
       console.log(e);
     }
@@ -50,6 +53,7 @@ export const AuthProvider = ({ children }) => {
       console.log(e);
     }
   };
+
   const login = async ({ ...data }) => {
     await csrf();
     try {
@@ -59,6 +63,14 @@ export const AuthProvider = ({ children }) => {
         getUser();
         navigate('/');
       }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const SocialLogin = async (provider) => {
+    await csrf();
+    try {
+      await axios.post(`/api/social/${provider}`);
     } catch (e) {
       console.log(e);
     }
@@ -77,7 +89,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, errors, getUser, getSearch, login, Register, Logout }}>
+    <AuthContext.Provider value={{ user, errors, searchVl, getSearch, getUser, login, Register, Logout, SocialLogin }}>
       {children}
     </AuthContext.Provider>
   );

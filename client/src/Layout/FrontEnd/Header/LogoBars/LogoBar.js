@@ -13,17 +13,18 @@ import useDebounce from '~/Hooks/Debounce/Debounce';
 
 import * as SearchServices from '~/Services/SearchServices';
 import config from '~/config';
+import useAuthContext from '~/contexts/Auth/AuthContent';
 
 const cx = classNames.bind(styles);
 
 function LogoBars() {
+  const { getSearch } = useAuthContext();
   const [searchValue, setSearchValue] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [showResult, setShowResult] = useState(false);
   const [delay, setDelay] = useState(500);
   const debounceValue = useDebounce(searchValue, delay);
-
-  const lengthBold = searchValue.length;
+  const lengthBold = useDebounce(searchValue.length, delay);
   useEffect(() => {
     if (!debounceValue.trim()) {
       setSearchResult([]);
@@ -45,6 +46,18 @@ function LogoBars() {
   const handleHideResult = () => {
     setShowResult(false);
   };
+  //handle search click
+  const handleClickSearch = (e) => {
+    setSearchValue(e.target.childNodes[0].textContent);
+    console.log(searchValue);
+  };
+  //handle submit form search
+  const handleSubmitSearch = (e) => {
+    // e.preventDefault();
+    // getSearch(searchValue);
+    // setShowResult(false);
+  };
+
   return (
     <div className={cx('wrapper')}>
       <Row className={cx('logo-bars-content')}>
@@ -67,6 +80,7 @@ function LogoBars() {
                 <div className={cx('search-result-main')}>
                   {searchResult.map((d, index) => (
                     <SearchResult
+                      handleClickSearch={handleClickSearch}
                       searchValue={searchValue}
                       title={d.title}
                       key={index}
@@ -80,9 +94,10 @@ function LogoBars() {
             )}
             onClickOutside={handleHideResult}
           >
-            <div className={cx('search-content')}>
+            <form onSubmit={handleSubmitSearch} className={cx('search-content')}>
               <input
                 onChange={handleChange}
+                value={searchValue}
                 onFocus={() => {
                   setShowResult(true);
                 }}
@@ -92,7 +107,7 @@ function LogoBars() {
               <button>
                 <FontAwesomeIcon icon={faSearch} />
               </button>
-            </div>
+            </form>
           </Tippy>
         </Col>
         <Col xl={1} className={cx('nav-cars')}>

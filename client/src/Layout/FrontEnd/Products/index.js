@@ -12,20 +12,15 @@ export default function Products({ data, display = 'flex-column', imgWidth = '10
   return (
     <div className={cx('wrapper', display + ' d-flex')} style={{ gap: Gap }}>
       <div className={cx('img')} style={{ width: imgWidth }}>
-        <Image
-          src="https://lzd-img-global.slatic.net/g/p/f2427846325bd9783b54a24a53f4f150.jpg_200x200q80.jpg_.webp"
-          alt="https://lzd-img-global.slatic.net/g/p/f2427846325bd9783b54a24a53f4f150.jpg_200x200q80.jpg_.webp"
-        />
+        <Image src={data.images} alt={data.images} />
       </div>
       <div className={cx('content', 'd-flex flex-column')}>
-        <div className={cx('title')}>
-          Rocoren 3A Micro USB Fast Charging Charger Cable for Samsung Redmi Huawei Android Mobile Phone USB Cable
-        </div>
-        <span className={cx('price')}>29,000</span>
-        <span className={cx('discount')}>47% Off</span>
+        <div className={cx('title')}>{data.title}</div>
+        <span className={cx('price')}>{(data.price - data.price * (data.discount / 100)).toFixed(2)}</span>
+        <span className={cx('discount')}>{data.discount}%</span>
         <div className={cx('footer', 'd-flex flex-row justify-content-between')}>
           <div className={cx('d-flex ', 'align-items-center')}>
-            <span className={cx('quantity')}>18 sold</span>
+            <span className={cx('quantity')}>{data.sold ? data.sold : 0} sold</span>
             <span className={cx('space')}>|</span>
             <span className={cx('rate-star')}>
               <FontAwesomeIcon icon={faStar} />

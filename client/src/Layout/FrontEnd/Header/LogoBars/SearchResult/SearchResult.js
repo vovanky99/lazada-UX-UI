@@ -9,22 +9,22 @@ import config from '~/config';
 
 const cx = classNames.bind(styles);
 
-export default function SearchResult({ title, lengthBold, delay, searchValue, id }) {
-  // const debounce = useDebounce(lengthBold, 600);
-  useEffect(() => {
-    const length_bold = document.querySelectorAll('.length-bold');
-    for (let i = 0; i < length_bold.length; i++) {
-      let b = length_bold[i].textContent.slice(0, lengthBold);
-      length_bold[i].innerHTML = length_bold[i].textContent.replace(b, `<b>${b}</b>`);
-    }
-  }, [searchValue]);
+export default function SearchResult({ title, lengthBold, delay, searchValue, id, handleClickSearch }) {
+  const debounce = useDebounce(lengthBold, 600);
+  // useEffect(() => {
+  //   const length_bold = document.querySelectorAll('.length-bold');
+  //   for (let i = 0; i < length_bold.length; i++) {
+  //     let b = length_bold[i].textContent.slice(0, lengthBold);
+  //     length_bold[i].innerHTML = length_bold[i].textContent.replace(b, `<b>${b}</b>`);
+  //   }
+  // }, [searchValue]);
 
   return (
     <>
-      <Link to={`/search/${title}`} className={cx('search-result-el', 'd-flex justify-content-between')}>
+      <div onClick={handleClickSearch} className={cx('search-result-el', 'd-flex justify-content-between')}>
         <span className={cx('length-bold')}>{title}</span>
         <FontAwesomeIcon icon={faArrowUp} />
-      </Link>
+      </div>
     </>
   );
 }

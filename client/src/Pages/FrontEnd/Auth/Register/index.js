@@ -119,12 +119,10 @@ export default function Register() {
   };
 
   // handle form submit
-
   useEffect(() => {
     const today = new Date();
     const d = new Date(birthday);
     const m = today.getFullYear() - d.getFullYear();
-    console.log(m);
     let form = formRef.current;
     let g = genderRef.current;
     const handleSubmitForm = (e) => {
@@ -150,9 +148,10 @@ export default function Register() {
         emailValid == '' &&
         passwordValid == '' &&
         genderValid == '' &&
-        birthdayValid &&
+        birthdayValid == '' &&
         nameValid == ''
       ) {
+        console.log(e);
         Register({ name, email, password, gender, birthday });
       }
     };

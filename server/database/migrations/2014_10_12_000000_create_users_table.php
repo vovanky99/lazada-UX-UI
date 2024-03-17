@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('username')->nullable();
             $table->string('email')->Unique();
             $table->string('phone_number')->nullable();
-            $table->text('password');
+            $table->text('password')->nullable();
             $table->string('avatar')->nullable();
             $table->double('level',10)->nullable();
             $table->double('status')->nullable();
@@ -26,7 +26,6 @@ return new class extends Migration
             $table->date('birthday')->nullable();
             $table->string('address')->nullable();
             $table->datetime('register_date')->nullable();
-            $table->text('auth_token')->nullable();
             $table->foreignId('role_id')->default('2')->references('id')->on('role')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

@@ -15,12 +15,14 @@ const cx = classNames.bind(SignIn);
 export default function SgnIn() {
   const emailRef = useRef();
   const passRef = useRef();
+  const fbRef = useRef();
+  const ggRef = useRef();
   const [emailValidate, setEmailValidate] = useState('');
   const [passwordValidate, setPasswordValidate] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
-  const { login } = useAuthContext();
+  const { login, SocialLogin } = useAuthContext();
 
   const handleEmailOnchange = (e) => {
     setEmail(e.target.value);
@@ -48,7 +50,7 @@ export default function SgnIn() {
         setEmailValidate('The length of the Phone or Email should be 6-30 characters.');
         em.classList.add('danger_validated');
       } else if (
-        e.target.value.match(
+        !e.target.value.match(
           /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         )
       ) {
@@ -103,6 +105,23 @@ export default function SgnIn() {
       pass.type = 'password';
     }
   };
+
+  //handle login facebook
+
+  useEffect(() => {
+    let gg = ggRef.current;
+    let fb = fbRef.current;
+    if (gg) {
+      gg.addEventListener('click', function () {
+        SocialLogin('google');
+      });
+    }
+    if (fb) {
+      fb.addEventListener('click', function () {
+        SocialLogin('facebook');
+      });
+    }
+  });
 
   return (
     <section className={cx('wrapper')}>
@@ -160,11 +179,11 @@ export default function SgnIn() {
           </form>
           <div className={cx('login_wrap', 'text-center my-4 fs-5')}>Or, login with</div>
           <div className={cx('login_third', 'form-group d-flex  justify-content-between')}>
-            <Button onClick="" className={cx('btn-lfc-gray', 'py-2 px-0')}>
+            <Button ref={fbRef} className={cx('btn-lfc-gray', 'py-2 px-0')}>
               <FontAwesomeIcon className={cx('fa_facebook', 'pe-2')} icon={faFacebook} />
               Facebook
             </Button>
-            <Button className={cx('btn-lfc-gray', 'py-2 px-0')}>
+            <Button ref={ggRef} className={cx('btn-lfc-gray', 'py-2 px-0')}>
               <FontAwesomeIcon className={cx('fa_google', 'pe-2')} icon={faGoogle} />
               Google
             </Button>

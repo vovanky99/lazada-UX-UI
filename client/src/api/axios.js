@@ -2,13 +2,13 @@ import axios from 'axios';
 
 export default axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
-  // headers: {
-  //   'Access-Control-Allow-Origin': '*',
-  //   'Content-Type': 'application/json',
-  //   // 'Access-Control-Request-Headers': 'Content-Type, Authorization',
-  // Authorization: `Bearer ${localStorage.getItem('token')}`,
-  'X-Requested-With': 'XMLHttpRequest',
-  // },
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+    // 'Access-Control-Request-Headers': 'Content-Type, Authorization',
+    // Authorization: `Bearer ${localStorage.getItem('token')}`,
+    'X-Requested-With': 'XMLHttpRequest',
+  },
 });
 axios.defaults.withCredentials = true;
 

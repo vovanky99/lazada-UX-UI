@@ -22,7 +22,7 @@ class ReviewsFactory extends Factory
             'content_reviews'=>fake()->sentence(),
             'parent_id'=>mt_rand(0,100),
             'users_id'=>mt_rand(1,100),
-            'products_id'=>mt_rand(1,100),
+            'products_id'=>mt_rand(1,32),
             //
         ];
     }

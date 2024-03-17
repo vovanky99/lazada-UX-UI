@@ -17,13 +17,13 @@ class ProductsFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'=>fake()->name(),
+            'title'=>fake()->sentence(15),
             'images'=>fake()->imageUrl(),
             'price'=>mt_rand(1000,10000000),
             'discount'=>mt_rand(1,100),
             'status'=>fake()->boolean(),
             'quantities'=>mt_rand(1,1000),
-            'descriptions'=>fake()->sentence(20),
+            'descriptions'=>fake()->sentence(40),
             'categories_id'=>mt_rand(1,15),
             'shop_id'=>mt_rand(1,100),
             'products_type_id'=>mt_rand(1,5),

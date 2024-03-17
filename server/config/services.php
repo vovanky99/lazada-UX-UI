@@ -21,9 +21,14 @@ return [
         'scheme' => 'https',
     ],
     'facebook' => [
-        'client_id' => '3288348261471016',
-        'client_secret' => '3e84d6c0538ae91e0bffdbc7d8d22e5f',
-        'redirect' => 'http://localhost:3000/auth/facebook/callback',
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect' => 'http://localhost:8000/api/social/facebook/callback',
+    ],
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => 'http://localhost:8000/api/social/google/callback',
     ],
 
     'postmark' => [

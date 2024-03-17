@@ -44,5 +44,6 @@ Route::prefix('/posts')->name('posts.')->group(function () {
     Route::get('/menu',[HomeController::class,'getMenu'])->name('get_menu'); 
 });
 
-Route::get('/auth/facebook', [SocialAuthController::class,'redirectToProvider']);
-Route::get('/auth/facebook/callback', [SocialAuthController::class,'handleProviderCallback']);
+
+Route::post('/social/{provider}', [SocialAuthController::class,'redirectToProvider']);
+Route::post('/social/{provider}/callback', [SocialAuthController::class,'handleProviderCallback']);
