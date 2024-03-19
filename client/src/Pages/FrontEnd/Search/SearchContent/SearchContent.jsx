@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import classNames from 'classnames/bind';
 import { Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -15,28 +15,34 @@ import { faClock, faCommentDots, faStar as faStarRegular } from '@fortawesome/fo
 
 import styles from './SearchContent.module.scss';
 import Products from '~/Layout/FrontEnd/Products';
+import useAuthContext from '~/contexts/Auth/AuthContent';
+import useDebounce from '~/Hooks/Debounce/Debounce';
+import Button from '~/components/Button';
+import Pagination from '~/Layout/Pagination';
 
 const cx = classNames.bind(styles);
 
 export default function SearchContent({ data }) {
-  const [curentPage, setCurrentPage] = useState(1);
-  const [newsPerPage, setNewsPerPage] = useState(16);
-  const [indexOfLastNews, SetIndexOfLastNews] = useState(newsPerPage * curentPage);
-  const [indexOfFirstNews, setIndexOfFirstNews] = useState(indexOfLastNews - newsPerPage);
-  const currentTodos = data.slice(indexOfFirstNews, indexOfLastNews);
+  const { titleSearch, getSearch } = useAuthContext();
+  const [decrease, setDecrease] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const priceRef = useRef();
+  let PageSize = 16;
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return data.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage]);
 
-  //use style
   const [display, setDisplay] = useState('flex-column');
   const [imgWidth, setImgWidth] = useState('100%');
   const [gap, setGap] = useState('15px');
-
-  //handle products list-grid
   useEffect(() => {
     const grid = document.getElementById('grid');
     const list = document.getElementById('list');
     const PD_grid_list = document.getElementById('products-grid-list');
     const widthProduct = document.querySelectorAll('.width-product');
-
+    // handle convert grid and list
     const hanldeClick = (e) => {
       if (e.currentTarget.classList.contains('active-grid') == true) {
         PD_grid_list.style['flexDirection'] = 'row';
@@ -53,7 +59,7 @@ export default function SearchContent({ data }) {
         widthProduct.forEach((e) => (e.style['width'] = '100%'));
         setDisplay('flex-row');
         setImgWidth('20%');
-        setGap('45px');
+        setGap('20px');
       }
     };
     if (grid) {
@@ -72,57 +78,14 @@ export default function SearchContent({ data }) {
     };
   }, [display]);
 
-  //handle pagination reviews
   useEffect(() => {
-    const btns = document.querySelectorAll('.pagination_number');
-    const prev = document.getElementById('prev');
-    const next = document.getElementById('next');
-    const handleClickPaginationNumber = (e) => {
-      if (e.currentTarget.classList.contains('pagination_active') == false) {
-        for (let i = 0; i < btns.length; i++) {
-          btns[i].classList.remove('pagination_active');
-          e.currentTarget.classList.add('pagination_active');
-        }
-      }
-    };
-    const handlePrev = () => {
-      for (let i = 0; i < btns.length; i++) {
-        if (btns[i].classList.contains('pagination_active') && i > 0) {
-          btns[i].classList.remove('pagination_active');
-          btns[i - 1].classList.add('pagination_active');
-          break;
-        }
-      }
-    };
-    const handleNext = () => {
-      for (let i = 0; i < btns.length - 1; i++) {
-        if (btns[i].classList.contains('pagination_active')) {
-          btns[i].classList.remove('pagination_active');
-          btns[i + 1].classList.add('pagination_active');
-          break;
-        }
-      }
-    };
-    prev.addEventListener('click', handlePrev);
-    next.addEventListener('click', handleNext);
-    btns.forEach((el) => el.addEventListener('click', handleClickPaginationNumber));
-    return () => {
-      if (prev) {
-        prev.removeEventListener('click', handlePrev);
-      }
-      if (next) {
-        next.removeEventListener('click', handleNext);
-      }
-      if (btns) {
-        btns.forEach((el) => el.removeEventListener('click', handleClickPaginationNumber));
-      }
-    };
-  }, []);
+    getSearch(titleSearch, decrease);
+  }, [decrease]);
   return (
     <div className={cx('wrapper', 'd-flex flex-column')}>
       <div className={cx('title')}>
         <span>SHOP LIÊN QUAN ĐẾN</span>
-        <span>ÁO KHOÁC</span>
+        <span>{titleSearch}</span>
       </div>
       <div className={cx('shop', 'd-flex flex-row justify-content-between')}>
         <div className={cx('shop-left', 'd-flex flex-row align-items-center')}>
@@ -177,15 +140,20 @@ export default function SearchContent({ data }) {
       </div>
       <div className={cx('search-products-title')}>
         <span>
-          <FontAwesomeIcon icon={faExclamation} /> SHOP LIÊN QUAN ĐẾN
+          <FontAwesomeIcon icon={faExclamation} /> Kết quả tìm kiếm cho từ khoá
         </span>
-        <span>ÁO KHOÁC</span>
+        <span>{titleSearch}</span>
       </div>
       <div className={cx('search-products-container', 'd-flex flex-column')}>
         <div className={cx('search-products-header', 'd-flex flex-row justify-content-between align-items-center')}>
           <div className={cx('sort-by', 'd-flex flex-row')}>
             <label>Sort By:</label>
-            <select>
+            <select
+              ref={priceRef}
+              onChange={(e) => {
+                setDecrease(e.target.value);
+              }}
+            >
               <option value="" selected>
                 Best Match
               </option>
@@ -206,7 +174,7 @@ export default function SearchContent({ data }) {
           </div>
         </div>
         <div id="products-grid-list" className={cx('search-products-content', 'd-flex flex-wrap')}>
-          {currentTodos.map((pd, index) => (
+          {currentTableData.map((pd, index) => (
             <div key={index} className={cx('container-products', 'width-product')}>
               <Link>
                 <Products data={pd} display={display} imgWidth={imgWidth} Gap={gap} />
@@ -215,15 +183,13 @@ export default function SearchContent({ data }) {
           ))}
         </div>
         <div className={cx('search-page-navigate', 'd-flex flex-row justify-content-end')}>
-          <button id="prev">
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </button>
-          <button className={cx('pagination_number', 'pagination_active')}>1</button>
-          <button className={cx('pagination_number')}>2</button>
-          <button className={cx('pagination_number')}>3</button>
-          <button id="next">
-            <FontAwesomeIcon icon={faChevronRight} />
-          </button>
+          <Pagination
+            className="pagination-bar"
+            currentPage={currentPage}
+            totalCount={data.length}
+            pageSize={PageSize}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
         </div>
       </div>
     </div>

@@ -11,16 +11,19 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState('');
 
   const [searchVl, setSearchVl] = useState(null);
+  const [titleSearch, setTitleSearch] = useState('');
 
   const csrf = () => axios.get('/sanctum/csrf-cookie');
 
-  const getSearch = async (value) => {
+  const getSearch = async (value, order) => {
     try {
       const res = await axios.get('/api/search', {
         params: {
           q: value,
+          order: order,
         },
       });
+      setTitleSearch(value);
       setSearchVl(res.data);
       navigate('/search/' + value);
     } catch (e) {
@@ -89,7 +92,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, errors, searchVl, getSearch, getUser, login, Register, Logout, SocialLogin }}>
+    <AuthContext.Provider
+      value={{ user, errors, searchVl, titleSearch, getSearch, getUser, login, Register, Logout, SocialLogin }}
+    >
       {children}
     </AuthContext.Provider>
   );

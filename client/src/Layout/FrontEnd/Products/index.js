@@ -10,11 +10,11 @@ const cx = classNames.bind(styles);
 
 export default function Products({ data, display = 'flex-column', imgWidth = '100%', Gap = '15px' }) {
   return (
-    <div className={cx('wrapper', display + ' d-flex')} style={{ gap: Gap }}>
+    <div className={cx('wrapper', display + ' d-flex align-items-center')} style={{ gap: Gap }}>
       <div className={cx('img')} style={{ width: imgWidth }}>
         <Image src={data.images} alt={data.images} />
       </div>
-      <div className={cx('content', 'd-flex flex-column')}>
+      <div className={cx('content', 'd-flex flex-column col')}>
         <div className={cx('title')}>{data.title}</div>
         <span className={cx('price')}>{(data.price - data.price * (data.discount / 100)).toFixed(2)}</span>
         <span className={cx('discount')}>{data.discount}%</span>

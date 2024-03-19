@@ -1,7 +1,7 @@
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
-import { faCartShopping, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faL, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from './LogoBars.module.scss';
@@ -22,6 +22,7 @@ function LogoBars() {
   const [searchValue, setSearchValue] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [showResult, setShowResult] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [delay, setDelay] = useState(500);
   const debounceValue = useDebounce(searchValue, delay);
   const lengthBold = useDebounce(searchValue.length, delay);
@@ -46,16 +47,27 @@ function LogoBars() {
   const handleHideResult = () => {
     setShowResult(false);
   };
+  // handle search when click element result
+  useEffect(() => {
+    if (mounted) {
+      getSearch(searchValue);
+    }
+  }, [searchValue, mounted]);
+
   //handle search click
   const handleClickSearch = (e) => {
     setSearchValue(e.target.childNodes[0].textContent);
-    console.log(searchValue);
+    setMounted(true);
+    setShowResult(false);
   };
   //handle submit form search
   const handleSubmitSearch = (e) => {
-    // e.preventDefault();
-    // getSearch(searchValue);
-    // setShowResult(false);
+    e.preventDefault();
+    if (mounted) {
+      setMounted(false);
+    }
+    getSearch(searchValue);
+    setShowResult(false);
   };
 
   return (
@@ -94,7 +106,7 @@ function LogoBars() {
             )}
             onClickOutside={handleHideResult}
           >
-            <form onSubmit={handleSubmitSearch} className={cx('search-content')}>
+            <form onSubmit={handleSubmitSearch} className={cx('search-content')} noValidate>
               <input
                 onChange={handleChange}
                 value={searchValue}
