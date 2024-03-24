@@ -93,3 +93,9 @@ button.btn-active {
 #bank-account_add.show-hide {
   display: none !important;
 }
+
+/*active search products score*/
+
+button.reviews_score.score_active {
+  background-color: #ebebeb !important;
+}

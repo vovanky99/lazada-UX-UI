@@ -6,6 +6,7 @@ const cx = classNames.bind(style);
 export default function CheckBox({
   requir = true,
   onClick,
+  valueInput,
   Label = '',
   width = '',
   height = '',
@@ -19,6 +20,7 @@ export default function CheckBox({
   Right = '',
   IconCheck = '',
   checkedAll = '',
+  checkId = '',
   checkboxclass = '',
 }) {
   const FormGroup = {};
@@ -27,8 +29,9 @@ export default function CheckBox({
       {requir ? (
         <input
           onClick={onClick}
-          id={checkedAll}
+          id={checkedAll || checkId}
           className={cx(checkboxclass)}
+          value={valueInput}
           required
           type="checkbox"
           style={{ height: Size, width: Size, top: Top, left: Left, right: Right, bottom: Bottom }}
@@ -36,9 +39,10 @@ export default function CheckBox({
       ) : (
         <input
           onClick={onClick}
-          id={checkedAll}
+          id={checkedAll || checkId}
           className={cx(checkboxclass)}
           type="checkbox"
+          value={valueInput}
           style={{ height: Size, width: Size, top: Top, left: Left, right: Right, bottom: Bottom }}
         />
       )}

@@ -16,7 +16,9 @@ function SlideShow() {
     const MenuItems = async () => {
       await axios.get('/api/posts/menu').then((res) => setData(res.data));
     };
-    MenuItems();
+    setTimeout(() => {
+      MenuItems();
+    }, 3000);
   }, []);
   return (
     <div className={cx('wrapper')}>

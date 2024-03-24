@@ -31,8 +31,10 @@ function JFYContent() {
         console.log('network error: ', error.message);
       }
     };
-    fetch();
-  }, []);
+    setTimeout(() => {
+      fetch();
+    }, 3000);
+  }, [products]);
   return (
     <div>
       <Row className={cx('jfy-content')}>

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import axios from '~/api/axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import routes from '~/config/routes';
 
 const AuthContext = createContext({});
@@ -9,28 +9,11 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState('');
-
-  const [searchVl, setSearchVl] = useState(null);
-  const [titleSearch, setTitleSearch] = useState('');
+  const [searchTitle, setSearchTitle] = useState('');
 
   const csrf = () => axios.get('/sanctum/csrf-cookie');
 
-  const getSearch = async (value, order) => {
-    try {
-      const res = await axios.get('/api/search', {
-        params: {
-          q: value,
-          order: order,
-        },
-      });
-      setTitleSearch(value);
-      setSearchVl(res.data);
-      navigate('/search/' + value);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
+  //handle get user when login
   const getUser = async () => {
     let token = localStorage.getItem('token');
     if (token) {
@@ -93,7 +76,17 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, errors, searchVl, titleSearch, getSearch, getUser, login, Register, Logout, SocialLogin }}
+      value={{
+        user,
+        errors,
+        searchTitle,
+        setSearchTitle,
+        getUser,
+        login,
+        Register,
+        Logout,
+        SocialLogin,
+      }}
     >
       {children}
     </AuthContext.Provider>

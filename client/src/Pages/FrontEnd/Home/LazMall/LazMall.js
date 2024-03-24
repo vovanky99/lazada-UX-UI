@@ -24,7 +24,10 @@ function LazMall() {
         console.log('Network Error:', error.message);
       }
     };
-    fetchData();
+    setTimeout(() => {
+      fetchData();
+    }, 3000);
+    // clearTimeout(mytimeout);
   }, []);
   return (
     <div className={cx('wrapper')}>

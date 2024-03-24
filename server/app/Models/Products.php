@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Products extends Model
 {
@@ -47,4 +48,7 @@ class Products extends Model
     public function productsTyp2(){
         return $this->belongsTo(ProductsType::class,'products_type_id2','id');
     }
+    // public function SellPrice(){
+    //         Products::select(DB::raw('(price-(discount*price)) as sell_price'));
+    // }
 }

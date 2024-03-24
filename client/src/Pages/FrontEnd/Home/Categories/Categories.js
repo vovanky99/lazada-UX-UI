@@ -20,7 +20,9 @@ function Categories() {
         console.log(e);
       }
     };
-    fetch();
+    setTimeout(() => {
+      fetch();
+    }, 3000);
   }, []);
   return (
     <div className={cx('wrapper')}>

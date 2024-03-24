@@ -33,6 +33,7 @@ Route::post('/register', [AuthController::class,'register']);
 
 Route::prefix('/search')->name('search.')->group(function(){
     Route::get('',[SearchController::class,'getSearchAll'])->name('result');
+    Route::get('/getcat',[SearchController::class,'getSearchCat'])->name('searchcat');
     Route::get('/header',[SearchController::class,'getSearchSuggest'])->name('header');
 });
 

@@ -21,10 +21,10 @@ export default function SearchResult({ title, lengthBold, delay, searchValue, id
 
   return (
     <>
-      <div onClick={handleClickSearch} className={cx('search-result-el', 'd-flex justify-content-between')}>
+      <a onClick={handleClickSearch} className={cx('search-result-el', 'd-flex justify-content-between')}>
         <span className={cx('length-bold')}>{title}</span>
         <FontAwesomeIcon icon={faArrowUp} />
-      </div>
+      </a>
     </>
   );
 }

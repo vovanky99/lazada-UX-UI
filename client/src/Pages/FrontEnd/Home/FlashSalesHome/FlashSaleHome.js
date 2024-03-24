@@ -23,7 +23,9 @@ function FlashSaleHome() {
         console.log('network error: ', error.message);
       }
     };
-    fetch();
+    setTimeout(() => {
+      fetch();
+    }, 3000);
   }, []);
   return (
     <div className={cx('wrapper')}>

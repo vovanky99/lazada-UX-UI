@@ -1,6 +1,6 @@
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { faCartShopping, faL, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -14,18 +14,29 @@ import useDebounce from '~/Hooks/Debounce/Debounce';
 import * as SearchServices from '~/Services/SearchServices';
 import config from '~/config';
 import useAuthContext from '~/contexts/Auth/AuthContent';
+import routes from '~/config/routes';
 
 const cx = classNames.bind(styles);
 
 function LogoBars() {
-  const { getSearch } = useAuthContext();
-  const [searchValue, setSearchValue] = useState('');
+  const { setSearchTitle } = useAuthContext();
+  const location = useLocation();
+  const Params = useParams();
+
+  //set default when run routes search
+  let defaultSearch = '';
+  if (location.pathname.indexOf('/search') >= 0) {
+    defaultSearch = Params.title;
+  }
+  const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState(defaultSearch || '');
   const [searchResult, setSearchResult] = useState([]);
   const [showResult, setShowResult] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [delay, setDelay] = useState(500);
   const debounceValue = useDebounce(searchValue, delay);
-  const lengthBold = useDebounce(searchValue.length, delay);
+  // const lengthBold = useDebounce(searchValue.length, delay);
+
   useEffect(() => {
     if (!debounceValue.trim()) {
       setSearchResult([]);
@@ -36,6 +47,7 @@ function LogoBars() {
       setSearchResult(result);
     };
     getProductsSearch();
+    sessionStorage.setItem('search_value', searchValue);
   }, [debounceValue]);
 
   const handleChange = (e) => {
@@ -47,26 +59,18 @@ function LogoBars() {
   const handleHideResult = () => {
     setShowResult(false);
   };
-  // handle search when click element result
-  useEffect(() => {
-    if (mounted) {
-      getSearch(searchValue);
-    }
-  }, [searchValue, mounted]);
 
   //handle search click
   const handleClickSearch = (e) => {
     setSearchValue(e.target.childNodes[0].textContent);
-    setMounted(true);
+    setSearchTitle(searchValue);
     setShowResult(false);
   };
   //handle submit form search
   const handleSubmitSearch = (e) => {
     e.preventDefault();
-    if (mounted) {
-      setMounted(false);
-    }
-    getSearch(searchValue);
+    setSearchTitle(searchValue);
+    navigate(`/search/` + searchValue);
     setShowResult(false);
   };
 
@@ -96,7 +100,7 @@ function LogoBars() {
                       searchValue={searchValue}
                       title={d.title}
                       key={index}
-                      lengthBold={lengthBold}
+                      // lengthBold={lengthBold}
                       delay={delay}
                       id={d.id}
                     />

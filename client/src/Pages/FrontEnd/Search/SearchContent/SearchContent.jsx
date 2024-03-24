@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -16,23 +16,16 @@ import { faClock, faCommentDots, faStar as faStarRegular } from '@fortawesome/fo
 import styles from './SearchContent.module.scss';
 import Products from '~/Layout/FrontEnd/Products';
 import useAuthContext from '~/contexts/Auth/AuthContent';
-import useDebounce from '~/Hooks/Debounce/Debounce';
-import Button from '~/components/Button';
 import Pagination from '~/Layout/Pagination';
 
 const cx = classNames.bind(styles);
 
-export default function SearchContent({ data }) {
-  const { titleSearch, getSearch } = useAuthContext();
-  const [decrease, setDecrease] = useState('');
+export default function SearchContent({ data, titleSearch, Price }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const priceRef = useRef();
   let PageSize = 16;
-  const currentTableData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize;
-    const lastPageIndex = firstPageIndex + PageSize;
-    return data.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+  const firstPageIndex = (currentPage - 1) * PageSize;
+  const lastPageIndex = firstPageIndex + PageSize;
+  const currentTableData = data.slice(firstPageIndex, lastPageIndex);
 
   const [display, setDisplay] = useState('flex-column');
   const [imgWidth, setImgWidth] = useState('100%');
@@ -78,9 +71,6 @@ export default function SearchContent({ data }) {
     };
   }, [display]);
 
-  useEffect(() => {
-    getSearch(titleSearch, decrease);
-  }, [decrease]);
   return (
     <div className={cx('wrapper', 'd-flex flex-column')}>
       <div className={cx('title')}>
@@ -149,14 +139,11 @@ export default function SearchContent({ data }) {
           <div className={cx('sort-by', 'd-flex flex-row')}>
             <label>Sort By:</label>
             <select
-              ref={priceRef}
               onChange={(e) => {
-                setDecrease(e.target.value);
+                Price(e.target.value);
               }}
             >
-              <option value="" selected>
-                Best Match
-              </option>
+              <option value="">Best Match</option>
               <option value="ASC">Price low to high</option>
               <option value="DESC">Price high to low</option>
             </select>
