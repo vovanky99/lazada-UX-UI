@@ -7,7 +7,6 @@ import styles from './SideBar.module.scss';
 import Checkbox from '~/Layout/FrontEnd/Checkbox';
 import { useEffect, useRef, useState } from 'react';
 import Button from '~/components/Button';
-import useDebounce from '~/Hooks/Debounce/Debounce';
 
 const cx = classNames.bind(styles);
 export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat }) {
@@ -18,7 +17,7 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
   const [showCat, setShowCat] = useState(false);
   const [catValue, setCatValue] = useState([]);
   const [score, setScore] = useState('');
-  const [newCatValue, setNewCatValue] = useState([]);
+  // const [newCatValue, setNewCatValue] = useState([]);
 
   useEffect(() => {
     let c = catRef.current;
@@ -37,18 +36,15 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
   }, [showCat]);
 
   //get cat id
-  getCatID(useDebounce(catValue, 300));
   useEffect(() => {
     let select_cat = document.querySelectorAll('.select-cat');
     const handleClickSelectCat = (e) => {
       if (catValue.indexOf(parseInt(e.target.value)) >= 0) {
-        const newValue = catValue;
-        newValue.splice(catValue.indexOf(parseInt(e.target.value)), 1);
-        setNewCatValue(newValue);
-        setCatValue(newCatValue);
+        setCatValue((state) => state.filter((item) => item != parseInt(e.target.value)));
       } else {
         setCatValue((oldValue) => [...oldValue, parseInt(e.target.value)]);
       }
+      getCatID(parseInt(e.target.value));
     };
     if (select_cat) {
       select_cat.forEach((e) => e.addEventListener('click', handleClickSelectCat));
@@ -58,9 +54,9 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
         select_cat.forEach((e) => e.removeEventListener('click', handleClickSelectCat));
       }
     };
-  }, [catValue, newCatValue]);
+  }, [catValue]);
+
   //handle set filter reviews score
-  onChangeScore(score);
   useEffect(() => {
     let reviews = document.querySelectorAll('.reviews_score');
     const handleClickScore = (e) => {
@@ -68,15 +64,17 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
         for (let i = 0; i < reviews.length; i++) {
           if (reviews[i].classList.contains) {
             reviews[i].classList.remove('score_active');
-            e.currentTarget.classList.add('score_active');
           }
         }
+        e.currentTarget.classList.add('score_active');
       } else {
         e.currentTarget.classList.remove('score_active');
       }
       if (score == parseInt(e.target.value)) {
+        onChangeScore('');
         setScore('');
       } else {
+        onChangeScore(parseInt(e.target.value));
         setScore(parseInt(e.target.value));
       }
     };
@@ -85,7 +83,7 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
     }
     return () => {
       if (reviews) {
-        reviews.forEach((e) => e.addEventListener('click', handleClickScore));
+        reviews.forEach((e) => e.removeEventListener('click', handleClickScore));
       }
     };
   }, [score]);
@@ -101,6 +99,30 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
       setPriceWarning('');
       onChangePrice(priceStart ? priceStart : 0, priceEnd ? priceEnd : 0);
     }
+  };
+
+  //handle delete all select
+  const handleClickDeleteSelect = (e) => {
+    let reviews = document.querySelectorAll('.reviews_score');
+    let checkBox = document.querySelectorAll('.select-cat');
+    for (let i = 0; i < reviews.length; i++) {
+      if (reviews[i].classList.contains) {
+        reviews[i].classList.remove('score_active');
+      }
+    }
+    for (let i = 0; i < checkBox.length; i++) {
+      if (checkBox[i].checked == true) {
+        checkBox[i].checked = false;
+      }
+    }
+    setPriceWarning('');
+    setPriceEnd('');
+    setPriceStart('');
+    onChangePrice('', '');
+    onChangeScore('');
+    setScore('');
+    setCatValue([]);
+    getCatID('');
   };
 
   return (
@@ -277,7 +299,9 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
         </Button>
       </fieldset>
       {/* delete all select */}
-      <Button className={cx('delete-all')}>DELETE ALL</Button>
+      <Button onClick={handleClickDeleteSelect} className={cx('delete-all')}>
+        DELETE ALL
+      </Button>
     </div>
   );
 }

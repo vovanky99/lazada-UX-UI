@@ -8,7 +8,6 @@ import axios from '~/api/axios';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useAuthContext from '~/contexts/Auth/AuthContent';
 import useDebounce from '~/Hooks/Debounce/Debounce';
-import QueryString from 'qs';
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +17,7 @@ export default function Search() {
   const navigate = useNavigate();
 
   const [searchVl, setSearchVl] = useState(null);
-  const [selectCat, setSelectCat] = useState('');
+  const [selectCat, setSelectCat] = useState([]);
   const [decrease, setDecrease] = useState('');
   const [categories, setCat] = useState(null);
   const [priceTo, setPriceTo] = useState('');
@@ -44,7 +43,9 @@ export default function Search() {
       getSearchCat();
     }, 3000);
   }, [searchTitle]);
+
   useEffect(() => {
+    const catSL = selectCat.join(',');
     const getSearch = async () => {
       try {
         if (Params.title || searchTitle) {
@@ -52,7 +53,7 @@ export default function Search() {
             params: {
               q: Params.title || searchTitle,
               order: decrease,
-              cat: selectCat,
+              cat: catSL,
               to: priceTo, //price to
               from: priceFrom, //price from
               score: reviewsScore,
@@ -78,12 +79,20 @@ export default function Search() {
   const onChangeScore = (value) => {
     setReviewsScore(value);
   };
-  console.log(reviewsScore);
   const onChange = (value) => {
     setDecrease(value);
   };
+  console.log(selectCat);
   const getCatID = (value) => {
-    setSelectCat(value.join());
+    if (selectCat.indexOf(value) >= 0) {
+      setSelectCat((state) => state.filter((item) => item != value));
+    } else if (value == '') {
+      setSelectCat([]);
+    } else {
+      setSelectCat((oldValue) => [...oldValue, value]);
+    }
+
+    // setSelectCat(value.join(''));
   };
 
   return (

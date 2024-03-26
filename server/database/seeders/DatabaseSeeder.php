@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\AddressUsers;
 use Illuminate\Database\Seeder;
 use \App\Models\Role;
 use \App\Models\User;
@@ -14,14 +16,19 @@ use \App\Models\Slide;
 use \App\Models\Voucher;
 use \App\Models\Payment;
 use \App\Models\Blogs;
+use App\Models\City;
 use App\Models\Images;
 use \App\Models\Products;
 use App\Models\ProductsTypeDetail;
 use \App\Models\Reviews;
 use \App\Models\Cod;
+use App\Models\District;
 use App\Models\Momo;
+use App\Models\National;
 use App\Models\Order;
 use App\Models\OrderProducts;
+use App\Models\StreetAddress;
+use App\Models\Ward;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -65,6 +72,11 @@ class DatabaseSeeder extends Seeder
        
         // Categories::factory()->count(100)->create();
         User::factory()->count(100)->create();
+        National::factory()->count(50)->create();
+        City::factory()->count(100)->create();
+        District::factory()->count(200)->create();
+        Ward::factory()->count(400)->create();
+        StreetAddress::factory()->count(50)->create();
         Shop::factory()->count(100)->create();
         ProductsType::factory()->count(100)->create();
         Manufacturer::factory()->count(100)->create();
@@ -80,5 +92,6 @@ class DatabaseSeeder extends Seeder
         Images::factory()->count(1000)->create();
         Order::factory()->count(1000)->create();
         OrderProducts::factory()->count(1000)->create();
+        AddressUsers::factory()->count(100)->create();
     }
 }

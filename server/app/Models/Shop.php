@@ -17,11 +17,19 @@ class Shop extends Model
         'descriptions',
         'address',
         'users_id',
+        'street_address_id',
+        'ward_id',
     ];
     public function users(){
         return $this->belongsTo(User::class,'users_id','id');
     }
     public function products(){
         return $this->hasMany(Products::class,'shop_id','id');
+    }
+    public function StreetAddress(){
+        return $this->belongsTo(StreetAddress::class,'street_address_id','id');
+    }
+    public function Ward(){
+        return $this->belongsTo(Ward::class,'ward_id','id');
     }
 }

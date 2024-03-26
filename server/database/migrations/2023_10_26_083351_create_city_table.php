@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('providers', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('provider');
-            $table->bigInteger('user_id')->unsigned();
-            $table->string('avatar')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        Schema::create('city', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('area');
+            $table->foreignId('national_id')->references('id')->on('national')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('providers');
+        Schema::dropIfExists('city');
     }
 };

@@ -60,6 +60,9 @@ class User extends Authenticatable
     public function order(){
         return $this->hasMany(Order::class,'users_id','id');
     }
+    public function AddressUsers(){
+        return $this->hasMany(AddressUsers::class,'user_id','id');
+    }
     public function provider(){
         return $this->hasMany(Provider::class,'user_id','id');
     }

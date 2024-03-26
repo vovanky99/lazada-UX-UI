@@ -22,15 +22,12 @@ export default function Products({ data, display = 'flex-column', imgWidth = '10
           <div className={cx('d-flex ', 'align-items-center')}>
             <span className={cx('quantity')}>{data.sold ? data.sold : 0} sold</span>
             <span className={cx('space')}>|</span>
-            <span className={cx('rate-star')}>
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-            </span>
+            <span
+              className={cx('rate-star', 'stars')}
+              style={{ '--rating': `${data.reviews_score ? data.reviews_score : 0}` }}
+            ></span>
           </div>
-          <div className={cx('area', 'text-capitalize')}>overseas</div>
+          <div className={cx('area', 'text-capitalize col')}>{data.city_name}</div>
         </div>
       </div>
     </div>
