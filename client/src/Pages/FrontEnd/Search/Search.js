@@ -5,9 +5,8 @@ import styles from './Search.Module.scss';
 import SideBar from './SideBar';
 import SearchContent from './SearchContent';
 import axios from '~/api/axios';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useAuthContext from '~/contexts/Auth/AuthContent';
-import useDebounce from '~/Hooks/Debounce/Debounce';
 
 const cx = classNames.bind(styles);
 
@@ -82,7 +81,6 @@ export default function Search() {
   const onChange = (value) => {
     setDecrease(value);
   };
-  console.log(selectCat);
   const getCatID = (value) => {
     if (selectCat.indexOf(value) >= 0) {
       setSelectCat((state) => state.filter((item) => item != value));
@@ -91,8 +89,6 @@ export default function Search() {
     } else {
       setSelectCat((oldValue) => [...oldValue, value]);
     }
-
-    // setSelectCat(value.join(''));
   };
 
   return (

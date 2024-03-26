@@ -1,22 +1,15 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import { Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faBars,
-  faChevronLeft,
-  faChevronRight,
-  faExclamation,
-  faGrip,
-  faShirt,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBars, faExclamation, faGrip, faShirt } from '@fortawesome/free-solid-svg-icons';
 import { faClock, faCommentDots, faStar as faStarRegular } from '@fortawesome/fontawesome-free-regular';
 
 import styles from './SearchContent.module.scss';
 import Products from '~/Layout/FrontEnd/Products';
-import useAuthContext from '~/contexts/Auth/AuthContent';
 import Pagination from '~/Layout/Pagination';
+import Button from '~/components/Button';
+import Images from '~/components/Images';
 
 const cx = classNames.bind(styles);
 
@@ -80,12 +73,12 @@ export default function SearchContent({ data, titleSearch, Price }) {
       <div className={cx('shop', 'd-flex flex-row justify-content-between')}>
         <div className={cx('shop-left', 'd-flex flex-row align-items-center')}>
           <div className={cx('shop-img')}>
-            <Image
+            <Images
               src="https://down-vn.img.susercontent.com/file/59ec532c43cc0879f6c0649c82d03641_tn"
               alt="https://down-vn.img.susercontent.com/file/59ec532c43cc0879f6c0649c82d03641_tn"
             />
           </div>
-          <Link to={'/'} className={cx('shop-main')}>
+          <Button to={'/'} className={cx('shop-main')}>
             <div className={cx('shop-name')}>Dep Nam</div>
             <div className={cx('shop-username')}>DepNamTuyetNhung</div>
             <div className={cx('shop-follow-count')}>
@@ -95,7 +88,7 @@ export default function SearchContent({ data, titleSearch, Price }) {
               <span className={cx('shop-count-number')}>113</span>
               <span className=" text-capitalize">&ensp;Đang theo dõi</span>
             </div>
-          </Link>
+          </Button>
         </div>
         <div className={cx('shop-right', 'd-flex flex-row align-items-center')}>
           <div className={cx('shop-products', 'd-flex flex-column')}>

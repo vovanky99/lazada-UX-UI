@@ -145,6 +145,7 @@ export default function SgnIn() {
                 ref={emailRef}
                 name="email"
                 value={email}
+                autoComplete="true"
                 onChange={handleEmailOnchange}
                 type="email"
                 placeholder="Email"
@@ -162,6 +163,7 @@ export default function SgnIn() {
               <input
                 ref={passRef}
                 name="password"
+                autoComplete="true"
                 value={password}
                 onChange={handlePasswordOnchange}
                 type="password"

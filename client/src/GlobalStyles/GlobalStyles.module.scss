@@ -1,7 +1,7 @@
 * {
   box-sizing: border-box !important;
   margin: 0;
-  font-family: lazada_en-font;
+  font-family: shoppe-regular-font;
   --background_color: #f5f5f5;
   --primary: var(--default_color);
   --black: #000;
@@ -54,12 +54,12 @@
 }
 
 @font-face {
-  font-family: lazada_vn-font;
-  src: url('/Font/vietnamese.woff2');
+  font-family: shoppe-regular-font;
+  src: url('../Font/vietnamese-regular..woff2');
 }
 @font-face {
-  font-family: lazada_en-font;
-  src: url('/Font/latin.woff2');
+  font-family: shoppe-font;
+  src: url('../Font/latin-regular..woff2');
 }
 
 html {

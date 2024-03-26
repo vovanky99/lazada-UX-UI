@@ -1,9 +1,8 @@
 import classNames from 'classnames/bind';
-import { Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
 import styles from './Footer.module.scss';
 import Images from '~/components/Images';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
@@ -70,73 +69,82 @@ function Footer() {
       <div className={cx('ft-first')}>
         <div className={cx('wrapper', 'd-flex flex-row justify-content-between')}>
           {dataFooter.map((dtft, index) => (
-            <div className={cx('')} key={index}>
+            <div className={cx('col')} key={index}>
               <div className={cx('d-flex flex-column')}>
-                <h3 className={cx('ft-first-title')}>{dtft.title} </h3>
+                <h4 className={cx('lfc-title')}>{dtft.title} </h4>
                 {dtft.data.map((dt, index) => (
-                  <Col key={index}>
-                    <Link to={dt.path}>{dt.title}</Link>
-                  </Col>
+                  <div className={cx('', 'col')} key={index}>
+                    <Button className={cx('lfc_footer_contact_element')} to={dt.path}>
+                      {dt.title}
+                    </Button>
+                  </div>
                 ))}
               </div>
             </div>
           ))}
-          <div>
-            <Row className={cx('lzd-footer-app-downloads')}>
-              <Col>
-                <div className={cx('lzd-footer-appicon')}>
-                  <Images src="https://lzd-img-global.slatic.net/g/tps/tfs/TB1iTziekWE3KVjSZSyXXXocXXa-42-42.png" />
-                </div>
-                <div className={cx('lzd-app-download-text')}>
-                  <div className={cx('title')}>Go where your heart beats</div>
-                  <div className={cx('text')} data-spm-anchor-id="a2o4n.home-vn.footer_top.i12.24303bdcCo87NW">
-                    Download the App
-                  </div>
-                </div>
-              </Col>
-              <Col className={cx('pull-left')}>
-                <a className={cx('icon-appStore-footer')} href="#"></a>
-                <a className={cx('icon-android-footer')} href="#"></a>
-                <a className={cx('icon-huawei-footer')} href="#"></a>
-              </Col>
-            </Row>
+          <div className={cx('lfc_social', 'col d-flex flex-column')}>
+            <h4 className={cx('lfc-title')}>follow us</h4>
+            <ul className={cx('lfc-social-media', 'd-flex flex-column')}>
+              <li>
+                <Button className={cx('lfc_footer_contact_element')} to="/">
+                  <Images
+                    className="me-2"
+                    src="https://down-vn.img.susercontent.com/file/2277b37437aa470fd1c71127c6ff8eb5"
+                    alt="https://down-vn.img.susercontent.com/file/2277b37437aa470fd1c71127c6ff8eb5"
+                  ></Images>
+                  <span>Facebook</span>
+                </Button>
+              </li>
+              <li>
+                <Button className={cx('lfc_footer_contact_element')} to="/">
+                  <Images
+                    className="me-2"
+                    src="https://down-vn.img.susercontent.com/file/f4f86f1119712b553992a75493065d9a"
+                    alt="https://down-vn.img.susercontent.com/file/f4f86f1119712b553992a75493065d9a"
+                  ></Images>
+                  <span>LinkedIn</span>
+                </Button>
+              </li>
+              <li>
+                <Button className={cx('lfc_footer_contact_element')} to="/">
+                  <Images
+                    className="me-2"
+                    src="https://down-vn.img.susercontent.com/file/5973ebbc642ceee80a504a81203bfb91"
+                    alt="https://down-vn.img.susercontent.com/file/5973ebbc642ceee80a504a81203bfb91"
+                  ></Images>
+                  <span>Instagram</span>
+                </Button>
+              </li>
+            </ul>
+          </div>
+          <div className={cx('lfc-app', 'col d-flex flex-column')}>
+            <h4 className={cx('lfc-title')}>LIFE CIRCLE APP DOWNLOAD</h4>
+            <div className={cx('lfc-app_qr-code', 'd-flex flex-row gap-3')}>
+              <Button className={cx('lfc_footer_contact_element', 'd-block p-2')} to="/">
+                <Images
+                  src="https://down-vn.img.susercontent.com/file/a5e589e8e118e937dc660f224b9a1472"
+                  alt="https://down-vn.img.susercontent.com/file/a5e589e8e118e937dc660f224b9a1472"
+                />
+              </Button>
+              <div className={cx('lfc-app_contain', 'col')}>
+                <Button className={cx('lfc_footer_contact_element', ' p-2')} to="/">
+                  <Images src="https://down-vn.img.susercontent.com/file/ad01628e90ddf248076685f73497c163" />
+                </Button>
+                <Button className={cx('lfc_footer_contact_element', ' p-2')} to="/">
+                  <Images src="https://down-vn.img.susercontent.com/file/ae7dced05f7243d0f3171f786e123def" />
+                </Button>
+                <Button className={cx('lfc_footer_contact_element', ' p-2')} to="/">
+                  <Images src="https://down-vn.img.susercontent.com/file/35352374f39bdd03b25e7b83542b2cb0" />
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div className={cx('ft-second')}>
-        <div className={cx('ft-second-wrapper', 'd-flex flex-row justify-content-between')}>
-          <div>
-            <h3 className={cx('lfc-title')}>follow us</h3>
-            <div className={cx('lfc-social-media', 'd-flex flex-row')}>
-              <div>
-                <Link>
-                  <img
-                    src="https://lzd-img-global.slatic.net/g/tps/imgextra/i3/O1CN01Wdetn224xMIRNihao_!!6000000007457-2-tps-34-34.png"
-                    alt="fb"
-                  ></img>
-                </Link>
-              </div>
-              <div>
-                <Link>
-                  <img
-                    src="https://lzd-img-global.slatic.net/g/tps/imgextra/i4/O1CN01zt1zOu1zsFnzoIWje_!!6000000006769-2-tps-34-34.png"
-                    alt="yt"
-                  ></img>
-                </Link>
-              </div>
-              <div>
-                <Link>
-                  <img
-                    src="https://lzd-img-global.slatic.net/g/tps/imgextra/i4/O1CN011gka8L1E0PIZlHK7e_!!6000000000289-2-tps-34-34.png"
-                    alt="ins"
-                  ></img>
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className={cx('ft-second-p')}>
-            <p>© Life Cilcle {new Date().getFullYear()} </p>
-          </div>
+        <div className={cx('ft-second-wrapper', 'd-flex justify-content-between')}>
+          <p>© {new Date().getFullYear()} Life Cilcle. All Rights Reserved .</p>
+          <p>Country & Region:VietNam</p>
         </div>
       </div>
     </footer>

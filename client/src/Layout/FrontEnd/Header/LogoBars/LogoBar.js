@@ -1,20 +1,17 @@
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
-import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { faCartShopping, faL, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { faCartShopping, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from './LogoBars.module.scss';
 import HeaderBanner from './HeaderBanner';
-import { Col, Row } from 'react-bootstrap';
 import SearchResult from './SearchResult';
-import { useEffect, useRef, useState } from 'react';
 import useDebounce from '~/Hooks/Debounce/Debounce';
-
 import * as SearchServices from '~/Services/SearchServices';
 import config from '~/config';
 import useAuthContext from '~/contexts/Auth/AuthContent';
-import routes from '~/config/routes';
 
 const cx = classNames.bind(styles);
 
@@ -76,8 +73,8 @@ function LogoBars() {
 
   return (
     <div className={cx('wrapper')}>
-      <Row className={cx('logo-bars-content')}>
-        <Col xl={2} className={cx('logo')}>
+      <div className={cx('logo-bars-content', 'row')}>
+        <div className={cx('logo', 'col-xl-2 col')}>
           <Link to="/">
             <img
               src={require('~/assets/images/logo2/png/logo-no-background.png')}
@@ -85,8 +82,8 @@ function LogoBars() {
               data-spm-anchor-id="a2o4n.home.dhome.i0.68b43bdcN0AOoI"
             />
           </Link>
-        </Col>
-        <Col xl={7} className={cx('search-container')}>
+        </div>
+        <div className={cx('search-container', 'col-xl-7 col')}>
           <Tippy
             interactive
             visible={showResult && searchValue.length > 0}
@@ -125,20 +122,20 @@ function LogoBars() {
               </button>
             </form>
           </Tippy>
-        </Col>
-        <Col xl={1} className={cx('nav-cars')}>
+        </div>
+        <div className={cx('nav-cars', 'col-xl-1 col')}>
           <Link to={config.routes.cart} className={cx('d-flex align-items-center')}>
             <FontAwesomeIcon icon={faCartShopping} />
           </Link>
-        </Col>
-        <Col xl={2}>
+        </div>
+        <div className={cx('col-xl-2 col')}>
           <HeaderBanner
             to={'//www.lazada.vn/lazada-co-brand-card?spm=a2o4n.home.header.dewallet.68b43bdcN0AOoI'}
             src={'//icms-image.slatic.net/images/ims-web/2069479e-741a-4807-8469-298d9e86ead7.png'}
             alt={'VIB_100K'}
           />
-        </Col>
-      </Row>
+        </div>
+      </div>
     </div>
   );
 }
