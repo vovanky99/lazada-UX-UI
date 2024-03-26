@@ -26,8 +26,6 @@ Route::middleware('auth:sanctum')->group(function(){
 
 });
 
-
-
 Route::post('/login', [AuthController::class,'login']);
 Route::post('/register', [AuthController::class,'register']); 
 
@@ -46,5 +44,5 @@ Route::prefix('/posts')->name('posts.')->group(function () {
 });
 
 
-Route::post('/social/{provider}', [SocialAuthController::class,'redirectToProvider']);
-Route::post('/social/{provider}/callback', [SocialAuthController::class,'handleProviderCallback']);
+// Route::post('/social/{provider}', [SocialAuthController::class,'redirectToProvider']);
+// Route::post('/social/{provider}/callback', [SocialAuthController::class,'handleProviderCallback']);

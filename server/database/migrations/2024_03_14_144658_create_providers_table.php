@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('providers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('provider');
+            $table->string('provider_id');
             $table->bigInteger('user_id')->unsigned();
             $table->string('avatar')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

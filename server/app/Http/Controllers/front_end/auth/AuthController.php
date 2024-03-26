@@ -25,7 +25,9 @@ class AuthController extends Controller
             'type'=>'bearer',
         ]]);
        }
-       return response()->json(['message'=>'Invalid credentials',401]);
+       else{
+           return response()->json(['message'=>'Invalid credentials',401]);
+       }
     }
     public function register(Request $request){
         $validator = Validator::make($request->all(),[

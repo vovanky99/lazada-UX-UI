@@ -8,6 +8,7 @@ import GetTheApp from './GetTheApp';
 import useAuthContext from '~/contexts/Auth/AuthContent';
 
 import routes from '~/config/routes';
+import config from '~/config';
 const cx = classNames.bind(styles);
 
 function LinkBars({ IDLinkBars }) {
@@ -24,33 +25,7 @@ function LinkBars({ IDLinkBars }) {
 
   return (
     <div id={IDLinkBars} className={cx('wrapper')}>
-      <div className={cx('link-list', 'd-flex gap-5 justify-content-end')} xs={'auto'}>
-        <div className="">
-          <span className={cx('cursor')}></span>
-        </div>
-        {/* <div>
-          <Tippy
-            interactive
-            trigger="click"
-            render={(attrs) => (
-              <div className={cx('get-the-app')} tabIndex="-1" {...attrs}>
-                <GetTheApp />
-              </div>
-            )}
-          >
-            <span className={cx('cursor')}>Save more on app</span>
-          </Tippy>
-        </div>
-        <div>
-          <a className={cx('cursor')}>Sell On Life Circle </a>
-        </div>
-
-        <div>
-          <a className={cx('cursor', 'grey')}>customer Care</a>
-        </div>
-        <div>
-          <span className={cx('cursor', 'grey')}>Track My Order</span>
-        </div> */}
+      <div className={cx('link-list', 'd-flex gap-5 justify-content-end py-1')}>
         {user?.name ? (
           <Tippy
             interactive
@@ -60,7 +35,7 @@ function LinkBars({ IDLinkBars }) {
               <div className={cx('get-the-user')} tabIndex="-1" {...attrs}>
                 <ul className=" text-capitalize">
                   <li>
-                    <Link>My Account</Link>
+                    <Link to={config.routes.profile}>My Account</Link>
                   </li>
                   <li>
                     <Link>My Order</Link>
@@ -72,7 +47,7 @@ function LinkBars({ IDLinkBars }) {
               </div>
             )}
           >
-            <div className={cx('usersname', 'col grey')}>{user?.name}</div>
+            <div className={cx('usersname', 'grey')}>{user?.name}</div>
           </Tippy>
         ) : (
           <div className={cx('d-flex gap-5')}>
