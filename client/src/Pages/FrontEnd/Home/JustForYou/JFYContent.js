@@ -37,47 +37,38 @@ function JFYContent() {
   }, [products]);
   return (
     <div>
-      <Row className={cx('jfy-content')}>
+      <div className={cx('jfy-content', 'row')}>
         {products
           .filter((product, index) => index <= loadMore * totalLoadMore - 1)
           .map((product) => (
-            <Col className={cx('jfy-content-container')} key={product.id}>
+            <div className={cx('jfy-content-container', 'col')} key={product.id}>
               <Link>
                 <div className={cx('jfy-content-img')}>
                   <Image src={product.images} />
                 </div>
                 <div style={{ padding: '4px 8px 12px' }}>
-                  <div className={cx('jfy-product-title')}>
-                    {product.event == true ? (
-                      <Image
-                        src="https://lzd-img-global.slatic.net/g/gcp/lazada/84a95bc1-4abf-4c03-96ce-2bac31f35756_ALL-90-36.png_2200x2200q80.png_.webp"
-                        alt="https://lzd-img-global.slatic.net/g/gcp/lazada/84a95bc1-4abf-4c03-96ce-2bac31f35756_ALL-90-36.png_2200x2200q80.png_.webp"
-                      />
-                    ) : (
-                      ''
-                    )}
-                    {product.title}
-                  </div>
+                  <div className={cx('jfy-product-title')}>{product.title}</div>
                   <span className={cx('jfy-price-discounted')}>
-                    {product.discount > 0 ? (product.price * product.discount) / 100 : product.price}
+                    {product.discount > 0
+                      ? (product.price - product.price * (product.discount / 100)).toFixed(2)
+                      : product.price}
                   </span>
                   <div className={cx('jfy-price-discount')}>
                     <span className={cx('jfy-price')}>{product.discount > 0 ? product.price : ''}</span>
                     <span className={cx('jfy-discount')}>{product.discount}</span>
                   </div>
                   <div className={cx('jfy-reviews-star')}>
-                    <FontAwesomeIcon icon={faStar} />
-                    <FontAwesomeIcon icon={faStar} />
-                    <FontAwesomeIcon icon={faStar} />
-                    <FontAwesomeIcon icon={faStar} />
-                    <FontAwesomeIcon icon={faStar} />
+                    <div
+                      className={cx('rate-star', 'stars')}
+                      style={{ '--rating': `${product.reviews_stars ? product.reviews_stars : 0}` }}
+                    ></div>
                     <span className={cx('total-reviews')}>{product.total_reviews}</span>
                   </div>
                 </div>
               </Link>
-            </Col>
+            </div>
           ))}
-      </Row>
+      </div>
 
       <div className={cx('jfy-loadmore')} style={{ textAlign: 'center' }}>
         <Button onClick={handleLoadMore} variant="outline-primary">

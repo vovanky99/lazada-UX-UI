@@ -16,6 +16,7 @@ const routes = {
   notification: '/user/account/notification',
   voucher: '/user/account/voucher',
   userbank: '/user/account/bank',
+  404: '*',
 };
 
 export default routes;

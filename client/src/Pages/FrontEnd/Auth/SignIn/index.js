@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import useAuthContext from '~/contexts/Auth/AuthContent';
@@ -9,6 +8,7 @@ import routes from '~/config/routes';
 import SignIn from './SignIn.module.scss';
 import Button from '~/components/Button';
 import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-regular';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(SignIn);
 
@@ -23,7 +23,15 @@ export default function SgnIn() {
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
   const { login, SocialLogin } = useAuthContext();
+  const navigate = useNavigate();
 
+  //logined
+  const logined = () => {
+    if (localStorage.getItem('token')) {
+      navigate('/');
+    }
+  };
+  logined();
   const handleEmailOnchange = (e) => {
     setEmail(e.target.value);
   };
@@ -145,7 +153,7 @@ export default function SgnIn() {
                 ref={emailRef}
                 name="email"
                 value={email}
-                autoComplete="true"
+                autoComplete="off"
                 onChange={handleEmailOnchange}
                 type="email"
                 placeholder="Email"

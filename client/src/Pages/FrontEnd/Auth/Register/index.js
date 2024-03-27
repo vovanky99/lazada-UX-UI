@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 
@@ -33,6 +33,15 @@ export default function Register() {
   const [birthdayValid, setBirthdayValidate] = useState('');
   const [nameValid, setNameValidate] = useState('');
   const [genderValid, setGenderValidate] = useState('');
+  const navigate = useNavigate();
+
+  //logined
+  const logined = () => {
+    if (localStorage.getItem('token')) {
+      return navigate('/');
+    }
+  };
+  logined();
 
   //handle email validated
   useEffect(() => {

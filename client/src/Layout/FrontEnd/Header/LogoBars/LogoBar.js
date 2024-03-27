@@ -114,6 +114,7 @@ function LogoBars() {
                 onFocus={() => {
                   setShowResult(true);
                 }}
+                autoComplete="off"
                 name="search"
                 placeholder="Search in Life Circle"
               />

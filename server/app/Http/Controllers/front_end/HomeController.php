@@ -40,8 +40,8 @@ class HomeController extends Controller
      */
     public function getProductsAll()
     {
-        //
-        $products = Products::join('reviews','reviews.products_id','=','products.id')->select(DB::raw('COUNT(reviews.id) as total_reviews'),DB::raw('AVG(reviews.reviews_stars) as reviews_stars'),'products.*')->groupBy('products.id')->get();
+       
+        $products = Products::select(DB::raw('(SELECT COUNT(reviews.id) from reviews where reviews.products_id = products.id) as total_reviews'),DB::raw('(SELECT AVG(reviews.reviews_stars) from reviews where reviews.products_id = products.id) as reviews_stars'),'products.*')->groupBy('products.id')->orderBy(DB::raw('(SELECT AVG(reviews.reviews_stars) from reviews where reviews.products_id = products.id)'),'DESC')->get();
         return response()->json($products,200);
     }
     public function getflashSale(){

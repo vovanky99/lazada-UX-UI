@@ -10,6 +10,7 @@ import Profile from '~/Pages/FrontEnd/Account/Profile';
 import Order from '~/Pages/FrontEnd/Account/Order';
 import Address from '~/Pages/FrontEnd/Account/Address';
 import UserBank from '~/Pages/FrontEnd/Account/UserBank';
+import Error from '~/Pages/FrontEnd/Error';
 
 const publicRoutes = [
   { path: config.routes.home, components: HomePages },
@@ -23,6 +24,7 @@ const publicRoutes = [
   { path: config.routes.address, components: Address },
   { path: config.routes.purchaseOrder, components: Order },
   { path: config.routes.userbank, components: UserBank },
+  { path: config.routes[404], components: Error },
 ];
 
 const privateRoutes = [];

@@ -106,7 +106,9 @@
     button {
       width: 10px !important;
       height: 10px !important;
-      border-radius: 50%;
+      border-radius: 999px;
+      background-color: red !important;
+      z-index: 9999 !important;
     }
   }
 }
