@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './Footer.module.scss';
 import Images from '~/components/Images';
 import Button from '~/components/Button';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -67,7 +68,7 @@ function Footer() {
   return (
     <footer>
       <div className={cx('ft-first')}>
-        <div className={cx('wrapper', 'd-flex flex-row justify-content-between')}>
+        <div className={cx('wrapper', 'd-flex flex-row justify-content-between gap-3')}>
           {dataFooter.map((dtft, index) => (
             <div className={cx('col')} key={index}>
               <div className={cx('d-flex flex-column')}>
@@ -82,6 +83,58 @@ function Footer() {
               </div>
             </div>
           ))}
+          <div className={cx('lfc-pay_transform', 'col')}>
+            <div className={cx('pay')}>
+              <h4 className={cx('lfc-title')}>Pay</h4>
+              <ul className={cx('pay-content', 'd-flex flex-row flex-wrap')}>
+                <li>
+                  <Link className={cx('lfc_footer_contact_element')} to="/">
+                    <Images src="https://down-vn.img.susercontent.com/file/d4bbea4570b93bfd5fc652ca82a262a8" />
+                  </Link>
+                </li>
+                <li>
+                  <Link className={cx('lfc_footer_contact_element')} to="/">
+                    <Images src="https://down-vn.img.susercontent.com/file/d4bbea4570b93bfd5fc652ca82a262a8" />
+                  </Link>
+                </li>
+                <li>
+                  <Link className={cx('lfc_footer_contact_element')} to="/">
+                    <Images src="https://down-vn.img.susercontent.com/file/d4bbea4570b93bfd5fc652ca82a262a8" />
+                  </Link>
+                </li>
+                <li>
+                  <Link className={cx('lfc_footer_contact_element')} to="/">
+                    <Images src="https://down-vn.img.susercontent.com/file/d4bbea4570b93bfd5fc652ca82a262a8" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className={cx('transform')}>
+              <h4 className={cx('lfc-title')}>Transform</h4>
+              <ul className={cx('transform-content', 'd-flex flex-row flex-wrap')}>
+                <li>
+                  <Link className={cx('lfc_footer_contact_element')} to="/">
+                    <Images src="https://down-vn.img.susercontent.com/file/59270fb2f3fbb7cbc92fca3877edde3f" />
+                  </Link>
+                </li>
+                <li>
+                  <Link className={cx('lfc_footer_contact_element')} to="/">
+                    <Images src="https://down-vn.img.susercontent.com/file/59270fb2f3fbb7cbc92fca3877edde3f" />
+                  </Link>
+                </li>
+                <li>
+                  <Link className={cx('lfc_footer_contact_element')} to="/">
+                    <Images src="https://down-vn.img.susercontent.com/file/59270fb2f3fbb7cbc92fca3877edde3f" />
+                  </Link>
+                </li>
+                <li>
+                  <Link className={cx('lfc_footer_contact_element')} to="/">
+                    <Images src="https://down-vn.img.susercontent.com/file/59270fb2f3fbb7cbc92fca3877edde3f" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
           <div className={cx('lfc_social', 'col d-flex flex-column')}>
             <h4 className={cx('lfc-title')}>follow us</h4>
             <ul className={cx('lfc-social-media', 'd-flex flex-column')}>
