@@ -1,4 +1,10 @@
 @use '../../../../GlobalStyles/mixin.scss' as mixin;
+
+@include mixin.breakpoint(lg) {
+  .link-list {
+    padding-right: 10px;
+  }
+}
 @include mixin.breakpoint(md) {
   .link-list {
     padding-right: 10px;
