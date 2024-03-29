@@ -1,10 +1,76 @@
+@use '../../../GlobalStyles/mixin.scss' as mixin;
+
+@include mixin.breakpoint(lg) {
+  .ft-first,
+  .ft-second {
+    padding: 0 10px;
+  }
+}
+
+@include mixin.breakpoint(md) {
+  .ft-first,
+  .ft-second {
+    padding: 0 10px;
+  }
+  .ft-first {
+    .wrapper {
+    }
+  }
+  .lfc-title {
+    font-size: 1.3rem !important;
+  }
+}
+@include mixin.breakpoint(sm) {
+  .wrapper {
+    gap: 10px !important;
+    justify-content: flex-start !important;
+    > div {
+      width: calc((100% - (10px * 2)) / 3) !important;
+      flex: none;
+    }
+  }
+  .ft-first,
+  .ft-second {
+    padding: 0 10px;
+  }
+  // .transform-content,
+  // .pay-content {
+  //   li {
+  //     width: calc((100% - (5px * 1)) / 2) !important;
+  //   }
+  // }
+}
+@include mixin.breakpoint(xs) {
+  .wrapper {
+    gap: 10px !important;
+    justify-content: flex-start !important;
+    > div {
+      width: calc((100% - (10px * 2)) / 3) !important;
+      flex: none;
+    }
+  }
+  .ft-first,
+  .ft-second {
+    padding: 0 10px;
+  }
+  .transform-content,
+  .pay-content {
+    li {
+      width: calc((100% - (5px * 1)) / 2) !important;
+    }
+  }
+  .lfc-app {
+    flex-grow: 1 !important;
+  }
+}
+
 .ft-first {
   background-color: var(--background_home_grey);
   padding-top: 10px;
   border-top: 1px solid #e2e2e2;
   > div {
     margin: 0 auto !important;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     width: var(--media_width);
     flex-direction: row;
     > div {
@@ -29,7 +95,6 @@
 }
 
 .lfc-title {
-  max-height: 35px;
   font-size: 1.4rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -45,6 +110,7 @@
 }
 
 .lfc-app {
+  gap: 5px;
   &_contain {
     a {
       margin-left: 0 !important;

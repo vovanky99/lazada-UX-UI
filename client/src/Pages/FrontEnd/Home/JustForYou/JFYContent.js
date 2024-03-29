@@ -1,11 +1,10 @@
 import classNames from 'classnames/bind';
 import styles from './JustForYou.module.scss';
-import { Button, Col, Image, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useState } from 'react';
 import axios from '~/api/axios';
+import Images from '~/components/Images';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
@@ -36,15 +35,15 @@ function JFYContent() {
     }, 3000);
   }, [products]);
   return (
-    <div>
-      <div className={cx('jfy-content', 'row')}>
+    <div className={cx('d-flex flex-column gap-5')}>
+      <div className={cx('jfy-content', 'd-flex flex-row flex-wrap')}>
         {products
           .filter((product, index) => index <= loadMore * totalLoadMore - 1)
           .map((product) => (
-            <div className={cx('jfy-content-container', 'col')} key={product.id}>
+            <div className={cx('jfy-content-container')} key={product.id}>
               <Link>
                 <div className={cx('jfy-content-img')}>
-                  <Image src={product.images} />
+                  <Images src={product.images} />
                 </div>
                 <div style={{ padding: '4px 8px 12px' }}>
                   <div className={cx('jfy-product-title')}>{product.title}</div>
@@ -70,9 +69,9 @@ function JFYContent() {
           ))}
       </div>
 
-      <div className={cx('jfy-loadmore')} style={{ textAlign: 'center' }}>
+      <div className={cx('jfy-loadmore', 'text-uppercase text-center')}>
         <Button onClick={handleLoadMore} variant="outline-primary">
-          Load More
+          See More
         </Button>
       </div>
     </div>

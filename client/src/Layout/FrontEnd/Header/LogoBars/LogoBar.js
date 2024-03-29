@@ -12,6 +12,7 @@ import useDebounce from '~/Hooks/Debounce/Debounce';
 import * as SearchServices from '~/Services/SearchServices';
 import config from '~/config';
 import useAuthContext from '~/contexts/Auth/AuthContent';
+import Images from '~/components/Images';
 
 const cx = classNames.bind(styles);
 
@@ -73,17 +74,20 @@ function LogoBars() {
 
   return (
     <div className={cx('wrapper')}>
-      <div className={cx('logo-bars-content', 'row')}>
-        <div className={cx('logo', 'col-xl-2 col')}>
-          <Link to="/">
+      <div className={cx('logo-bars-content', 'row align-items-center')}>
+        <div className={cx('logo', 'col-xl-2 col col-lg-2 col-md-3 col-sm-3')}>
+          <Link className={cx('logo-normal')} to="/">
             <img
               src={require('~/assets/images/logo2/png/logo-no-background.png')}
               alt="Online Shopping Life Circle Logo"
               data-spm-anchor-id="a2o4n.home.dhome.i0.68b43bdcN0AOoI"
             />
           </Link>
+          <Link className={cx('logo-xs')} to="/">
+            <Images src={require('~/assets/images/logo1/logo-xs.png')} />
+          </Link>
         </div>
-        <div className={cx('search-container', 'col-xl-7 col')}>
+        <div className={cx('search-container', 'col-xl-7 col col-lg-8 col-md-7 col-sm-7 d-block mx-0')}>
           <Tippy
             interactive
             visible={showResult && searchValue.length > 0}
@@ -107,8 +111,9 @@ function LogoBars() {
             )}
             onClickOutside={handleHideResult}
           >
-            <form onSubmit={handleSubmitSearch} className={cx('search-content')} noValidate>
+            <form onSubmit={handleSubmitSearch} className={cx('search-content', 'row mx-0')} noValidate>
               <input
+                className={cx('search-input', 'col-10')}
                 onChange={handleChange}
                 value={searchValue}
                 onFocus={() => {
@@ -118,18 +123,18 @@ function LogoBars() {
                 name="search"
                 placeholder="Search in Life Circle"
               />
-              <button>
+              <button className={cx('search-button', 'col')}>
                 <FontAwesomeIcon icon={faSearch} />
               </button>
             </form>
           </Tippy>
         </div>
-        <div className={cx('nav-cars', 'col-xl-1 col')}>
-          <Link to={config.routes.cart} className={cx('d-flex align-items-center')}>
+        <div className={cx('nav-cars', 'col-xl-1 col col-lg-1 col-md-2 col-sm-2 text-center')}>
+          <Link to={config.routes.cart} className={cx('')}>
             <FontAwesomeIcon icon={faCartShopping} />
           </Link>
         </div>
-        <div className={cx('col-xl-2 col')}>
+        <div className={cx('header-banner', 'col-xl-2 col')}>
           <HeaderBanner
             to={'//www.lazada.vn/lazada-co-brand-card?spm=a2o4n.home.header.dewallet.68b43bdcN0AOoI'}
             src={'//icms-image.slatic.net/images/ims-web/2069479e-741a-4807-8469-298d9e86ead7.png'}

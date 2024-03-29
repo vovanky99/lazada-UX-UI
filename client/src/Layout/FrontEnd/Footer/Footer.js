@@ -66,9 +66,9 @@ const dataFooter = [
 
 function Footer() {
   return (
-    <footer>
+    <footer className={cx('footer')}>
       <div className={cx('ft-first')}>
-        <div className={cx('wrapper', 'd-flex flex-row justify-content-between gap-3')}>
+        <div className={cx('wrapper', 'd-flex flex-row flex-wrap gap-3')}>
           {dataFooter.map((dtft, index) => (
             <div className={cx('col')} key={index}>
               <div className={cx('d-flex flex-column')}>

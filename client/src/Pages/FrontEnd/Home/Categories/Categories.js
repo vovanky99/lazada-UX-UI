@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
 import style from './Categories.module.scss';
-import { Col, Image, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from '~/api/axios';
+import Images from '~/components/Images';
 
 const cx = classNames.bind(style);
 
@@ -27,20 +27,20 @@ function Categories() {
   return (
     <div className={cx('wrapper')}>
       <span className={cx('cat-title')}>Categories</span>
-      <Row className={cx('cat-content')}>
+      <div className={cx('cat-content', 'd-flex flex-row flex-wrap')}>
         {data.map((cat) => (
-          <Col className={cx('cat-content-container')} key={cat.id}>
+          <div className={cx('cat-content-container')} key={cat.id}>
             <Link>
               <div className={cx('cat-img')}>
-                <Image src={cat.images} alt={cat.images} />
+                <Images src={cat.images} alt={cat.images} />
               </div>
               <div className={cx('cats-title')}>
                 <span>{cat.title}</span>
               </div>
             </Link>
-          </Col>
+          </div>
         ))}
-      </Row>
+      </div>
     </div>
   );
 }

@@ -1,3 +1,28 @@
+@use '../../../../GlobalStyles/mixin.scss' as mixin;
+@include mixin.breakpoint(md) {
+  .link-list {
+    padding-right: 10px;
+  }
+  .cursor {
+    font-size: 1.2rem !important;
+  }
+}
+@include mixin.breakpoint(sm) {
+  .link-list {
+    padding-right: 10px;
+  }
+  .cursor {
+    font-size: 1.2rem !important;
+  }
+}
+@include mixin.breakpoint(xs) {
+  .link-list {
+    padding-right: 10px;
+  }
+  .cursor {
+    font-size: 1.1rem !important;
+  }
+}
 .wrapper {
   display: flex;
   align-items: center;

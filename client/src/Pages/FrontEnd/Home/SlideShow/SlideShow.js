@@ -22,14 +22,15 @@ function SlideShow() {
   }, []);
   return (
     <div className={cx('wrapper')}>
-      <div className={cx('banner-conteiner-inner')}>
-        <div className={cx('categories-tree-container', 'd-flex flex-column')}>
+      <div className={cx('banner-container-inner', 'd-flex flex-row gap-2')}>
+        {/* <div className={cx('categories-tree-container', 'd-flex flex-column col-2')}>
           {data.map((dt, index) => (
             <CatTree key={index} personData={dt} />
           ))}
-        </div>
-        <div className={cx('swiper-container')}>
-          <Carousel controls fade pause={'hover'} className={cx('slide-indicator')}>
+         
+        </div> */}
+        <div className={cx('slide-left', 'col-9')}>
+          <Carousel indicators={true} controls={false} fade pause={'hover'} className={cx('slide-indicator')}>
             <Carousel.Item interval={3000} className={cx('each-banner-container')}>
               <Link>
                 <Images
@@ -61,6 +62,18 @@ function SlideShow() {
               </Link>
             </Carousel.Item>
           </Carousel>
+        </div>
+        <div className={cx('slide-right', 'col d-flex flex-column gap-2')}>
+          <div className={cx('img-top')}>
+            <Link>
+              <Images src="https://cf.shopee.vn/file/vn-50009109-a48b19584f4988dfefa3c9f785218ae1_xhdpi" />
+            </Link>
+          </div>
+          <div className={cx('img-bottom')}>
+            <Link>
+              <Images src="https://cf.shopee.vn/file/vn-50009109-a48b19584f4988dfefa3c9f785218ae1_xhdpi" />
+            </Link>
+          </div>
         </div>
       </div>
     </div>

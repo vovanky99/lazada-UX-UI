@@ -1,3 +1,52 @@
+@use '../../../../GlobalStyles/mixin.scss' as mixin;
+
+@include mixin.breakpoint(xxl) {
+}
+@include mixin.breakpoint(xxx) {
+}
+@include mixin.breakpoint(lg) {
+  .wrapper {
+    padding: 0 10px;
+  }
+}
+@include mixin.breakpoint(md) {
+  .wrapper {
+    padding: 0 10px;
+  }
+}
+@include mixin.breakpoint(sm) {
+  .wrapper {
+    padding: 0 10px;
+  }
+  .cat-content {
+    .cat-content-container {
+      width: calc(100% / 5) !important;
+    }
+  }
+}
+@include mixin.breakpoint(xs) {
+  .cat-content-container {
+    width: calc(100% / 4) !important;
+    height: 110px !important;
+    span {
+      height: auto !important;
+      margin: 0 !important;
+      text-align: center !important;
+    }
+  }
+  .cat-img {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 auto;
+    img {
+      width: 100%;
+    }
+  }
+  .wrapper {
+    padding: 0 10px;
+  }
+}
+
 .wrapper {
   width: var(--media_width);
   margin: 0 auto 40px;
@@ -6,9 +55,11 @@
   font-size: 2.1rem;
   font-weight: 400;
   text-transform: capitalize;
-  margin-bottom: 5px;
   display: flex;
   flex-direction: column;
+  background-color: white;
+  padding: 5px;
+  border-bottom: 1px solid #0000000d;
 }
 .cat-content {
   margin: 0 !important;
@@ -16,13 +67,12 @@
   min-height: 297px;
 }
 .cat-content-container {
-  flex: none !important;
-  padding: 0 !important;
-  width: 12.5% !important;
+  padding: 0;
+  width: 10%;
   height: 148.5px;
   border-right: 1px solid #e2e2e2;
   border-bottom: 1px solid #e2e2e2;
-  box-sizing: border-box !important;
+  box-sizing: border-box;
   background-color: var(--white);
   a {
     display: block;
@@ -40,11 +90,11 @@
   text-align: center;
   span {
     display: -webkit-box;
-    height: 36px;
+    height: 3.6rem;
     margin: 8px 12px 0;
     overflow: hidden;
-    font-size: 14px;
-    line-height: 18px;
+    font-size: 1.4rem;
+    line-height: 1.8rem;
     color: #212121;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;

@@ -29,13 +29,13 @@ function FlashSaleHome() {
   }, []);
   return (
     <div className={cx('wrapper')}>
-      <span className={cx('title-flash-sale')}>flash sale</span>
       <div className={cx('flash-sale-content')}>
         <div className={cx('fs-content-header')}>
           <div className={cx('fs-content-header-left')}>
-            <div className={cx('fs-text')}>on sale now</div>
+            <div className={cx('fs-text')}>
+              <span className={cx('title-flash-sale')}>flash sale</span>
+            </div>
             <div className={cx('fs-content-header-timer')}>
-              <div className={cx('timer-text')}>Ending in</div>
               <div className={cx('timer-time')}>
                 <Timer deadline={'December, 6, 2022'} dateClass={cx('date-class')} textFs={cx('text-fs')} />
               </div>
@@ -47,9 +47,9 @@ function FlashSaleHome() {
             </Button>
           </div>
         </div>
-        <Row className={cx('flash-sale-content-body', 'flex-wrap gap-3')}>
+        <div className={cx('flash-sale-content-body', 'd-flex flex-row')}>
           {products.map((product) => (
-            <Col className={cx('fs-content-body-container', 'p-0')} key={product.id}>
+            <div className={cx('fs-content-body-container')} key={product.id}>
               <Link className={cx(`fs-content-body-unit`)}>
                 <div className={cx('fs-img-container')}>
                   <Image src={product.images} />
@@ -60,20 +60,22 @@ function FlashSaleHome() {
                   </span>
                   <div className={cx('fs-card-price')}>
                     <span className={cx('currency')}>₫</span>
-                    <span className={cx('price-discount')}>{Math.floor((product.price * product.discount) / 100)}</span>
+                    <span className={cx('price-discount')}>
+                      {(product.price - product.price * (product.discount / 100)).toFixed(2)}
+                    </span>
                   </div>
-                  <div className={cx('fs-card-origin-price')}>
+                  <div className={cx('fs-card-origin-price', 'd-flex flex-row')}>
                     <div className={cx('fs-origin-price')}>
                       <span className={cx('currency')}>₫</span>
                       <span className={cx('price')}>{product.price}</span>
                     </div>
-                    <span className={cx('itemdiscount', 'pb-5')}>-{product.discount}%</span>
+                    <span className={cx('itemdiscount')}>-{product.discount}%</span>
                   </div>
                 </div>
               </Link>
-            </Col>
+            </div>
           ))}
-        </Row>
+        </div>
       </div>
     </div>
   );

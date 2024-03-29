@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'tippy.js/dist/tippy.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/js/bootstrap';
+
 import SSRProvider from 'react-bootstrap/SSRProvider';
 import { AuthProvider } from './contexts/Auth/AuthContent';
 

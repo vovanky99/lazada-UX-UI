@@ -1,17 +1,17 @@
 import classNames from 'classnames/bind';
 
-import style from './LazMall.module.scss';
-import { Col, Image, Row } from 'react-bootstrap';
+import style from './LifeMall.module.scss';
 import { Link } from 'react-router-dom';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '~/api/axios';
 
 import { useEffect, useState } from 'react';
+import Images from '~/components/Images';
 
 const cx = classNames.bind(style);
 
-function LazMall() {
+function LifeMall() {
   const [data, setdata] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -31,34 +31,34 @@ function LazMall() {
   }, []);
   return (
     <div className={cx('wrapper')}>
-      <div className={cx('lz-container')}>
-        <div className={cx('lz-header')}>
-          <span className={cx('lz-header-left')}>LazMall</span>
-          <Link className={cx('lz-header-right')}>
+      <div className={cx('lfc-container')}>
+        <div className={cx('lfc-header', 'd-flex flex-row justify-content-between align-items-center')}>
+          <span className={cx('lfc-header-left')}>Life Mall</span>
+          <Link className={cx('lfc-header-right')}>
             <span href="#">
               Shop More <FontAwesomeIcon icon={faChevronRight} />
             </span>
           </Link>
         </div>
-        <Row className={cx('lz-content', 'gap-3 flex-wrap')}>
+        <div className={cx('lfc-content', 'd-flex flex-row flex-wrap')}>
           {data.map((lzs) => (
-            <Col className={cx('lz-content-container', 'p-0')} key={lzs.id}>
+            <div className={cx('lfc-content-container')} key={lzs.id}>
               <Link>
-                <div className={cx('lz-img-cover')}>
-                  <Image src={lzs.img_cover} />
+                <div className={cx('lfc-img-cover')}>
+                  <Images src={lzs.img_cover} />
                 </div>
-                <div className={cx('lz-logo')}>
-                  <Image src={lzs.logo} />
+                <div className={cx('lfc-logo')}>
+                  <Images src={lzs.logo} />
                 </div>
                 <span className={cx('card-official-stores-h1')}>{lzs.name}</span>
                 <span className={cx('card-official-stores-p')}>{lzs.name}</span>
               </Link>
-            </Col>
+            </div>
           ))}
-        </Row>
+        </div>
       </div>
     </div>
   );
 }
 
-export default LazMall;
+export default LifeMall;

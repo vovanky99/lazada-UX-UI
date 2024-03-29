@@ -1,36 +1,61 @@
+@use '../../../../GlobalStyles/mixin.scss' as mixin;
+
+@include mixin.breakpoint(lg) {
+}
+
+@include mixin.breakpoint(md) {
+}
+@include mixin.breakpoint(sm) {
+  .wrapper {
+    > div {
+      height: 50px !important;
+    }
+  }
+}
+@include mixin.breakpoint(xs) {
+  .wrapper {
+    margin-bottom: 5px !important;
+    > div {
+      height: 50px !important;
+    }
+  }
+  .rax-view {
+    padding-left: 15px !important;
+    img {
+      width: 10rem !important;
+      height: 1.4rem !important;
+      background-color: transparent;
+    }
+  }
+}
 .wrapper {
   width: var(--media_width);
   margin: 0 auto;
   display: flex;
   background-color: var(--white);
-  border-radius: 12px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   div {
     width: 100%;
-    display: flex;
-    flex-direction: row;
     height: 60px;
-    justify-content: center;
-    align-items: center;
   }
 }
 
+// a.rax-view {
+//   &:not(:first-child) {
+//     border-left: 1px solid #eee !important;
+//     color: #000;
+//   }
+// }
 .rax-view {
-  flex: 1;
   height: 36px;
   padding-left: 30px;
-  display: flex;
-  flex-direction: column;
-
   &:hover span {
     color: var(--orange);
   }
   img {
-    width: 120px;
-    height: 18px;
+    width: 12rem;
+    height: 1.8rem;
     background-color: transparent;
-    resize: contain;
-    object-fit: contain;
   }
   span {
     color: #999;
@@ -45,7 +70,7 @@
   }
 }
 
-.lazmall {
+.lifemall {
   .rax-view:hover span {
     color: var(--red);
   }

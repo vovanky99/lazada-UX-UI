@@ -4,7 +4,7 @@ import styles from './Home.module.scss';
 import SlideShow from './SlideShow';
 import Channels from './Channels';
 import FlashSaleHome from './FlashSalesHome/FlashSaleHome';
-import LazMall from './LazMall';
+import LifeMall from './LifeMall';
 import Categories from './Categories';
 import JustForYou from './JustForYou';
 
@@ -23,7 +23,7 @@ function Home() {
         <FlashSaleHome />
       </div>
       <div className={cx('lazmall')}>
-        <LazMall />
+        <LifeMall />
       </div>
       <div className={cx('categories')}>
         <Categories />

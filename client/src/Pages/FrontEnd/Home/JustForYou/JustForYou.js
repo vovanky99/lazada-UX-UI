@@ -13,7 +13,7 @@ const LazyJFYContent = React.lazy(() => {
 function JustForYou() {
   return (
     <div className={cx('wrapper')}>
-      <span className={cx('jfy-title')}>Just For You</span>
+      <span className={cx('jfy-title', 'text-capitalize')}>Just For You</span>
       <Suspense fallback={<div className={cx('loading-container')}></div>}>
         <LazyJFYContent />
       </Suspense>

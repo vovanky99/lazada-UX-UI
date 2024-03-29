@@ -1,3 +1,115 @@
+@use '../../../../GlobalStyles/mixin.scss' as mixin;
+
+@include mixin.breakpoint(lg) {
+  .wrapper {
+    padding: 0px 10px;
+  }
+  .fs-content-header-right {
+    a {
+      padding: 4px 8px !important;
+    }
+  }
+}
+
+@include mixin.breakpoint(md) {
+  .wrapper {
+    padding: 0px 10px;
+  }
+  .fs-content-header-left {
+    gap: 4rem !important;
+  }
+  .fs-content-header-right {
+    a {
+      padding: 3px 5px !important;
+    }
+  }
+  .timer-text {
+    &:not(:last-child) {
+      width: 6rem !important;
+    }
+  }
+  .flash-sale-content-body {
+    margin: 0 !important;
+    gap: 5px !important;
+    .fs-content-body-container {
+      width: calc((100% - (5px * 5)) / 6) !important;
+      padding-bottom: 5px !important;
+    }
+  }
+}
+@include mixin.breakpoint(sm) {
+  .wrapper {
+    padding: 0px 10px;
+  }
+  div.timer-text {
+    width: 40px !important;
+  }
+  .fs-card-text {
+    padding: 4px 6px !important;
+  }
+  .flash-sale-content-body {
+    margin: 0 !important;
+    gap: 5px !important;
+    .fs-content-body-container {
+      width: calc((100% - (5px * 5)) / 6) !important;
+      padding-bottom: 5px !important;
+    }
+  }
+}
+@include mixin.breakpoint(xs) {
+  .wrapper {
+    padding: 0px 10px;
+  }
+  .fs-text {
+    font-size: 1.6rem !important;
+  }
+  .timer-text {
+    font-size: 1.6rem !important;
+  }
+  .flash-sale-content-body {
+    flex-wrap: wrap;
+    margin: 0 !important;
+    gap: 5px !important;
+    background-color: transparent;
+    .fs-content-body-container {
+      width: calc((100% - (5px * 2)) / 3) !important;
+      padding-bottom: 5px !important;
+    }
+  }
+  .fs-card-price {
+    margin-bottom: 5px !important;
+    font-size: 1.6rem !important;
+  }
+  .fs-origin-price {
+    font-size: 1.5rem !important;
+  }
+  .fs-card-text {
+    padding: 4px 3px !important;
+  }
+  .fs-content-header {
+    flex-direction: column;
+    padding: 5px 5px !important;
+    align-items: flex-end;
+  }
+  .fs-content-header-left {
+    gap: 2rem !important;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .fs-content-header-right {
+    width: 100%;
+    text-align: end;
+    a {
+      padding: 0 5px !important;
+    }
+  }
+  .fs-content-header-right {
+    a {
+      padding: 3px 5px !important;
+    }
+  }
+}
+
 .wrapper {
   width: var(--media_width);
   margin: 0 auto 20px;
@@ -12,31 +124,24 @@
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
+  padding: 0 10px;
   border-bottom: 1px solid #d5d5d5;
   margin-bottom: 10px;
-  // padding-bottom: 10px;
 
   div {
     align-items: center;
   }
 }
 .fs-text {
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: 500;
   color: #f57224;
-  margin-left: 20px;
   text-transform: capitalize;
 }
-.fs-content-header-left {
-}
-.fs-content-header-timer {
-  margin-left: 65px;
-}
 .timer-text {
-  font-size: 14px;
+  font-size: 1.4rem;
   color: var(--black);
-  flex-wrap: wrap;
-  width: 70px;
+  margin-right: 20px;
 }
 .timer-time {
   display: flex;
@@ -46,18 +151,19 @@
       display: flex;
       padding: 0 !important;
       .date-class {
-        width: 40px;
-        height: 35px;
-        margin: 12px 6px;
-        font-size: 16px;
+        width: 4rem;
+        height: 3.5rem;
+        margin: 1.2rem 0.6rem;
+        font-size: 1.6rem;
         font-weight: 500;
-        line-height: 35px;
+        line-height: 3.5rem;
         color: #fff;
         text-align: center;
         background-color: #d3232a;
         border-radius: 2px;
       }
       .text-fs {
+        color: #a12e2e;
         font-size: 2.4rem;
       }
       span {
@@ -66,14 +172,16 @@
     }
   }
 }
+.fs-content-header-left {
+  gap: 6.5rem;
+}
 .fs-content-header-left,
 .fs-content-header-timer {
   display: flex;
 }
 .fs-content-header-right {
-  margin-right: 10px;
   a {
-    font-size: 14px;
+    font-size: 1.4rem;
     color: #f57224;
     border: 1px solid #f57224;
     padding: 6px 10px;
@@ -96,6 +204,10 @@
 
 .flash-sale-content-body {
   margin: 0 !important;
+  gap: 10px;
+  .fs-content-body-container {
+    width: calc((100% - (10px * 5)) / 6);
+  }
 }
 .fs-content-body-container {
   padding-bottom: 20px;
@@ -112,7 +224,7 @@
 }
 
 .fs-card-text {
-  margin: 4px 8px 0;
+  padding: 4px 8px 4px;
 }
 .fs-card-title {
   display: -webkit-box;
@@ -127,24 +239,20 @@
   text-transform: capitalize;
 }
 .fs-card-price {
-  height: 22px;
-  margin-bottom: 4px;
-  font-size: 18px;
-  line-height: 22px;
+  margin-bottom: 6px;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
   color: #f57224;
   letter-spacing: -0.56px;
 }
 .fs-card-origin-price {
-  display: flex;
-  flex-direction: row;
-
   line-height: 1.2rem;
   color: #212121;
 }
 .fs-origin-price {
-  flex-direction: row;
   color: #9e9e9e;
   text-decoration: line-through;
+  font-size: 1.2rem;
 }
 .itemdiscount {
   margin-left: 5px;

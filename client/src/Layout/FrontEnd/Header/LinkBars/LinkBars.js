@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './LinkBars.module.scss';
-import GetTheApp from './GetTheApp';
 import useAuthContext from '~/contexts/Auth/AuthContent';
 
 import routes from '~/config/routes';
@@ -38,7 +37,7 @@ function LinkBars({ IDLinkBars }) {
                     <Link to={config.routes.profile}>My Account</Link>
                   </li>
                   <li>
-                    <Link>My Order</Link>
+                    <Link to={config.routes.purchaseOrder}>My Order</Link>
                   </li>
                   <li>
                     <button onClick={handleLogout}>Logout</button>

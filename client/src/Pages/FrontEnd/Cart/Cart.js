@@ -71,9 +71,6 @@ export default function Cart() {
   };
   return (
     <div className={cx('wrapper')}>
-      <button className={cx('')} onClick={handleCheckedShop(1)}>
-        onclick
-      </button>
       <div className={cx('content', 'd-flex flex-row')}>
         <div className={cx('cart-left', 'd-flex flex-column')}>
           <div className={cx('list-header', 'd-flex flex-row justify-content-between align-items-center')}>

@@ -1,6 +1,106 @@
+@use '../../../../GlobalStyles/mixin.scss' as mixin;
+
+@include mixin.breakpoint(lg) {
+  .wrapper {
+    padding: 0px 10px;
+  }
+  .jfy-content-img {
+    margin-bottom: 10px !important;
+  }
+}
+
+@include mixin.breakpoint(md) {
+  .wrapper {
+    padding: 0px 10px;
+  }
+  .jfy-content-img {
+    margin-bottom: 8px !important;
+  }
+  .rate-star {
+    --star-size: 1.4rem;
+  }
+  .jfy-content {
+    gap: 10px 10px !important;
+  }
+  .jfy-content-container {
+    > a {
+      > div {
+        &:not(:first-child) {
+          padding: 0 6px 8px !important;
+        }
+      }
+    }
+  }
+  .jfy-loadmore {
+    button {
+      width: 280px !important;
+      height: 35px !important;
+    }
+  }
+}
+@include mixin.breakpoint(sm) {
+  .wrapper {
+    padding: 0px 10px;
+
+    > div {
+      gap: 2rem !important;
+    }
+  }
+  .jfy-content-img {
+    margin-bottom: 5px !important;
+  }
+  .jfy-content {
+    gap: 10px 5px !important;
+  }
+  .jfy-content-container {
+    width: calc((100% - (5px * 3)) / 4) !important;
+  }
+  .rate-star {
+    --star-size: 1.2rem;
+  }
+  .jfy-loadmore {
+    button {
+      width: 200px !important;
+      height: 35px !important;
+    }
+  }
+}
+@include mixin.breakpoint(xs) {
+  .wrapper {
+    padding: 0px 10px;
+  }
+  .jfy-content-img {
+    margin-bottom: 5px !important;
+  }
+  .jfy-content {
+    gap: 10px 5px !important;
+  }
+  .jfy-content-container {
+    width: calc((100% - (5px * 2)) / 3) !important;
+    > a {
+      > div {
+        &:not(:first-child) {
+          padding: 0 6px 8px !important;
+        }
+      }
+    }
+  }
+  .jfy-price-discount {
+    margin-bottom: 0 !important;
+  }
+  .jfy-loadmore {
+    button {
+      width: 30% !important;
+      height: 25px !important;
+      font-size: 1.2rem !important;
+      line-height: 2.5rem !important;
+    }
+  }
+}
+
 .wrapper {
   width: var(--media_width);
-  margin: 0 auto 40px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
 }
@@ -18,21 +118,19 @@
 }
 
 .jfy-title {
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   font-weight: 500;
-  text-transform: capitalize;
-  margin-bottom: 3px;
+  background-color: white;
+  padding: 5px;
+  border-bottom: 1px solid #0000000d;
 }
 .jfy-content {
-  width: 100%;
-  gap: 0.67%;
+  gap: 10px;
 }
 
 .jfy-content-container {
-  margin-bottom: 20px;
+  width: calc((100% - (10px * 5)) / 6);
   background-color: var(--white);
-  width: 16% !important;
-  box-sizing: border-box !important;
   padding: 0 !important;
   flex: none !important;
   &:hover {
@@ -110,30 +208,27 @@
   }
 }
 .jfy-loadmore {
-  padding-bottom: 10px;
-
   button {
-    font-size: 1.4rem;
-    line-height: 4rem;
-    text-transform: uppercase;
-    background-color: transparent;
+    font-size: 1.5rem;
+    color: #555 !important;
+    background-color: white;
+    box-shadow: 0px 1px 1px 0px #00000008;
+    border: 1px solid #00000017 !important;
     border-radius: 0;
     width: 387px;
     height: 40px;
     padding: 0 !important;
-  }
-  button:hover,
-  button:active {
-    color: var(--blue) !important;
-    background-color: transparent !important;
+    &:hover,
+    &:active {
+      background-color: #00000005;
+    }
   }
 }
 .rate-star {
-  --star-size: 16px;
+  --star-size: 1.6rem;
   --star-background: #fc0;
   --star-color: #d3cccc;
   color: #faca51;
-  font-size: 1rem;
   --percent: calc(var(--rating) / 5 * 100%);
   display: inline-block;
   font-size: var(--star-size);

@@ -1,12 +1,120 @@
-@import url('../../../../GlobalStyles/GlobalStyles.module.scss');
+@use '../../../../GlobalStyles/mixin.scss' as mixin;
+
+//styles responsive
+@include mixin.breakpoint(lg) {
+  .logo-bars-content {
+    width: 100% !important;
+    justify-content: center;
+    .header-banner {
+      display: none;
+    }
+    .search-container {
+      .search-result {
+        width: 600px !important;
+        transform: translate(auto, 400px) !important;
+      }
+    }
+  }
+}
+@include mixin.breakpoint(md) {
+  .search-content {
+    input {
+      height: 35px !important;
+    }
+    button {
+      height: 35px !important;
+    }
+  }
+  .logo-bars-content {
+    width: 100% !important;
+    padding: 10px 10px 20px !important;
+    .header-banner {
+      display: none;
+    }
+  }
+  .logo {
+    .logo-normal {
+      width: 80%;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .nav-cars {
+    a {
+      font-size: 2rem !important;
+    }
+  }
+}
+@include mixin.breakpoint(sm) {
+  .logo-bars-content {
+    padding: 10px 10px 20px !important;
+    width: 100% !important;
+    .header-banner {
+      display: none;
+    }
+  }
+  .search-content {
+    input {
+      height: 35px !important;
+    }
+    button {
+      height: 35px !important;
+    }
+  }
+  .nav-cars {
+    a {
+      font-size: 2rem !important;
+    }
+  }
+}
+@include mixin.breakpoint(xs) {
+  .logo-bars-content {
+    width: 100% !important;
+    padding: 10px !important;
+    .header-banner {
+      display: none;
+    }
+  }
+  .logo {
+    width: 20% !important;
+    .logo-normal {
+      display: none !important;
+    }
+    .logo-xs {
+      display: block !important;
+      width: 100% !important;
+    }
+  }
+
+  .search-container {
+    width: 60% !important;
+    .search-input {
+      height: 30px !important;
+      width: 85% !important;
+    }
+    .search-button {
+      height: 30px !important;
+      width: 15% !important;
+    }
+  }
+  .nav-cars {
+    width: 20% !important;
+    a {
+      font-size: 1.8rem !important;
+    }
+  }
+}
+
+//style  default
 .logo-bars-content {
   margin: 0 auto !important;
   width: var(--media_width);
   padding: 10px 0 20px;
   .search-container {
     .search-result {
+      width: 692px;
       outline: none;
-      width: 660px;
       background-color: white;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.21);
       .search-result-main {
@@ -57,12 +165,7 @@
     }
   }
   .nav-cars {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     a {
-      display: flex;
-      margin-left: 15px;
       font-size: 2.4rem;
       color: #0a1569;
     }
@@ -72,16 +175,19 @@
     flex: none !important;
     a {
       display: block;
-      height: 35px;
       width: 100%;
       img {
         width: 80%;
       }
     }
+    .logo-xs {
+      display: none;
+    }
   }
 }
 .hdbn-img {
   width: 100% !important;
+  height: 100%;
 }
 
 // @media (max-width: --desktop-width-xl) {

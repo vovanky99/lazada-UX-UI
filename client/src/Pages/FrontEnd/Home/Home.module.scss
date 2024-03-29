@@ -1,3 +1,27 @@
+@use '../../../GlobalStyles/mixin.scss' as mixin;
+
+@include mixin.breakpoint(lg) {
+  .channels {
+    padding: 0px 10px;
+  }
+}
+
+@include mixin.breakpoint(md) {
+  .channels {
+    padding: 0px 10px;
+  }
+}
+@include mixin.breakpoint(sm) {
+  .channels {
+    padding: 0px 10px;
+  }
+}
+@include mixin.breakpoint(xs) {
+  .channels {
+    padding: 0px 10px;
+  }
+}
+
 .wrapper {
   background-color: var(--background_home_grey);
   padding-bottom: 40px;
