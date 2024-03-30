@@ -1,3 +1,13 @@
+@use '../../GlobalStyles/mixin.scss' as mixin;
+
+@include mixin.breakpoint(xs) {
+  .pagination-item {
+    padding: 0 6px !important;
+    min-width: auto !important;
+    height: auto !important;
+  }
+}
+
 .pagination-container {
   display: flex;
   list-style-type: none;

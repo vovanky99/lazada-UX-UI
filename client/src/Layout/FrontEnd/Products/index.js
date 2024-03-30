@@ -15,7 +15,7 @@ export default function Products({ data, display = 'flex-column', imgWidth = '10
         <div className={cx('title')}>{data.title}</div>
         <span className={cx('price')}>{(data.price - data.price * (data.discount / 100)).toFixed(2)}</span>
         <span className={cx('discount')}>{data.discount}%</span>
-        <div className={cx('footer', 'd-flex flex-row justify-content-between align-items-center')}>
+        <div className={cx('pd-footer', 'd-flex flex-row justify-content-between align-items-center')}>
           <div className={cx('d-flex ', 'align-items-center')}>
             <span className={cx('quantity')}>{data.sold ? data.sold : 0} sold</span>
             <span className={cx('space')}>|</span>

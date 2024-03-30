@@ -1,3 +1,67 @@
+@use '../../../GlobalStyles/mixin.scss' as mixin;
+
+@include mixin.breakpoint(lg) {
+  .search-wrapper {
+    padding: 0 10px;
+  }
+  .main-content {
+    border-radius: 0 !important;
+  }
+  .sidebar {
+    width: 22% !important;
+  }
+  .result-content {
+    width: calc(78% - 25px);
+  }
+}
+@include mixin.breakpoint(md) {
+  .search-wrapper {
+    padding: 0 10px;
+  }
+  .main-content {
+    border-radius: 0 !important;
+    gap: 10px !important;
+  }
+  .sidebar {
+    width: 25% !important;
+  }
+  .result-content {
+    width: calc(75% - 10px);
+  }
+}
+@include mixin.breakpoint(sm) {
+  .search-wrapper {
+    padding: 0 10px;
+  }
+  div.main-content {
+    border-radius: 0 !important;
+    gap: 10px !important;
+    flex-direction: column !important;
+  }
+  .sidebar {
+    width: 100% !important;
+  }
+  .result-content {
+    width: 100% !important;
+  }
+}
+@include mixin.breakpoint(xs) {
+  .search-wrapper {
+    padding: 0 10px;
+  }
+  div.main-content {
+    border-radius: 0 !important;
+    gap: 10px !important;
+    flex-direction: column !important;
+  }
+  .sidebar {
+    width: 100% !important;
+  }
+  .result-content {
+    width: 100% !important;
+  }
+}
+
 .search-wrapper {
   background-color: #f5f5fa;
   .main-content {
@@ -12,11 +76,9 @@
     .sidebar {
       width: 18%;
       padding: 15px 10px 0px;
-      border-radius: 5px;
     }
     .result-content {
-      width: calc(100% - 18% - 25px);
-      border-radius: 5px;
+      width: calc(82% - 25px);
       padding: 15px 10px 0px;
     }
   }

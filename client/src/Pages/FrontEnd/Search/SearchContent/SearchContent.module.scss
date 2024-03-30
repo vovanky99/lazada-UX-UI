@@ -1,3 +1,68 @@
+@use '../../../../GlobalStyles/mixin.scss' as mixin;
+
+@include mixin.breakpoint(lg) {
+  div .search-products-container {
+    gap: 10px !important;
+  }
+  .search-products-content {
+    gap: 10px !important;
+  }
+}
+@include mixin.breakpoint(md) {
+  .search-products-content {
+    gap: 10px !important;
+  }
+}
+@include mixin.breakpoint(sm) {
+  .title,
+  div.shop {
+    display: none !important;
+  }
+  div.view {
+    display: none !important;
+  }
+  .sort-by {
+    select {
+      width: 100px !important;
+    }
+  }
+  .search-products-header {
+    padding-bottom: 10px !important;
+  }
+  .search-products-content {
+    gap: 10px 5px !important;
+    .container-products {
+      width: calc((100% - (5px * 2)) / 3) !important;
+    }
+  }
+}
+@include mixin.breakpoint(xs) {
+  .title,
+  div.shop {
+    display: none !important;
+  }
+  div.view {
+    display: none !important;
+  }
+  .sort-by {
+    select {
+      width: 100px !important;
+    }
+  }
+  .search-products-header {
+    padding-bottom: 10px !important;
+  }
+  .search-products-content {
+    gap: 10px 5px !important;
+    .container-products {
+      width: calc((100% - (5px)) / 2) !important;
+    }
+  }
+  .search-page-navigate {
+    margin-bottom: 10px !important;
+  }
+}
+
 .wrapper {
   .title {
     margin-bottom: 10px;
@@ -146,7 +211,6 @@
   }
   .search-page-navigate {
     margin-bottom: 20px;
-    gap: 5px;
   }
 }
 .shop-main {

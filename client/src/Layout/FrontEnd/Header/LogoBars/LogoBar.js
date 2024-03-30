@@ -76,6 +76,7 @@ function LogoBars() {
     setShowResult(false);
   };
 
+  //handle tippy reponsive
   useEffect(() => {
     const rs = searchResultRef.current;
     const onWindowResize = () => {

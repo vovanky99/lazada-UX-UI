@@ -1,3 +1,73 @@
+@use '../../../GlobalStyles/mixin.scss' as mixin;
+@include mixin.breakpoint(lg) {
+  .wrapper {
+    gap: 5px !important;
+    .img {
+      padding: 0 !important;
+    }
+  }
+  .content {
+    gap: 0 !important;
+  }
+  div.pd-footer {
+    flex-direction: column !important;
+    gap: 3px;
+    align-items: flex-start !important;
+  }
+}
+@include mixin.breakpoint(md) {
+  .wrapper {
+    gap: 5px !important;
+    .img {
+      padding: 0 !important;
+    }
+  }
+  .content {
+    gap: 0 !important;
+  }
+  .price {
+    font-size: 1.6rem;
+  }
+  .discount {
+    margin-bottom: 1px;
+  }
+  div.pd-footer {
+    flex-direction: column !important;
+    gap: 3px;
+    align-items: flex-start !important;
+    > div {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+    }
+    .space {
+      display: none;
+    }
+  }
+}
+@include mixin.breakpoint(sm) {
+  .wrapper {
+    gap: 5px !important;
+    .img {
+      padding: 0 !important;
+    }
+  }
+}
+@include mixin.breakpoint(xs) {
+  .wrapper {
+    gap: 10px !important;
+    .img {
+      padding: 0 !important;
+    }
+  }
+  .content {
+    gap: 0px !important;
+  }
+  div.pd-footer {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+}
+
 .wrapper {
   padding: 5px 10px;
   border-radius: 2px;
@@ -27,6 +97,9 @@
     .price {
       color: #f57224;
       font-size: 1.7rem;
+    }
+    .discount {
+      font-size: 1.3rem;
     }
     .discount,
     .space,
