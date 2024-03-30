@@ -157,7 +157,7 @@ export default function SgnIn() {
                 onChange={handleEmailOnchange}
                 type="email"
                 placeholder="Email"
-                className={cx('py-3 form-control')}
+                className={cx('email_input', 'py-3 form-control')}
               />
               <span className={cx('text-danger')}>{emailValidate != '' ? emailValidate : ''}</span>
             </div>
@@ -176,7 +176,7 @@ export default function SgnIn() {
                 onChange={handlePasswordOnchange}
                 type="password"
                 placeholder="Password"
-                className={cx('form-control py-3')}
+                className={cx('pass_input', 'form-control py-3')}
               />
               <div onClick={handleShowHidePass} className={cx('show-hide-pass')}>
                 {showPass ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}

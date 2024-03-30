@@ -1,3 +1,94 @@
+@use '../../../../GlobalStyles/mixin.scss' as mixin;
+
+@include mixin.breakpoint(lg) {
+}
+
+@include mixin.breakpoint(md) {
+  .header {
+    margin: 25px auto 0 !important;
+  }
+  .rgt_content {
+    margin: 12px auto !important;
+    flex-direction: column;
+    padding: 25px !important;
+    gap: 0px !important;
+    .rgt_content_left {
+      width: 100% !important;
+    }
+    .rgt_content_right {
+      width: 100% !important;
+    }
+  }
+}
+@include mixin.breakpoint(sm) {
+  .header {
+    margin: 20px auto 0 !important;
+  }
+  .rgt_content {
+    margin: 12px auto !important;
+    flex-direction: column;
+    padding: 25px !important;
+    gap: 0px !important;
+    .rgt_content_left {
+      width: 100% !important;
+    }
+    .rgt_content_right {
+      width: 100% !important;
+    }
+  }
+  .show-hide-pass {
+    top: 30px !important;
+  }
+}
+@include mixin.breakpoint(xs) {
+  .header {
+    margin: 20px auto 0 !important;
+    flex-direction: column !important;
+  }
+  .rgt_content {
+    margin: 12px auto !important;
+    padding: 25px !important;
+    flex-direction: column;
+    gap: 0px !important;
+    .rgt_content_left {
+      width: 100% !important;
+    }
+    .rgt_content_right {
+      width: 100% !important;
+    }
+  }
+  .show-hide-pass {
+    top: 30px !important;
+  }
+  .container_select_date {
+    flex-direction: column !important;
+    > div {
+      width: 100% !important;
+    }
+  }
+  .birthday_gender {
+    flex-direction: column;
+    .birthday {
+      width: 100%;
+    }
+    .gender {
+      select {
+        width: 100% !important;
+      }
+    }
+  }
+  .login_third {
+    flex-direction: column;
+    gap: 5px;
+    button {
+      width: 100% !important;
+    }
+    .gg_background {
+      margin-left: 0 !important;
+    }
+  }
+}
+
 .wrapper {
   background-color: #eff0f5;
 }
@@ -12,11 +103,18 @@
     font-size: 1.2rem;
   }
 }
-.register_content {
+.rgt_content {
   margin: 24px auto;
   background-color: #ffffff;
   padding: 25px 50px 50px 25px;
   box-sizing: border-box !important;
+  gap: 20px;
+  .rgt_content_left {
+    width: calc(55% - 20px);
+  }
+  .rgt_content_right {
+    width: 45%;
+  }
 }
 .container_select_date {
   width: 100%;

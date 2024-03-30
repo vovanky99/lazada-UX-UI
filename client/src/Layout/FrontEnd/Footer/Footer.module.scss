@@ -33,12 +33,6 @@
   .ft-second {
     padding: 0 10px;
   }
-  // .transform-content,
-  // .pay-content {
-  //   li {
-  //     width: calc((100% - (5px * 1)) / 2) !important;
-  //   }
-  // }
 }
 @include mixin.breakpoint(xs) {
   .wrapper {

@@ -16,6 +16,7 @@
   --background_home_grey: #f5f5f5;
   --default_color: #ee4d2d;
   --media_width: 1188px;
+  --media_width_signin: 810px;
 }
 
 //styles responsive
@@ -43,6 +44,7 @@
 @include mixin.breakpoint(md) {
   * {
     --media_width: 100% !important;
+    --media_width_signin: 70%;
   }
   html {
     font-size: 56.25% !important;
@@ -51,6 +53,7 @@
 @include mixin.breakpoint(sm) {
   * {
     --media_width: 100% !important;
+    --media_width_signin: 70%;
   }
   html {
     font-size: 50% !important;
@@ -59,6 +62,7 @@
 @include mixin.breakpoint(xs) {
   * {
     --media_width: 100% !important;
+    --media_width_signin: 70%;
   }
   html {
     font-size: 50% !important;

@@ -190,7 +190,7 @@ export default function Register() {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('main-content', 'mx-auto bg-transparent')}>
-        <div className={cx('header', 'd-flex justify-content-between')}>
+        <div className={cx('header', 'd-flex justify-content-between align-items-center')}>
           <h3 className={cx('title', 'fs-1')}>Create your Life Circle Account</h3>
           <div className={cx('login')}>
             Already member?
@@ -200,8 +200,8 @@ export default function Register() {
             Here
           </div>
         </div>
-        <form ref={formRef} noValidate className={cx('register_content', 'd-flex justify-content-between')}>
-          <div className={cx('col-6 form-group')}>
+        <form ref={formRef} noValidate className={cx('rgt_content', 'd-flex justify-content-between')}>
+          <div className={cx('rgt_content_left', 'form-group')}>
             <div className={cx('mb-4 form-group')}>
               <label className="fs-5 form-label">Email*</label>
               <input
@@ -235,8 +235,8 @@ export default function Register() {
               </div>
               <span className="text-danger fs-5">{passwordValid != '' ? passwordValid : ''}</span>
             </div>
-            <div className={cx('mb-4 d-flex justify-content-between gap-3 form-group')}>
-              <div className={cx('col-9 form-group')}>
+            <div className={cx('birthday_gender', 'mb-4 d-flex justify-content-between gap-3 form-group')}>
+              <div className={cx('birthday', 'col-9 form-group')}>
                 <label className="fs-5 form-label">Birthday</label>
                 {/* handle select birthday */}
                 <DateOption
@@ -265,7 +265,7 @@ export default function Register() {
               </div>
             </div>
           </div>
-          <div className={cx('col-5 form-group')}>
+          <div className={cx('rgt_content_right', 'form-group')}>
             <div className={cx('mb-4 form-group')}>
               <label className="fs-5 form-label">Full Name*</label>
               <input
@@ -301,11 +301,11 @@ export default function Register() {
             </div>
             <div className={cx('register_wrap', 'text-start my-3 fs-5')}>Or, register with</div>
             <div className={cx('login_third', 'form-group d-flex  justify-content-between')}>
-              <Button className={cx('fa_background', 'py-2 px-0  fs-2 text-white')}>
+              <Button className={cx('fa_background', 'py-2 px-0  fs-2 text-white d-flex align-items-center')}>
                 <FontAwesomeIcon className={cx('fa_facebook', 'text-white btn fs-1 pe-2 me-3')} icon={faFacebookF} />
                 Facebook
               </Button>
-              <Button className={cx('gg_background', 'btn py-2 px-0 fs-2 text-white')}>
+              <Button className={cx('gg_background', 'btn py-2 px-0 fs-2 text-white d-flex align-items-center')}>
                 <FontAwesomeIcon className={cx('fa_google', 'pe-2 me-3')} icon={faGooglePlusG} />
                 Google
               </Button>
