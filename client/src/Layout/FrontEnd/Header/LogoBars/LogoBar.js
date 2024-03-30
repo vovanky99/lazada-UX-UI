@@ -1,6 +1,6 @@
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { faCartShopping, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,6 +20,7 @@ function LogoBars() {
   const { setSearchTitle } = useAuthContext();
   const location = useLocation();
   const Params = useParams();
+  let searchResultRef = useRef();
 
   //set default when run routes search
   let defaultSearch = '';
@@ -34,6 +35,9 @@ function LogoBars() {
   const [delay, setDelay] = useState(500);
   const debounceValue = useDebounce(searchValue, delay);
   // const lengthBold = useDebounce(searchValue.length, delay);
+
+  //tippy search width
+  const [searchWidth, setSearchWidth] = useState('');
 
   useEffect(() => {
     if (!debounceValue.trim()) {
@@ -72,6 +76,34 @@ function LogoBars() {
     setShowResult(false);
   };
 
+  useEffect(() => {
+    const rs = searchResultRef.current;
+    const onWindowResize = () => {
+      if (window.screen.width >= 1400) {
+        setSearchWidth(window.screen.width * (52.5 / 100));
+      } else if (window.screen.width >= 1200) {
+        setSearchWidth(690);
+      } else if (window.screen.width > 991) {
+        setSearchWidth(window.screen.width * (66.3 / 100));
+      } else if (window.screen.width > 576) {
+        setSearchWidth(window.screen.width * (56.5 / 100));
+      } else {
+        setSearchWidth(window.screen.width * (57 / 100));
+      }
+      rs.style.width = `${searchWidth}px`;
+    };
+    if (rs) {
+      window.addEventListener('resize', onWindowResize);
+    }
+    if (rs) {
+      onWindowResize();
+    }
+    return () => {
+      if (rs) {
+        window.removeEventListener('resize', onWindowResize);
+      }
+    };
+  }, [searchValue, searchWidth]);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('logo-bars-content', 'row align-items-center')}>
@@ -91,9 +123,13 @@ function LogoBars() {
           <Tippy
             interactive
             visible={showResult && searchValue.length > 0}
-            offset={[-16, 0]}
+            offset={[0, 0]}
+            // onShow={({ popper, reference }) => {
+            //   popper.style.width = reference.getBoundingClientRect.width + 'px';
+            // }}
+            placement="bottom"
             render={(attrs) => (
-              <div className={cx('search-result')} tabIndex="-1" {...attrs}>
+              <div ref={searchResultRef} className={cx('search-result')} tabIndex="-1" {...attrs}>
                 <div className={cx('search-result-main')}>
                   {searchResult.map((d, index) => (
                     <SearchResult

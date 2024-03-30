@@ -10,8 +10,6 @@
     }
     .search-container {
       .search-result {
-        width: 600px !important;
-        transform: translate(auto, 400px) !important;
       }
     }
   }
@@ -113,7 +111,7 @@
   padding: 10px 0 20px;
   .search-container {
     .search-result {
-      width: 692px;
+      // width: 690px;
       outline: none;
       background-color: white;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.21);

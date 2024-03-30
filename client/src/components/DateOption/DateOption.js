@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getDay, getMonth, getYear, format, getDate } from 'date-fns';
 
 import { months } from './Month';
@@ -31,7 +31,9 @@ export default function DateOption({
     Year: year,
     numberOfYears: numberOfYears,
   });
-  onChangeValue(selectDate);
+  useEffect(() => {
+    onChangeValue(selectDate);
+  }, [selectDate]);
   const handleDaySelect = (e) => {
     const { value } = e.target;
     const day = parseInt(value, 10);

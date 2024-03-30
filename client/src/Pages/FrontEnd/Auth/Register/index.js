@@ -123,8 +123,8 @@ export default function Register() {
     };
   }, [nameValid]);
 
-  const handleBirthDayOnchange = (childData) => {
-    setBirthday(childData);
+  const handleBirthDayOnchange = (value) => {
+    setBirthday(value);
   };
 
   // handle form submit
@@ -139,14 +139,29 @@ export default function Register() {
       if (gender == '') {
         setGenderValidate('Please select gender');
         g.classList.add('danger_validated');
+      } else if (m < 14) {
+        setBirthdayValidate('Age must be greater than 14');
+        g.classList.remove('danger_validated');
+        setGenderValidate('');
       } else {
+        setBirthdayValidate('');
         g.classList.remove('danger_validated');
         setGenderValidate('');
       }
-      if (m < 14) {
-        setBirthdayValidate('Age must be greater than 14');
+      if (email == '') {
+        setEmailValidate('please check email!');
       } else {
-        setBirthdayValidate('');
+        setEmailValidate('');
+      }
+      if (password == '') {
+        setPasswordValidate('please check password!');
+      } else {
+        setPasswordValidate('');
+      }
+      if (name == '') {
+        setNameValidate('please check password!');
+      } else {
+        setNameValidate('');
       }
       if (
         email != '' &&
@@ -160,7 +175,6 @@ export default function Register() {
         birthdayValid == '' &&
         nameValid == ''
       ) {
-        console.log(e);
         Register({ name, email, password, gender, birthday });
       }
     };

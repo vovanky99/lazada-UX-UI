@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import ThemeProvider from 'react-bootstrap/ThemeProvider';
 
 import './GlobalStyles/GlobalStyles.module.scss';
-import './GlobalStyles/active.css';
+import './GlobalStyles/active.scss';
 import { publicRoutes, privateRoutes } from '~/Routes';
 import MainLayout from '~/Layout/FrontEnd/MainLayout';
 
