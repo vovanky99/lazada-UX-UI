@@ -23,6 +23,8 @@ use App\Models\ProductsTypeDetail;
 use \App\Models\Reviews;
 use \App\Models\Cod;
 use App\Models\District;
+use App\Models\ImagesProducts;
+use App\Models\ImagesReviews;
 use App\Models\Momo;
 use App\Models\National;
 use App\Models\Order;
@@ -89,7 +91,8 @@ class DatabaseSeeder extends Seeder
         Products::factory()->count(5000)->create();
         Reviews::factory()->count(1000)->create();
         ProductsTypeDetail::factory()->count(100)->create();
-        Images::factory()->count(1000)->create();
+        ImagesReviews::factory()->count(1000)->create();
+        ImagesProducts::factory()->count(1000)->create();
         Order::factory()->count(1000)->create();
         OrderProducts::factory()->count(1000)->create();
         AddressUsers::factory()->count(100)->create();

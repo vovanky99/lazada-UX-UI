@@ -11,22 +11,22 @@ class Reviews extends Model
     public $table = 'reviews';
     protected $fillable = [
         'title',
-        'reviews_star',
-        'content_reviews',
+        'review_star',
+        'content_review',
         'parent_id',
-        'users_id',
-        'products_id',
+        'user_id',
+        'product_id',
     ];
     public function users(){
-        return $this->belongsTo(User::class,'users_id','id');
+        return $this->belongsTo(User::class,'user_id','id');
     }
     public function parent(){
         return $this->belongsTo(Reviews::class,'parent_id','id');
     }
     public function products(){
-        return $this->belongsTo(Products::class,'products_id','id');
+        return $this->belongsTo(Products::class,'product_id','id');
     }
     public function images(){
-        return $this->hasMany(Images::class,'products_id','id');
+        return $this->hasMany(ImagesReviews::class,'review_id','id');
     }
 }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('status');
             $table->string('descriptions');
             $table->string('address',100);
-            $table->foreignId('users_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('street_address_id')->references('id')->on('street_address')->onDelete('cascade');
             $table->foreignId('ward_id')->references('id')->on('ward')->onDelete('cascade');
             $table->timestamps();

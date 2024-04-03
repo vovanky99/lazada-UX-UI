@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Images>
  */
-class ImagesFactory extends Factory
+class ImagesProductsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,8 +19,7 @@ class ImagesFactory extends Factory
         return [
             //
             'images'=>fake()->imageUrl(),
-            'products_id'=>mt_rand(1,100),
-            'reviews_id'=>mt_rand(1,100),
+            'product_id'=>mt_rand(1,100),
         ];
     }
 }

@@ -13,11 +13,11 @@ class Slide extends Model
         'title',
         'descriptions',
         'img',
-        'categories_id',
+        'category_id',
         'start_day',
         'end_day',
     ];
-    public function categories(){
-        return $this->belongsTo(Categories::class,'categories_id','id');
+    public function category(){
+        return $this->belongsTo(Categories::class,'category_id','id');
     }
 }

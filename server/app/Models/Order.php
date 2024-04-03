@@ -12,13 +12,13 @@ class Order extends Model
     protected $fillable = [
         'status',
         'payment_id',
-        'users_id',
+        'user_id',
     ];
     public function payment(){
         return $this->belongsTo(Payment::class,'payment_id','id');
     }
     public function users(){
-        return $this->belongsTo(User::class,'users_id','id');
+        return $this->belongsTo(User::class,'user_id','id');
     }
     public function orderProducts(){
         return $this->hasMany(OrderProducts::class,'order_id','id');

@@ -52,13 +52,13 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class,'role_id','id');
     }
     public function shop(){
-        return $this->hasOne(Shop::class,'users_id','id');
+        return $this->hasOne(Shop::class,'user_id','id');
     }
     public function reviews(){
-        return $this->hasOne(Reviews::class,'users_id','id');
+        return $this->hasOne(Reviews::class,'user_id','id');
     }
     public function order(){
-        return $this->hasMany(Order::class,'users_id','id');
+        return $this->hasMany(Order::class,'user_id','id');
     }
     public function AddressUsers(){
         return $this->hasMany(AddressUsers::class,'user_id','id');

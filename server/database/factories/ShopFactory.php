@@ -23,7 +23,7 @@ class ShopFactory extends Factory
             'status'=>fake()->boolean(),
             'descriptions'=>fake()->sentence(),
             'address'=>fake()->address(),
-            'users_id'=>mt_rand(1,10),
+            'user_id'=>mt_rand(1,10),
             'street_address_id'=>mt_rand(1,20),
             'ward_id'=>mt_rand(1,30),
             //

@@ -27,15 +27,15 @@ class Categories extends Model
         return $this->children()->with('childrenRecursive');
     }
     public function blogs(){
-        return $this->hasMany(Blogs::class,'categories_id','id');
+        return $this->hasMany(Blogs::class,'category_id','id');
     }
     public function slide(){
-        return $this->belongsTo(Slide::class,'categories_id','id');
+        return $this->belongsTo(Slide::class,'category_id','id');
     }
     public function products(){
-        return $this->hasMany(Products::class,'categories_id','id');
+        return $this->hasMany(Products::class,'category_id','id');
     }
     public function voucher(){
-        return $this->belongsTo(Voucher::class,'categories_id','id');
+        return $this->belongsTo(Voucher::class,'category_id','id');
     }
 }

@@ -20,7 +20,7 @@ class OrderFactory extends Factory
             //
             'status'=>mt_rand(0,5),
             'payment_id'=>mt_rand(1,100),
-            'users_id'=>mt_rand(1,100),
+            'user_id'=>mt_rand(1,100),
         ];
     }
 }

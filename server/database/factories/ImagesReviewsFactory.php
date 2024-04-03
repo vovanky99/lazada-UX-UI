@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Images>
  */
-class OrderProductsFactory extends Factory
+class ImagesReviewsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,9 +18,8 @@ class OrderProductsFactory extends Factory
     {
         return [
             //
-            'order_id'=>mt_rand(1,100),        
-            'quantity'=>mt_rand(1,10),        
-            'product_id'=>mt_rand(1,100), 
+            'images'=>fake()->imageUrl(),
+            'review_id'=>mt_rand(1,100),
         ];
     }
 }

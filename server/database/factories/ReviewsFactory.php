@@ -18,11 +18,11 @@ class ReviewsFactory extends Factory
     {
         return [
             'title'=>fake()->name(),
-            'reviews_stars'=>mt_rand(1,5),
-            'content_reviews'=>fake()->sentence(),
+            'review_star'=>mt_rand(1,5),
+            'content_review'=>fake()->sentence(),
             'parent_id'=>mt_rand(0,100),
-            'users_id'=>mt_rand(1,100),
-            'products_id'=>mt_rand(1,32),
+            'user_id'=>mt_rand(1,100),
+            'product_id'=>mt_rand(1,32),
             //
         ];
     }

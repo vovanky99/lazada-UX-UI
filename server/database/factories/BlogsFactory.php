@@ -23,7 +23,7 @@ class BlogsFactory extends Factory
             'content'=>fake()->sentence(1000),
             'img'=>fake()->imageUrl(),
             'status'=>fake()->boolean(),
-            'categories_id'=>mt_rand(1,10),
+            'category_id'=>mt_rand(1,10),
             //
         ];
     }

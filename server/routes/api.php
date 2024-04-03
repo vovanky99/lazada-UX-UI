@@ -4,6 +4,8 @@ use App\Http\Controllers\front_end\auth\AuthController;
 use App\Http\Controllers\front_end\auth\SocialAuthController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
+use App\Http\Controllers\front_end\ProductDetailController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +35,10 @@ Route::prefix('/search')->name('search.')->group(function(){
     Route::get('',[SearchController::class,'getSearchAll'])->name('result');
     Route::get('/getcat',[SearchController::class,'getSearchCat'])->name('searchcat');
     Route::get('/header',[SearchController::class,'getSearchSuggest'])->name('header');
+});
+
+Route::prefix('/products')->name('product-detail.')->group(function(){
+    Route::get('/product-detail',[ProductDetailController::class,'getProductDetail'])->name('get_product_detail');
 });
 
 Route::prefix('/posts')->name('posts.')->group(function () {

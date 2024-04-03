@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('order_products', function (Blueprint $table) {
             $table->foreignId('order_id')->unsigned()->references('id')->on('order')->onDelete('cascade');
-            $table->foreignId('production_id')->unsigned()->references('id')->on('products')->onDelete('cascade');
+            $table->foreignId('product_id')->unsigned()->references('id')->on('products')->onDelete('cascade');
             $table->double('quantity');
             $table->timestamps();
         });

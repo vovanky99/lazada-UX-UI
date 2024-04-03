@@ -15,9 +15,9 @@ class Blogs extends Model
         'content',
         'img',
         'status',
-        'categories_id',
+        'category_id',
     ];
-    public function categories(){
-        return $this->belongsTo(Categories::class,'categories_id','id');
+    public function category(){
+        return $this->belongsTo(Categories::class,'category_id','id');
     }
 }

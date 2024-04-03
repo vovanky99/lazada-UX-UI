@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->bigIncrements('id')->Unique();
             $table->string('title',50);
-            $table->longText('content_reviews',500);
-            $table->double('reviews_stars',5);
+            $table->longText('content_review',500);
+            $table->double('review_star',5);
             $table->integer('parent_id')->nullable();
-            $table->foreignId('users_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('products_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }

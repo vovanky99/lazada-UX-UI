@@ -16,12 +16,12 @@ class Shop extends Model
         'img_cover',
         'descriptions',
         'address',
-        'users_id',
+        'user_id',
         'street_address_id',
         'ward_id',
     ];
     public function users(){
-        return $this->belongsTo(User::class,'users_id','id');
+        return $this->belongsTo(User::class,'user_id','id');
     }
     public function products(){
         return $this->hasMany(Products::class,'shop_id','id');

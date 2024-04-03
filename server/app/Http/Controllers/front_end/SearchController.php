@@ -3,15 +3,10 @@
 namespace App\Http\Controllers\front_end;
 
 use \App\Http\Controllers\Controller;
-use App\Models\Categories;
 use App\Models\Products;
-use App\Models\Reviews;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Termwind\Components\Raw;
 
-use function Laravel\Prompts\select;
 
 class SearchController extends Controller {
     

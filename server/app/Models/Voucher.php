@@ -15,13 +15,13 @@ class Voucher extends Model
         'code',
         'percents',
         'quantity',
-        'categories_id',
+        'category_id',
         'products_type_id',
         'start_day',
         'end_day',
     ];
-    public function categories(){
-        return $this->belongsTo(Categories::class,'categories_id','id');
+    public function category(){
+        return $this->belongsTo(Categories::class,'category_id','id');
     }
     public function productsType(){
         return $this->belongsTo(ProductsType::class,'products_type_id','id');
