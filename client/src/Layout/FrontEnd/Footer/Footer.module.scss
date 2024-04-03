@@ -29,6 +29,9 @@
       flex: none;
     }
   }
+  .lfc_social {
+    align-items: flex-start !important;
+  }
   .ft-first,
   .ft-second {
     padding: 0 10px;
@@ -42,6 +45,9 @@
       width: calc((100% - (10px * 2)) / 3) !important;
       flex: none;
     }
+  }
+  .lfc_social {
+    align-items: flex-start !important;
   }
   .ft-first,
   .ft-second {
@@ -135,6 +141,7 @@
   overflow: hidden;
 }
 .lfc_social {
+  align-items: center;
   .lfc-social-media {
     padding-left: 0;
     gap: 5px;

@@ -120,7 +120,7 @@ function LogoBars() {
             <Images src={require('~/assets/images/logo1/logo-xs.png')} />
           </Link>
         </div>
-        <div className={cx('search-container', 'col-xl-7 col col-lg-8 col-md-7 col-sm-7 d-block mx-0')}>
+        <div className={cx('search-container', 'col-xl-8 col col-lg-8 col-md-7 col-sm-7 d-block mx-0')}>
           <Tippy
             interactive
             visible={showResult && searchValue.length > 0}
@@ -167,11 +167,12 @@ function LogoBars() {
           </Tippy>
         </div>
         <div className={cx('nav-cars', 'col-xl-1 col col-lg-1 col-md-2 col-sm-2 text-center')}>
-          <Link to={config.routes.cart} className={cx('')}>
-            <FontAwesomeIcon icon={faCartShopping} />
+          <Link to={config.routes.cart} className={cx('cart-contain')}>
+            {/* <FontAwesomeIcon icon={faCartShopping} /> */}
+            <Images className={cx('cart-img')} src={require('~/assets/images/cart/cart.png')} />
           </Link>
         </div>
-        <div className={cx('header-banner', 'col-xl-2 col')}>
+        <div className={cx('header-banner', 'col-xl-1 col')}>
           <HeaderBanner
             to={'//www.lazada.vn/lazada-co-brand-card?spm=a2o4n.home.header.dewallet.68b43bdcN0AOoI'}
             src={'//icms-image.slatic.net/images/ims-web/2069479e-741a-4807-8469-298d9e86ead7.png'}

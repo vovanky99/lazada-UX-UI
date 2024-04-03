@@ -2,8 +2,8 @@ import classNames from 'classnames/bind';
 import { useEffect } from 'react';
 
 import styles from './Header.module.scss';
-import LinkBars from './LinkBars';
-import LogoBars from './LogoBars';
+import LinkBars from './TopHeader';
+import LogoBars from './BottomHeader';
 
 const cx = classNames.bind(styles);
 

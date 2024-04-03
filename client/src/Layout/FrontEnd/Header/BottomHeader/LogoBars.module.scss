@@ -1,6 +1,16 @@
 @use '../../../../GlobalStyles/mixin.scss' as mixin;
 
 //styles responsive
+@include mixin.breakpoint(xxx) {
+  .search-content {
+    height: 80px !important;
+  }
+}
+@include mixin.breakpoint(xxl) {
+  .search-content {
+    height: 55px !important;
+  }
+}
 @include mixin.breakpoint(lg) {
   .logo-bars-content {
     width: 100% !important;
@@ -16,12 +26,7 @@
 }
 @include mixin.breakpoint(md) {
   .search-content {
-    input {
-      height: 35px !important;
-    }
-    button {
-      height: 35px !important;
-    }
+    // height: 35px !important;
   }
   .logo-bars-content {
     width: 100% !important;
@@ -39,8 +44,8 @@
     }
   }
   .nav-cars {
-    a {
-      font-size: 2rem !important;
+    a.cart-contain {
+      width: 20% !important;
     }
   }
 }
@@ -53,16 +58,11 @@
     }
   }
   .search-content {
-    input {
-      height: 35px !important;
-    }
-    button {
-      height: 35px !important;
-    }
+    // height: 35px !important;
   }
   .nav-cars {
-    a {
-      font-size: 2rem !important;
+    a.cart-contain {
+      width: 25% !important;
     }
   }
 }
@@ -87,19 +87,20 @@
 
   .search-container {
     width: 60% !important;
+    .search-content {
+      height: 35px !important;
+    }
     .search-input {
-      height: 30px !important;
       width: 85% !important;
     }
     .search-button {
-      height: 30px !important;
       width: 15% !important;
     }
   }
   .nav-cars {
     width: 20% !important;
-    a {
-      font-size: 1.8rem !important;
+    a.cart-contain {
+      width: 25% !important;
     }
   }
 }
@@ -138,34 +139,40 @@
     }
   }
   .search-content {
+    height: 40px;
     input {
+      height: 100%;
       border-top-left-radius: 3px;
       border-bottom-left-radius: 3px;
       width: 90%;
       background-color: #eff0f5;
       outline: none;
       border: none;
-      height: 40px;
       text-indent: 15px;
       font-size: 1.4rem;
       line-height: 1;
       letter-spacing: 0.5px;
     }
     button {
+      height: 100%;
       border-top-right-radius: 3px;
       border-bottom-right-radius: 3px;
       width: 35px;
       border: none;
-      height: 40px;
+
       background-color: #f57226;
       font-size: 1.6rem;
       color: var(--white);
     }
   }
   .nav-cars {
-    a {
-      font-size: 2.4rem;
-      color: #0a1569;
+    .cart-contain {
+      // font-size: 2rem !important;
+      width: 30%;
+      display: inline-block;
+      .cart-img {
+        width: 100%;
+      }
     }
   }
   > div {
@@ -183,19 +190,12 @@
     }
   }
 }
-.hdbn-img {
-  width: 100% !important;
-  height: 100%;
+
+.header-banner {
+  .container-img {
+    .hdbn-img {
+      width: 100% !important;
+      height: 100%;
+    }
+  }
 }
-
-// @media (max-width: --desktop-width-xl) {
-//   .container-img {
-//     display: none !important;
-//   }
-// }
-
-// .container-img {
-//   @include desktop-xl {
-//     display: none !important;
-//   }
-// }
