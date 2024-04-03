@@ -21,6 +21,7 @@ function LogoBars() {
   const location = useLocation();
   const Params = useParams();
   let searchResultRef = useRef();
+  let ctnWidthSearhRef = useRef();
 
   //set default when run routes search
   let defaultSearch = '';
@@ -35,9 +36,6 @@ function LogoBars() {
   const [delay, setDelay] = useState(500);
   const debounceValue = useDebounce(searchValue, delay);
   // const lengthBold = useDebounce(searchValue.length, delay);
-
-  //tippy search width
-  const [searchWidth, setSearchWidth] = useState('');
 
   useEffect(() => {
     if (!debounceValue.trim()) {
@@ -79,32 +77,22 @@ function LogoBars() {
   //handle tippy reponsive
   useEffect(() => {
     const rs = searchResultRef.current;
+    const width = ctnWidthSearhRef.current;
     const onWindowResize = () => {
-      if (window.screen.width >= 1400) {
-        setSearchWidth(window.screen.width * (52.5 / 100));
-      } else if (window.screen.width >= 1200) {
-        setSearchWidth(690);
-      } else if (window.screen.width > 991) {
-        setSearchWidth(window.screen.width * (66.3 / 100));
-      } else if (window.screen.width > 576) {
-        setSearchWidth(window.screen.width * (56.5 / 100));
-      } else {
-        setSearchWidth(window.screen.width * (57 / 100));
-      }
-      rs.style.width = `${searchWidth}px`;
+      rs.style.width = `${width.offsetWidth}px`;
     };
-    if (rs) {
+    if (rs && width) {
       window.addEventListener('resize', onWindowResize);
     }
-    if (rs) {
+    if (rs && width) {
       onWindowResize();
     }
     return () => {
-      if (rs) {
+      if (rs && width) {
         window.removeEventListener('resize', onWindowResize);
       }
     };
-  }, [searchValue, searchWidth]);
+  }, [searchValue]);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('logo-bars-content', 'row align-items-center')}>
@@ -120,7 +108,10 @@ function LogoBars() {
             <Images src={require('~/assets/images/logo1/logo-xs.png')} />
           </Link>
         </div>
-        <div className={cx('search-container', 'col-xl-8 col col-lg-8 col-md-7 col-sm-7 d-block mx-0')}>
+        <div
+          ref={ctnWidthSearhRef}
+          className={cx('search-container', 'col-xl-8 col col-lg-8 col-md-7 col-sm-7 d-block mx-0')}
+        >
           <Tippy
             interactive
             visible={showResult && searchValue.length > 0}
