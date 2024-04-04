@@ -16,7 +16,7 @@ class HomeController extends Controller
     public function getCat()
     {
         //
-        $cat = Categories::join('products','products.categories_id','=','categories.id')->where('categories.status','=','1')->select('categories.id','categories.title','products.images as images')->groupBy('categories.id')->offset(0)->take(16)->get();
+        $cat = Categories::join('products','products.category_id','=','categories.id')->where('categories.status','=','1')->select('categories.id','categories.title','products.images as images')->groupBy('categories.id')->offset(0)->take(16)->get();
         // $blog = Blogs::all();
         return response()->json($cat,200);
     }
@@ -41,11 +41,11 @@ class HomeController extends Controller
     public function getProductsAll()
     {
        
-        $products = Products::select(DB::raw('(SELECT COUNT(reviews.id) from reviews where reviews.products_id = products.id) as total_reviews'),DB::raw('(SELECT AVG(reviews.reviews_stars) from reviews where reviews.products_id = products.id) as reviews_stars'),'products.*')->groupBy('products.id')->orderBy(DB::raw('(SELECT AVG(reviews.reviews_stars) from reviews where reviews.products_id = products.id)'),'DESC')->get();
+        $products = Products::select(DB::raw('(SELECT COUNT(reviews.id) from reviews where reviews.product_id = products.id) as total_reviews'),DB::raw('(SELECT AVG(reviews.review_star) from reviews where reviews.product_id = products.id) as review_star'),'products.*','discount.number as discount')->join('discount','discount.product_id','=','products.id')->groupBy('products.id')->orderBy(DB::raw('(SELECT AVG(reviews.review_star) from reviews where reviews.product_id = products.id)'),'DESC')->get();
         return response()->json($products,200);
     }
     public function getflashSale(){
-        $flashSale = Products::orderBy('discount','DESC')->offset(0)->take(6)->get();
+        $flashSale = Products::join('discount','discount.product_id','=','products.id')->select('discount.number as discount','products.*')->orderBy('discount','DESC')->offset(0)->take(6)->get();
         return response()->json($flashSale,200);
     }
    

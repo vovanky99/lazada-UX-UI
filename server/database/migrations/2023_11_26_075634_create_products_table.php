@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title',50);
             $table->string('images');
             $table->double('price');
-            $table->double('discount',100);
             $table->double('quantities');
             $table->boolean('status');
             $table->string('descriptions');
@@ -25,6 +24,7 @@ return new class extends Migration
             $table->foreignId('products_type_id')->references('id')->on('products_type')->onDelete('cascade');
             $table->foreignId('products_type_id1')->nullable()->unsigned()->references('id')->on('products_type')->onDelete('cascade');
             $table->foreignId('products_type_id2')->nullable()->unsigned()->references('id')->on('products_type')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

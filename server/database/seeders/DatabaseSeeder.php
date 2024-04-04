@@ -22,6 +22,7 @@ use \App\Models\Products;
 use App\Models\ProductsTypeDetail;
 use \App\Models\Reviews;
 use \App\Models\Cod;
+use App\Models\Discount;
 use App\Models\District;
 use App\Models\ImagesProducts;
 use App\Models\ImagesReviews;
@@ -96,5 +97,6 @@ class DatabaseSeeder extends Seeder
         Order::factory()->count(1000)->create();
         OrderProducts::factory()->count(1000)->create();
         AddressUsers::factory()->count(100)->create();
+        Discount::factory()->count(100)->create();
     }
 }

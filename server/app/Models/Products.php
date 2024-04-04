@@ -38,6 +38,9 @@ class Products extends Model
     public function shop(){
         return $this->belongsTo(Shop::class,'shop_id','id');
     }
+    public function discount(){
+        return $this->hasMany(Discount::class,'product_id');
+    }
     public function productsType(){
         return $this->belongsTo(ProductsType::class,'products_type_id','id');
     }

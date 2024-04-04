@@ -12,7 +12,10 @@ class ProductDetailController extends Controller {
     public function getProductDetail(Request $request){
 
         $id = $request->get('id');
-        $Product = Products::find($id)->select('products.*',DB::raw(`(select count(reviews.id) from reviews where reviews.product_id = $id and reviews.product_id) as total_review`));
-        return response()->json($Product,200);
+        $Product = Products::where('products.id',$id)->select('products.*',Db::raw('(select count(reviews.id) from reviews where reviews.product_id = products.id) as total_reviews'),DB::raw('(select avg(reviews.review_star) from reviews where reviews.product_id = products.id) as score'),db::raw('(select sum(order_products.quantity) from order_products where order_products.product_id = products.id) as sold'))->get();
+        return response()->json([
+            'products'=>$Product,
+            ''
+        ]);
     }
 }

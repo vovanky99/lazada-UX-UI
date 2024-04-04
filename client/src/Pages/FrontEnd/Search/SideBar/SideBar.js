@@ -216,7 +216,7 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
       </fieldset> */}
       {/* filter price */}
       <fieldset className={cx('filter-group_cat')}>
-        <legend className={cx('filter-group_header')}>According price</legend>
+        <legend className={cx('filter-group_header')}>By price</legend>
         <form onSubmit={handleSubmitRangePrice}>
           <div className={cx('filter-price', 'd-flex flex-row align-items-start')}>
             <input
@@ -253,7 +253,7 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
       </fieldset>
       {/* filter rate star */}
       <fieldset className={cx('filter-group_cat', 'd-flex flex-column gap-3')}>
-        <legend className={cx('filter-group_header')}>According score</legend>
+        <legend className={cx('filter-group_header')}>By score</legend>
         <Button value={5} className={cx('check-star-filter', 'reviews_score d-flex flex-row gap-2 align-items-center')}>
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />

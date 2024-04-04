@@ -94,16 +94,23 @@ export default function Search() {
   return (
     <div className={cx('search-wrapper', 'd-flex')}>
       <div className={cx('main-content', 'd-flex flex-row')}>
-        <section className={cx('sidebar')}>
-          {categories ? (
-            <SideBar onChangeScore={onChangeScore} getCatID={getCatID} onChangePrice={onChangePrice} cat={categories} />
-          ) : (
-            ''
-          )}
-        </section>
-        <section className={cx('result-content')}>
-          {searchVl ? <SearchContent data={searchVl} titleSearch={Params.title} Price={onChange} /> : ''}
-        </section>
+        {searchVl || categories ? (
+          <>
+            <section className={cx('sidebar')}>
+              <SideBar
+                onChangeScore={onChangeScore}
+                getCatID={getCatID}
+                onChangePrice={onChangePrice}
+                cat={categories}
+              />
+            </section>
+            <section className={cx('result-content')}>
+              <SearchContent data={searchVl} titleSearch={Params.title} Price={onChange} />
+            </section>
+          </>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
