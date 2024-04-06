@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('img_cover');
             $table->boolean('status');
             $table->string('descriptions');
-            $table->string('address',100);
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('street_address_id')->references('id')->on('street_address')->onDelete('cascade');
             $table->foreignId('ward_id')->references('id')->on('ward')->onDelete('cascade');

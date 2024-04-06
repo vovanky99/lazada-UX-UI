@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class ReviewsFactory extends Factory
+class OrderCartFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,14 +17,10 @@ class ReviewsFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'=>fake()->name(),
-            'review_star'=>mt_rand(1,5),
-            'status'=>fake()->boolean(),
-            'content_review'=>fake()->sentence(),
-            'parent_id'=>mt_rand(0,100),
-            'user_id'=>mt_rand(1,100),
-            'product_id'=>mt_rand(1,32),
             //
+            'status'=>mt_rand(0,5),
+            'payment_id'=>mt_rand(1,100),
+            'user_id'=>mt_rand(1,100),
         ];
     }
 }

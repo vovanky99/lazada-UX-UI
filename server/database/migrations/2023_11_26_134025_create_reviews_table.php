@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id')->Unique();
             $table->string('title',50);
             $table->longText('content_review',500);
+            $table->boolean('status');
             $table->double('review_star',5);
             $table->integer('parent_id')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');

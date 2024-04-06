@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class OrderFactory extends Factory
+class FollowShopFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,9 +18,8 @@ class OrderFactory extends Factory
     {
         return [
             //
-            'status'=>mt_rand(0,5),
-            'payment_id'=>mt_rand(1,100),
             'user_id'=>mt_rand(1,100),
+            'shop_id'=>mt_rand(1,100),
         ];
     }
 }

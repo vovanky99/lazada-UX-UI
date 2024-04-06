@@ -15,21 +15,27 @@ class Shop extends Model
         'logo',
         'img_cover',
         'descriptions',
-        'address',
         'user_id',
         'street_address_id',
         'ward_id',
     ];
-    public function users(){
+    public function messages(){
+        return $this->hasMany(MessagesShop::class,'shop_id');
+    }
+    public function user(){
         return $this->belongsTo(User::class,'user_id','id');
     }
-    public function products(){
+    public function product(){
         return $this->hasMany(Products::class,'shop_id','id');
     }
-    public function StreetAddress(){
+    public function streetAddress(){
         return $this->belongsTo(StreetAddress::class,'street_address_id','id');
     }
-    public function Ward(){
+    public function ward(){
         return $this->belongsTo(Ward::class,'ward_id','id');
     }
+    public function followShop(){
+        return $this->hasMany(FollowShop::class,'shop_id');
+    }
+    
 }

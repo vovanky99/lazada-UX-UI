@@ -58,12 +58,21 @@ class User extends Authenticatable
         return $this->hasOne(Reviews::class,'user_id','id');
     }
     public function order(){
-        return $this->hasMany(Order::class,'user_id','id');
+        return $this->hasMany(OrderCart::class,'user_id','id');
     }
-    public function AddressUsers(){
+    public function addressUsers(){
         return $this->hasMany(AddressUsers::class,'user_id','id');
     }
     public function provider(){
         return $this->hasMany(Provider::class,'user_id','id');
+    }
+    public function followShop(){
+        return $this->hasMany(FollowShop::class,'user_id');
+    }
+    public function messages_sender(){
+        return $this->belongsTo(Messages::class,'sender_id');
+    }
+    public function messages_receiver(){
+        return $this->belongsTo(Messages::class,'receiver_id');
     }
 }

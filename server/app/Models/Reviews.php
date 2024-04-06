@@ -11,6 +11,7 @@ class Reviews extends Model
     public $table = 'reviews';
     protected $fillable = [
         'title',
+        'status',
         'review_star',
         'content_review',
         'parent_id',

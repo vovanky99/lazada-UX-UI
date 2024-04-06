@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class OrderCart extends Model
 {
     use HasFactory;
-    public $table = 'order';
+    public $table = 'order_cart';
     protected $fillable = [
         'status',
         'payment_id',

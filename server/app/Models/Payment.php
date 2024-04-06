@@ -22,6 +22,6 @@ class Payment extends Model
         return $this->belongsTo(Momo::class,'momo_id','id');
     }
     public function order(){
-        return $this->hasMany(Order::class,'payment_id','id');
+        return $this->hasMany(OrderCart::class,'payment_id','id');
     }
 }

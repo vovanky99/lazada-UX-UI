@@ -22,7 +22,6 @@ class ShopFactory extends Factory
             'img_cover'=>fake()->imageUrl(),
             'status'=>fake()->boolean(),
             'descriptions'=>fake()->sentence(),
-            'address'=>fake()->address(),
             'user_id'=>mt_rand(1,10),
             'street_address_id'=>mt_rand(1,20),
             'ward_id'=>mt_rand(1,30),

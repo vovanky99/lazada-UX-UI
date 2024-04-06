@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AttributeProduct>
  */
-class PaymentFactory extends Factory
+class AttributeProductFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,11 +17,10 @@ class PaymentFactory extends Factory
     public function definition(): array
     {
         return [
-            'status'=>fake()->boolean(),
-            'payment_datetime'=>fake()->dateTimeAD(),
-            'cod_id'=>mt_rand(1,100),
-            'momo_id'=>mt_rand(1,100)
             //
+            'name'=>fake()->name(),
+            'product_id'=>mt_rand(1,20),
+            'description'=>fake()->sentence(5),
         ];
     }
 }
