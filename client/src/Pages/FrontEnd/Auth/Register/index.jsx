@@ -1,21 +1,21 @@
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
+import { useDispatch } from 'react-redux';
+import { SignUp } from '~/Redux/Actions/Auth';
 
 import style from './register.module.scss';
 import routes from '~/config/routes';
 import DateOption from '~/components/DateOption';
-import axios from '~/api/axios';
-import useAuthContext from '~/contexts/Auth/AuthContent';
 import Button from '~/components/Button';
 import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-regular';
 
 const cx = classNames.bind(style);
 
 export default function Register() {
-  const { Register } = useAuthContext();
+  const dispatch = useDispatch();
   const emailRef = useRef();
   const passRef = useRef();
   const genderRef = useRef();
@@ -33,15 +33,6 @@ export default function Register() {
   const [birthdayValid, setBirthdayValidate] = useState('');
   const [nameValid, setNameValidate] = useState('');
   const [genderValid, setGenderValidate] = useState('');
-  const navigate = useNavigate();
-
-  //logined
-  const logined = () => {
-    if (localStorage.getItem('token')) {
-      return navigate('/');
-    }
-  };
-  logined();
 
   //handle email validated
   useEffect(() => {
@@ -175,7 +166,7 @@ export default function Register() {
         birthdayValid == '' &&
         nameValid == ''
       ) {
-        Register({ name, email, password, gender, birthday });
+        dispatch(SignUp({ name, email, password, gender, birthday }));
       }
     };
     if (form) {

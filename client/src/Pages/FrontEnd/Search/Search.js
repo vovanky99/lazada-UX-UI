@@ -6,12 +6,10 @@ import SideBar from './SideBar';
 import SearchContent from './SearchContent';
 import axios from '~/api/axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import useAuthContext from '~/contexts/Auth/AuthContent';
 
 const cx = classNames.bind(styles);
 
 export default function Search() {
-  const { searchTitle } = useAuthContext();
   const Params = useParams();
   const navigate = useNavigate();
 
@@ -26,10 +24,10 @@ export default function Search() {
   useEffect(() => {
     const getSearchCat = async () => {
       try {
-        if (Params.title || searchTitle) {
+        if (Params.title) {
           const res = await axios.get('/api/search/getcat', {
             params: {
-              q: Params.title || searchTitle,
+              q: Params.title,
             },
           });
           setCat(res.data);
@@ -41,16 +39,16 @@ export default function Search() {
     setTimeout(() => {
       getSearchCat();
     }, 3000);
-  }, [searchTitle]);
+  }, []);
 
   useEffect(() => {
     const catSL = selectCat.join(',');
     const getSearch = async () => {
       try {
-        if (Params.title || searchTitle) {
+        if (Params.title) {
           const res = await axios.get('/api/search', {
             params: {
-              q: Params.title || searchTitle,
+              q: Params.title,
               order: decrease,
               cat: catSL,
               to: priceTo, //price to
@@ -69,7 +67,7 @@ export default function Search() {
     setTimeout(() => {
       getSearch();
     }, 3000);
-  }, [searchTitle, decrease, selectCat, priceFrom, priceTo, reviewsScore]);
+  }, [decrease, selectCat, priceFrom, priceTo, reviewsScore]);
 
   const onChangePrice = (to, from) => {
     setPriceTo(to);
@@ -94,7 +92,7 @@ export default function Search() {
   return (
     <div className={cx('search-wrapper', 'd-flex')}>
       <div className={cx('main-content', 'd-flex flex-row')}>
-        {searchVl || categories ? (
+        {searchVl && categories ? (
           <>
             <section className={cx('sidebar')}>
               <SideBar

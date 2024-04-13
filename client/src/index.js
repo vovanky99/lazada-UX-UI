@@ -5,19 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'tippy.js/dist/tippy.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap/dist/js/bootstrap';
-
 import SSRProvider from 'react-bootstrap/SSRProvider';
-import { AuthProvider } from './contexts/Auth/AuthContent';
+import { Provider } from 'react-redux';
+import Store from './Redux/Store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <SSRProvider>
       <Routers>
-        <AuthProvider>
+        <Provider store={Store}>
           <App />
-        </AuthProvider>
+        </Provider>
       </Routers>
     </SSRProvider>
   </React.StrictMode>,

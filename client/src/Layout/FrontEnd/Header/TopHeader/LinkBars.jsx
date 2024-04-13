@@ -1,25 +1,63 @@
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from '~/api/axios';
 
+import { Logout, getUser } from '~/Redux/Actions/Auth';
 import styles from './LinkBars.module.scss';
-import useAuthContext from '~/contexts/Auth/AuthContent';
-
 import routes from '~/config/routes';
 import config from '~/config';
+import { useEffect } from 'react';
+import Store from '~/Redux/Store';
+
 const cx = classNames.bind(styles);
 
 function LinkBars({ IDLinkBars }) {
-  const { user, getUser, Logout } = useAuthContext();
+  //login action
+  const csrf = () => axios.get('/sanctum/csrf-cookie');
+  const dispatch = useDispatch;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.Auth.user);
 
+  // user logined
   useEffect(() => {
-    if (!user) {
-      getUser();
-    }
-  }, [user]);
+    const logined = () => {
+      if (
+        localStorage.getItem('token') &&
+        (location.pathname == routes.register || location.pathname == routes.signIn)
+      ) {
+        navigate('/');
+      }
+    };
+    logined();
+  }, [location.pathname, localStorage.getItem('token')]);
+
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    const fetchData = async () => {
+      if (token) {
+        try {
+          csrf();
+          // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+          const res = await axios.get('/api/user', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: { token },
+          });
+          Store.dispatch(getUser(res.data));
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    };
+    fetchData();
+  }, [token]);
+
   const handleLogout = () => {
-    Logout();
+    Store.dispatch(Logout());
   };
 
   return (

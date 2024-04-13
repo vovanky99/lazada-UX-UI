@@ -2,22 +2,23 @@ import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { faCartShopping, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch } from 'react-redux';
 
+// import { search } from '~/Redux/Actions/Auth/index';
 import styles from './LogoBars.module.scss';
 import HeaderBanner from './HeaderBanner';
 import SearchResult from './SearchResult';
 import useDebounce from '~/Hooks/Debounce/Debounce';
 import * as SearchServices from '~/Services/SearchServices';
 import config from '~/config';
-import useAuthContext from '~/contexts/Auth/AuthContent';
 import Images from '~/components/Images';
 
 const cx = classNames.bind(styles);
 
 function LogoBars() {
-  const { setSearchTitle } = useAuthContext();
+  // const dispatch = useDispatch();
   const location = useLocation();
   const Params = useParams();
   let searchResultRef = useRef();
@@ -63,13 +64,13 @@ function LogoBars() {
   //handle search click
   const handleClickSearch = (e) => {
     setSearchValue(e.target.childNodes[0].textContent);
-    setSearchTitle(searchValue);
+    // dispatch(search(searchValue));
     setShowResult(false);
   };
   //handle submit form search
   const handleSubmitSearch = (e) => {
     e.preventDefault();
-    setSearchTitle(searchValue);
+    // dispatch(search(searchValue));
     navigate(`/search/` + searchValue);
     setShowResult(false);
   };
@@ -84,7 +85,7 @@ function LogoBars() {
     if (rs && width) {
       window.addEventListener('resize', onWindowResize);
     }
-    if (rs && width) {
+    if (rs) {
       onWindowResize();
     }
     return () => {
@@ -92,7 +93,7 @@ function LogoBars() {
         window.removeEventListener('resize', onWindowResize);
       }
     };
-  }, [searchValue]);
+  }, [showResult]);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('logo-bars-content', 'row align-items-center')}>

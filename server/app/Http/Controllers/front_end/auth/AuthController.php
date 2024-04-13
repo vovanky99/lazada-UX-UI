@@ -41,19 +41,33 @@ class AuthController extends Controller
                 'message' => $validator->errors()->first()
             ]);
         }
-        $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
-            'gender'=>$request->gender,
-            'birthday' =>$request->birthday,
-        ]);
-        $token = $user->createToken('api-token')->plainTextToken;
-        return response()->json([
-            'token'=>$token,
-            'message' => 'User register successfully.',
-            'user' =>$user,
-        ]);
+        else{
+            try{
+                $user = User::create([
+                    'name'     => $request->name,
+                    'email'    => $request->email,
+                    'password' => Hash::make($request->password),
+                    'gender'=>$request->gender,
+                    'birthday' =>$request->birthday,
+                ]);
+                $credentials = $request->only('email','password');
+                if($user && Auth::attempt($credentials)){
+                    $users = Auth::user();
+                    return response()->json(['user'=>$users,'authorization'=>[
+                        'token'=>$users->createToken('api-token')->plainTextToken,
+                        'type'=>'bearer',
+                    ]]);
+                }
+                else{
+                    return response()->json(['message'=>'Invalid credentials',401]);
+                }
+            }
+            catch(\Exception $e){
+                return response()->json(['message'=>'register-fails',401]);
+            }
+            
+        }
+       
     }
     public function refresh(){
         return response()->json([
@@ -64,18 +78,12 @@ class AuthController extends Controller
             ]
             ]);
     }
-    public function logout()
+    public function logout(Request $request)
     {
-        // Revoke all tokens...
-        // auth()->user()->tokens()->delete();
-        
-        // Revoke the token that was used to authenticate the current request...
-        auth()->user()->currentAccessToken()->delete();
-        
-        // Revoke a specific token...
-        // auth()->user()->tokens()->where('id', $tokenId)->delete();
-        // auth()->logout();
-        return response()->json(['message' => 'Successfully logged out']);
+        $user = Auth::user();
+        $user->tokens()->delete();
+
+        return response()->json(['message' => 'Logged out successfully'], 200);
     }
 }
     

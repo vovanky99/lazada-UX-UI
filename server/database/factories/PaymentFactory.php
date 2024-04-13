@@ -18,7 +18,7 @@ class PaymentFactory extends Factory
     {
         return [
             'status'=>fake()->boolean(),
-            'payment_datetime'=>fake()->dateTimeAD(),
+            'payment_datetime'=>fake()->dateTime(),
             'cod_id'=>mt_rand(1,100),
             'momo_id'=>mt_rand(1,100)
             //

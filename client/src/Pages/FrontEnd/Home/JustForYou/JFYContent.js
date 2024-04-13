@@ -33,7 +33,7 @@ function JFYContent() {
     setTimeout(() => {
       fetch();
     }, 3000);
-  }, [products]);
+  }, []);
   return (
     <div className={cx('d-flex flex-column gap-5')}>
       <div className={cx('jfy-content', 'd-flex flex-row flex-wrap')}>
