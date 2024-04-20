@@ -126,7 +126,7 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
   };
 
   return (
-    <div className={cx('wrapper')}>
+    <aside className={cx('wrapper')}>
       <h2 className={cx('title')}>
         <FontAwesomeIcon icon={faFilter} /> BỘ LỌC TÌM KIẾM
       </h2>
@@ -302,6 +302,6 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
       <Button onClick={handleClickDeleteSelect} className={cx('delete-all')}>
         DELETE ALL
       </Button>
-    </div>
+    </aside>
   );
 }

@@ -11,6 +11,7 @@ class ProductsTypeDetail extends Model
     public $table = 'products_type_detail';
     protected $fillable =[
         'title',
+        'image',
         'products_type_id'
     ];
 

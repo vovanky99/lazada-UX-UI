@@ -8,4 +8,6 @@ export const SEARCH = 'SEARCH';
 export const LOG_ERROR = 'LOG_ERROR';
 export const REGISTER_ERROR = 'REGISTER_ERROR';
 
+export const GET_ID_PRODUCT = 'GET_ID_PRODUCT';
+
 // Other action types

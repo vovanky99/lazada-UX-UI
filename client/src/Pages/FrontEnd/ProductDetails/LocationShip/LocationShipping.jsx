@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import Tippy from '@tippyjs/react';
 import classNames from 'classnames/bind';
-import styles from './ProductDetails.module.scss';
+import styles from '../ProductDetails.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleDot, faLocationCrosshairs, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { Button } from 'react-bootstrap';
 import { faCircle } from '@fortawesome/fontawesome-free-regular';
 
 const cx = classNames.bind(styles);

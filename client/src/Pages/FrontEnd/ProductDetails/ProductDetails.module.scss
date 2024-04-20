@@ -5,20 +5,12 @@ p {
   margin-bottom: 0 !important;
 }
 .wrapper {
+  min-height: 100vh;
   background-color: #eff0f5;
 }
 .main-content {
   width: var(--media_width);
   margin: 0 auto;
-}
-.breadcum {
-  ul {
-    li {
-      a {
-        color: #7a9cbb;
-      }
-    }
-  }
 }
 .product-briefing {
   background-color: white;
@@ -28,10 +20,6 @@ p {
 .images-products,
 .products-content-main {
   padding: 15px;
-}
-
-.reviews_headers {
-  margin-top: 10px;
 }
 .reviews,
 .total-reviews {
@@ -51,6 +39,28 @@ p {
 }
 .stars {
   color: #ffd500;
+}
+.reviews_headers {
+  .reviews {
+    .stars {
+      --star-size: 2rem;
+      --star-background: #fc0;
+      --star-color: #d3cccc;
+      color: #faca51;
+      font-size: 1rem;
+      --percent: calc(var(--rating) / 5 * 100%);
+      display: inline-block;
+      font-size: var(--star-size);
+      line-height: 1;
+      &::before {
+        content: '★★★★★';
+        letter-spacing: 1px;
+        background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
 }
 
 .total-reviews {

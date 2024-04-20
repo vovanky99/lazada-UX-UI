@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('products_type_detail', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('image');
             $table->foreignId('products_type_id')->references('id')->on('products_type')->onDelete('cascade');
             $table->timestamps();
         });

@@ -48,9 +48,9 @@ function FlashSaleHome() {
           </div>
         </div>
         <div className={cx('flash-sale-content-body', 'd-flex flex-row')}>
-          {products.map((product) => (
-            <div className={cx('fs-content-body-container')} key={product.id}>
-              <Link className={cx(`fs-content-body-unit`)}>
+          {products.map((product, index) => (
+            <div className={cx('fs-content-body-container')} key={index}>
+              <Link to={`products/${product.title}/${product.id}`} className={cx(`fs-content-body-unit`)}>
                 <div className={cx('fs-img-container')}>
                   <Image src={product.images} />
                 </div>

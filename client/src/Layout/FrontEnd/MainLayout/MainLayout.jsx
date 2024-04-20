@@ -55,7 +55,7 @@ function MainLayout({ children }) {
       }
     };
     fetchData();
-  }, [isAuth, localStorage.getItem('token')]);
+  }, [isAuth, localStorage.getItem('token'), location.pathname]);
   return (
     <>
       <div className={cx('wrapper', 'container-fluid')}>

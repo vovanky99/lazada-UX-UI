@@ -41,7 +41,7 @@ function JFYContent() {
           .filter((product, index) => index <= loadMore * totalLoadMore - 1)
           .map((product) => (
             <div className={cx('jfy-content-container')} key={product.id}>
-              <Link>
+              <Link to={`http://localhost:3000/products/${product.title}/${product.id}`}>
                 <div className={cx('jfy-content-img')}>
                   <Images src={product.images} />
                 </div>

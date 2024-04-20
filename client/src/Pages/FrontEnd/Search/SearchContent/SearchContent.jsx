@@ -10,6 +10,7 @@ import Products from '~/Layout/FrontEnd/Products';
 import Pagination from '~/Layout/Pagination';
 import Button from '~/components/Button';
 import Images from '~/components/Images';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -156,7 +157,7 @@ export default function SearchContent({ data, titleSearch, Price }) {
         <div id="products-grid-list" className={cx('search-products-content', 'd-flex flex-wrap')}>
           {currentTableData.map((pd, index) => (
             <div key={index} className={cx('container-products', 'width-product')}>
-              <Link>
+              <Link to={`http://localhost:3000/products/${pd.title}/${pd.id}`}>
                 <Products data={pd} display={display} imgWidth={imgWidth} Gap={gap} />
               </Link>
             </div>

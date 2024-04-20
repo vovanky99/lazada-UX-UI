@@ -12,7 +12,7 @@ import SlideReviews from '~/components/SlickSlider/SlideReviews';
 
 const cx = classNames.bind(styles);
 
-export default function ProductsDescriptions() {
+export default function ProductsDescriptions({ id }) {
   const [likeReviews, setLikeReviews] = useState(false);
   //onclick handle like reviews
   const onClickHandleLikeReviews = () => {
@@ -115,7 +115,7 @@ export default function ProductsDescriptions() {
             </div>
           </div>
         </div>
-        <div className={cx('products-rating')}>
+        <div id={id} className={cx('products-rating')}>
           <h3>Product Ratings</h3>
           <div className={cx('products-rate-content')}>
             <div className={cx('products-rate-header', 'd-flex')}>

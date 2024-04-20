@@ -3,7 +3,7 @@ const routes = {
   signIn: '/login',
   register: '/register',
   logout: '/logout',
-  productdetails: '/products',
+  productdetails: '/products/:title/:id',
   search: '/search/:title',
   cart: '/cart',
   cat: '/cat',

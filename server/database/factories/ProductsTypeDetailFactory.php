@@ -20,6 +20,7 @@ class ProductsTypeDetailFactory extends Factory
             //
             'title'=>fake()->name(),
             'products_type_id'=>mt_rand(1,10),
+            'image'=>fake()->imageUrl()
         ];
     }
 }

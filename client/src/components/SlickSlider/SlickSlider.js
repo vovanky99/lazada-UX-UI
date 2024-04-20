@@ -24,16 +24,7 @@ export default function SlickSlide({
   const [slideStart, setSlideStart] = useState(0);
   const [slideEnd, setSlideEnd] = useState(numberShow);
   const [imageHighlight, setImageHighlight] = useState('');
-  const dt = [
-    'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lodc12gxnd9vb5_tn',
-    'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lodc12gxorub7f_tn',
-    'https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lnkv8suqm1dmd6',
-    'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lodc12gxkk4z05_tn',
-    'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lodc12gxlypf53_tn',
-    'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lodc12gxq6er7b_tn',
-    'https://down-vn.img.susercontent.com/file/sg-11134201-23020-24w7601rednv12',
-  ];
-  const [srcHighlight, setSrcHighlight] = useState(dt[0]);
+  const [srcHighlight, setSrcHighlight] = useState(data[0].images);
   let setDefaultHL = srcHL;
   let defaultSrcHighlight = '';
   if (setDefaultHL != '') {
@@ -45,8 +36,8 @@ export default function SlickSlide({
     setShowHighlight(true);
   };
   const srcHighlightChild = srcHighlightParent;
-  const datas = dt.slice(slideStart, slideEnd);
-  const lenght = dt.length;
+  const datas = data.slice(slideStart, slideEnd);
+  const lenght = data.length;
   const handleNext = () => {
     if (slideEnd < lenght) {
       setSlideStart(slideStart + 1);
@@ -96,7 +87,7 @@ export default function SlickSlide({
       {showHighlight && (
         <ShowHighLight
           changeSetShowHighlight={changeSetShowHighlight}
-          dt={dt}
+          dt={data}
           title={title}
           imageHighlight={imageHighlight}
         />
@@ -117,17 +108,17 @@ export default function SlickSlide({
         {datas.map((d, key) => (
           <div className={cx('container-img')} key={key}>
             <picture>
-              {srcHighlight == d ? (
+              {srcHighlight == d.images ? (
                 <Image
                   onMouseOver={handleOnMouse}
-                  src={d}
+                  src={d.images}
                   style={{ width: '100%', cursor: 'pointer' }}
                   className={cx('img-click', 'images_active')}
                 />
               ) : (
                 <Image
                   onMouseOver={handleOnMouse}
-                  src={d}
+                  src={d.images}
                   className={cx('img-click')}
                   style={{ width: '100%', cursor: 'pointer' }}
                 />
