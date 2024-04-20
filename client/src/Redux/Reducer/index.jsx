@@ -1,12 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-
-import { GET_USER, LOGOUT, LOG_ERROR, REGISTER_ERROR } from '../Actions/Types';
-import axios from '~/api/axios';
+import { GET_USER, LOGOUT, LOG_ERROR, REGISTER_ERROR, LOGIN, REGISTER, SOCIAL_AUTH } from '../Actions/Types';
 
 export const initialState = {
   isAuthenticated: false,
   user: null,
-  log_error: '',
+  message: null,
 };
 export default function AuthReducer(state = initialState, action) {
   switch (action.type) {
@@ -14,20 +11,34 @@ export default function AuthReducer(state = initialState, action) {
       return {
         ...state,
         user: action.payload,
+      };
+    case LOGIN:
+      return {
+        ...state,
+        isAuthenticated: true,
+      };
+    case SOCIAL_AUTH:
+      return {
+        ...state,
         isAuthenticated: true,
       };
     case LOGOUT:
-      state.user = null;
-      state.isAuthenticated = false;
-      return state;
+      return { ...state, user: null, isAuthenticated: false };
+    case REGISTER:
+      return {
+        ...state,
+        isAuthenticated: true,
+      };
     case LOG_ERROR:
-      state.user = action.payload;
-      state.isAuthenticated = true;
-      state.log_error = 'email or password incorrect!';
-      return state;
+      return {
+        ...state,
+        message: action.payload,
+      };
     case REGISTER_ERROR:
-      state.log_error = 'have issue happen when register!';
-      return state;
+      return {
+        ...state,
+        message: action.payload,
+      };
     default:
       return state;
   }

@@ -39,7 +39,7 @@ export default function Search() {
     setTimeout(() => {
       getSearchCat();
     }, 3000);
-  }, []);
+  }, [Params.title]);
 
   useEffect(() => {
     const catSL = selectCat.join(',');
@@ -67,7 +67,7 @@ export default function Search() {
     setTimeout(() => {
       getSearch();
     }, 3000);
-  }, [decrease, selectCat, priceFrom, priceTo, reviewsScore]);
+  }, [Params.title, decrease, selectCat, priceFrom, priceTo, reviewsScore]);
 
   const onChangePrice = (to, from) => {
     setPriceTo(to);

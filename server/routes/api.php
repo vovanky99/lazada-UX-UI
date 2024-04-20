@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\front_end\auth\AuthController;
-use App\Http\Controllers\front_end\auth\SocialAuthController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -49,5 +51,6 @@ Route::prefix('/posts')->name('posts.')->group(function () {
 });
 
 
-// Route::post('/social/{provider}', [SocialAuthController::class,'redirectToProvider']);
-// Route::post('/social/{provider}/callback', [SocialAuthController::class,'handleProviderCallback']);
+Route::get('/auth/{provider}', [SocialAuthController::class,'redirectToProvider']);
+Route::get('/auth/{provider}/callback', [SocialAuthController::class,'handleProviderCallback']);
+Route::get('/decrypt-cookie',[SocialAuthController::class,'decryptCookie']);

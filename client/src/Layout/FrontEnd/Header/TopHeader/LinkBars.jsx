@@ -1,63 +1,43 @@
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from '~/api/axios';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import { Logout, getUser } from '~/Redux/Actions/Auth';
+import { Logout } from '~/Redux/Actions/Auth';
+import axios from '~/api/axios';
 import styles from './LinkBars.module.scss';
 import routes from '~/config/routes';
 import config from '~/config';
-import { useEffect } from 'react';
 import Store from '~/Redux/Store';
 
 const cx = classNames.bind(styles);
 
 function LinkBars({ IDLinkBars }) {
   //login action
-  const csrf = () => axios.get('/sanctum/csrf-cookie');
-  const dispatch = useDispatch;
-  const location = useLocation();
-  const navigate = useNavigate();
+  // const csrf = () => axios.get('/sanctum/csrf-cookie');
+  // const dispatch = useDispatch();
+  // const location = useLocation();
+  // const navigate = useNavigate();
   const user = useSelector((state) => state.Auth.user);
 
-  // user logined
-  useEffect(() => {
-    const logined = () => {
-      if (
-        localStorage.getItem('token') &&
-        (location.pathname == routes.register || location.pathname == routes.signIn)
-      ) {
-        navigate('/');
-      }
-    };
-    logined();
-  }, [location.pathname, localStorage.getItem('token')]);
-
-  const token = localStorage.getItem('token');
-  useEffect(() => {
+  const handleLogout = () => {
     const fetchData = async () => {
-      if (token) {
-        try {
-          csrf();
-          // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-          const res = await axios.get('/api/user', {
+      try {
+        let token = localStorage.getItem('token');
+        if (token) {
+          await axios.post('/api/logout', null, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: 'Bearer ' + token,
             },
-            params: { token },
           });
-          Store.dispatch(getUser(res.data));
-        } catch (e) {
-          console.log(e);
+          localStorage.removeItem('token');
+          Store.dispatch(Logout());
         }
+      } catch (e) {
+        console.log(e);
       }
     };
     fetchData();
-  }, [token]);
-
-  const handleLogout = () => {
-    Store.dispatch(Logout());
   };
 
   return (

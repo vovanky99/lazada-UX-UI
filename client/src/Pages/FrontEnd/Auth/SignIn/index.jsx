@@ -8,8 +8,8 @@ import routes from '~/config/routes';
 import SignIn from './SignIn.module.scss';
 import Button from '~/components/Button';
 import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-regular';
-import { useNavigate } from 'react-router-dom';
-import { Login } from '~/Redux/Actions/Auth';
+import { AuthSocial, Login } from '~/Redux/Actions/Auth';
+import axios from '~/api/axios';
 
 const cx = classNames.bind(SignIn);
 
@@ -107,22 +107,58 @@ export default function Log() {
     }
   };
 
-  //handle login facebook
-
+  //handle set localstorage auth social
   useEffect(() => {
-    // let gg = ggRef.current;
-    // let fb = fbRef.current;
-    // if (gg) {
-    //   gg.addEventListener('click', function () {
-    //     SocialLogin('google');
-    //   });
-    // }
-    // if (fb) {
-    //   fb.addEventListener('click', function () {
-    //     SocialLogin('facebook');
-    //   });
-    // }
-  }, []);
+    const getCookieValue = (name) => {
+      const cookies = document.cookie.split('; ');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const [cookieName, cookieValue] = cookie.split('=');
+        if (cookieName === name) {
+          return cookieValue;
+        }
+      }
+      return null;
+    };
+    const decrypt = getCookieValue('authToken');
+
+    if (decrypt) {
+      const getDecryptedCookieValue = async (cookie) => {
+        try {
+          const res = await axios.get(`/api/decrypt-cookie?cookie=` + cookie);
+          localStorage.setItem('token', res.data.decryptedValue.slice(res.data.decryptedValue.indexOf('|') + 1));
+        } catch (e) {
+          return null;
+        }
+      };
+      getDecryptedCookieValue(decrypt);
+    }
+  }, [document.cookie]);
+  //handle login social
+  useEffect(() => {
+    let fb = fbRef.current;
+    let gg = ggRef.current;
+    const handleFacebookAuth = () => {
+      dispatch(AuthSocial('facebook'));
+    };
+    const handleGoogleAuth = () => {
+      dispatch(AuthSocial('google'));
+    };
+    if (fb) {
+      fb.addEventListener('click', handleFacebookAuth);
+    }
+    if (gg) {
+      gg.addEventListener('click', handleGoogleAuth);
+    }
+    return () => {
+      if (fb) {
+        fb.removeEventListener('click', handleFacebookAuth);
+      }
+      if (gg) {
+        gg.addEventListener('click', handleGoogleAuth);
+      }
+    };
+  }, [fbRef, ggRef]);
 
   return (
     <section className={cx('wrapper')}>
@@ -147,7 +183,7 @@ export default function Log() {
                 name="email"
                 value={email}
                 onChange={handleEmailOnchange}
-                type="text"
+                type="email"
                 placeholder="Email..."
                 className={cx('email_input', 'py-3 form-control')}
               />

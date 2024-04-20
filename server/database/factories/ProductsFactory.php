@@ -23,6 +23,7 @@ class ProductsFactory extends Factory
             'status'=>fake()->boolean(),
             'quantities'=>mt_rand(1,1000),
             'descriptions'=>fake()->sentence(40),
+            'discount_id'=>mt_rand(1,50),
             'category_id'=>mt_rand(1,15),
             'shop_id'=>mt_rand(1,100),
             'products_type_id'=>mt_rand(1,5),

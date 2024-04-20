@@ -12,11 +12,10 @@ class Discount extends Model
     protected $fillable = [
         'number',
         'status',
-        'produt_id',
         'start_time',
         'end_time'
     ];
     public function products(){
-        return $this->hasMany(Products::class,'shop_id','id');
+        return $this->hasMany(Products::class,'discount_id','id');
     }
 }

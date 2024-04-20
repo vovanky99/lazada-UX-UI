@@ -63,7 +63,7 @@ class User extends Authenticatable
     public function addressUsers(){
         return $this->hasMany(AddressUsers::class,'user_id','id');
     }
-    public function provider(){
+    public function providers(){
         return $this->hasMany(Provider::class,'user_id','id');
     }
     public function followShop(){

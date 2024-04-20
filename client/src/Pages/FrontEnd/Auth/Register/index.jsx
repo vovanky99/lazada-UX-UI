@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 import { useDispatch } from 'react-redux';
-import { SignUp } from '~/Redux/Actions/Auth';
+import { AuthSocial, SignUp } from '~/Redux/Actions/Auth';
 
 import style from './register.module.scss';
 import routes from '~/config/routes';
@@ -16,6 +16,8 @@ const cx = classNames.bind(style);
 
 export default function Register() {
   const dispatch = useDispatch();
+  const fbRef = useRef();
+  const ggRef = useRef();
   const emailRef = useRef();
   const passRef = useRef();
   const genderRef = useRef();
@@ -118,7 +120,7 @@ export default function Register() {
     setBirthday(value);
   };
 
-  // handle form submit
+  // handle form submit register
   useEffect(() => {
     const today = new Date();
     const d = new Date(birthday);
@@ -192,6 +194,32 @@ export default function Register() {
     }
   };
 
+  //handle login social
+  useEffect(() => {
+    let fb = fbRef.current;
+    let gg = ggRef.current;
+    const handleFacebookAuth = () => {
+      dispatch(AuthSocial('facebook'));
+    };
+    const handleGoogleAuth = () => {
+      dispatch(AuthSocial('google'));
+    };
+    if (fb) {
+      fb.addEventListener('click', handleFacebookAuth);
+    }
+    if (gg) {
+      gg.addEventListener('click', handleGoogleAuth);
+    }
+    return () => {
+      if (fb) {
+        fb.removeEventListener('click', handleFacebookAuth);
+      }
+      if (gg) {
+        gg.addEventListener('click', handleGoogleAuth);
+      }
+    };
+  }, [fbRef, ggRef]);
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('main-content', 'mx-auto bg-transparent')}>
@@ -217,7 +245,7 @@ export default function Register() {
                 }}
                 value={email}
                 required
-                type="text"
+                type="email"
                 placeholder="Email..."
               />
               <span className="text-danger fs-5">{emailValid != '' ? emailValid : ''}</span>
@@ -306,11 +334,17 @@ export default function Register() {
             </div>
             <div className={cx('register_wrap', 'text-start my-3 fs-5')}>Or, register with</div>
             <div className={cx('login_third', 'form-group d-flex  justify-content-between')}>
-              <Button className={cx('fa_background', 'py-2 px-0  fs-2 text-white d-flex align-items-center')}>
+              <Button
+                ref={fbRef}
+                className={cx('fa_background', 'py-2 px-0  fs-2 text-white d-flex align-items-center')}
+              >
                 <FontAwesomeIcon className={cx('fa_facebook', 'text-white btn fs-1 pe-2 me-3')} icon={faFacebookF} />
                 Facebook
               </Button>
-              <Button className={cx('gg_background', 'btn py-2 px-0 fs-2 text-white d-flex align-items-center')}>
+              <Button
+                ref={ggRef}
+                className={cx('gg_background', 'btn py-2 px-0 fs-2 text-white d-flex align-items-center')}
+              >
                 <FontAwesomeIcon className={cx('fa_google', 'pe-2 me-3')} icon={faGooglePlusG} />
                 Google
               </Button>

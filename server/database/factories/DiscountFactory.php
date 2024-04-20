@@ -19,7 +19,6 @@ class DiscountFactory extends Factory
         return [
             'number'=>mt_rand(1,50),
             'status'=>fake()->boolean(),
-            'product_id'=>mt_rand(1,100),
             'start_time'=>fake()->dateTime(),
             'end_time'=>fake()->dateTime(),
         ];

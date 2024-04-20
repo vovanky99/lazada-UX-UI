@@ -1,4 +1,4 @@
-import { GET_USER, LOGOUT, LOG_ERROR, REGISTER_ERROR } from '../Types/index';
+import { GET_USER, LOGOUT, LOG_ERROR, REGISTER_ERROR, LOGIN, SOCIAL_AUTH } from '../Types/index';
 import axios from '~/api/axios';
 
 //login action
@@ -23,6 +23,9 @@ export const Login = (...data) => {
       if (result && result.data) {
         localStorage.setItem('token', result.data.authorization.token);
       }
+      dispatch({
+        type: LOGIN,
+      });
     } catch (e) {
       dispatch({
         type: LOG_ERROR,
@@ -31,16 +34,30 @@ export const Login = (...data) => {
   };
 };
 
+export const AuthSocial = (provider) => {
+  return async (dispatch) => {
+    try {
+      await csrf();
+      // const result = await axios.get(`/api/auth/${provider}`, { withCredentials: true });
+      // window.open(`http://localhost:8000/api/auth/${provider}`, '_self');
+      window.location.href = `http://localhost:8000/api/auth/${provider}`;
+      dispatch({
+        type: SOCIAL_AUTH,
+      });
+    } catch (e) {
+      dispatch({
+        type: LOG_ERROR,
+        payload: `login with${provider} happen issue`,
+      });
+    }
+  };
+};
+
 export const Logout = () => {
   return async (dispatch) => {
-    csrf();
-    let token = localStorage.getItem('token');
-    if (token) {
-      await axios.post('api/logout', { params: { token } });
-      localStorage.removeItem('token');
-      dispatch({ type: LOGOUT });
-      window.location.reload();
-    }
+    dispatch({
+      type: LOGOUT,
+    });
   };
 };
 

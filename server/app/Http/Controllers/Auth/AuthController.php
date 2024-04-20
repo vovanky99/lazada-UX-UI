@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\front_end\auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -80,9 +80,9 @@ class AuthController extends Controller
     }
     public function logout(Request $request)
     {
-        $user = Auth::user();
-        $user->tokens()->delete();
-
+        // $user = Auth::user();
+        // $user->tokens()->delete();
+        $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logged out successfully'], 200);
     }
 }

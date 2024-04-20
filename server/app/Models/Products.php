@@ -16,6 +16,7 @@ class Products extends Model
         'discount',
         'quantities',
         'descriptions',
+        'discount_id',
         'category_id',
         'shop_id',
         'products_type_id',
@@ -42,7 +43,7 @@ class Products extends Model
         return $this->belongsTo(Shop::class,'shop_id','id');
     }
     public function discount(){
-        return $this->hasMany(Discount::class,'product_id');
+        return $this->belongsTo(Discount::class,'discount_id','id');
     }
     public function productsType(){
         return $this->belongsTo(ProductsType::class,'products_type_id','id');

@@ -90,6 +90,7 @@ class DatabaseSeeder extends Seeder
         Cod::factory()->count(1000)->create();
         Momo::factory()->count(1000)->create();
         Payment::factory()->count(100)->create();
+        Discount::factory()->count(100)->create();
         Products::factory()->count(5000)->create();
         Reviews::factory()->count(100)->create();
         ProductsTypeDetail::factory()->count(100)->create();
@@ -98,7 +99,7 @@ class DatabaseSeeder extends Seeder
         OrderCart::factory()->count(1000)->create();
         OrderProducts::factory()->count(1000)->create();
         AddressUsers::factory()->count(100)->create();
-        Discount::factory()->count(100)->create();
+        
         FollowShop::factory()->count(1000)->create();
         Messages::factory()->count(100)->create();
         MessagesShop::factory()->count(100)->create();

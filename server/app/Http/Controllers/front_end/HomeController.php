@@ -41,11 +41,11 @@ class HomeController extends Controller
     public function getProductsAll()
     {
        
-        $products = Products::select(DB::raw('(SELECT COUNT(reviews.id) from reviews where reviews.product_id = products.id) as total_reviews'),DB::raw('(SELECT AVG(reviews.review_star) from reviews where reviews.product_id = products.id) as review_star'),'products.*','discount.number as discount')->join('discount','discount.product_id','=','products.id')->groupBy('products.id')->orderBy(DB::raw('(SELECT AVG(reviews.review_star) from reviews where reviews.product_id = products.id)'),'DESC')->get();
+        $products = Products::select(DB::raw('(SELECT COUNT(reviews.id) from reviews where reviews.product_id = products.id) as total_reviews'),DB::raw('(SELECT AVG(reviews.review_star) from reviews where reviews.product_id = products.id) as review_star'),'products.*','discount.number as discount')->join('discount','discount.id','=','products.discount_id')->groupBy('products.id')->orderBy(DB::raw('(SELECT AVG(reviews.review_star) from reviews where reviews.product_id = products.id)'),'DESC')->get();
         return response()->json($products,200);
     }
     public function getflashSale(){
-        $flashSale = Products::join('discount','discount.product_id','=','products.id')->select('discount.number as discount','products.*')->orderBy('discount','DESC')->offset(0)->take(6)->get();
+        $flashSale = Products::join('discount','discount.id','=','products.discount_id')->select('discount.number as discount','products.*')->orderBy('discount','DESC')->offset(0)->take(6)->get();
         return response()->json($flashSale,200);
     }
    
