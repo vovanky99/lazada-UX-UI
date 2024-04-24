@@ -15,6 +15,6 @@ class Momo extends Model
         'amount',
     ];
     public function payment(){
-        return $this->hasMany(Payment::class,'momo_id','id');
+        return $this->morphMany(Payment::class,'paymentable');
     }
 }

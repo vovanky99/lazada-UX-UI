@@ -20,7 +20,6 @@ return new class extends Migration
             $table->double('percents',2);
             $table->integer('quantity');
             $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade')->nullable();
-            $table->foreignId('products_type_id')->references('id')->on('products_type')->onDelete('cascade');
             $table->dateTime('start_day');
             $table->dateTime('end_day');
             $table->timestamps();

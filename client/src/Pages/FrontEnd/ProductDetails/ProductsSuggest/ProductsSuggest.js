@@ -7,305 +7,51 @@ import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-export default function ProductsSuggest() {
+export default function ProductsSuggest({ PD, shopPD }) {
   return (
     <div className={cx('products-suggest')}>
       <div className={cx('from-store')}>
         <h4>From The Same Store</h4>
         <div className={cx('from-store-content', 'd-flex')}>
-          <Link className={cx('from-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
+          {shopPD.map((pd, index) => (
+            <Link
+              to={`http://localhost:3000/products/${pd.title}/${pd.id}`}
+              className={cx('from-store-product')}
+              key={index}
+            >
+              <div className={cx('img')}>
+                <Image src={`${pd.images}`} />
               </div>
-            </div>
-          </Link>
-          <Link className={cx('from-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
+              <div className={cx('from-store-product-content', 'd-flex flex-column')}>
+                <h5>{pd.title}</h5>
+                <span>{(pd.price - (pd.discount / 100) * pd.price).toFixed(1)}</span>
+                <div
+                  className={cx('from-store-product-star')}
+                  style={{ '--rating': `${pd.score ? pd.score : 0}` }}
+                ></div>
               </div>
-            </div>
-          </Link>
-          <Link className={cx('from-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
-          <Link className={cx('from-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
-          <Link className={cx('from-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
+            </Link>
+          ))}
         </div>
       </div>
       <div className={cx('from-other-store')}>
         <h4>You may also like</h4>
         <div className={cx('from-other-store-content', 'd-flex flex-wrap')}>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
+          {PD.map((p, index) => (
+            <Link className={cx('from-other-store-product')}>
+              <div className={cx('img')}>
+                <Image src={`${p.images}`} />
               </div>
-            </div>
-          </Link>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
+              <div className={cx('from-other-store-product-content', 'd-flex flex-column')}>
+                <h5>{p.title}</h5>
+                <span>{(p.price - (p.discount / 100) * p.price).toFixed(1)}</span>
+                <div
+                  className={cx('from-other-store-product-star')}
+                  style={{ '--rating': `${p.score ? p.score : 0}` }}
+                ></div>
               </div>
-            </div>
-          </Link>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
-          <Link className={cx('from-other-store-product')}>
-            <div className={cx('img')}>
-              <Image src="https://img.lazcdn.com/g/p/e39064ea746da15aeb08a7a924292cd6.jpg_200x200q80.jpg_.webp" />
-            </div>
-            <div className={cx('from-other-store-product-content')}>
-              <h5>(Voucher) Sở Hữu Điện Thoại lP15 Pro Max 512GB VNA</h5>
-              <span>38,000</span>
-              <div className={cx('from-other-store-product-star')}>
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-                <FontAwesomeIcon icon={faStar} />
-              </div>
-            </div>
-          </Link>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

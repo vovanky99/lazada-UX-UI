@@ -94,10 +94,10 @@ export default function ShowHIghLight({ changeSetShowHighlight, dt, title, image
           <div className={cx('', 'd-flex flex-wrap')}>
             {dt.map((d, index) => (
               <div key={index} className={cx('img-wrapper')}>
-                {imagesHighlight == d.images ? (
-                  <Image className={cx('img-hl-click', 'img-hl-active')} src={d.images} alt={d.images} />
+                {imagesHighlight == d.title ? (
+                  <Image className={cx('img-hl-click', 'img-hl-active')} src={d.title} alt={d.title} />
                 ) : (
-                  <Image className={cx('img-hl-click')} src={d.images} alt={d.images} />
+                  <Image className={cx('img-hl-click')} src={d.title} alt={d.title} />
                 )}
               </div>
             ))}

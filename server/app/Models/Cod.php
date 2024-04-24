@@ -15,6 +15,6 @@ class Cod extends Model
         'amount'
     ];
     public function payment(){
-        return $this->hasMany(Payment::class,'cod_id','id');
+        return $this->morphMany(Payment::class,'paymentable');
     }
 }

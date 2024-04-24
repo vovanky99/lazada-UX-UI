@@ -12,14 +12,11 @@ class Payment extends Model
     protected $fillable = [
         'status',
         'payment_datetime',
-        'cod_id',
-        'momo_id'
+        'paymentable_id',
+        'paymentable_type',
     ];
-    public function cod(){
-        return $this->belongsTo(Cod::class,'cod_id','id');
-    }
-    public function momo(){
-        return $this->belongsTo(Momo::class,'momo_id','id');
+    public function paymentable(){
+        return $this->morphTo();
     }
     public function order(){
         return $this->hasMany(OrderCart::class,'payment_id','id');

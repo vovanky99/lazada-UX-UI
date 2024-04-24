@@ -28,6 +28,6 @@ class Reviews extends Model
         return $this->belongsTo(Products::class,'product_id','id');
     }
     public function images(){
-        return $this->hasMany(ImagesReviews::class,'review_id','id');
+        return $this->morphMany(Images::class,'imageable');
     }
 }

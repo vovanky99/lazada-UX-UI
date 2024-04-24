@@ -68,6 +68,7 @@ export default function LocationShipping({ changeLocationValue, onClick }) {
   const handleClick = async (e) => {
     changeLocationValue(e.target.value);
   };
+
   const handleclickCircle = () => {
     setclickCircle(false);
   };

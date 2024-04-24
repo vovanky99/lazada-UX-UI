@@ -24,7 +24,7 @@ export default function SlickSlide({
   const [slideStart, setSlideStart] = useState(0);
   const [slideEnd, setSlideEnd] = useState(numberShow);
   const [imageHighlight, setImageHighlight] = useState('');
-  const [srcHighlight, setSrcHighlight] = useState(data[0].images);
+  const [srcHighlight, setSrcHighlight] = useState(data[0].title);
   let setDefaultHL = srcHL;
   let defaultSrcHighlight = '';
   if (setDefaultHL != '') {
@@ -108,17 +108,17 @@ export default function SlickSlide({
         {datas.map((d, key) => (
           <div className={cx('container-img')} key={key}>
             <picture>
-              {srcHighlight == d.images ? (
+              {srcHighlight == d.title ? (
                 <Image
                   onMouseOver={handleOnMouse}
-                  src={d.images}
+                  src={d.title}
                   style={{ width: '100%', cursor: 'pointer' }}
                   className={cx('img-click', 'images_active')}
                 />
               ) : (
                 <Image
                   onMouseOver={handleOnMouse}
-                  src={d.images}
+                  src={d.title}
                   className={cx('img-click')}
                   style={{ width: '100%', cursor: 'pointer' }}
                 />

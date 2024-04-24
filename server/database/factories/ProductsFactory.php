@@ -22,13 +22,10 @@ class ProductsFactory extends Factory
             'price'=>mt_rand(1000,10000000),
             'status'=>fake()->boolean(),
             'quantities'=>mt_rand(1,1000),
-            'descriptions'=>fake()->sentence(40),
+            'descriptions'=>fake()->sentence(200),
             'discount_id'=>mt_rand(1,50),
             'category_id'=>mt_rand(1,15),
             'shop_id'=>mt_rand(1,100),
-            'products_type_id'=>mt_rand(1,5),
-            'products_type_id1'=>mt_rand(6,10),
-            'products_type_id2'=>mt_rand(15,20),
             //
         ];
     }

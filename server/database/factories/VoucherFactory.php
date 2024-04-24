@@ -24,7 +24,6 @@ class VoucherFactory extends Factory
             'code'=>fake()->isbn13(),
             'quantity'=>mt_rand(1,1000),
             'category_id'=>mt_rand(1,10),
-            'products_type_id'=>mt_rand(1,10),
             'start_day'=>fake()->date(),
             'end_day'=>fake()->date(),
             //

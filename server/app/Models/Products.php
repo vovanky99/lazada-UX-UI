@@ -19,22 +19,18 @@ class Products extends Model
         'discount_id',
         'category_id',
         'shop_id',
-        'products_type_id',
-        'products_type_id1',
-        'products_type_id2',
     ];
-    
     public function reviews(){
         return $this->hasMany(Reviews::class,'products_id','id');
     }
     public function images(){
-        return $this->hasMany(ImagesProducts::class,'product_id','id');
+        return $this->morphMany(Images::class,'imageable');
     }
     public function attributeProduct(){
         return $this->hasMany(AttributeProduct::class,'product_id');
     }
-    public function orderProducts(){
-        return $this->hasMany(OrderProducts::class,'product_id','id');
+    public function orderProduct(){
+        return $this->hasMany(OrderProduct::class,'product_id','id');
     }
     public function categories(){
         return $this->belongsTo(Categories::class,'category_id','id');
@@ -45,13 +41,7 @@ class Products extends Model
     public function discount(){
         return $this->belongsTo(Discount::class,'discount_id','id');
     }
-    public function productsType(){
-        return $this->belongsTo(ProductsType::class,'products_type_id','id');
-    }
-    public function productsType1(){
-        return $this->belongsTo(ProductsType::class,'products_type_id1','id');
-    }
-    public function productsTyp2(){
-        return $this->belongsTo(ProductsType::class,'products_type_id2','id');
+    public function productType(){
+        return $this->hasMany(ProductType::class,'product_id','id');
     }
 }

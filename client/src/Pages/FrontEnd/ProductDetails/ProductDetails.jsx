@@ -19,25 +19,26 @@ import SlickSlide from '~/components/SlickSlider/SlickSlider';
 import { useEffect, useRef, useState } from 'react';
 import Timer from '~/components/Timer';
 import LocationShipping from './LocationShip';
-import { Image } from 'react-bootstrap';
 import ProductsDescriptions from './ProductsDescriptions';
 import BreadCumbs from './BreadCumbs';
 import Button from '~/components/Button';
 import axios from '~/api/axios';
 import { useParams } from 'react-router-dom';
+import Images from '~/components/Images';
 
 const cx = classNames.bind(styles);
 
 export default function ProductDetails() {
-  const btnHlRef1 = useRef();
-  const btnHlRef2 = useRef();
+  const btnHlRef = useRef();
+  // const btnHlRef1 = useRef();
+  // const btnHlRef2 = useRef();
   const params = useParams();
 
   const [denounce, setDenounce] = useState(false);
   const [reason, setReason] = useState('');
   const [shipping, setShipping] = useState(false);
   const [location, setLocation] = useState('phuong ky long, thi xa ky anh');
-  const title = params.title;
+  // const title = params.title;
   const [srcHighlightImgCat, setSrcHighlightImgCat] = useState('');
   const [srcHL, setSrcHL] = useState('');
   const [quantity, setQuantity] = useState(1);
@@ -50,8 +51,9 @@ export default function ProductDetails() {
   const [productStore, setProductStore] = useState(null);
   const [productTopShop, setProductTopShop] = useState(null);
   const [reviews, setReviews] = useState(null);
+  const [productType, setProductType] = useState(null);
 
-  // handle scroll body hidden
+  /* handle scroll body hidden*/
   const handleScrollBody = (parameter) => {
     if (parameter == true) {
       document.querySelector('body').style['overflowY'] = 'hidden';
@@ -60,11 +62,11 @@ export default function ProductDetails() {
     }
   };
   handleScrollBody(denounce || shipping);
-  // handle change value location
+  /* handle change value location*/
   const changeLocationValue = (value) => {
     setLocation(value);
   };
-  // handle show hide denounce
+  /* handle show hide denounce*/
 
   useEffect(() => {}, [denounce]);
   const handleOnClickDenounce = () => {
@@ -75,7 +77,7 @@ export default function ProductDetails() {
     setReason('');
   };
 
-  // handle show hide shipping
+  /* handle show hide shipping*/
   const hanldeShippingShow = () => {
     setShipping(true);
   };
@@ -83,73 +85,76 @@ export default function ProductDetails() {
     setShipping(false);
   };
 
-  // handle highlight
-  const handleOnClickHighlight = (e) => {
-    const btns = document.getElementsByClassName('btn-active');
-    e.preventDefault();
-    if (e.target.classList.contains('slide_active') == false) {
-      for (var i = 0; i < btns.length; i++) {
-        if (btns[i].classList.contains('slide_active')) {
-          btns[i].classList.remove('slide_active');
+  /* handle highlight*/
+  useEffect(() => {
+    const c = document.querySelectorAll('.btn-hl-ref');
+    const handleOnClickHighlight = (e) => {
+      const btns = document.getElementsByClassName('btn-active');
+      if (e.currentTarget.classList.contains('slide_active') == false) {
+        for (var i = 0; i < btns.length; i++) {
+          if (btns[i].classList.contains('slide_active')) {
+            btns[i].classList.remove('slide_active');
+          }
         }
+        if (e.currentTarget.value != '') {
+          setSrcHL(e.currentTarget.childNodes[0].src);
+        }
+        e.currentTarget.classList.add('slide_active');
+      } else {
+        e.currentTarget.classList.remove('slide_active');
+        setSrcHL('');
       }
-      setSrcHL(e.currentTarget.value);
-      e.target.classList.add('slide_active');
-    } else {
-      e.target.classList.remove('slide_active');
-      setSrcHL('');
+    };
+    if (c) {
+      c.forEach((e) => e.addEventListener('click', handleOnClickHighlight));
     }
-  };
+    return () => {
+      if (c) {
+        c.forEach((e) => e.addEventListener('click', handleOnClickHighlight));
+      }
+    };
+  }, [data, srcHL]);
+  /*mouse over product type */
   useEffect(() => {
     const handleOnMouse = (e) => {
-      setSrcHighlightImgCat(e.currentTarget.value);
-      e.preventDefault();
+      if (e.currentTarget.value != '') {
+        setSrcHighlightImgCat(e.currentTarget.childNodes[0].src);
+      }
     };
-    const btnElement = btnHlRef1.current;
-    const btnElement2 = btnHlRef2.current;
+    const btnElement = document.querySelectorAll('.btn-hl-ref');
     if (btnElement) {
-      btnElement.addEventListener('mouseover', handleOnMouse);
-    }
-    if (btnElement2) {
-      btnElement2.addEventListener('mouseover', handleOnMouse);
+      btnElement.forEach((e) => e.addEventListener('mouseover', handleOnMouse));
     }
     return () => {
       if (btnElement) {
-        btnElement.removeEventListener('mouseover', handleOnMouse);
-      }
-      if (btnElement2) {
-        btnElement2.removeEventListener('mouseover', handleOnMouse);
+        btnElement.forEach((e) => e.removeEventListener('mouseover', handleOnMouse));
       }
     };
-  }, []);
+  }, [data, srcHighlightImgCat]);
+  /*mouse out product type */
   useEffect(() => {
-    const handleOnMouseLeave = (e) => {
-      setSrcHighlightImgCat('');
+    const handleOnMouseOut = (e) => {
+      if (e.currentTarget.value != '') {
+        setSrcHighlightImgCat('');
+      }
     };
-    const btnElement = btnHlRef1.current;
-    const btnElement2 = btnHlRef2.current;
+    const btnElement = document.querySelectorAll('.btn-hl-ref');
     if (btnElement) {
-      btnElement.addEventListener('mouseleave', handleOnMouseLeave);
-    }
-    if (btnElement2) {
-      btnElement2.addEventListener('mouseleave', handleOnMouseLeave);
+      btnElement.forEach((e) => e.addEventListener('mouseout', handleOnMouseOut));
     }
     return () => {
       if (btnElement) {
-        btnElement.removeEventListener('mouseleave', handleOnMouseLeave);
-      }
-      if (btnElement2) {
-        btnElement2.removeEventListener('mouseleave', handleOnMouseLeave);
+        btnElement.forEach((e) => e.removeEventListener('mouseout', handleOnMouseOut));
       }
     };
-  }, []);
+  }, [data, srcHighlightImgCat]);
 
-  //handle change default highlight
+  /*handle change default highlight*/
   const changeSrcHL = (value) => {
     setSrcHL(value);
   };
 
-  //handle active slide with src highlight
+  /*handle active slide with src highlight*/
   const handleOnclickSize = (e) => {
     const btns = document.getElementsByClassName('btn-size');
     if (e.target.classList.contains('slide_active') == false) {
@@ -164,14 +169,14 @@ export default function ProductDetails() {
     }
   };
 
-  // handle increase and decrease
+  /* handle increase and decrease */
   const handleOnclickQuantityMinus = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
     }
   };
   const handleOnclickQuantityPlus = () => {
-    if (quantity < 1000) {
+    if (quantity < product.quantities) {
       setQuantity(quantity + 1);
     }
   };
@@ -214,21 +219,32 @@ export default function ProductDetails() {
   //get data
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get('/api/products/product-detail?id=' + params.id);
-      setImages(res.data.images);
-      setProduct(res.data.products[0]);
-      setProductStore(res.data.shopPD);
-      setProductSuggest(res.data.will_you_aslo_like);
-      setProductTopShop(res.data.top_products_shop);
-      setShop(res.data.shop);
-      setReviews(res.data.reviews);
-      setData(true);
+      try {
+        const res = await axios.get('/api/products/product-detail?id=' + params.id);
+        setImages(res.data.images);
+        setProduct(res.data.products[0]);
+        setProductStore(res.data.shop_products);
+        setProductSuggest(res.data.will_you_aslo_like);
+        setProductTopShop(res.data.top_products_shop);
+        setShop(res.data.shop);
+        setReviews(res.data.reviews);
+        setProductType(res.data.product_type_details);
+        setData(true);
+      } catch (e) {
+        console.log(e);
+      }
     };
 
     setTimeout(() => {
       getData();
     }, 3000);
   }, [params.id]);
+
+  /*handle submit buy now */
+  const handleSubmitBuynow = () => {};
+
+  /*handle submit add to cart */
+  const handleSubmitAddCart = () => {};
 
   return (
     <section className={cx('wrapper')}>
@@ -237,24 +253,31 @@ export default function ProductDetails() {
           <BreadCumbs />
           <section className={cx('product-briefing', 'd-flex')}>
             {/* <h1 style={{ position: 'absolute', zIndex: '-999', width: '1px', height: '1px', overflow: 'hidden' }}>
-            {title}
+            {product.title}
           </h1> */}
             <section className={cx('images-products', 'd-flex flex-row col-5')}>
-              <SlickSlide
-                data={images}
-                title={title}
-                srcHighlightParent={srcHighlightImgCat}
-                srcHL={srcHL}
-                changeSrcHL={changeSrcHL}
-              />
+              {images.length != 0 ? (
+                <SlickSlide
+                  data={images}
+                  title={product.title}
+                  srcHighlightParent={srcHighlightImgCat}
+                  srcHL={srcHL}
+                  changeSrcHL={changeSrcHL}
+                />
+              ) : (
+                ''
+              )}
             </section>
             <section className={cx('products-content', 'col-7')}>
               <div className={cx('products-content-main', 'd-flex flex-column')}>
-                <h2 className={cx('title', 'mb-2')}>{title}</h2>
+                <h2 className={cx('title', 'mb-2')}>{product.title}</h2>
                 <div className={cx('reviews_headers', 'd-flex flex-row justify-content-between')}>
                   <div className={cx('d-flex flex-row align-items-center')}>
                     <div className={cx('reviews', 'd-flex flex-row align-items-center')}>
-                      <div className={cx('stars', 'me-2')} style={{ '--rating': `${product.score}` }}></div>
+                      <div
+                        className={cx('stars', 'me-2')}
+                        style={{ '--rating': `${product.score ? product.score : 0}` }}
+                      ></div>
                       {/* <span className="me-1">{product.total_reviews}</span>
                       <a href="#reviews_product" className={cx('core')}>
                         Ratings
@@ -368,60 +391,38 @@ export default function ProductDetails() {
                     </div>
                   </div>
                 </section>
-                <section className={cx('classify', 'd-flex flex-row')}>
-                  <h3 className={cx('classify-title')}>Phân loại</h3>
-                  <div className={cx('classify-content', 'd-flex justify-content-start')}>
-                    <Button
-                      id="button"
-                      ref={btnHlRef1}
-                      onClick={handleOnClickHighlight}
-                      value={`https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lftaifzma9nucb`}
-                      className={cx('classify-content-element', 'btn-active d-flex flex-row align-items-center')}
-                    >
-                      <Image src="https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lftaifzma9nucb" />
-                      Cổ Cao
-                    </Button>
-                    <Button
-                      onClick={handleOnClickHighlight}
-                      ref={btnHlRef2}
-                      value={`https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lftaifzma9nucb`}
-                      className={cx('classify-content-element', ' btn-active d-flex flex-row align-items-center ')}
-                    >
-                      <Image src="https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lftaifzma9nucb" />
-                      Cổ Thấp
-                    </Button>
-                  </div>
-                </section>
-                <section className={cx('size', 'd-flex')}>
-                  <h3>Size</h3>
-                  <div className={cx('size-content', 'd-flex flex-row flex-wrap gap-3')}>
-                    <button className="btn-size" onClick={handleOnclickSize}>
-                      38
-                    </button>
-                    <button className="btn-size" onClick={handleOnclickSize}>
-                      38
-                    </button>
-                    <button className="btn-size" onClick={handleOnclickSize}>
-                      38
-                    </button>
-                    <button className="btn-size" onClick={handleOnclickSize}>
-                      38
-                    </button>
-                    <button className="btn-size" onClick={handleOnclickSize}>
-                      38
-                    </button>
-                    <button className="btn-size" onClick={handleOnclickSize}>
-                      38
-                    </button>
-                  </div>
-                </section>
+                {Object.entries(productType).map((pdt, index) => {
+                  return (
+                    <section className={cx('classify', 'd-flex flex-row')} key={index}>
+                      <h3 className={cx('classify-title')}>{pdt[0]}</h3>
+                      <div className={cx('classify-content', 'd-flex justify-content-start col flex-wrap')}>
+                        {pdt[1].map((pt, index) => (
+                          <Button
+                            key={index}
+                            id="button"
+                            // ref={btnHlRef}
+                            value={`${pt.image ? pt.image : ''}`}
+                            className={cx(
+                              'classify-content-element',
+                              'btn-hl-ref btn-active d-flex flex-row align-items-center',
+                            )}
+                          >
+                            <Images src={`${pt.image ? pt.image : ''}`} />
+                            {pt.title}
+                          </Button>
+                        ))}
+                      </div>
+                    </section>
+                  );
+                })}
+
                 <section className={cx('quantity', 'd-flex')}>
                   <h3>Quantity</h3>
                   <div className={cx('quantity-content', 'd-flex align-items-center gap-3')}>
-                    <div className={cx('quantity-order')}>
-                      <button onClick={handleOnclickQuantityMinus}>
+                    <div className={cx('quantity-order', 'd-flex align-items-center')}>
+                      <Button onClick={handleOnclickQuantityMinus}>
                         <FontAwesomeIcon icon={faMinus} />
-                      </button>
+                      </Button>
                       <input
                         id="quantity_order"
                         name="quantity_order"
@@ -431,30 +432,32 @@ export default function ProductDetails() {
                           setQuantity(value);
                         }}
                         onKeyUp={(e) => {
-                          if (e.target.value > 1000) {
-                            setQuantity(1000);
+                          if (e.target.value > product.quantities) {
+                            setQuantity(product.quantities);
                           }
                           if (e.target.value < 1) {
                             setQuantity(1);
                           }
                         }}
                       />
-                      <button onClick={handleOnclickQuantityPlus}>
+                      <Button onClick={handleOnclickQuantityPlus}>
                         <FontAwesomeIcon icon={faPlus} />
-                      </button>
+                      </Button>
                     </div>
-                    <div className={cx('quantity-avail')}>1000 pieces available</div>
+                    <div className={cx('quantity-avail')}>{product.quantities} pieces available</div>
                   </div>
                 </section>
                 <div className={cx('btn-select', 'd-flex gap-4')}>
-                  <form>
+                  <form onSubmit={handleSubmitAddCart}>
                     <button className={cx('add-to-cart', 'text-capitalize')}>
                       <FontAwesomeIcon icon={faCartPlus} />
                       Add to cart
                     </button>
                   </form>
                   <form>
-                    <button className={cx('buy-now', 'text-capitalize')}>buy now</button>
+                    <button onSubmit={handleSubmitBuynow} className={cx('buy-now', 'text-capitalize')}>
+                      buy now
+                    </button>
                   </form>
                 </div>
                 <div className={cx('policy-buy-products', 'd-flex justify-content-between')}>
@@ -474,7 +477,14 @@ export default function ProductDetails() {
             </section>
           </section>
           <section className={cx('shop-products')}></section>
-          <ProductsDescriptions id={'#reviews_product'} />
+          <ProductsDescriptions
+            PD_Description={product.descriptions}
+            id={'#reviews_product'}
+            PD_Reviews={reviews}
+            PD_topProduct={productTopShop}
+            PD_Suggest={productSuggest}
+            PD_store={productStore}
+          />
         </div>
       ) : (
         ''

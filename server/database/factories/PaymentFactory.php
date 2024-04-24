@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Cod;
+use App\Models\Momo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,12 +18,19 @@ class PaymentFactory extends Factory
      */
     public function definition(): array
     {
+        $paymentable = $this->paymentable();
         return [
             'status'=>fake()->boolean(),
             'payment_datetime'=>fake()->dateTime(),
-            'cod_id'=>mt_rand(1,100),
-            'momo_id'=>mt_rand(1,100)
+            'paymentable_id'=>mt_rand(1,100),
+            'paymentable_type'=>$paymentable,
             //
         ];
+    }
+    public function paymentable(){
+        return $this->faker->randomElement([
+            Cod::class,
+            Momo::class
+        ]);
     }
 }
