@@ -7,9 +7,12 @@ use App\Models\Images;
 use App\Models\Products;
 use App\Models\ProductType;
 use App\Models\ProductTypeDetail;
+use App\Models\ReportsProduct;
 use App\Models\Reviews;
 use App\Models\Shop;
+use App\Models\TitleReports;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductDetailController extends Controller {
@@ -35,7 +38,7 @@ class ProductDetailController extends Controller {
             $topShopPD = Products::where('shop.id',$s->id)->join('shop','products.shop_id','=','shop.id')->join('discount','discount.id','=','products.discount_id')->select('products.*','discount.number as discount')->groupBy('products.id')->orderBy(DB::raw('(select avg(reviews.review_star) from reviews,shop where products.id = reviews.product_id and shop.id = products.shop_id)','DESC'))->limit(5)->get();
             $pd = Products::where('id',$id)->get();
             foreach($pd as $p){
-                $shopPD = Products::where('shop.id',$s->id)->join('categories','categories.id','=','products.category_id')->join('discount','discount.id','=','products.discount_id')->join('shop','products.shop_id','=','shop.id')->where('products.category_id',$p->category_id)->select('products.*','discount.number as discount',DB::raw('(select avg(reviews.review_star) from reviews where reviews.product_id = products.id) as score'))->groupBy('products.id')->get();
+                $shopPD = Products::where('shop.id',$s->id)->join('categories','categories.id','=','products.category_id')->join('discount','discount.id','=','products.discount_id')->join('shop','products.shop_id','=','shop.id')->where('products.category_id',$p->category_id)->select('products.*','discount.number as discount',DB::raw('(select avg(reviews.review_star) from reviews where reviews.product_id = products.id) as score'))->groupBy('products.id')->limit(12)->get();
 
                 $WillYouAlsoLike = Products::where('products.category_id',$p->category_id)->join('discount','discount.id','=','products.id')->select('products.*','discount.number as discount',DB::raw('(select avg(reviews.review_star) from reviews where reviews.product_id = products.id) as score'))->limit(15)->get();
             }
@@ -51,6 +54,8 @@ class ProductDetailController extends Controller {
            }
         }
         $images = Images::where('imageable_id',$id)->where('imageable_type',Products::class)->select('title')->limit(15)->get();
+
+        $reportPD= TitleReports::all();
         
         return response()->json([
             'products'=>$Product,
@@ -61,6 +66,20 @@ class ProductDetailController extends Controller {
             'will_you_aslo_like'=>$WillYouAlsoLike,
             'images'=>$images,
             'product_type_details'=>$PDdetail,
+            'reports'=>$reportPD,
         ]);
+    }
+    public function SendReports(Request $request){
+        $title_id = $request->get('title_id');
+        $content = $request->get('content');
+        $product_id = $request->get('product_id');
+        $id = $request->user()->id;
+        ReportsProduct::create([
+            'title_id'=>$title_id,
+            'content'=>$content,
+            'user_id'=>$id,
+            'product_id'=>$product_id,
+        ]);
+        return response()->json(['sucess'=>'send success!'],200);
     }
 }

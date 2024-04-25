@@ -44,4 +44,7 @@ class Products extends Model
     public function productType(){
         return $this->hasMany(ProductType::class,'product_id','id');
     }
+    public function product(){
+        return $this->belongsTo(Products::class,'product_id');
+    }
 }

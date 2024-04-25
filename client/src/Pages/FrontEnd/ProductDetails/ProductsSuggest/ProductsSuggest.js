@@ -38,7 +38,7 @@ export default function ProductsSuggest({ PD, shopPD }) {
         <h4>You may also like</h4>
         <div className={cx('from-other-store-content', 'd-flex flex-wrap')}>
           {PD.map((p, index) => (
-            <Link className={cx('from-other-store-product')}>
+            <Link className={cx('from-other-store-product')} key={index}>
               <div className={cx('img')}>
                 <Image src={`${p.images}`} />
               </div>

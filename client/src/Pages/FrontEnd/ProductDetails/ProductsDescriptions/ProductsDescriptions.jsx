@@ -212,7 +212,11 @@ export default function ProductsDescriptions({ id, PD_Description, PD_Reviews, P
       <div className={cx('top-pick-from-shop')}>
         <h2>Top Picks From Shop</h2>
         {PD_topProduct.map((pd, index) => (
-          <Link className={cx('shop-suggest-products')} to={`http://localhost:3000/products/${pd.title}/${pd.id}`}>
+          <Link
+            className={cx('shop-suggest-products')}
+            to={`http://localhost:3000/products/${pd.title}/${pd.id}`}
+            key={index}
+          >
             <div className={cx('img')}>
               <Image src={`${pd.images}`} />
             </div>

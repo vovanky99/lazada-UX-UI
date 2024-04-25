@@ -18,6 +18,7 @@ class WardFactory extends Factory
     {
         return [
             'name'=>fake()->state(),
+            'fee_ship'=>mt_rand(8000,60000),
             'district_id'=>mt_rand(1,30),
             //
         ];

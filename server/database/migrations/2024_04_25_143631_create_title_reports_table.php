@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ward', function (Blueprint $table) {
+        Schema::create('title_reports', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->double('fee_ship');
-            $table->foreignId('district_id')->references('id')->on('district')->onDelete('cascade');
+            $table->string('title');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ward');
+        Schema::dropIfExists('title_reports');
     }
 };

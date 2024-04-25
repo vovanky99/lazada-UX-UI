@@ -36,6 +36,7 @@ export default function ProductDetails() {
 
   const [denounce, setDenounce] = useState(false);
   const [reason, setReason] = useState('');
+  const [reportId, setReportId] = useState(null);
   const [shipping, setShipping] = useState(false);
   const [location, setLocation] = useState('phuong ky long, thi xa ky anh');
   // const title = params.title;
@@ -52,6 +53,8 @@ export default function ProductDetails() {
   const [productTopShop, setProductTopShop] = useState(null);
   const [reviews, setReviews] = useState(null);
   const [productType, setProductType] = useState(null);
+  const [reports, setReports] = useState(null);
+  const [contentReports, setContentReports] = useState('');
 
   /* handle scroll body hidden*/
   const handleScrollBody = (parameter) => {
@@ -68,7 +71,7 @@ export default function ProductDetails() {
   };
   /* handle show hide denounce*/
 
-  useEffect(() => {}, [denounce]);
+  // useEffect(() => {}, [denounce]);
   const handleOnClickDenounce = () => {
     setDenounce(true);
   };
@@ -91,15 +94,15 @@ export default function ProductDetails() {
     const handleOnClickHighlight = (e) => {
       const btns = document.getElementsByClassName('btn-active');
       if (e.currentTarget.classList.contains('slide_active') == false) {
-        for (var i = 0; i < btns.length; i++) {
+        for (let i = 0; i < btns.length; i++) {
           if (btns[i].classList.contains('slide_active')) {
             btns[i].classList.remove('slide_active');
           }
         }
-        if (e.currentTarget.value != '') {
+        e.currentTarget.classList.add('slide_active');
+        if (e.currentTarget.childNodes[0].src != '') {
           setSrcHL(e.currentTarget.childNodes[0].src);
         }
-        e.currentTarget.classList.add('slide_active');
       } else {
         e.currentTarget.classList.remove('slide_active');
         setSrcHL('');
@@ -110,7 +113,7 @@ export default function ProductDetails() {
     }
     return () => {
       if (c) {
-        c.forEach((e) => e.addEventListener('click', handleOnClickHighlight));
+        c.forEach((e) => e.removeEventListener('click', handleOnClickHighlight));
       }
     };
   }, [data, srcHL]);
@@ -189,10 +192,12 @@ export default function ProductDetails() {
     //handle back report
     const handleBackReport = () => {
       setReason('');
+      setReportId();
       show_denounce.style['display'] = 'flex';
     };
     const handleClickSend = (e) => {
       setReason(e.target.outerText);
+      setReportId(parseInt(e.target.dataset.id));
       show_denounce.style['display'] = 'none';
     };
     if (send_reason) {
@@ -203,17 +208,35 @@ export default function ProductDetails() {
     }
     return () => {
       if (send_reason) {
-        send_reason.forEach((e) => e.addEventListener('click', handleClickSend));
+        send_reason.forEach((e) => e.removeEventListener('click', handleClickSend));
       }
       if (back_report) {
         back_report.removeEventListener('click', handleBackReport);
       }
     };
-  }, [reason]);
+  }, [data, reason]);
 
   //handle submit for report
   const handleSubmitReport = (e) => {
     e.preventDefault();
+    if (contentReports != '' && reason != '') {
+      const sendReport = async () => {
+        try {
+          await axios.post('/api/reports-product', {
+            content: contentReports,
+            title_id: reportId,
+            product_id: product.id ? product.id : '',
+          });
+          setContentReports('');
+          setReportId('');
+          setReason('');
+          setDenounce(false);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      sendReport();
+    }
   };
 
   //get data
@@ -229,6 +252,7 @@ export default function ProductDetails() {
         setShop(res.data.shop);
         setReviews(res.data.reviews);
         setProductType(res.data.product_type_details);
+        setReports(res.data.reports);
         setData(true);
       } catch (e) {
         console.log(e);
@@ -308,15 +332,11 @@ export default function ProductDetails() {
                         </button>
                       </div>
                       <ul className={cx('scroll-denounce')}>
-                        <li>Sản phẩm bị cấm buôn bán (động vật hoang dã, 18+,...)</li>
-                        <li>Hàng giả, hàng nhái</li>
-                        <li>Sản phẩm không rõ nguồn gốc, xuất xứ</li>
-                        <li>Hình ảnh sản phẩm không rõ ràng</li>
-                        <li>Sản phẩm có hình ảnh, nội dung phản cảm hoặc có thể gây phản cảm</li>
-                        <li>Sản phẩm có dấu hiệu lừa đảo</li>
-                        <li>Khác</li>
-                        <li>Tên sản phẩm (Name) không phù hợp với hình ảnh sản phẩm</li>
-                        <li>Sản phẩm có dấu hiệu tăng đơn ảo</li>
+                        {reports.map((r, index) => (
+                          <li data-id={r.id} key={index}>
+                            {r.title}
+                          </li>
+                        ))}
                       </ul>
                     </div>
                     {reason != '' ? (
@@ -334,7 +354,12 @@ export default function ProductDetails() {
                           onSubmit={handleSubmitReport}
                           className={cx('d-flex flex-column justify-content-end align-items-end')}
                         >
-                          <textarea placeholder="Report Description (10-50 character allowed)" />
+                          <textarea
+                            placeholder="Report Description (10-50 character allowed)"
+                            onChange={(e) => {
+                              setContentReports(e.target.value);
+                            }}
+                          />
                           <button className={cx('btn text-capitalize')}>send report</button>
                         </form>
                       </div>

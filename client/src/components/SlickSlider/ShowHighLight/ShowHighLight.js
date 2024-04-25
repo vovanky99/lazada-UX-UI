@@ -44,6 +44,8 @@ export default function ShowHIghLight({ changeSetShowHighlight, dt, title, image
           images[i].classList.remove('img-hl-active');
           setImagesHighlight(images[i + 1].src);
           break;
+        } else {
+          setImagesHighlight(images[0].src);
         }
       }
     };
@@ -53,6 +55,8 @@ export default function ShowHIghLight({ changeSetShowHighlight, dt, title, image
           images[i].classList.remove('img-hl-active');
           setImagesHighlight(images[i - 1].src);
           break;
+        } else {
+          setImagesHighlight(images[images.length - 1].src);
         }
       }
     };

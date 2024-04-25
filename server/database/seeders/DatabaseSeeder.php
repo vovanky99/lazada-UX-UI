@@ -36,6 +36,7 @@ use App\Models\OrderProducts;
 use App\Models\ProductType;
 use App\Models\ProductTypeDetail;
 use App\Models\StreetAddress;
+use App\Models\TitleReports;
 use App\Models\Ward;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -105,5 +106,18 @@ class DatabaseSeeder extends Seeder
         FollowShop::factory()->count(1000)->create();
         Messages::factory()->count(100)->create();
         MessagesShop::factory()->count(100)->create();
+
+        $titleReports = array(
+            array('title'=>'Sản phẩm bị cấm buôn bán (động vật hoang dã, 18+,...)'),
+            array('title'=>'Hàng giả, hàng nhái'),
+            array('title'=>'Sản phẩm không rõ nguồn gốc, xuất xứ'),
+            array('title'=>'Hình ảnh sản phẩm không rõ ràng'),
+            array('title'=>'Sản phẩm có hình ảnh, nội dung phản cảm hoặc có thể gây phản cảm'),
+            array('title'=>'Sản phẩm có dấu hiệu lừa đảo'),
+            array('title'=>'Tên sản phẩm (Name) không phù hợp với hình ảnh sản phẩm'),
+            array('title'=>'Sản phẩm có dấu hiệu tăng đơn ảo'),
+            array('title'=>'Khác'),
+        );
+        DB::table('title_reports')->insert($titleReports);
     }
 }

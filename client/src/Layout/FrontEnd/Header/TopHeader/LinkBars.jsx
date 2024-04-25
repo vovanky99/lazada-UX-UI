@@ -25,11 +25,7 @@ function LinkBars({ IDLinkBars }) {
       try {
         let token = localStorage.getItem('token');
         if (token) {
-          await axios.post('/api/logout', null, {
-            headers: {
-              Authorization: 'Bearer ' + token,
-            },
-          });
+          await axios.post('/api/logout');
           localStorage.removeItem('token');
           Store.dispatch(Logout());
         }

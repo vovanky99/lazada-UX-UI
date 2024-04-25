@@ -5,7 +5,6 @@ use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class,'logout']);
+    Route::post('/reports-product',[ProductDetailController::class,'SendReports']);
 });
 
 Route::post('/login', [AuthController::class,'login']);

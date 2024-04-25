@@ -75,4 +75,7 @@ class User extends Authenticatable
     public function messages_receiver(){
         return $this->belongsTo(Messages::class,'receiver_id');
     }
+    public function reports_product(){
+        return $this->hasMany(ReportsProduct::class,'user_id');
+    }
 }

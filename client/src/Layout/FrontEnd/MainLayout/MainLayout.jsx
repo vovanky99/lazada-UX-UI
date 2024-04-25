@@ -36,16 +36,20 @@ function MainLayout({ children }) {
   }, [isAuth, location.pathname, localStorage.getItem('token')]);
 
   useEffect(() => {
+    const setAuthToken = (token) => {
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      } else {
+        delete axios.defaults.headers.common['Authorization'];
+      }
+    };
     const fetchData = async () => {
       const token = localStorage.getItem('token');
       if (token) {
+        setAuthToken(token);
         try {
           csrf();
-          // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
           const res = await axios.get('/api/user', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
             params: { token },
           });
           Store.dispatch(getUser(res.data));
