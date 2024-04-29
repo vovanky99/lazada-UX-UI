@@ -32,6 +32,14 @@
   background-color: var(--primary);
   color: var(--white);
   border-color: var(--primary);
+  &:hover {
+    opacity: 0.9;
+  }
+}
+.transparent {
+  background-color: transparent;
+  color: var(--black);
+  border: none;
 }
 
 .outline {

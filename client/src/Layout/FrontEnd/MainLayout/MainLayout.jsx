@@ -36,6 +36,7 @@ function MainLayout({ children }) {
   }, [isAuth, location.pathname, localStorage.getItem('token')]);
 
   useEffect(() => {
+    /* set auth token for header*/
     const setAuthToken = (token) => {
       if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -43,6 +44,7 @@ function MainLayout({ children }) {
         delete axios.defaults.headers.common['Authorization'];
       }
     };
+    /* get user  */
     const fetchData = async () => {
       const token = localStorage.getItem('token');
       if (token) {

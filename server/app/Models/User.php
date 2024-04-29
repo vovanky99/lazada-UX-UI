@@ -24,6 +24,7 @@ class User extends Authenticatable
         'role_id',
         'phone_number',
         'status',
+        'address_id',
         'avatar',
         'level',
     ];
@@ -34,7 +35,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'phone_number',
         'password',
         'remember_token',
     ];
@@ -60,8 +60,8 @@ class User extends Authenticatable
     public function order(){
         return $this->hasMany(OrderCart::class,'user_id','id');
     }
-    public function addressUsers(){
-        return $this->hasMany(AddressUsers::class,'user_id','id');
+    public function address_Users(){
+        return $this->hasMany(Address::class,'addressable_id');
     }
     public function providers(){
         return $this->hasMany(Provider::class,'user_id','id');
@@ -77,5 +77,8 @@ class User extends Authenticatable
     }
     public function reports_product(){
         return $this->hasMany(ReportsProduct::class,'user_id');
+    }
+    public function address(){
+        return $this->belongsTo(Address::class,'address_id');
     }
 }

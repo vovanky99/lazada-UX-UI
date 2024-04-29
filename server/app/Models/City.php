@@ -12,10 +12,10 @@ class City extends Model
     protected $fillable = [
         'name',
         'area',
-        'national_id'
+        'country_id'
     ];
-    public function National(){
-        return $this->belongsTo(National::class,'national_id','id');
+    public function Country(){
+        return $this->belongsTo(Country::class,'country_id','id');
     }
     public function District(){
         return $this->hasMany(District::class,'city_id','id');

@@ -12,11 +12,8 @@ class StreetAddress extends Model
     protected $fillable = [
         'name',
     ];
-    public function AddressUsers(){
-        return $this->hasMany(AddressUsers::class,'street_address_id','id');
-    }
-    public function Shop(){
-        return $this->hasMany(Shop::class,'street_address_id','id');
+    public function Address(){
+        return $this->hasMany(Address::class,'street_address_id','id');
     }
    
 }

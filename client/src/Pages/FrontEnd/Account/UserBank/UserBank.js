@@ -33,15 +33,6 @@ export default function UserBank() {
   let [nameMessage, setNameMessage] = useState('');
   let [icNumberMessage, setIcNumberMessage] = useState('');
 
-  // let [validated, setValidated] = useState({
-  //   CardNumber: '',
-  //   ExpiryDate: '',
-  //   CVV: '',
-  //   NameOnCard: '',
-  //   Address: '',
-  //   PostalCode: '',
-  // });
-
   //handle show hide scrollbal body
   const showHideScroll = (parameter) => {
     let body = document.querySelector('body');

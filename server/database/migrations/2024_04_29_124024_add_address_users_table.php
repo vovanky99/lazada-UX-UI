@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('national', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('address_id')->nullable()->references('id')->on('address')->onDelete('cascade')->nullable();
         });
     }
 
@@ -23,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('national');
+        Schema::table('users', function (Blueprint $table) {
+            //
+            $table->dropForeign(['address_id']);
+        });
     }
 };

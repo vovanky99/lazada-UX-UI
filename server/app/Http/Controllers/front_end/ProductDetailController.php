@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\front_end;
 
 use \App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Images;
+use App\Models\Country;
+use App\Models\District;
 use App\Models\Products;
 use App\Models\ProductType;
 use App\Models\ProductTypeDetail;
@@ -11,14 +14,13 @@ use App\Models\ReportsProduct;
 use App\Models\Reviews;
 use App\Models\Shop;
 use App\Models\TitleReports;
+use App\Models\Ward;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductDetailController extends Controller {
     
     public function getProductDetail(Request $request){
-
         $id = $request->get('id');
 
         /*get product */
@@ -40,7 +42,7 @@ class ProductDetailController extends Controller {
             foreach($pd as $p){
                 $shopPD = Products::where('shop.id',$s->id)->join('categories','categories.id','=','products.category_id')->join('discount','discount.id','=','products.discount_id')->join('shop','products.shop_id','=','shop.id')->where('products.category_id',$p->category_id)->select('products.*','discount.number as discount',DB::raw('(select avg(reviews.review_star) from reviews where reviews.product_id = products.id) as score'))->groupBy('products.id')->limit(12)->get();
 
-                $WillYouAlsoLike = Products::where('products.category_id',$p->category_id)->join('discount','discount.id','=','products.id')->select('products.*','discount.number as discount',DB::raw('(select avg(reviews.review_star) from reviews where reviews.product_id = products.id) as score'))->limit(15)->get();
+                $WillYouAlsoLike = Products::where('products.category_id',$p->category_id)->join('discount','discount.id','=','products.id')->select('products.*','discount.number as discount',DB::raw('(select avg(reviews.review_star) from reviews where reviews.product_id = products.id) as score'))->inRandomOrder()->limit(15)->get();
             }
             
         }
@@ -53,8 +55,9 @@ class ProductDetailController extends Controller {
                $PDdetail[$pd->title] = $productTypeDetail;
            }
         }
+        /*get images for product */
         $images = Images::where('imageable_id',$id)->where('imageable_type',Products::class)->select('title')->limit(15)->get();
-
+        /*get all report */
         $reportPD= TitleReports::all();
         
         return response()->json([
@@ -81,5 +84,30 @@ class ProductDetailController extends Controller {
             'product_id'=>$product_id,
         ]);
         return response()->json(['sucess'=>'send success!'],200);
+    }
+    public function Location(Request $request){
+        
+    }
+    public function getAddress(Request $request){
+        $country = $request->get('country');
+        $q = $request->get('q');
+        $ad= [];
+        $country = Country::where('name','like',$country)->first();
+        if(!empty($country)){
+            $city = City::where('country_id',$country->id)->where('name','like',$q.'%')->first();
+            if(!empty($city)){
+                $district = District::where('city_id',$city->id)->get();
+                if(!empty($district)){
+                    foreach($district as $d){
+                        $ward = Ward::where('district_id',$d->id)->get();
+                        if(!empty($ward)){
+                            $ad[$ward->id] = $ward->name;
+                        }
+                    }
+                }
+            }
+        }
+            
+        return response()->json(['result'=>$district],200);
     }
 }

@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('address_users', function (Blueprint $table) {
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+        Schema::create('address', function (Blueprint $table) {
+            $table->id();
+            $table->morphs('addressable');
             $table->boolean('home');
-            $table->foreignId('street_address_id')->references('id')->on('street_address')->onDelete('cascade');
+            $table->string('phone');
+            $table->foreignId('street_address_id')->nullable()->references('id')->on('street_address')->onDelete('cascade');
             $table->foreignId('ward_id')->references('id')->on('ward')->onDelete('cascade');
             $table->timestamps();
         });
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('address_users');
+        Schema::dropIfExists('address');
     }
 };

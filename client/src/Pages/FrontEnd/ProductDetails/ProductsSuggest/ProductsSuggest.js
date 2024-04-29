@@ -12,7 +12,7 @@ export default function ProductsSuggest({ PD, shopPD }) {
     <div className={cx('products-suggest')}>
       <div className={cx('from-store')}>
         <h4>From The Same Store</h4>
-        <div className={cx('from-store-content', 'd-flex')}>
+        <div className={cx('from-store-content', 'd-flex flex-row flex-wrap')}>
           {shopPD.map((pd, index) => (
             <Link
               to={`http://localhost:3000/products/${pd.title}/${pd.id}`}
@@ -38,7 +38,11 @@ export default function ProductsSuggest({ PD, shopPD }) {
         <h4>You may also like</h4>
         <div className={cx('from-other-store-content', 'd-flex flex-wrap')}>
           {PD.map((p, index) => (
-            <Link className={cx('from-other-store-product')} key={index}>
+            <Link
+              className={cx('from-other-store-product')}
+              to={`http://localhost:3000/products/${p.title}/${p.id}`}
+              key={index}
+            >
               <div className={cx('img')}>
                 <Image src={`${p.images}`} />
               </div>

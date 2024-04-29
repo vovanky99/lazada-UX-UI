@@ -26,22 +26,34 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class,'logout']);
-    Route::post('/reports-product',[ProductDetailController::class,'SendReports']);
 });
-
+/*auth */
 Route::post('/login', [AuthController::class,'login']);
 Route::post('/register', [AuthController::class,'register']); 
 
+/*social auth */
+Route::get('/auth/{provider}', [SocialAuthController::class,'redirectToProvider']);
+Route::get('/auth/{provider}/callback', [SocialAuthController::class,'handleProviderCallback']);
+Route::get('/decrypt-cookie',[SocialAuthController::class,'decryptCookie']);
+
+
+/*search auth */
 Route::prefix('/search')->name('search.')->group(function(){
     Route::get('',[SearchController::class,'getSearchAll'])->name('result');
     Route::get('/getcat',[SearchController::class,'getSearchCat'])->name('searchcat');
     Route::get('/header',[SearchController::class,'getSearchSuggest'])->name('header');
 });
 
-Route::prefix('/products')->name('product-detail.')->group(function(){
-    Route::get('/product-detail',[ProductDetailController::class,'getProductDetail'])->name('get_product_detail');
+/*products detail */
+Route::prefix('/product-detail')->group(function(){
+    Route::get('',[ProductDetailController::class,'getProductDetail']);
+    Route::post('/reports-product',[ProductDetailController::class,'SendReports'])->middleware('auth:sanctum');
+    Route::get('/location',[ProductDetailController::class,'location']);
+    Route::get('/get-address',[ProductDetailController::class,'getAddress']);
 });
 
+
+/*home page */
 Route::prefix('/posts')->name('posts.')->group(function () {
     Route::get('/products',[HomeController::class,'getProductsAll'])->name('get_products'); 
     Route::get('/shop',[HomeController::class,'getShop'])->name('get_shop'); 
@@ -49,8 +61,3 @@ Route::prefix('/posts')->name('posts.')->group(function () {
     Route::get('/flashsale',[HomeController::class,'getflashSale'])->name('get_flashsale'); 
     Route::get('/menu',[HomeController::class,'getMenu'])->name('get_menu'); 
 });
-
-
-Route::get('/auth/{provider}', [SocialAuthController::class,'redirectToProvider']);
-Route::get('/auth/{provider}/callback', [SocialAuthController::class,'handleProviderCallback']);
-Route::get('/decrypt-cookie',[SocialAuthController::class,'decryptCookie']);

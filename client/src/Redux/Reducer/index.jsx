@@ -11,23 +11,21 @@ export default function AuthReducer(state = initialState, action) {
       return {
         ...state,
         user: action.payload,
+        isAuthenticated: true,
       };
     case LOGIN:
       return {
         ...state,
-        isAuthenticated: true,
       };
     case SOCIAL_AUTH:
       return {
         ...state,
-        isAuthenticated: true,
       };
     case LOGOUT:
       return { ...state, user: null, isAuthenticated: false };
     case REGISTER:
       return {
         ...state,
-        isAuthenticated: true,
       };
     case LOG_ERROR:
       return {

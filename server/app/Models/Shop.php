@@ -15,9 +15,8 @@ class Shop extends Model
         'logo',
         'img_cover',
         'descriptions',
+        'address_id',
         'user_id',
-        'street_address_id',
-        'ward_id',
     ];
     public function messages(){
         return $this->hasMany(MessagesShop::class,'shop_id');
@@ -28,14 +27,14 @@ class Shop extends Model
     public function product(){
         return $this->hasMany(Products::class,'shop_id','id');
     }
-    public function streetAddress(){
-        return $this->belongsTo(StreetAddress::class,'street_address_id','id');
-    }
-    public function ward(){
-        return $this->belongsTo(Ward::class,'ward_id','id');
-    }
     public function followShop(){
         return $this->hasMany(FollowShop::class,'shop_id');
+    }
+    public function Address(){
+        return $this->hasMany(Address::class,'addressable_id');
+    }
+    public function addressDefault(){
+        return $this->belongsTo(Address::class,'address_id');
     }
     
 }

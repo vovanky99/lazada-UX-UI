@@ -16,10 +16,7 @@ class Ward extends Model
     public function District(){
         return $this->belongsTo(District::class,'district_id','id');
     }
-    public function AddressUsers(){
-        return $this->hasMany(AddressUsers::class,'ward_id','id');
-    }
-    public function Shop(){
-        return $this->hasMany(Shop::class,'ward_id','id');
+    public function Address(){
+        return $this->hasMany(Address::class,'ward_id','id');
     }
 }

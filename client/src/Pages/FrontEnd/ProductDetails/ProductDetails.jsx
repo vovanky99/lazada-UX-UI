@@ -30,8 +30,6 @@ const cx = classNames.bind(styles);
 
 export default function ProductDetails() {
   const btnHlRef = useRef();
-  // const btnHlRef1 = useRef();
-  // const btnHlRef2 = useRef();
   const params = useParams();
 
   const [denounce, setDenounce] = useState(false);
@@ -39,11 +37,9 @@ export default function ProductDetails() {
   const [reportId, setReportId] = useState(null);
   const [shipping, setShipping] = useState(false);
   const [location, setLocation] = useState('phuong ky long, thi xa ky anh');
-  // const title = params.title;
   const [srcHighlightImgCat, setSrcHighlightImgCat] = useState('');
   const [srcHL, setSrcHL] = useState('');
   const [quantity, setQuantity] = useState(1);
-  //set data
   const [data, setData] = useState(false);
   const [images, setImages] = useState(null);
   const [product, setProduct] = useState(null);
@@ -222,7 +218,7 @@ export default function ProductDetails() {
     if (contentReports != '' && reason != '') {
       const sendReport = async () => {
         try {
-          await axios.post('/api/reports-product', {
+          await axios.post('/api/product-detail/reports-product', {
             content: contentReports,
             title_id: reportId,
             product_id: product.id ? product.id : '',
@@ -243,7 +239,7 @@ export default function ProductDetails() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get('/api/products/product-detail?id=' + params.id);
+        const res = await axios.get('/api/product-detail?id=' + params.id);
         setImages(res.data.images);
         setProduct(res.data.products[0]);
         setProductStore(res.data.shop_products);

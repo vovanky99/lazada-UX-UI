@@ -13,6 +13,7 @@ const Button = forwardRef(function Button(
     children,
     onClick,
     className,
+    transparent = false,
     rounded = false,
     primary = false,
     outline = false,
@@ -46,6 +47,7 @@ const Button = forwardRef(function Button(
   }
   const classes = cx('wrapper', {
     primary,
+    transparent,
     large,
     small,
     outline,

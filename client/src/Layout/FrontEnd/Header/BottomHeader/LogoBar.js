@@ -48,7 +48,6 @@ function LogoBars() {
       setSearchResult(result);
     };
     getProductsSearch();
-    sessionStorage.setItem('search_value', searchValue);
   }, [debounceValue]);
 
   const handleChange = (e) => {
@@ -57,20 +56,18 @@ function LogoBars() {
       setSearchValue(searchValue);
     }
   };
-  const handleHideResult = () => {
+  const handleHideResult = (e) => {
     setShowResult(false);
   };
 
   //handle search click
   const handleClickSearch = (e) => {
     setSearchValue(e.target.childNodes[0].textContent);
-    // dispatch(search(searchValue));
     setShowResult(false);
   };
   //handle submit form search
   const handleSubmitSearch = (e) => {
     e.preventDefault();
-    // dispatch(search(searchValue));
     navigate(`/search/` + searchValue);
     setShowResult(false);
   };
@@ -117,9 +114,6 @@ function LogoBars() {
             interactive
             visible={showResult && searchValue.length > 0}
             offset={[0, 0]}
-            // onShow={({ popper, reference }) => {
-            //   popper.style.width = reference.getBoundingClientRect.width + 'px';
-            // }}
             placement="bottom"
             render={(attrs) => (
               <div ref={searchResultRef} className={cx('search-result')} tabIndex="-1" {...attrs}>
