@@ -3,7 +3,10 @@ import ThemeProvider from 'react-bootstrap/ThemeProvider';
 
 import './GlobalStyles/GlobalStyles.module.scss';
 import './GlobalStyles/active.scss';
+import './GlobalStyles/LazyLoad.scss';
+
 import { publicRoutes, privateRoutes } from '~/Routes';
+import React, { Suspense } from 'react';
 import MainLayout from '~/Layout/FrontEnd/MainLayout';
 
 function App() {

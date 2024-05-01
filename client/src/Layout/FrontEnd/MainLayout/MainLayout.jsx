@@ -1,14 +1,13 @@
 import classNames from 'classnames/bind';
-import PropTypes from 'prop-types';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from '~/api/axios';
 
 import { getUser } from '~/Redux/Actions/Auth';
 import routes from '~/config/routes';
-import config from '~/config';
 import { useEffect } from 'react';
 import Store from '~/Redux/Store';
+
 import Footer from '~/Layout/FrontEnd/Footer';
 import Header from '~/Layout/FrontEnd/Header';
 import styles from './mainLayout.module.scss';
@@ -29,14 +28,54 @@ function MainLayout({ children }) {
         localStorage.getItem('token') &&
         (location.pathname == routes.register || location.pathname == routes.signIn)
       ) {
-        navigate('/');
+        navigate(-1);
       }
     };
     logined();
-  }, [isAuth, location.pathname, localStorage.getItem('token')]);
+  }, [isAuth, localStorage.getItem('token')]);
 
+  /* handle set localstorage auth social */
   useEffect(() => {
-    /* set auth token for header*/
+    const getCookieValue = (name) => {
+      const cookies = document.cookie.split('; ');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const [cookieName, cookieValue] = cookie.split('=');
+        if (cookieName === name) {
+          return cookieValue;
+        }
+      }
+      return null;
+    };
+
+    // handle decrypt cookie for auth social
+    const decrypt = getCookieValue('authToken');
+    const token = localStorage.getItem('token');
+    if (decrypt && !token) {
+      const getDecryptedCookieValue = async (cookie) => {
+        try {
+          const res = await axios.get(`/api/decrypt-cookie?cookie=` + cookie);
+          localStorage.setItem('token', res.data.decryptedValue.slice(res.data.decryptedValue.indexOf('|') + 1));
+        } catch (e) {
+          return null;
+        }
+      };
+      getDecryptedCookieValue(decrypt);
+    }
+    //function to check authsocialCallbackComplete parameter is present in the URL
+    const checkAuthSocialCallbackCOmplete = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('authCallbackComplete') === 'true';
+    };
+    // Close the window or tab if authCallbackComplete parameter is present
+    if (checkAuthSocialCallbackCOmplete()) {
+      window.close();
+    }
+  }, [document.cookie]);
+
+  /* handle get user */
+  useEffect(() => {
+    // set auth token for header
     const setAuthToken = (token) => {
       if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -44,7 +83,7 @@ function MainLayout({ children }) {
         delete axios.defaults.headers.common['Authorization'];
       }
     };
-    /* get user  */
+    // get user
     const fetchData = async () => {
       const token = localStorage.getItem('token');
       if (token) {
@@ -61,10 +100,26 @@ function MainLayout({ children }) {
       }
     };
     fetchData();
-  }, [isAuth, localStorage.getItem('token'), location.pathname]);
+  }, [isAuth, localStorage.getItem('token')]);
+
+  /* loader */
+  useEffect(() => {
+    const load = () => {
+      const loader = document.querySelector('.loader_life-shop');
+      setTimeout(() => {
+        loader.classList.add('loader_life-shop--hidden');
+      }, 2000);
+    };
+    window.addEventListener('load', load);
+    return () => {
+      window.removeEventListener('load', load);
+    };
+  }, []);
+
   return (
     <>
-      <div className={cx('wrapper', 'container-fluid')}>
+      <div className={cx('wrapper', 'loader-contain container-fluid')}>
+        <div className="loader_life-shop"></div>
         <Header />
         <Main children={children} />
         <Footer />
@@ -72,9 +127,4 @@ function MainLayout({ children }) {
     </>
   );
 }
-
-MainLayout.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
 export default MainLayout;

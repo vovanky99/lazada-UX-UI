@@ -4,15 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 import { useDispatch } from 'react-redux';
-import { AuthSocial, SignUp } from '~/Redux/Actions/Auth';
+import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-regular';
 
+import { AuthSocial, SignUp } from '~/Redux/Actions/Auth';
+import axios from '~/api/axios';
 import style from './register.module.scss';
 import routes from '~/config/routes';
 import DateOption from '~/components/DateOption';
 import Button from '~/components/Button';
-import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-regular';
+import { REGISTER_ERROR } from '~/Redux/Actions/Types';
 
 const cx = classNames.bind(style);
+const csrf = () => axios.get('/sanctum/csrf-cookie');
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -23,6 +26,7 @@ export default function Register() {
   const genderRef = useRef();
   const nameRef = useRef();
   const formRef = useRef();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [gender, setGender] = useState('');
@@ -36,7 +40,24 @@ export default function Register() {
   const [nameValid, setNameValidate] = useState('');
   const [genderValid, setGenderValidate] = useState('');
 
-  //handle email validated
+  /* show hide pass */
+  const handleShowHidePass = () => {
+    let pass = passRef.current;
+    if (showPass == false) {
+      setShowPass(true);
+      pass.type = 'text';
+    } else {
+      setShowPass(false);
+      pass.type = 'password';
+    }
+  };
+
+  /*handle change birthday */
+  const handleBirthDayOnchange = (value) => {
+    setBirthday(value);
+  };
+
+  /* handle email validated */
   useEffect(() => {
     let em = emailRef.current;
     const handleKeyUpEmail = (e) => {
@@ -66,7 +87,7 @@ export default function Register() {
     };
   }, [emailValid]);
 
-  //handle pass validated
+  /* handle pass validated */
   useEffect(() => {
     let pass = passRef.current;
     const handleKeyUpPass = (e) => {
@@ -91,7 +112,7 @@ export default function Register() {
     };
   }, [passwordValid]);
 
-  //handle name validate
+  /* handle name validate */
   useEffect(() => {
     let name = nameRef.current;
     const handleKeyUpName = (e) => {
@@ -116,11 +137,7 @@ export default function Register() {
     };
   }, [nameValid]);
 
-  const handleBirthDayOnchange = (value) => {
-    setBirthday(value);
-  };
-
-  // handle form submit register
+  /* handle form submit register */
   useEffect(() => {
     const today = new Date();
     const d = new Date(birthday);
@@ -168,7 +185,22 @@ export default function Register() {
         birthdayValid == '' &&
         nameValid == ''
       ) {
-        dispatch(SignUp({ name, email, password, gender, birthday }));
+        const register = async (dispatch) => {
+          try {
+            csrf();
+            const result = await axios.post('/api/register', { name, email, password, gender, birthday });
+            if (result && result.data.token) {
+              localStorage.setItem('token', result.data.token);
+              navigate(-1);
+            }
+          } catch (e) {
+            dispatch({
+              type: REGISTER_ERROR,
+              payload: e.message,
+            });
+          }
+        };
+        register();
       }
     };
     if (form) {
@@ -182,19 +214,7 @@ export default function Register() {
     };
   }, [email, password, name, gender, birthday]);
 
-  // show hide pass
-  const handleShowHidePass = () => {
-    let pass = passRef.current;
-    if (showPass == false) {
-      setShowPass(true);
-      pass.type = 'text';
-    } else {
-      setShowPass(false);
-      pass.type = 'password';
-    }
-  };
-
-  //handle login social
+  /* handle login social */
   useEffect(() => {
     let fb = fbRef.current;
     let gg = ggRef.current;
@@ -215,7 +235,7 @@ export default function Register() {
         fb.removeEventListener('click', handleFacebookAuth);
       }
       if (gg) {
-        gg.addEventListener('click', handleGoogleAuth);
+        gg.removeEventListener('click', handleGoogleAuth);
       }
     };
   }, [fbRef, ggRef]);
@@ -317,24 +337,10 @@ export default function Register() {
             <Button className={cx('btn_submit', 'form-control text-white py-3 fs-4 mb-2')} type="submit">
               Register
             </Button>
-            <div style={{ fontSize: '1.2rem', color: '#757575' }}>
-              By proceeding to sign up, I acknowledge that I have read and consented to Lazada’s{' '}
-              <Button to={'/'} className={cx('fs-5 m-0 p-0')} style={{ color: '#1a9cb7' }}>
-                Terms of Use
-              </Button>{' '}
-              and{' '}
-              <Button to={'/'} className={cx('fs-5 m-0 p-0')} style={{ color: '#1a9cb7' }}>
-                Privacy
-              </Button>
-              <Button to={'/'} className={cx('fs-5 m-0 p-0')} style={{ color: '#1a9cb7' }}>
-                Policy
-              </Button>
-              , which sets out how Lazada collects, uses and discloses my personal data, and the rights that I have
-              under applicable law.
-            </div>
-            <div className={cx('register_wrap', 'text-start my-3 fs-5')}>Or, register with</div>
+            <div className={cx('register_wrap', 'text-center my-3 fs-5')}>Or, register with</div>
             <div className={cx('login_third', 'form-group d-flex  justify-content-between')}>
               <Button
+                type="button"
                 ref={fbRef}
                 className={cx('fa_background', 'py-2 px-0  fs-2 text-white d-flex align-items-center')}
               >
@@ -342,6 +348,7 @@ export default function Register() {
                 Facebook
               </Button>
               <Button
+                type="button"
                 ref={ggRef}
                 className={cx('gg_background', 'btn py-2 px-0 fs-2 text-white d-flex align-items-center')}
               >

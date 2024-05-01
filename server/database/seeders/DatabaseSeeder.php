@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
     {
         
         /*cat seeder data*/
-        $users =array('name'=>'maihoangha','username'=>'maihoangha','email'=>'maihoangha@gmail.com','password'=>Hash::make('123456789'),'phone_number'=>'0123456789','avatar'=>'dasde','level'=>1,'status'=>'1','gender'=>1,'birthday'=>'','role_id'=>1);
+        $users =array('name'=>'maihoangha','username'=>'maihoangha','email'=>'maihoangha@gmail.com','password'=>Hash::make('123456789'),'phone_number'=>'0123456789','avatar'=>'dasde','level'=>1,'status'=>'1','gender'=>1,'birthday'=>'');
 
         DB::table('users')->insert($users);
         $titleReports = array(

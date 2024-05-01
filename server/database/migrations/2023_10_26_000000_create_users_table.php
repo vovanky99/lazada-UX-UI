@@ -25,7 +25,6 @@ return new class extends Migration
             $table->boolean('gender');
             $table->date('birthday')->nullable();
             $table->datetime('register_date')->nullable();
-            $table->foreignId('role_id')->default('2')->references('id')->on('role')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

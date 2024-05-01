@@ -8,13 +8,16 @@ import routes from '~/config/routes';
 import SignIn from './SignIn.module.scss';
 import Button from '~/components/Button';
 import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-regular';
-import { AuthSocial, Login } from '~/Redux/Actions/Auth';
+import { AuthSocial } from '~/Redux/Actions/Auth';
+import { LOG_ERROR } from '~/Redux/Actions/Types';
 import axios from '~/api/axios';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(SignIn);
 
 export default function Log() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const emailRef = useRef();
   const passRef = useRef();
   const fbRef = useRef();
@@ -33,10 +36,22 @@ export default function Log() {
   };
 
   //handle login submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e, dispatch) => {
     e.preventDefault();
     if (email != '' && password != '' && emailValidate == '' && passwordValidate == '') {
-      dispatch(Login({ email, password }));
+      try {
+        // csrf();
+        const result = await axios.post('/api/login', { email, password });
+        if (result && result.data.token) {
+          localStorage.setItem('token', result.data.token);
+          navigate(-1);
+        }
+      } catch (e) {
+        dispatch({
+          type: LOG_ERROR,
+          payload: e.message,
+        });
+      }
     }
   };
 
@@ -48,11 +63,11 @@ export default function Log() {
         setEmailValidate(`You can't leave this empty`);
         em.classList.add('danger_validated');
       } else if (e.target.value.length < 6 || e.target.value > 30) {
-        setEmailValidate('The length of the Phone or Email should be 6-30 characters.');
+        setEmailValidate('The length of the Email should be 6-30 characters.');
         em.classList.add('danger_validated');
       } else if (
         !e.target.value.match(
-          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
         )
       ) {
         setEmailValidate('email should be @gmail.com');
@@ -63,12 +78,12 @@ export default function Log() {
       }
     };
     if (em) {
-      em.addEventListener('keydown', handleKeyDownEmail);
+      em.addEventListener('keyup', handleKeyDownEmail);
     }
 
     return () => {
       if (em) {
-        em.removeEventListener('keydown', handleKeyDownEmail);
+        em.removeEventListener('keyup', handleKeyDownEmail);
       }
     };
   }, [emailValidate]);
@@ -107,33 +122,6 @@ export default function Log() {
     }
   };
 
-  //handle set localstorage auth social
-  useEffect(() => {
-    const getCookieValue = (name) => {
-      const cookies = document.cookie.split('; ');
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i];
-        const [cookieName, cookieValue] = cookie.split('=');
-        if (cookieName === name) {
-          return cookieValue;
-        }
-      }
-      return null;
-    };
-    const decrypt = getCookieValue('authToken');
-
-    if (decrypt) {
-      const getDecryptedCookieValue = async (cookie) => {
-        try {
-          const res = await axios.get(`/api/decrypt-cookie?cookie=` + cookie);
-          localStorage.setItem('token', res.data.decryptedValue.slice(res.data.decryptedValue.indexOf('|') + 1));
-        } catch (e) {
-          return null;
-        }
-      };
-      getDecryptedCookieValue(decrypt);
-    }
-  }, [document.cookie]);
   //handle login social
   useEffect(() => {
     let fb = fbRef.current;
@@ -155,7 +143,7 @@ export default function Log() {
         fb.removeEventListener('click', handleFacebookAuth);
       }
       if (gg) {
-        gg.addEventListener('click', handleGoogleAuth);
+        gg.removeEventListener('click', handleGoogleAuth);
       }
     };
   }, [fbRef, ggRef]);

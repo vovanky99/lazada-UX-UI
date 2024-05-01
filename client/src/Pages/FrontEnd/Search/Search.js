@@ -6,6 +6,7 @@ import SideBar from './SideBar';
 import SearchContent from './SearchContent';
 import axios from '~/api/axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -20,6 +21,33 @@ export default function Search() {
   const [priceTo, setPriceTo] = useState('');
   const [priceFrom, setPriceFrom] = useState('');
   const [reviewsScore, setReviewsScore] = useState('');
+
+  /* handle change price  */
+  const onChangePrice = (to, from) => {
+    setPriceTo(to);
+    setPriceFrom(from);
+  };
+
+  /* handle change score  */
+  const onChangeScore = (value) => {
+    setReviewsScore(value);
+  };
+
+  /* handle change value  */
+  const onChange = (value) => {
+    setDecrease(value);
+  };
+
+  /* handle get category id */
+  const getCatID = (value) => {
+    if (selectCat.indexOf(value) >= 0) {
+      setSelectCat((state) => state.filter((item) => item != value));
+    } else if (value == '') {
+      setSelectCat([]);
+    } else {
+      setSelectCat((oldValue) => [...oldValue, value]);
+    }
+  };
   //handle search
   useEffect(() => {
     const getSearchCat = async () => {
@@ -56,7 +84,12 @@ export default function Search() {
               score: reviewsScore,
             },
           });
-          setSearchVl(res.data);
+          console.log(res.data.length);
+          if (res.data.length <= 0) {
+            navigate(`${config.routes[404]}`);
+          } else {
+            setSearchVl(res.data);
+          }
         } else {
           navigate('/');
         }
@@ -68,26 +101,6 @@ export default function Search() {
       getSearch();
     }, 3000);
   }, [Params.title, decrease, selectCat, priceFrom, priceTo, reviewsScore]);
-
-  const onChangePrice = (to, from) => {
-    setPriceTo(to);
-    setPriceFrom(from);
-  };
-  const onChangeScore = (value) => {
-    setReviewsScore(value);
-  };
-  const onChange = (value) => {
-    setDecrease(value);
-  };
-  const getCatID = (value) => {
-    if (selectCat.indexOf(value) >= 0) {
-      setSelectCat((state) => state.filter((item) => item != value));
-    } else if (value == '') {
-      setSelectCat([]);
-    } else {
-      setSelectCat((oldValue) => [...oldValue, value]);
-    }
-  };
 
   return (
     <div className={cx('search-wrapper', 'd-flex')}>

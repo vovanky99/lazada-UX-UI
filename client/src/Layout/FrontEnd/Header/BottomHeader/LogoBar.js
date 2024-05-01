@@ -91,6 +91,7 @@ function LogoBars() {
       }
     };
   }, [showResult]);
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('logo-bars-content', 'row align-items-center')}>

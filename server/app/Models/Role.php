@@ -13,7 +13,7 @@ class Role extends Model
         'name',
         'description',
     ];
-    public function users(){
-        return $this->hasOne(User::class,'role_id','id');
+    public function admin(){
+        return $this->hasOne(Admin::class,'role_id','id');
     }
 }

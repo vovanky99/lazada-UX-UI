@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\SocialAuthController;
+use App\Http\Controllers\Auth\Client\AuthController;
+use App\Http\Controllers\Auth\Client\SocialAuthController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;

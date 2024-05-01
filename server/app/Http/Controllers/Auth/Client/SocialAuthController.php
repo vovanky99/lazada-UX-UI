@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -44,10 +45,12 @@ class SocialAuthController extends Controller
         ],[
             'avatar'=>$user->getAvatar()
         ]);
+        if($userCreated){
+            Auth::guard('user')->attempt(['email'=>$user->getEmail(),'password'=>null]);
+        }
         $token = $userCreated->createToken('social-token')->plainTextToken ;
         $cookie = cookie('authToken',$token,time()+(10*365*24*60*60),httpOnly:false);
-        return redirect('http://localhost:3000')->withCookie($cookie);
-        // return response()->json($token)->withCookie($cookie);
+        return redirect()->away('http://localhost:3000?authCallbackComplete=true')->withCookie($cookie);
     }
     public function decryptCookie(Request $request){
        

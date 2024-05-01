@@ -180,7 +180,7 @@ export default function ProductDetails() {
     }
   };
 
-  //handle send report reason
+  /* handle send report reason */
   useEffect(() => {
     const send_reason = document.querySelectorAll('#show-denounce div ul li');
     let show_denounce = document.getElementById('show-denounce-content');
@@ -212,7 +212,7 @@ export default function ProductDetails() {
     };
   }, [data, reason]);
 
-  //handle submit for report
+  /* handle submit for report */
   const handleSubmitReport = (e) => {
     e.preventDefault();
     if (contentReports != '' && reason != '') {
@@ -235,7 +235,7 @@ export default function ProductDetails() {
     }
   };
 
-  //get data
+  /* get data */
   useEffect(() => {
     const getData = async () => {
       try {

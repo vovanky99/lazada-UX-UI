@@ -13,20 +13,12 @@ export default function AuthReducer(state = initialState, action) {
         user: action.payload,
         isAuthenticated: true,
       };
-    case LOGIN:
-      return {
-        ...state,
-      };
     case SOCIAL_AUTH:
       return {
         ...state,
       };
     case LOGOUT:
       return { ...state, user: null, isAuthenticated: false };
-    case REGISTER:
-      return {
-        ...state,
-      };
     case LOG_ERROR:
       return {
         ...state,

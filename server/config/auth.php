@@ -39,11 +39,17 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+            'hash'=>false,
         ],
-        'api'=>[
-            'driver' => 'token',
+        'user'=>[
+            'driver' => 'session',
             'provider' => 'users',
-            'hash' => false,
+            'hash' => true,
+        ],
+        'admin'=>[
+            'driver'=> 'session',
+            'provider'=>'admins',
+            'hash' => true,
         ]
     ],
 
@@ -69,7 +75,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
+        'admins'=>[
+            'driver'=>'eloquent',
+            'model'=> App\Models\Admin::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

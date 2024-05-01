@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,12 +19,9 @@ class AuthController extends Controller
         'password'=>'required'
        ]);
        $credentials = $request->only('email','password');
-       if(Auth::attempt($credentials)){
-        $user = Auth::user();
-        return response()->json(['user'=>$user,'authorization'=>[
-            'token'=>$user->createToken('api-token')->plainTextToken,
-            'type'=>'bearer',
-        ]]);
+       if(Auth::guard('user')->attempt($credentials)){
+        $user = Auth::guard('user')->user();
+        return response()->json(['token'=>$user->createToken('api-token')->plainTextToken]);
        }
        else{
            return response()->json(['message'=>'Invalid credentials',401]);
@@ -51,12 +49,9 @@ class AuthController extends Controller
                     'birthday' =>$request->birthday,
                 ]);
                 $credentials = $request->only('email','password');
-                if($user && Auth::attempt($credentials)){
-                    $users = Auth::user();
-                    return response()->json(['user'=>$users,'authorization'=>[
-                        'token'=>$users->createToken('api-token')->plainTextToken,
-                        'type'=>'bearer',
-                    ]]);
+                if($user && Auth::guard('user')->attempt($credentials)){
+                    $users = Auth::guard('user')->user();
+                    return response()->json(['token'=>$users->createToken('api-token')->plainTextToken]);
                 }
                 else{
                     return response()->json(['message'=>'Invalid credentials',401]);
@@ -71,7 +66,7 @@ class AuthController extends Controller
     }
     public function refresh(){
         return response()->json([
-            'user'=>Auth::user(),
+            'user'=>Auth::guard('user')->user(),
             'authorisation' => [
                 'token' => Auth::refresh(),
                 'type' => 'bearer',
@@ -82,8 +77,13 @@ class AuthController extends Controller
     {
         // $user = Auth::user();
         // $user->tokens()->delete();
+        if($request->hasCookie('authToken')){
+            return response()->json(['message'=>'Logged out successfully'],200)->withCookie(Cookie::forget('authToken'));
+        }
+       else{ 
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logged out successfully'], 200);
+        }
     }
 }
     

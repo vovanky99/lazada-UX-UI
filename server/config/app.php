@@ -174,7 +174,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
         \Laravel\Sanctum\SanctumServiceProvider::class,
-        \Torann\GeoIP\GeoIPServiceProvider::class,
         ])->toArray(),
 
     /*
@@ -196,7 +195,6 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
         // ...
     ])->toArray(),
 

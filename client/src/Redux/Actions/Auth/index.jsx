@@ -1,4 +1,4 @@
-import { GET_USER, LOGOUT, LOG_ERROR, REGISTER_ERROR, LOGIN, SOCIAL_AUTH } from '../Types/index';
+import { GET_USER, LOGOUT, LOG_ERROR, REGISTER_ERROR, SOCIAL_AUTH } from '../Types/index';
 import axios from '~/api/axios';
 
 //login action
@@ -15,32 +15,15 @@ export const getUser = (data) => {
   };
 };
 
-export const Login = (...data) => {
-  return async (dispatch) => {
-    try {
-      // csrf();
-      const result = await axios.post('/api/login', ...data);
-      if (result && result.data) {
-        localStorage.setItem('token', result.data.authorization.token);
-      }
-      dispatch({
-        type: LOGIN,
-      });
-    } catch (e) {
-      dispatch({
-        type: LOG_ERROR,
-      });
-    }
-  };
-};
-
 export const AuthSocial = (provider) => {
   return async (dispatch) => {
     try {
-      await csrf();
-      // const result = await axios.get(`/api/auth/${provider}`, { withCredentials: true });
-      // window.open(`http://localhost:8000/api/auth/${provider}`, '_self');
-      window.location.href = `http://localhost:8000/api/auth/${provider}`;
+      // await csrf();
+      window.open(
+        `http://localhost:8000/api/auth/${provider}`,
+        '_blank',
+        'width=600,height=400,resizable=yes,scrollbars=yes',
+      );
       dispatch({
         type: SOCIAL_AUTH,
       });
@@ -58,21 +41,5 @@ export const Logout = () => {
     dispatch({
       type: LOGOUT,
     });
-  };
-};
-
-export const SignUp = (...data) => {
-  return async (dispatch) => {
-    try {
-      csrf();
-      const result = await axios.post('/api/register', ...data);
-      if (result && result.data) {
-        localStorage.setItem('token', result.data.authorization.token);
-      }
-    } catch (e) {
-      dispatch({
-        type: REGISTER_ERROR,
-      });
-    }
   };
 };

@@ -33,4 +33,10 @@ class Address extends Model
     public function address(){
         return $this->hasOne(User::class,'address_id','id');
     }
+    public function adminP(){
+        return $this->hasOne(Admin::class,'permanent_residennce_registration','id');
+    }
+    public function AdminT(){
+        return $this->hasOne(Admin::class,'temporary_registration','id');
+    }
 }
