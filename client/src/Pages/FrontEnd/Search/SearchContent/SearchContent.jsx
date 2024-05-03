@@ -7,10 +7,9 @@ import { faClock, faCommentDots, faStar as faStarRegular } from '@fortawesome/fo
 
 import styles from './SearchContent.module.scss';
 import Products from '~/Layout/FrontEnd/Products';
-import Pagination from '~/Layout/Pagination';
+import Pagination from '~/components/Pagination';
 import Button from '~/components/Button';
 import Images from '~/components/Images';
-import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -24,14 +23,15 @@ export default function SearchContent({ data, titleSearch, Price }) {
   const [display, setDisplay] = useState('flex-column');
   const [imgWidth, setImgWidth] = useState('100%');
   const [gap, setGap] = useState('15px');
+
+  // handle convert grid and list
   useEffect(() => {
     const grid = document.getElementById('grid');
     const list = document.getElementById('list');
     const PD_grid_list = document.getElementById('products-grid-list');
     const widthProduct = document.querySelectorAll('.width-product');
-    // handle convert grid and list
     const hanldeClick = (e) => {
-      if (e.currentTarget.classList.contains('active-grid') == true) {
+      if (e.currentTarget.classList.contains('active-grid') === true) {
         PD_grid_list.style['flexDirection'] = 'row';
         grid.style['color'] = '#183545';
         list.style['color'] = '#dadada';

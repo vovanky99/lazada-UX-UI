@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useDispatch } from 'react-redux';
 
 // import { search } from '~/Redux/Actions/Auth/index';
 import styles from './LogoBars.module.scss';
@@ -33,7 +32,6 @@ function LogoBars() {
   const [searchValue, setSearchValue] = useState(defaultSearch || '');
   const [searchResult, setSearchResult] = useState([]);
   const [showResult, setShowResult] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [delay, setDelay] = useState(500);
   const debounceValue = useDebounce(searchValue, delay);
   // const lengthBold = useDebounce(searchValue.length, delay);

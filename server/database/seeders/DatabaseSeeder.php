@@ -45,8 +45,13 @@ class DatabaseSeeder extends Seeder
         
         /*cat seeder data*/
         $users =array('name'=>'maihoangha','username'=>'maihoangha','email'=>'maihoangha@gmail.com','password'=>Hash::make('123456789'),'phone_number'=>'0123456789','avatar'=>'dasde','level'=>1,'status'=>'1','gender'=>1,'birthday'=>'');
+        $role = array('name'=>'admin','description'=>'admin');
+
+        $admin = array('name'=>'admin','username'=>'admin','password'=>Hash::make('admin99'),'role_id'=>'1');
 
         DB::table('users')->insert($users);
+        DB::table('role')->insert($role);
+        DB::table('admins')->insert($admin);
         $titleReports = array(
             array('title'=>'Sản phẩm bị cấm buôn bán (động vật hoang dã, 18+,...)'),
             array('title'=>'Hàng giả, hàng nhái'),

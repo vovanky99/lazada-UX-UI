@@ -44,12 +44,12 @@ return [
         'user'=>[
             'driver' => 'session',
             'provider' => 'users',
-            'hash' => true,
+            'hash' => false,
         ],
         'admin'=>[
             'driver'=> 'session',
             'provider'=>'admins',
-            'hash' => true,
+            'hash' => false,
         ]
     ],
 

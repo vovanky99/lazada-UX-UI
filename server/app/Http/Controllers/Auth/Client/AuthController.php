@@ -21,7 +21,7 @@ class AuthController extends Controller
        $credentials = $request->only('email','password');
        if(Auth::guard('user')->attempt($credentials)){
         $user = Auth::guard('user')->user();
-        return response()->json(['token'=>$user->createToken('api-token')->plainTextToken]);
+        return response()->json(['token'=>$user->createToken('user-token')->plainTextToken]);
        }
        else{
            return response()->json(['message'=>'Invalid credentials',401]);

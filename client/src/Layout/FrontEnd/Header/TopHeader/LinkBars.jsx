@@ -9,7 +9,6 @@ import styles from './LinkBars.module.scss';
 import routes from '~/config/routes';
 import config from '~/config';
 import Store from '~/Redux/Store';
-import { useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -18,21 +17,15 @@ function LinkBars({ IDLinkBars }) {
 
   const handleLogout = () => {
     const fetchData = async () => {
-      try {
-        let token = localStorage.getItem('token');
-        const cookie = document.cookie;
-        if (token && cookie) {
-          await axios.post('/api/logout');
-          document.cookie = 'authToken=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=';
-          localStorage.removeItem('token');
-          Store.dispatch(Logout());
-        } else {
-          await axios.post('/api/logout');
-          localStorage.removeItem('token');
-          Store.dispatch(Logout());
-        }
-      } catch (e) {
-        console.log(e);
+      let token = localStorage.getItem('token');
+      const cookie = document.cookie;
+      if (token && cookie) {
+        Store.dispatch(Logout());
+        document.cookie = 'authToken=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=';
+        localStorage.removeItem('token');
+      } else {
+        Store.dispatch(Logout());
+        localStorage.removeItem('token');
       }
     };
     fetchData();

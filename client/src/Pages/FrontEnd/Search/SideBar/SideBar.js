@@ -4,7 +4,7 @@ import { faChevronDown, faFilter, faStar } from '@fortawesome/free-solid-svg-ico
 import { faStar as faStarReguler } from '@fortawesome/fontawesome-free-regular';
 
 import styles from './SideBar.module.scss';
-import Checkbox from '~/Layout/FrontEnd/Checkbox';
+import Checkbox from '~/components/Checkbox';
 import { useEffect, useRef, useState } from 'react';
 import Button from '~/components/Button';
 
@@ -40,7 +40,7 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
     let select_cat = document.querySelectorAll('.select-cat');
     const handleClickSelectCat = (e) => {
       if (catValue.indexOf(parseInt(e.target.value)) >= 0) {
-        setCatValue((state) => state.filter((item) => item != parseInt(e.target.value)));
+        setCatValue((state) => state.filter((item) => item !== parseInt(e.target.value)));
       } else {
         setCatValue((oldValue) => [...oldValue, parseInt(e.target.value)]);
       }
@@ -60,7 +60,7 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
   useEffect(() => {
     let reviews = document.querySelectorAll('.reviews_score');
     const handleClickScore = (e) => {
-      if (e.currentTarget.classList.contains('score_active') == false) {
+      if (e.currentTarget.classList.contains('score_active') === false) {
         for (let i = 0; i < reviews.length; i++) {
           if (reviews[i].classList.contains) {
             reviews[i].classList.remove('score_active');
@@ -70,7 +70,7 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
       } else {
         e.currentTarget.classList.remove('score_active');
       }
-      if (score == parseInt(e.target.value)) {
+      if (score === parseInt(e.target.value)) {
         onChangeScore('');
         setScore('');
       } else {
@@ -111,7 +111,7 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
       }
     }
     for (let i = 0; i < checkBox.length; i++) {
-      if (checkBox[i].checked == true) {
+      if (checkBox[i].checked === true) {
         checkBox[i].checked = false;
       }
     }
@@ -134,7 +134,7 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
       <fieldset className={cx('filter-group_cat')}>
         <legend className={cx('filter-group_header')}>By Category</legend>
 
-        {cat.slice(0, showCat == false ? 5 : cat.length).map((cat, index) => (
+        {cat.slice(0, showCat === false ? 5 : cat.length).map((cat, index) => (
           <div key={index} className={cx('checkbox-filter')}>
             <Checkbox
               checkboxclass="select-cat"
@@ -148,7 +148,7 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
             />
           </div>
         ))}
-        {showCat == false ? (
+        {showCat === false ? (
           <button ref={catRef} className={cx('show')}>
             Show More <FontAwesomeIcon icon={faChevronDown} />
           </button>
@@ -247,7 +247,7 @@ export default function SideBar({ getCatID, onChangePrice, onChangeScore, cat })
               }}
             />
           </div>
-          {priceWarning != '' ? <span className="text-danger mb-3 d-block fs-5">{priceWarning}</span> : ''}
+          {priceWarning !== '' ? <span className="text-danger mb-3 d-block fs-5">{priceWarning}</span> : ''}
           <button className={cx('apply', 'btn')}>APPLY</button>
         </form>
       </fieldset>

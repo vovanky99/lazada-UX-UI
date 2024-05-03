@@ -6,12 +6,12 @@ import axios from '~/api/axios';
 import { getUser } from '~/Redux/Actions/Auth';
 import routes from '~/config/routes';
 import { useEffect } from 'react';
-import Store from '~/Redux/Store';
 
 import Footer from '~/Layout/FrontEnd/Footer';
 import Header from '~/Layout/FrontEnd/Header';
 import styles from './mainLayout.module.scss';
 import Main from '../Main';
+import Store from '~/Redux/Store';
 
 const cx = classNames.bind(styles);
 
@@ -26,7 +26,7 @@ function MainLayout({ children }) {
     const logined = () => {
       if (
         localStorage.getItem('token') &&
-        (location.pathname == routes.register || location.pathname == routes.signIn)
+        (location.pathname === routes.register || location.pathname === routes.signIn)
       ) {
         navigate(-1);
       }
@@ -86,21 +86,13 @@ function MainLayout({ children }) {
     // get user
     const fetchData = async () => {
       const token = localStorage.getItem('token');
-      if (token) {
+      if (token && isAuth === false) {
         setAuthToken(token);
-        try {
-          csrf();
-          const res = await axios.get('/api/user', {
-            params: { token },
-          });
-          Store.dispatch(getUser(res.data));
-        } catch (e) {
-          console.log(e);
-        }
+        Store.dispatch(getUser(token));
       }
     };
     fetchData();
-  }, [isAuth, localStorage.getItem('token')]);
+  }, [localStorage.getItem('token')]);
 
   /* loader */
   useEffect(() => {

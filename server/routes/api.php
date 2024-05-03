@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\Client\AuthController;
+use App\Http\Controllers\Auth\Admin\AdminAuthController;
 use App\Http\Controllers\Auth\Client\SocialAuthController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
@@ -26,10 +27,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class,'logout']);
+    // Route::get('/user',[AuthController::class,'getUser']);
+    // Route::get('/admin',[AdminAuthController::class,'getAdmin']);
 });
 /*auth */
 Route::post('/login', [AuthController::class,'login']);
-Route::post('/register', [AuthController::class,'register']); 
+Route::post('/register', [AuthController::class,'register']);
+Route::post('/admin-login', [AdminAuthController::class,'login']);
+
 
 /*social auth */
 Route::get('/auth/{provider}', [SocialAuthController::class,'redirectToProvider']);

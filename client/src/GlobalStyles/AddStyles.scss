@@ -1,0 +1,110 @@
+/* life shop */
+.sticky_header {
+  position: sticky;
+  z-index: 999;
+  top: 0;
+}
+
+.slide_active {
+  border-color: #ee4d2d !important;
+  color: #ee4d2d;
+  position: relative;
+}
+.slide_active::before {
+  border: 1rem solid transparent;
+  border-bottom: 1rem solid #d0011b;
+  bottom: -10px;
+  content: '';
+  position: absolute;
+  right: -1.1rem;
+  transform: rotate(135deg);
+}
+.slide_active::after {
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+  width: 4px;
+  height: 8px;
+  bottom: 0.1rem;
+  content: '';
+  position: absolute;
+  right: 0.2rem;
+  transform: rotate(45deg);
+}
+
+.rating_active {
+  border: 1px solid #ee4d2d !important;
+  color: #ee4d2d !important;
+}
+.pagination_active {
+  border-color: #16849b !important ;
+  background-color: #1a9cb7 !important;
+  color: #fff !important;
+}
+/* .slide-rv_active {
+  display: flex;
+} */
+
+.account_navlink_active {
+  color: var(--default_color) !important;
+}
+
+/*page account*/
+// select gender
+.stardust-radio_active .outer-circle_active {
+  border-color: #ee4d2d !important;
+}
+.stardust-radio_active .outer-circle_active .inner-circle_active {
+  opacity: 1 !important;
+}
+
+// add danger login and register
+
+input.danger_validated {
+  border-color: #f44336 !important;
+}
+input.danger_validated:focus {
+  border-color: #f44336 !important;
+}
+
+select.danger_validated {
+  border-color: #f44336 !important;
+}
+
+select.danger_validated:focus {
+  border-color: #f44336 !important;
+}
+
+// add active validated page account bank
+input.active_validated:focus + label,
+input.active_validated:required:valid + label {
+  color: #dc3545 !important;
+}
+
+input.active_validated {
+  border-color: #dc3545 !important;
+}
+
+// active button submit account credit
+button.btn-active {
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
+
+#credit-card_add.show-hide,
+#bank-account_add.show-hide {
+  display: none !important;
+}
+
+// active search products score
+
+button.reviews_score.score_active {
+  background-color: #ebebeb !important;
+}
+
+/* admin */
+
+//login
+.admin_login-pass,
+.admin_login-username {
+  border-color: red !important;
+}

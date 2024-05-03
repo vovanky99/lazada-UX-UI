@@ -4,12 +4,12 @@ import classNames from 'classnames/bind';
 import styles from '../ProductDetails.module.scss';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight, faStar, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import { useEffect, useState } from 'react';
 import ProductsSuggest from '../ProductsSuggest';
 import SlideReviews from '~/components/SlickSlider/SlideReviews';
-import Pagination from '~/Layout/Pagination';
+import Pagination from '~/components/Pagination';
 
 const cx = classNames.bind(styles);
 
@@ -24,7 +24,7 @@ export default function ProductsDescriptions({ id, PD_Description, PD_Reviews, P
 
   /*onclick handle like reviews */
   const onClickHandleLikeReviews = () => {
-    likeReviews == true ? setLikeReviews(false) : setLikeReviews(true);
+    likeReviews === true ? setLikeReviews(false) : setLikeReviews(true);
   };
 
   /*onclick reviews sidebar*/
@@ -33,7 +33,7 @@ export default function ProductsDescriptions({ id, PD_Description, PD_Reviews, P
     const handleSelectScoreReviews = (e) => {
       e.preventDefault();
       for (let i = 0; i < btns.length; i++) {
-        if (btns[i].classList.contains('rating_active') == true) {
+        if (btns[i].classList.contains('rating_active') === true) {
           btns[i].classList.remove('rating_active');
         }
         e.target.classList.add('rating_active');

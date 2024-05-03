@@ -18,7 +18,7 @@ import styles from './Location.module.scss';
 import config from '~/config';
 import Button from '~/components/Button';
 import axios from '~/api/axios';
-import Checkbox from '~/Layout/FrontEnd/Checkbox';
+import Checkbox from '~/components/Checkbox';
 import useDebounce from '~/Hooks/Debounce';
 
 const cx = classNames.bind(styles);

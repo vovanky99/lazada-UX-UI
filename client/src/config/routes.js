@@ -7,7 +7,9 @@ const routes = {
   search: '/search/:title',
   cart: '/cart',
   cat: '/cat',
-  //users needs to login
+  404: '*',
+
+  // users needs to login
   profile: '/user/account/profile',
   purchaseOrder: '/user/account/purchase',
   address: '/user/account/address',
@@ -16,7 +18,12 @@ const routes = {
   notification: '/user/account/notification',
   voucher: '/user/account/voucher',
   userbank: '/user/account/bank',
-  404: '*',
+};
+
+export const adminRoutes = {
+  SignIn: '/admin/auth/login',
+  ResetPassword: '/admin/auth/resetpass',
+  Home: '/admin',
 };
 
 export default routes;

@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 import styles from './Cart.module.scss';
-import Checkbox from '~/Layout/FrontEnd/Checkbox';
+import Checkbox from '~/components/Checkbox';
 import JustForYou from '../Home/JustForYou';
-import { faL, faLocationDot, faMinus, faPlus, faShop } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faMinus, faPlus, faShop } from '@fortawesome/free-solid-svg-icons';
 import Images from '~/components/Images';
 import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 export default function Cart() {
-  const [deleteAll, setDeleteAll] = useState([]);
+  // const [deleteAll, setDeleteAll] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [totalProduct, setTotalProduct] = useState(1000);
   const [voucher, setVoucher] = useState('');
@@ -38,10 +38,10 @@ export default function Cart() {
     const check_products = document.querySelectorAll('.checkbox-products');
     const handleChecked = (e) => {
       for (let i = 0; i < check_shop.length; i++) {
-        if (check_shop[i] != checkbox_all) {
+        if (check_shop[i] !== checkbox_all) {
           check_shop[i].checked = e.target.checked;
           for (let j = 0; j < check_products.length; j++) {
-            if (check_products[j] != check_shop[i]) {
+            if (check_products[j] !== check_shop[i]) {
               check_products[j].checked = check_shop[i].checked;
             }
           }
@@ -62,7 +62,7 @@ export default function Cart() {
   const handleCheckedShop = (val) => {
     // const check_products = document.querySelectorAll(`.products-` + val + ` .checkbox-products`);
     // const check_shop = document.querySelectorAll(`.products-` + val + ` .checkbox-shop`);
-    console.log(val);
+    // console.log(val);
     // for (let j = 0; j < check_products.length; j++) {
     //   if (check_products[j] != check_shop) {
     //     check_products[j].checked = check_shop.checked;

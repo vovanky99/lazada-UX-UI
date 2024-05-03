@@ -16,6 +16,7 @@ const Button = forwardRef(function Button(
     transparent = false,
     rounded = false,
     primary = false,
+    gradient_primary = false,
     outline = false,
     disabled = false,
     text = false,
@@ -48,6 +49,7 @@ const Button = forwardRef(function Button(
   const classes = cx('wrapper', {
     primary,
     transparent,
+    gradient_primary,
     large,
     small,
     outline,

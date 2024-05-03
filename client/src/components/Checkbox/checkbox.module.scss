@@ -12,7 +12,7 @@
   left: 0;
 }
 .container input:checked ~ .input-helper {
-  // background-image: #da6520;
+  background-image: #da6520;
 }
 input:checked ~ .input-helper:after {
   display: block !important;

@@ -1,16 +1,39 @@
-import { GET_USER, LOGOUT, LOG_ERROR, REGISTER_ERROR, SOCIAL_AUTH } from '../Types/index';
+import { GET_USER, LOGOUT, LOG_ERROR, SOCIAL_AUTH, GET_ADMIN } from '../Types/index';
 import axios from '~/api/axios';
 
 //login action
 const csrf = () => axios.get('/sanctum/csrf-cookie');
 
-export const getUser = (data) => {
-  return (dispatch) => {
-    if (data) {
+export const getUser = (token) => {
+  return async (dispatch) => {
+    try {
+      csrf();
+      const res = await axios.get('/api/user', {
+        params: { token },
+      });
       dispatch({
         type: GET_USER,
-        payload: data,
+        payload: res.data,
       });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export const getAdmin = (token) => {
+  return async (dispatch) => {
+    try {
+      csrf();
+      const res = await axios.get('/api/user', {
+        params: { token },
+      });
+      dispatch({
+        type: GET_ADMIN,
+        payload: res.data,
+      });
+    } catch (e) {
+      console.log(e);
     }
   };
 };
@@ -38,8 +61,13 @@ export const AuthSocial = (provider) => {
 
 export const Logout = () => {
   return async (dispatch) => {
-    dispatch({
-      type: LOGOUT,
-    });
+    try {
+      await axios.post('/api/logout');
+      dispatch({
+        type: LOGOUT,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 };

@@ -1,4 +1,6 @@
 import config from '~/config';
+
+// public route
 import HomePages from '~/Pages/FrontEnd/Home';
 import SignIn from '~/Pages/FrontEnd/Auth/SignIn';
 import Register from '~/Pages/FrontEnd/Auth/Register';
@@ -12,7 +14,11 @@ import Address from '~/Pages/FrontEnd/Account/Address';
 import UserBank from '~/Pages/FrontEnd/Account/UserBank';
 import Error from '~/Pages/FrontEnd/Error';
 
-const publicRoutes = [
+//route admin
+import AdminLogin from '~/Pages/ADMIN/Auth/Login';
+import AdminHome from '~/Pages/ADMIN/Home';
+
+const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages },
   { path: config.routes.signIn, components: SignIn },
   { path: config.routes.register, components: Register },
@@ -27,6 +33,12 @@ const publicRoutes = [
   { path: config.routes[404], components: Error },
 ];
 
-const privateRoutes = [];
+const AdminRoutes = [
+  { path: config.adminRoutes.SignIn, components: AdminLogin },
+  {
+    path: config.adminRoutes.Home,
+    components: AdminHome,
+  },
+];
 
-export { publicRoutes, privateRoutes };
+export { LifeShopRoutes, AdminRoutes };

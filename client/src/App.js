@@ -1,18 +1,19 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import ThemeProvider from 'react-bootstrap/ThemeProvider';
 
 import './GlobalStyles/GlobalStyles.module.scss';
-import './GlobalStyles/active.scss';
+import './GlobalStyles//AddStyles.scss';
 import './GlobalStyles/LazyLoad.scss';
 
-import { publicRoutes, privateRoutes } from '~/Routes';
-import React, { Suspense } from 'react';
-import MainLayout from '~/Layout/FrontEnd/MainLayout';
+import { LifeShopRoutes, AdminRoutes } from '~/Routes';
+import React from 'react';
+import LifeShopLayout from '~/Layout/FrontEnd/MainLayout';
+import AdminLayout from '~/Layout/ADMIN/MainLayout';
 
 function App() {
   return (
     <Routes>
-      {publicRoutes.map((route, index) => {
+      {LifeShopRoutes.map((route, index) => {
         const Pages = route.components;
         return (
           <Route
@@ -24,10 +25,27 @@ function App() {
                 breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
                 minBreakpoint="xxs"
               >
-                <MainLayout>
+                <LifeShopLayout>
                   <Pages />
-                </MainLayout>
+                </LifeShopLayout>
               </ThemeProvider>
+            }
+          />
+        );
+      })}
+      {AdminRoutes.map((route, index) => {
+        const Pages = route.components;
+        if (route.path === '/admin/auth/login' || route.path === '/admin/auth/resetpassword') {
+          return <Route key={index} path={route.path} element={<Pages />} />;
+        }
+        return (
+          <Route
+            key={index}
+            path={route.path}
+            element={
+              <AdminLayout>
+                <Pages />
+              </AdminLayout>
             }
           />
         );

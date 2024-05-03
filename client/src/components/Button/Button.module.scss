@@ -53,6 +53,16 @@
   }
 }
 
+// custom for admin
+
+.gradient_primary {
+  background-image: linear-gradient(to right, #da8cff, #9a55ff);
+  color: white;
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
 //button size
 .small {
   min-width: 88px;
