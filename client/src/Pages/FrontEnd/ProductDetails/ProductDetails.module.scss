@@ -1,6 +1,3 @@
-* {
-  --minheightquantities: 40px;
-}
 p {
   margin-bottom: 0 !important;
 }
@@ -39,10 +36,6 @@ p {
 }
 .stars {
   color: #ffd500;
-}
-.reviews_headers {
-  .reviews {
-  }
 }
 
 .total-reviews {
@@ -315,7 +308,7 @@ div.show {
         border: 1px solid #dbdbdb;
         background-color: transparent;
         padding: 5px 10px;
-        min-height: var(--minheightquantities);
+        min-height: 40px;
         border-radius: 0;
       }
       input {

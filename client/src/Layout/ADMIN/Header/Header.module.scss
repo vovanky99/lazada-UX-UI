@@ -1,0 +1,124 @@
+.header {
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: white;
+  &_logo {
+    width: 260px;
+    outline: none;
+    .img-contain {
+      width: 125px;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  &_navbar-menu {
+    padding: 0 30px;
+    .navbar-menu_left {
+      .navbar-toggler {
+        color: #9c9fa6;
+        padding: 0;
+        font-size: 1.8rem;
+      }
+    }
+    .navbar-menu_right {
+      gap: 30px;
+      .message {
+        &_icon {
+          font-size: 1.8rem;
+          color: #9c9fa6;
+        }
+        .message_toggle {
+          background-color: white;
+          border-radius: 5px;
+          box-shadow: 0px 0px 3px 0px #c2bbbb;
+          h4 {
+            margin-bottom: 0;
+            padding: 10px 15px;
+            border-bottom: 1px solid #dbd9d9;
+            font-size: 1.6rem;
+            font-weight: 600;
+            cursor: context-menu;
+          }
+          .content {
+            .element {
+              padding: 10px 10px;
+              gap: 15px;
+              border-bottom: 1px solid #dbd9d9;
+              &:hover {
+                background-color: #f3f0f0;
+              }
+              &_account {
+                width: 40px;
+                height: 40px;
+                img {
+                  border-radius: 50%;
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+              &_content {
+                h6,
+                time {
+                  color: black;
+                  font-size: 1.5rem;
+                }
+              }
+            }
+          }
+          .total-mes-new {
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            cursor: context-menu;
+            font-size: 1.4rem;
+          }
+        }
+      }
+      .account {
+        &_profile {
+          width: 100%;
+          gap: 20px;
+          .avatar {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            &::after {
+              content: '';
+              height: 10px;
+              border-radius: 50%;
+              width: 10px;
+              position: absolute;
+              bottom: 0px;
+              right: 0px;
+              background-color: #1bcfb4;
+              border: 2px solid white;
+            }
+            img {
+              border-radius: 50%;
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+        &_toggle {
+          box-shadow: 0px 0px 3px 0px #c2bbbb;
+          background-color: white;
+          .btn-profile {
+            color: black;
+            border-bottom: 1px solid #dbd9d9;
+          }
+          a,
+          button {
+            border-radius: 0;
+            &:hover {
+              background-color: #e6e9f0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

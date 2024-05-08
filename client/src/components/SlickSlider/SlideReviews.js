@@ -20,7 +20,7 @@ export default function SlideReviews({ data, wrapper, activeSlide, numberShow = 
     const rating_media_list = 'rating-media-list';
     function ChangeStyle(elmId, style, value) {
       let elem = document.getElementById(elmId);
-      if (typeof elem != 'undefined' && elem !== null) {
+      if (typeof elem !== 'undefined' && elem !== null) {
         elem.style[style] = value;
       }
     }

@@ -1,0 +1,16 @@
+.sidebar {
+  width: 260px;
+  &_element {
+    padding: 20px 40px;
+    font-size: 1.6rem;
+    p {
+      color: #3e4b80;
+    }
+    svg {
+      color: #beabc2;
+    }
+    &:hover {
+      background-color: #f3f0f0;
+    }
+  }
+}

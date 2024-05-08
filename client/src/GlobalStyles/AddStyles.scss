@@ -108,3 +108,13 @@ button.reviews_score.score_active {
 .admin_login-username {
   border-color: red !important;
 }
+
+/* navlink for sidebar */
+#sidebar a.active {
+  background-color: #f3f0f0;
+}
+
+#sidebar a.active p,
+#sidebar a.active svg {
+  color: #b66dff;
+}

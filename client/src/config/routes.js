@@ -24,6 +24,11 @@ export const adminRoutes = {
   SignIn: '/admin/auth/login',
   ResetPassword: '/admin/auth/resetpass',
   Home: '/admin',
+  ProfileAdmin: '/admin/profile',
+  AllAdmin: '/admin/all-admin',
+  EditAdmin: '/admin/edit-admin',
+  AllShop: '/admin/all-shop',
+  EditShop: '/admin/edit-shop',
 };
 
 export default routes;

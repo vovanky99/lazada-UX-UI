@@ -61,10 +61,10 @@ export default function Login() {
 
   /* redirect had login admin */
   useEffect(() => {
-    if (localStorage.getItem('authToken')) {
+    if (localStorage.getItem('adminToken')) {
       return navigate('/admin');
     }
-  }, [localStorage.getItem('authToken')]);
+  }, [localStorage.getItem('adminToken')]);
 
   /* login admin */
   const handleSubmitLogin = (e) => {
@@ -107,7 +107,7 @@ export default function Login() {
                 type="text"
                 placeholder="username"
               />
-              {usernameMessage != '' ? <span className={cx('message', 'text-danger')}>{usernameMessage}</span> : ''}
+              {usernameMessage !== '' ? <span className={cx('message', 'text-danger')}>{usernameMessage}</span> : ''}
             </div>
             <div className={cx('password', 'form-group')}>
               <input
@@ -120,7 +120,7 @@ export default function Login() {
                 type="password"
                 placeholder="password"
               />
-              {passwordMessage != '' ? <span className={cx('message', 'text-danger')}>{passwordMessage}</span> : ''}
+              {passwordMessage !== '' ? <span className={cx('message', 'text-danger')}>{passwordMessage}</span> : ''}
             </div>
             <div className={cx('forget-pass', 'form-group d-flex flex-row justify-content-end')}>
               <Link to={config.adminRoutes.ResetPassword}>Forgot password?</Link>

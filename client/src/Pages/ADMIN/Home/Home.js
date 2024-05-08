@@ -6,7 +6,9 @@ const cx = classNames.bind(styles);
 export default function Home() {
   return (
     <>
-      <main className={cx('main-content')}></main>
+      <div>
+        <h3>Home!</h3>
+      </div>
     </>
   );
 }

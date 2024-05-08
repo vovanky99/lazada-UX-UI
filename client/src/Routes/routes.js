@@ -17,6 +17,11 @@ import Error from '~/Pages/FrontEnd/Error';
 //route admin
 import AdminLogin from '~/Pages/ADMIN/Auth/Login';
 import AdminHome from '~/Pages/ADMIN/Home';
+import AllAdmin from '~/Pages/ADMIN/Admin/AllAdmin';
+import EditAdmin from '~/Pages/ADMIN/Admin/EditAdmin';
+import AllShop from '~/Pages/ADMIN/Shop/AllShop';
+import EditShop from '~/Pages/ADMIN/Shop/EditShop';
+import ProfileAdmin from '~/Pages/ADMIN/Profile';
 
 const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages },
@@ -38,7 +43,35 @@ const AdminRoutes = [
   {
     path: config.adminRoutes.Home,
     components: AdminHome,
+    breadcrumbName: 'DashBoard',
+  },
+  {
+    path: config.adminRoutes.AllAdmin,
+    components: AllAdmin,
+    breadcrumbName: 'All Admin',
+  },
+  {
+    path: config.adminRoutes.EditAdmin,
+    components: EditAdmin,
+    breadcrumbName: 'Edit Admin',
+  },
+  {
+    path: config.adminRoutes.AllShop,
+    components: AllShop,
+    breadcrumbName: 'All Shop',
+  },
+  {
+    path: config.adminRoutes.EditShop,
+    components: EditShop,
+    breadcrumbName: 'Edit Shop',
+  },
+  {
+    path: config.adminRoutes.ProfileAdmin,
+    components: ProfileAdmin,
+    breadcrumbName: 'Profile',
   },
 ];
 
-export { LifeShopRoutes, AdminRoutes };
+const ManageShopRoutes = [{}];
+
+export { LifeShopRoutes, AdminRoutes, ManageShopRoutes };

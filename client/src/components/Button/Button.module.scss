@@ -10,9 +10,9 @@
   align-items: center;
   justify-content: center;
 
-  + .wrapper {
-    margin-left: 16px;
-  }
+  // + .wrapper {
+  //   margin-left: 16px;
+  // }
   &.disabled {
     pointer-events: none;
     opacity: 0.5;
@@ -38,7 +38,6 @@
 }
 .transparent {
   background-color: transparent;
-  color: var(--black);
   border: none;
 }
 

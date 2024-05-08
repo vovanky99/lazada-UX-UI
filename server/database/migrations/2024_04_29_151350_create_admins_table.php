@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('username');
             $table->string('password');
+            $table->boolean('status')->default(1)->comment('1:work. 0:has retired');
             $table->string('avatar')->nullable();
             $table->double('phone_number')->nullable();
             $table->boolean('gender')->nullable();

@@ -1,4 +1,4 @@
-import { GET_USER, LOGOUT, LOG_ERROR, SOCIAL_AUTH, GET_ADMIN } from '../Types/index';
+import { GET_USER, LOGOUT, LOG_ERROR, SOCIAL_AUTH, GET_ADMIN, LOGOUT_ADMIN } from '../Types/index';
 import axios from '~/api/axios';
 
 //login action
@@ -65,6 +65,19 @@ export const Logout = () => {
       await axios.post('/api/logout');
       dispatch({
         type: LOGOUT,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export const AdminLogout = () => {
+  return async (dispatch) => {
+    try {
+      await axios.post('/api/logout');
+      dispatch({
+        type: LOGOUT_ADMIN,
       });
     } catch (e) {
       console.log(e);
