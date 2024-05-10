@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreignId('permanent_residennce_registration')->nullable()->references('id')->on('address')->onDelete('cascade');
             $table->foreignId('temporary_registration')->nullable()->references('id')->on('address')->onDelete('cascade');
             $table->foreignId('role_id')->references('id')->on('role')->onDelete('cascade');
-            $table->timestamp('email_verified_at')->nullable();
+            // $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

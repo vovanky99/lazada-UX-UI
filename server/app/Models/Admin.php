@@ -31,7 +31,6 @@ class Admin extends Authenticatable
         'remember_token',
     ];
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
