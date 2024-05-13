@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +23,10 @@ class AdminAuthController extends Controller
        else{
            return response()->json(['message'=>'Invalid credentials',401]);
        }
+    }
+    public function getAmin(Request $request){
+        $admin = Admin::where('id',Auth::user()->id)->select('admins.*')->with('role','addressT','addressP')->first();
+        return response()->json($admin);
     }
 }
     

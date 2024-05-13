@@ -1,5 +1,36 @@
 .main_profile {
   background-color: white;
   padding: 20px;
-  height: 100vh;
+  min-height: 80vh;
+  form {
+    > div {
+      label {
+        font-size: 1.6rem;
+      }
+      input,
+      textarea {
+        font-size: 1.5rem !important;
+      }
+      .message-valid {
+        font-size: 1.4rem;
+      }
+    }
+  }
+  .avatar {
+    &_container {
+      width: 125px;
+      height: 125px;
+      padding: 0;
+      margin-bottom: 5px;
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+    }
+    &_btn-change {
+      font-size: 1.4rem;
+      letter-spacing: 0.5px;
+    }
+  }
 }

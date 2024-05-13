@@ -18,13 +18,13 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('status')->default(1)->comment('1:work. 0:has retired');
             $table->string('avatar')->nullable();
-            $table->double('phone_number')->nullable();
+            $table->string('phone_number')->nullable();
             $table->boolean('gender')->nullable();
             $table->dateTime('birthday')->nullable();
             $table->string('citizen_identification_card')->nullable();
             $table->foreignId('permanent_residennce_registration')->nullable()->references('id')->on('address')->onDelete('cascade');
             $table->foreignId('temporary_registration')->nullable()->references('id')->on('address')->onDelete('cascade');
-            $table->foreignId('role_id')->references('id')->on('role')->onDelete('cascade');
+            $table->foreignId('role_id')->default(1)->references('id')->on('role')->onDelete('cascade');
             // $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

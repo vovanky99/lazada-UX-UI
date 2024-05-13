@@ -57,6 +57,7 @@
 .gradient_primary {
   background-image: linear-gradient(to right, #da8cff, #9a55ff);
   color: white;
+  border: none;
   &:hover {
     opacity: 0.85;
   }

@@ -25,7 +25,6 @@ function Profile({ data }) {
   // handle select gender active
   useEffect(() => {
     let stardust_radio = document.querySelectorAll('.stardust_radio_click');
-
     //hide phone number
     let phone = document.getElementById('phone_number');
     const p = phone.textContent.replace(phone.textContent.slice(0, 8), '********');

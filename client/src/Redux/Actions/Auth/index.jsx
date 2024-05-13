@@ -4,13 +4,10 @@ import axios from '~/api/axios';
 //login action
 const csrf = () => axios.get('/sanctum/csrf-cookie');
 
-export const getUser = (token) => {
+export const getUser = () => {
   return async (dispatch) => {
     try {
-      csrf();
-      const res = await axios.get('/api/user', {
-        params: { token },
-      });
+      const res = await axios.get('/api/user');
       dispatch({
         type: GET_USER,
         payload: res.data,
@@ -21,13 +18,10 @@ export const getUser = (token) => {
   };
 };
 
-export const getAdmin = (token) => {
+export const getAdmin = () => {
   return async (dispatch) => {
     try {
-      csrf();
-      const res = await axios.get('/api/user', {
-        params: { token },
-      });
+      const res = await axios.get('/api/admin');
       dispatch({
         type: GET_ADMIN,
         payload: res.data,

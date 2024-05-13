@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\back_end;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogsRequest;
@@ -13,10 +13,6 @@ class BlogsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __construct()
-    {
-       return $this->middleware('auth');
-    }
     public function index()
     {
         //

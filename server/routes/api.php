@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Auth\Client\AuthController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Auth\Client\AuthController as LifeShopController;
 use App\Http\Controllers\Auth\Admin\AdminAuthController;
 use App\Http\Controllers\Auth\Client\SocialAuthController;
 use App\Http\Controllers\front_end\HomeController;
@@ -22,47 +23,64 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 Route::middleware('auth:sanctum')->group(function(){
-    Route::post('/logout', [AuthController::class,'logout']);
-    // Route::get('/user',[AuthController::class,'getUser']);
-    // Route::get('/admin',[AdminAuthController::class,'getAdmin']);
-});
-/*auth */
-Route::post('/login', [AuthController::class,'login']);
-Route::post('/register', [AuthController::class,'register']);
-Route::post('/admin-login', [AdminAuthController::class,'login']);
+    Route::post('/logout', [LifeShopController::class,'logout']);
+    // get user client
+    Route::get('/user',[LifeShopController::class,'getUser']);
 
+    //get admin 
+    Route::get('/admin',[AdminAuthController::class,'getAmin']);
 
-/*social auth */
-Route::get('/auth/{provider}', [SocialAuthController::class,'redirectToProvider']);
-Route::get('/auth/{provider}/callback', [SocialAuthController::class,'handleProviderCallback']);
-Route::get('/decrypt-cookie',[SocialAuthController::class,'decryptCookie']);
-
-
-/*search auth */
-Route::prefix('/search')->name('search.')->group(function(){
-    Route::get('',[SearchController::class,'getSearchAll'])->name('result');
-    Route::get('/getcat',[SearchController::class,'getSearchCat'])->name('searchcat');
-    Route::get('/header',[SearchController::class,'getSearchSuggest'])->name('header');
 });
 
-/*products detail */
-Route::prefix('/product-detail')->group(function(){
-    Route::get('',[ProductDetailController::class,'getProductDetail']);
-    Route::post('/reports-product',[ProductDetailController::class,'SendReports'])->middleware('auth:sanctum');
-    Route::get('/location',[ProductDetailController::class,'location']);
-    Route::get('/get-address',[ProductDetailController::class,'getAddress']);
+/* life shop */
+Route::prefix('')->group(function(){
+    /*auth */
+    Route::post('/login', [LifeShopController::class,'login']);
+    Route::post('/register', [LifeShopController::class,'register']);
+    /*social auth */
+    Route::get('/auth/{provider}', [SocialAuthController::class,'redirectToProvider']);
+    Route::get('/auth/{provider}/callback', [SocialAuthController::class,'handleProviderCallback']);
+    Route::get('/decrypt-cookie',[SocialAuthController::class,'decryptCookie']);
+
+    /*search auth */
+    Route::prefix('/search')->name('search.')->group(function(){
+        Route::get('',[SearchController::class,'getSearchAll'])->name('result');
+        Route::get('/getcat',[SearchController::class,'getSearchCat'])->name('searchcat');
+        Route::get('/header',[SearchController::class,'getSearchSuggest'])->name('header');
+    });
+
+    /*products detail */
+    Route::prefix('/product-detail')->group(function(){
+        Route::get('',[ProductDetailController::class,'getProductDetail']);
+        Route::post('/reports-product',[ProductDetailController::class,'SendReports'])->middleware('auth:sanctum');
+        Route::get('/location',[ProductDetailController::class,'location']);
+        Route::get('/get-address',[ProductDetailController::class,'getAddress']);
+    });
+
+    /*home page */
+    Route::prefix('/posts')->name('posts.')->group(function () {
+        Route::get('/products',[HomeController::class,'getProductsAll'])->name('get_products'); 
+        Route::get('/shop',[HomeController::class,'getShop'])->name('get_shop'); 
+        Route::get('/cat',[HomeController::class,'getCat'])->name('get_cat'); 
+        Route::get('/flashsale',[HomeController::class,'getflashSale'])->name('get_flashsale'); 
+        Route::get('/menu',[HomeController::class,'getMenu'])->name('get_menu'); 
+    });
 });
 
+/* admin life circe */
+Route::prefix('/admin')->group(function(){
+    // auth
+    Route::post('/admin-login', [AdminAuthController::class,'login']);
 
-/*home page */
-Route::prefix('/posts')->name('posts.')->group(function () {
-    Route::get('/products',[HomeController::class,'getProductsAll'])->name('get_products'); 
-    Route::get('/shop',[HomeController::class,'getShop'])->name('get_shop'); 
-    Route::get('/cat',[HomeController::class,'getCat'])->name('get_cat'); 
-    Route::get('/flashsale',[HomeController::class,'getflashSale'])->name('get_flashsale'); 
-    Route::get('/menu',[HomeController::class,'getMenu'])->name('get_menu'); 
+    Route::middleware('auth:sanctum')->group(function(){
+    //admin controller
+    Route::controller(AdminController::class)->group(function(){
+        Route::post('/update','store');
+    });
+    });
+    
 });

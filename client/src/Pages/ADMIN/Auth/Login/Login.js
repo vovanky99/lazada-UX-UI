@@ -17,6 +17,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [usernameMessage, setUsernameMessage] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
+  const [messageSubmitError, setMessageSubmitError] = useState('');
 
   /* validate login */
   useEffect(() => {
@@ -26,20 +27,20 @@ export default function Login() {
     const handleKeyupUsername = (e) => {
       if (e.target.value === '') {
         setUsernameMessage(`Username don't empty`);
-        e.target.classList.add('admin_login-username');
+        e.target.classList.add('login-valid');
       } else {
         setUsernameMessage('');
-        e.target.classList.remove('admin_login-username');
+        e.target.classList.remove('login-valid');
       }
     };
     //validate password
     const handleKeyupPass = (e) => {
       if (e.target.value === '') {
         setPasswordMessage(`Password don't empty`);
-        e.target.classList.add('admin_login-pass');
+        e.target.classList.add('login-valid');
       } else {
         setPasswordMessage('');
-        e.target.classList.remove('admin_login-pass');
+        e.target.classList.remove('login-valid');
       }
     };
 
@@ -72,12 +73,17 @@ export default function Login() {
     if (username !== '' && password !== '' && usernameMessage === '' && passwordMessage === '') {
       const LoginAdmin = async () => {
         try {
-          const res = await axios.post('/api/admin-login', { username, password });
-          if (res.data) {
+          axios.get('/sanctum/csrf-cookie');
+          const res = await axios.post('/api/admin/admin-login', { username, password });
+          if (res.data.token) {
             localStorage.setItem('adminToken', res.data.token);
             if (localStorage.getItem('adminToken')) {
               navigate('/admin');
             }
+          } else {
+            passwordRef.current.classList.add('login-valid');
+            usernameRef.current.classList.add('login-valid');
+            setMessageSubmitError(`Username or Password don't correct`);
           }
         } catch (e) {
           console.log(e);
@@ -109,6 +115,9 @@ export default function Login() {
               />
               {usernameMessage !== '' ? <span className={cx('message', 'text-danger')}>{usernameMessage}</span> : ''}
             </div>
+            <div className={cx('forget-pass', 'form-group d-flex flex-row justify-content-end')}>
+              <Link to={config.adminRoutes.ResetPassword}>Forgot password?</Link>
+            </div>
             <div className={cx('password', 'form-group')}>
               <input
                 ref={passwordRef}
@@ -122,9 +131,11 @@ export default function Login() {
               />
               {passwordMessage !== '' ? <span className={cx('message', 'text-danger')}>{passwordMessage}</span> : ''}
             </div>
-            <div className={cx('forget-pass', 'form-group d-flex flex-row justify-content-end')}>
-              <Link to={config.adminRoutes.ResetPassword}>Forgot password?</Link>
-            </div>
+            {messageSubmitError != '' ? (
+              <div className={cx('message_submit-error', 'form-group text-danger')}>{messageSubmitError}</div>
+            ) : (
+              ''
+            )}
             <Button className={cx('btn-login', 'text-capitolize')} gradient_primary>
               Sign In
             </Button>
