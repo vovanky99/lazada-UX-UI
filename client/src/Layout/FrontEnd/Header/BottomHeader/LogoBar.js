@@ -70,7 +70,7 @@ function LogoBars() {
     setShowResult(false);
   };
 
-  //handle tippy reponsive
+  //handle for search tippy  reponsive
   useEffect(() => {
     const rs = searchResultRef.current;
     const width = ctnWidthSearhRef.current;

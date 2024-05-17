@@ -11,12 +11,16 @@ class District extends Model
     protected $table = 'district';
     protected $fillable = [
         'name',
+        'fee_ship',
         'city_id'
     ];
-    public function City(){
+    public function cities(){
         return $this->belongsTo(City::class,'city_id','id');
     }
-    public function Ward(){
+    public function wards(){
         return $this->hasMany(Ward::class,'district_id','id');
     }
+    // public function District(){
+    //     return $this->hasManyThrough(City::class,District::class);
+    // }
 }

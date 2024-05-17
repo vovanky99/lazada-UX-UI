@@ -60,7 +60,7 @@ export default function Login() {
     };
   }, [username, password]);
 
-  /* redirect had login admin */
+  /* redirect when admin had login  */
   useEffect(() => {
     if (localStorage.getItem('adminToken')) {
       return navigate('/admin');
@@ -78,7 +78,7 @@ export default function Login() {
           if (res.data.token) {
             localStorage.setItem('adminToken', res.data.token);
             if (localStorage.getItem('adminToken')) {
-              navigate('/admin');
+              navigate(`${config.adminRoutes.Home}`);
             }
           } else {
             passwordRef.current.classList.add('login-valid');

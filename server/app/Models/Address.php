@@ -15,7 +15,7 @@ class Address extends Model
         'addressable_type',
         'home',
         'phone',
-        'street_address_id',
+        'street_address',
         'wrad_id',
     ];
     public function Users(){
@@ -26,9 +26,6 @@ class Address extends Model
     }
     public function Ward(){
         return $this->belongsTo(Ward::class,'ward_id','id');
-    }
-    public function StreetAddress(){
-        return $this->belongsTo(StreetAddress::class,'street_address_id','id');
     }
     public function address(){
         return $this->hasOne(User::class,'address_id','id');

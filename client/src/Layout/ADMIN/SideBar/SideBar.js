@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './SideBar.module.scss';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShop, faUserTie } from '@fortawesome/free-solid-svg-icons';
+import { faGlobe, faShop, faUserTie } from '@fortawesome/free-solid-svg-icons';
 import Button from '~/components/Button';
 import { NavLink } from 'react-router-dom';
 import config from '~/config';
@@ -28,6 +28,13 @@ export default function SideBar() {
         >
           <p className="text-capitalize">shop</p>
           <FontAwesomeIcon icon={faShop} />
+        </NavLink>
+        <NavLink
+          to={config.adminRoutes.Location}
+          className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between ')}
+        >
+          <p className="text-capitalize">location</p>
+          <FontAwesomeIcon icon={faGlobe} />
         </NavLink>
       </aside>
     </>

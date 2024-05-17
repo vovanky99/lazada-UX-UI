@@ -15,9 +15,6 @@ class AdminController extends Controller{
         $address = $request->address;
         $phone = $request->phone;
         $avatar = $request->avatar;
-        // $nameAvatar = $avatar->getClientOriginalName();
-        // $publicPath = public_path('upload/Admin/Images/Admin');
-        // $avatar->move($publicPath,$nameAvatar);
         try{
             $admin = Admin::findOrFail(Auth::user()->id);
             // if($address){

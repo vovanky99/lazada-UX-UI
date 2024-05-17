@@ -9,6 +9,7 @@ import { LifeShopRoutes, AdminRoutes } from '~/Routes';
 import React from 'react';
 import LifeShopLayout from '~/Layout/FrontEnd/MainLayout';
 import AdminLayout from '~/Layout/ADMIN/MainLayout';
+import config from './config';
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
       })}
       {AdminRoutes.map((route, index) => {
         const Pages = route.components;
-        if (route.path === '/admin/auth/login' || route.path === '/admin/auth/resetpassword') {
+        if (route.path === `${config.adminRoutes.SignIn}` || route.path === `${config.adminRoutes.ResetPassword}`) {
           return <Route key={index} path={route.path} element={<Pages />} />;
         }
         return (

@@ -12,7 +12,7 @@ class Country extends Model
     protected $fillable = [
         'name',
     ];
-    public function City(){
+    public function cities(){
         return $this->hasMany(City::class,'country_id','id');
     }
 }

@@ -21,14 +21,15 @@ const routes = {
 };
 
 export const adminRoutes = {
-  SignIn: '/admin/auth/login',
-  ResetPassword: '/admin/auth/resetpass',
+  SignIn: '/admin/login',
+  ResetPassword: '/admin/resetpass',
   Home: '/admin',
   ProfileAdmin: '/admin/profile',
   AllAdmin: '/admin/all-admin',
   EditAdmin: '/admin/edit-admin',
   AllShop: '/admin/all-shop',
   EditShop: '/admin/edit-shop',
+  Location: '/admin/location',
 };
 
 export default routes;

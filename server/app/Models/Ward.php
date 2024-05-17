@@ -13,10 +13,10 @@ class Ward extends Model
         'name',
         'district_id'
     ];
-    public function District(){
+    public function districts(){
         return $this->belongsTo(District::class,'district_id','id');
     }
-    public function Address(){
+    public function address(){
         return $this->hasMany(Address::class,'ward_id','id');
     }
 }

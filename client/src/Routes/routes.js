@@ -22,6 +22,7 @@ import EditAdmin from '~/Pages/ADMIN/Admin/EditAdmin';
 import AllShop from '~/Pages/ADMIN/Shop/AllShop';
 import EditShop from '~/Pages/ADMIN/Shop/EditShop';
 import ProfileAdmin from '~/Pages/ADMIN/Profile';
+import LocationAdmin from '~/Pages/ADMIN/Location';
 
 const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages },
@@ -69,6 +70,11 @@ const AdminRoutes = [
     path: config.adminRoutes.ProfileAdmin,
     components: ProfileAdmin,
     breadcrumbName: 'Profile',
+  },
+  {
+    path: config.adminRoutes.Location,
+    components: LocationAdmin,
+    breadcrumbName: 'Location',
   },
 ];
 

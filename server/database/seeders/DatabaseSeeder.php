@@ -5,32 +5,6 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use Illuminate\Database\Seeder;
-use \App\Models\Role;
-use \App\Models\User;
-use \App\Models\Shop;
-use \App\Models\Manufacturer;
-use \App\Models\Slide;
-use \App\Models\Voucher;
-use \App\Models\Payment;
-use \App\Models\Blogs;
-use App\Models\City;
-use \App\Models\Products;
-use \App\Models\Reviews;
-use \App\Models\Cod;
-use App\Models\Discount;
-use App\Models\District;
-use App\Models\FollowShop;
-use App\Models\Images;
-use App\Models\Messages;
-use App\Models\MessagesShop;
-use App\Models\Momo;
-use App\Models\Country;
-use App\Models\OrderCart;
-use App\Models\OrderProduct;
-use App\Models\ProductType;
-use App\Models\ProductTypeDetail;
-use App\Models\StreetAddress;
-use App\Models\Ward;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -42,16 +16,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        
         /*cat seeder data*/
         $users =array('name'=>'maihoangha','username'=>'maihoangha','email'=>'maihoangha@gmail.com','password'=>Hash::make('123456789'),'phone_number'=>'0123456789','avatar'=>'dasde','level'=>1,'status'=>'1','gender'=>1,'birthday'=>'');
-        $role = array('name'=>'admin','description'=>'admin');
+        $role = array(array('name'=>'Employee','description'=>'Employee'),array('name'=>'Department Manager','description'=>'Department Manager'),array('name'=>'admin','description'=>'admin'));
 
-        $admin = array('name'=>'admin','username'=>'admin','password'=>Hash::make('admin99'),'role_id'=>'1');
+        
+        $admin = array('name'=>'admin','username'=>'admin','password'=>Hash::make('admin99'),'role_id'=>'3');
 
         DB::table('users')->insert($users);
         DB::table('role')->insert($role);
-        DB::table('admins')->insert($admin);
+        DB::table('admin')->insert($admin);
         $titleReports = array(
             array('title'=>'Sản phẩm bị cấm buôn bán (động vật hoang dã, 18+,...)'),
             array('title'=>'Hàng giả, hàng nhái'),

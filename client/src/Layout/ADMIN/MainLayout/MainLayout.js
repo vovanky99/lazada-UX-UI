@@ -10,6 +10,7 @@ import Store from '~/Redux/Store';
 import { getAdmin } from '~/Redux/Actions/Auth';
 import axios from '~/api/axios';
 import BreadCrumb from '~/components/BreadCrumb';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -29,7 +30,7 @@ export default function MainLayout({ children }) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${adminToken}`;
       Store.dispatch(getAdmin(adminToken));
     } else {
-      navigate('/admin/auth/login');
+      navigate(`${config.adminRoutes.SignIn}`);
     }
   }, [localStorage.getItem('adminToken')]);
 
@@ -53,7 +54,7 @@ export default function MainLayout({ children }) {
             <SideBar />
             <section className={cx('main-content', 'd-flex flex-column flex-grow-1')}>
               {breadCrumb ? <BreadCrumb path={path} isAdmin /> : ''}
-              {children}
+              <section className={cx('content')}>{children}</section>
             </section>
           </div>
         </>

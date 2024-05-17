@@ -28,12 +28,13 @@ export default function Profile() {
   const [addressValid, setAddressValid] = useState('');
 
   // handle upload image
+  console.log(upload.url);
   const uploadImage = (img) => {
     let image = new FormData();
     image.append('file', img);
     const result = CldUploadImg(image);
     result.then((result) => {
-      setUpload(result);
+      setUpload(result.url);
     });
   };
 
@@ -44,12 +45,13 @@ export default function Profile() {
     // handle upadte admin
     const updateAdmin = async () => {
       let data = new FormData();
-      data.append('avatar', upload.url);
+      data.append('avatar', upload || avatar);
       data.append('name', name);
       data.append('phone', phone);
       data.append('address', address);
       try {
         await axios.post('/api/admin/update', data);
+        window.location.reload();
       } catch (e) {
         console.log(e);
       }
@@ -163,7 +165,7 @@ export default function Profile() {
   }, [avatar]);
   return (
     <>
-      <section className={cx('main_profile')}>
+      <div className={cx('main_profile')}>
         <form
           onSubmit={handleSubmitProfile}
           noValidate
@@ -268,7 +270,7 @@ export default function Profile() {
             </Button>
           </div>
         </form>
-      </section>
+      </div>
     </>
   );
 }

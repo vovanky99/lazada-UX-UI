@@ -14,10 +14,10 @@ class City extends Model
         'area',
         'country_id'
     ];
-    public function Country(){
+    public function countries(){
         return $this->belongsTo(Country::class,'country_id','id');
     }
-    public function District(){
+    public function districts(){
         return $this->hasMany(District::class,'city_id','id');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Auth\Client\AuthController as LifeShopController;
 use App\Http\Controllers\Auth\Admin\AdminAuthController;
 use App\Http\Controllers\Auth\Client\SocialAuthController;
@@ -83,4 +84,26 @@ Route::prefix('/admin')->group(function(){
     });
     });
     
+});
+
+/* location */
+Route::controller(LocationController::class)->group(function(){
+    Route::get('/get-country','getCountry');
+    Route::get('/get-city','getCity');
+    Route::get('/get-district','getDistrict');
+    Route::get('/all-location','getLocation');
+    Route::post('/create-country','createCountry');
+    Route::post('/create-city','createCity');
+    Route::post('/create-district','createDistrict');
+    Route::post('/create-ward','createWard');
+    Route::delete('/delete-location/{type}/{id}','deleteLocation');
+    Route::delete('/delete-country/{id}','deleteCountry');
+    Route::delete('/delete-city/{id}','deleteCity');
+    Route::delete('/delete-district/{id}','deleteDistrict');
+    Route::delete('/delete-ward/{id}','deleteWard');
+    Route::patch('/edit-country/{id}','editCountry');
+    Route::patch('/edit-city/{id}','editCity');
+    Route::patch('/edit-district/{id}','editDistrict');
+    Route::patch('/edit-ward/{id}','editWard');
+
 });
