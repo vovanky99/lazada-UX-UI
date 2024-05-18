@@ -7,7 +7,7 @@ import styles from '../Location.module.scss';
 import axios from '~/api/axios';
 import Button from '~/components/Button';
 import { SelectLocation } from '../SelectLocation';
-import Element from './Element';
+import EditLocation from './EditLocation';
 
 const cx = classNames.bind(styles);
 
@@ -75,12 +75,13 @@ export default function ListLocation() {
             const ward = district?.wards ? district?.wards[l] : null;
             // Push the elements into the rows array
             rows.push(
-              <Element
+              <EditLocation
                 handleOnchangeDelete={handleOnchangeDelete}
                 ward={ward}
                 country={country}
                 city={city}
                 district={district}
+                key={`${country.name}_${city?.name || ''}_${district?.name || ''}_${ward?.name || ''}`}
               />,
             );
           }
@@ -184,6 +185,7 @@ export default function ListLocation() {
               searchSelectValue={handleSetCountry}
               data={optionCountry}
               title="country"
+              classTitle="country-filter"
             />
           </div>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
@@ -193,6 +195,7 @@ export default function ListLocation() {
               searchSelectValue={handleSetCity}
               data={optionCity}
               title="city"
+              classTitle="city-filter"
             />
           </div>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
@@ -202,6 +205,7 @@ export default function ListLocation() {
               searchSelectValue={handleSetDistrict}
               data={optionDistrict}
               title="district"
+              classTitle="district-filter"
             />
           </div>
         </form>

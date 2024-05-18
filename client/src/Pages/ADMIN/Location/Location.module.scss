@@ -6,7 +6,7 @@
   &_header {
     position: relative;
     gap: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     > div {
       z-index: 99;
       .add-container {
@@ -17,6 +17,14 @@
         top: 40px;
         background-color: white;
         box-shadow: 0px 0px 3px var(--box_shadow_admin);
+      }
+    }
+    .add-city,
+    .add-country,
+    .add-district,
+    .add-ward {
+      > button {
+        padding: 5px 15px;
       }
     }
   }
@@ -110,13 +118,11 @@ table {
     width: 100%;
   }
   tbody {
-    overflow: auto;
+    overflow-y: scroll;
     height: 100vh;
     width: 100%;
     display: block;
     tr {
-      // border: 1px solid var(--border_color_admin);
-      // cursor: pointer;
       &:hover td {
         background-color: #109c62;
         border-color: #109c62;
@@ -146,9 +152,9 @@ table {
     }
   }
   .toggle-edit {
-    background-color: white;
-    box-shadow: 0px 0px 3px 1px var(--box_shadow_admin);
-    padding: 10px 20px;
+    background-color: white !important;
+    box-shadow: 0px 0px 3px 1px var(--box_shadow_admin) !important;
+    padding: 10px 20px !important;
     h5 {
       font-size: 2rem;
       font-weight: 600;

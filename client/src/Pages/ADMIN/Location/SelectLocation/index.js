@@ -8,7 +8,7 @@ import Debounce from '~/Hooks/Debounce';
 const cx = classNames.bind(styles);
 
 export const SelectLocation = forwardRef(function Select(
-  { data, title, NullValue = false, handleSetID = () => {}, searchSelectValue = () => {} },
+  { data, title, classTitle, NullValue = false, handleSetID = () => {}, searchSelectValue = () => {} },
   ref,
 ) {
   const searchRef = useRef();
@@ -43,7 +43,7 @@ export const SelectLocation = forwardRef(function Select(
 
   /* handle select country  */
   useEffect(() => {
-    const c = document.querySelectorAll(`.select-option-${title}`);
+    const c = document.querySelectorAll(`.select-option-${classTitle || title}`);
     const s = searchRef.current;
 
     const handleClick = (e) => {
@@ -96,7 +96,7 @@ export const SelectLocation = forwardRef(function Select(
           render={(attrs) => (
             <ul ref={optionRef} className={cx('option')} {...attrs}>
               {data.length > 0 && NullValue ? (
-                <li className={cx('option-single', `select-option-${title}`)} data-value="" data-id="">
+                <li className={cx('option-single', `select-option-${classTitle || title}`)} data-value="" data-id="">
                   Null
                 </li>
               ) : (
@@ -105,7 +105,7 @@ export const SelectLocation = forwardRef(function Select(
               {data
                 ? data.map((d) => (
                     <li
-                      className={cx('option-single', `select-option-${title}`)}
+                      className={cx('option-single', `select-option-${classTitle || title}`)}
                       data-value={d.name}
                       data-id={d.id}
                       key={d.id}

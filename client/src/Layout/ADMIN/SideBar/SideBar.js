@@ -14,7 +14,7 @@ export default function SideBar() {
   const admin = useSelector((state) => state.Auth.admin);
   return (
     <>
-      <aside id="sidebar" className={cx('sidebar', 'd-flex flex-column')}>
+      <aside id="sidebar" className={cx('sidebar', 'd-flex flex-column ')}>
         <NavLink
           to={config.adminRoutes.AllAdmin}
           className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between ')}
