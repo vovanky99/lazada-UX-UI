@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('address', function (Blueprint $table) {
             $table->id();
             $table->morphs('addressable');
-            $table->boolean('home');
-            $table->string('phone');
-            $table->string('street_address')->nullable();
+            $table->boolean('home')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('street_address');
             $table->foreignId('ward_id')->references('id')->on('ward')->onDelete('cascade');
             $table->timestamps();
         });

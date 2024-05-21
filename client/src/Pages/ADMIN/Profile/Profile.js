@@ -4,14 +4,13 @@ import { useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import Images from '~/components/Images';
 import Button from '~/components/Button';
-import Tippy from '@tippyjs/react/headless';
 import axios from '~/api/axios';
 import CldUploadImg from '~/service/cloudinary/CldUploadImg';
+import { SelectLocation } from '~/Layout/Component/SelectLocation';
 
 const cx = classNames.bind(styles);
 
 export default function Profile() {
-  const formRef = useRef();
   const nameRef = useRef();
   const phoneRef = useRef();
   const avatarRef = useRef();
@@ -22,13 +21,26 @@ export default function Profile() {
   const [upload, setUpload] = useState('');
   const [changeAvatar, setChangeAvatar] = useState(null);
   const [phone, setPhone] = useState(Admin.phone_number);
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState(Admin.address_t.street_address || '');
   const [nameValid, setNameValid] = useState('');
   const [phoneValid, setPhoneValid] = useState('');
   const [addressValid, setAddressValid] = useState('');
+  const [searchCountryValue, setSearchCountryValue] = useState(
+    Admin.address_t.ward.districts.cities.countries.name || '',
+  );
+  const [searchCityValue, setSearchCityValue] = useState(Admin.address_t.ward.districts.cities.name || '');
+  const [searchDistrictValue, setSearchDistrictValue] = useState(Admin.address_t.ward.districts.name || '');
+  const [searchWardValue, setSearchWardValue] = useState(Admin.address_t.ward.name || '');
+  const [country, setCountry] = useState('');
+  const [city, setCity] = useState('');
+  const [district, setDistrict] = useState('');
+  const [ward, setWard] = useState('');
+  const [countryID, setCountryID] = useState(Admin.address_t.ward.districts.cities.country_id || '');
+  const [cityID, setCityID] = useState(Admin.address_t.ward.districts.city_id || '');
+  const [districtID, setDistrictID] = useState(Admin.address_t.ward.district_id || '');
+  const [wardID, setWardID] = useState(Admin.address_t.ward_id || '');
 
-  // handle upload image
-  console.log(upload.url);
+  /* handle upload image */
   const uploadImage = (img) => {
     let image = new FormData();
     image.append('file', img);
@@ -41,7 +53,6 @@ export default function Profile() {
   /* handle onsubmit form */
   const handleSubmitProfile = (e) => {
     e.preventDefault();
-
     // handle upadte admin
     const updateAdmin = async () => {
       let data = new FormData();
@@ -49,6 +60,7 @@ export default function Profile() {
       data.append('name', name);
       data.append('phone', phone);
       data.append('address', address);
+      data.append('ward_id', wardID);
       try {
         await axios.post('/api/admin/update', data);
         window.location.reload();
@@ -56,36 +68,42 @@ export default function Profile() {
         console.log(e);
       }
     };
-
-    if (name !== '' && phone !== '' && address !== '' && nameValid === '' && phoneValid === '' && addressValid === '') {
-      updateAdmin();
+    // submit update profile when value haven't empty
+    if (
+      name !== '' &&
+      phone !== '' &&
+      address !== '' &&
+      nameValid === '' &&
+      phoneValid === '' &&
+      addressValid === '' &&
+      wardID !== ''
+    ) {
+      // submit update profile when admin have change value
+      if (
+        wardID !== Admin.address_t.ward_id ||
+        name !== Admin.name ||
+        phone !== Admin.phone_number ||
+        upload !== '' ||
+        address !== Admin.address_t.street_address
+      ) {
+        updateAdmin();
+      }
     }
   };
 
   /* handle avatar change value */
-  useEffect(() => {
-    const a = avatarRef.current;
-    const handleAvatarChange = (e) => {
-      const file = e.target.files[0];
-      const render = new FileReader();
-      render.onload = (e) => {
-        setAvatar(render.result);
-        uploadImage(file);
-      };
-      if (file) {
-        render.readAsDataURL(file);
-        setChangeAvatar(file);
-      }
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    const render = new FileReader();
+    render.onload = (e) => {
+      setAvatar(render.result);
+      uploadImage(file);
     };
-    if (a) {
-      a.addEventListener('change', handleAvatarChange);
+    if (file) {
+      render.readAsDataURL(file);
+      setChangeAvatar(file);
     }
-    return () => {
-      if (a) {
-        a.removeEventListener('change', handleAvatarChange);
-      }
-    };
-  }, [changeAvatar]);
+  };
 
   /* handle name value */
   useEffect(() => {
@@ -163,6 +181,86 @@ export default function Profile() {
       }
     };
   }, [avatar]);
+
+  /* get country value */
+  useEffect(() => {
+    const getCountry = async () => {
+      try {
+        const res = await axios.get('/api/get-country', {
+          params: {
+            name: searchCountryValue,
+          },
+        });
+        if (res.data) {
+          setCountry(res.data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getCountry();
+  }, [searchCountryValue]);
+
+  /* get city value */
+  useEffect(() => {
+    const getCity = async () => {
+      try {
+        const res = await axios.get('/api/get-city', {
+          params: {
+            name: searchCityValue,
+            country_id: countryID,
+          },
+        });
+        if (res.data) {
+          setCity(res.data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getCity();
+  }, [searchCityValue, countryID]);
+
+  /* get district value */
+  useEffect(() => {
+    const getDistrict = async () => {
+      try {
+        const res = await axios.get('/api/get-district', {
+          params: {
+            name: searchDistrictValue,
+            city_id: cityID,
+          },
+        });
+        if (res.data) {
+          setDistrict(res.data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getDistrict();
+  }, [searchDistrictValue, cityID]);
+
+  /* get ward value */
+  useEffect(() => {
+    const getWard = async () => {
+      try {
+        const res = await axios.get('/api/get-ward', {
+          params: {
+            name: searchWardValue,
+            district_id: districtID,
+          },
+        });
+        if (res.data) {
+          setWard(res.data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getWard();
+  }, [searchWardValue, districtID]);
+
   return (
     <>
       <div className={cx('main_profile')}>
@@ -184,8 +282,9 @@ export default function Profile() {
             <input
               ref={avatarRef}
               type="file"
-              name="avatar[]"
+              name="avatar"
               value={''}
+              onChange={handleAvatarChange}
               style={{ display: 'none' }}
               accept="image/*"
             />
@@ -220,11 +319,7 @@ export default function Profile() {
               type="number"
               className="form-control  py-2 mb-3"
               onChange={(e) => {
-                // if (e.target.value != '') {
                 setPhone(e.target.value);
-                // } else {
-                //   setPhone('');
-                // }
               }}
             />
             {phoneValid ? (
@@ -233,20 +328,53 @@ export default function Profile() {
               ''
             )}
           </div>
-          {/* <div className={cx('ward', 'form-group col-6 px-3 mb-3')}>
-            <Tippy
-              interactive
-              visible
-              render={(attrs) => (
-                <div className={cx('ward_option')} {...attrs}>
-                  <div></div>
-                </div>
-              )}
-            >
-              <input type="text" data-value="" value="" className={cx('form-control py-2')} />
-            </Tippy>
-          </div> */}
-          <div className={cx('form-group col-6 px-3 mb-3')}>
+          <div className={cx('profile_location', 'form-group col-6 px-3 mb-3')}>
+            <label className={cx('input_title', 'form-label')}>Select Location</label>
+            <div className={cx('form-group d-flex flex-row gap-3 flex-wrap')}>
+              <SelectLocation
+                IDValue={countryID}
+                searchValue={searchCountryValue}
+                isLabel={false}
+                title="country"
+                data={country}
+                searchSelectValue={setSearchCountryValue}
+                handleSetID={setCountryID}
+              />
+              <SelectLocation
+                IDValue={cityID}
+                searchValue={searchCityValue}
+                isLabel={false}
+                title="city"
+                data={city}
+                searchSelectValue={setSearchCityValue}
+                handleSetID={setCityID}
+              />
+              <SelectLocation
+                IDValue={districtID}
+                searchValue={searchDistrictValue}
+                isLabel={false}
+                title="district"
+                data={district}
+                searchSelectValue={setSearchDistrictValue}
+                handleSetID={setDistrictID}
+              />
+              <SelectLocation
+                IDValue={wardID}
+                searchValue={searchWardValue}
+                isLabel={false}
+                title="ward"
+                data={ward}
+                searchSelectValue={setSearchWardValue}
+                handleSetID={setWardID}
+              />
+            </div>
+            {phoneValid ? (
+              <div className={cx('message-valid', 'text-danger text-capitalize ps-3')}>{phoneValid}</div>
+            ) : (
+              ''
+            )}
+          </div>
+          <div className={cx('profile_address', 'form-group col-6 px-3 mb-3')}>
             <label className="form-label text-capitalize">address:</label>
             <textarea
               ref={addressRef}
@@ -257,6 +385,7 @@ export default function Profile() {
               onChange={(e) => {
                 setAddress(e.target.value);
               }}
+              placeholder="Please Enter Street Address... "
             />
             {addressValid ? (
               <div className={cx('message-valid', 'text-danger ps-3 text-capitalize')}>{addressValid}</div>

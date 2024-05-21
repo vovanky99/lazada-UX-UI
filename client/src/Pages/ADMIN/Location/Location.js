@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import axios from '~/api/axios';
 import { AddLocationToggle } from './AddLocationToggle';
 import ListLocation from './ListLocation';
-import Tippy from '@tippyjs/react';
 
 const cx = classNames.bind(styles);
 
@@ -46,61 +45,6 @@ export default function Location() {
   const [CountryID, setCountryID] = useState('');
   const [CityID, setCityID] = useState('');
   const [districtID, setDistrictID] = useState('');
-
-  /* handle set search Country value  */
-  const handleSetSearchCountry = (value) => {
-    setSearchCountry(value);
-  };
-
-  /* handle set search City value  */
-  const handleSetSearchCity = (value) => {
-    setSearchCity(value);
-  };
-
-  /* handle set search District value  */
-  const handleSetSearchDistrict = (value) => {
-    setSearchDistrict(value);
-  };
-
-  /* handle set search Country ID  */
-  const handleSetCountry = (ID) => {
-    setCountryID(ID);
-  };
-
-  /* handle set search City ID  */
-  const handleSetCity = (ID) => {
-    setCityID(ID);
-  };
-
-  /* handle set search City ID  */
-  const handleSetDistrict = (ID) => {
-    setDistrictID(ID);
-  };
-
-  /* handle set name Country  */
-  const handleSetNameCountry = (value) => {
-    setNameCountry(value);
-  };
-
-  /* handle set name City  */
-  const handleSetNameCity = (value) => {
-    setNameCity(value);
-  };
-
-  /* handle set name District  */
-  const handleSetNameDistrict = (value) => {
-    setNameDistrict(value);
-  };
-
-  /* handle set name Ward  */
-  const handleSetNameWard = (value) => {
-    setNameWard(value);
-  };
-
-  /* handle set Fee Ship  */
-  const handleSetFeeShip = (value) => {
-    setFeeShip(value);
-  };
 
   /* toggle add country  */
   const handleBTNCountryClick = () => {
@@ -333,7 +277,7 @@ export default function Location() {
               messageError={addCountryError}
               messageSuccess={addCountrySuccess}
               onSubmitForm={handleAddContry}
-              setNameValue={handleSetNameCountry}
+              setNameValue={setNameCountry}
             />
           ) : (
             ''
@@ -346,13 +290,13 @@ export default function Location() {
           {city ? (
             <AddLocationToggle
               title="City"
-              searchSelectCountryValue={handleSetSearchCountry}
+              searchSelectCountryValue={setSearchCountry}
               messageSuccess={addCitySuccess}
               messageError={addCityError}
               countryData={countryValue}
-              handleSetCountryID={handleSetCountry}
+              handleSetCountryID={setCountryID}
               onSubmitForm={handleAddCity}
-              setNameValue={handleSetNameCity}
+              setNameValue={setNameCity}
             />
           ) : (
             ''
@@ -365,17 +309,17 @@ export default function Location() {
           {district ? (
             <AddLocationToggle
               title="District"
-              searchSelectCountryValue={handleSetSearchCountry}
-              searchSelectCityValue={handleSetSearchCity}
+              searchSelectCountryValue={setSearchCountry}
+              searchSelectCityValue={setSearchCity}
               messageSuccess={addDistrictSuccess}
               messageError={addDistrictError}
               countryData={countryValue}
               cityData={cityValue}
-              handleSetCountryID={handleSetCountry}
-              handleSetCityID={handleSetCity}
+              handleSetCountryID={setCountryID}
+              handleSetCityID={setCityID}
               onSubmitForm={handleAddDistrict}
-              setNameValue={handleSetNameDistrict}
-              setFeeShipValue={handleSetFeeShip}
+              setNameValue={setNameDistrict}
+              setFeeShipValue={setFeeShip}
             />
           ) : (
             ''
@@ -388,19 +332,19 @@ export default function Location() {
           {ward ? (
             <AddLocationToggle
               title="Ward"
-              searchSelectCountryValue={handleSetSearchCountry}
-              searchSelectCityValue={handleSetSearchCity}
-              searchSelectDistrictValue={handleSetSearchDistrict}
+              searchSelectCountryValue={setSearchCountry}
+              searchSelectCityValue={setSearchCity}
+              searchSelectDistrictValue={setSearchDistrict}
               messageSuccess={addWardSuccess}
               messageError={addWardError}
               countryData={countryValue}
               cityData={cityValue}
               districtData={districtValue}
               onSubmitForm={handleAddWard}
-              handleSetCountryID={handleSetCountry}
-              handleSetCityID={handleSetCity}
-              handleSetDistrictID={handleSetDistrict}
-              setNameValue={handleSetNameWard}
+              handleSetCountryID={setCountryID}
+              handleSetCityID={setCityID}
+              handleSetDistrictID={setDistrictID}
+              setNameValue={setNameWard}
             />
           ) : (
             ''

@@ -1,12 +1,10 @@
 import classNames from 'classnames/bind';
 import React from 'react';
-import Tippy from '@tippyjs/react/headless';
 import { useRef, useState, useEffect } from 'react';
 
 import styles from '../Location.module.scss';
 import axios from '~/api/axios';
-import Button from '~/components/Button';
-import { SelectLocation } from '../SelectLocation';
+import { SelectLocation } from '~/Layout/Component/SelectLocation';
 import EditLocation from './EditLocation';
 
 const cx = classNames.bind(styles);
@@ -25,38 +23,7 @@ export default function ListLocation() {
   const [districtID, setDistrictID] = useState('');
   const [deleteLocation, setDeleteLocation] = useState(1);
 
-  /* set Country ID */
-  const handleSetCountryID = (id) => {
-    setCountryID(id);
-  };
-
-  /* set Country ID */
-  const handleSetCityID = (id) => {
-    setCityID(id);
-  };
-
-  /* set Country ID */
-  const handleSetDistrictID = (id) => {
-    setDistrictID(id);
-  };
-
-  /* set Country ID */
-  const handleSetCountry = (id) => {
-    setCountry(id);
-  };
-
-  /* set City ID */
-  const handleSetCity = (id) => {
-    setCity(id);
-  };
-
-  /* set District ID */
-  const handleSetDistrict = (id) => {
-    setDistrict(id);
-  };
-
   /* handle onchage set Delete Location */
-
   const handleOnchangeDelete = (value) => {
     setDeleteLocation(deleteLocation + value);
   };
@@ -181,8 +148,8 @@ export default function ListLocation() {
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
             <SelectLocation
               NullValue
-              handleSetID={handleSetCountryID}
-              searchSelectValue={handleSetCountry}
+              handleSetID={setCountryID}
+              searchSelectValue={setCountry}
               data={optionCountry}
               title="country"
               classTitle="country-filter"
@@ -191,8 +158,8 @@ export default function ListLocation() {
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
             <SelectLocation
               NullValue
-              handleSetID={handleSetCityID}
-              searchSelectValue={handleSetCity}
+              handleSetID={setCityID}
+              searchSelectValue={setCity}
               data={optionCity}
               title="city"
               classTitle="city-filter"
@@ -201,8 +168,8 @@ export default function ListLocation() {
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
             <SelectLocation
               NullValue
-              handleSetID={handleSetDistrictID}
-              searchSelectValue={handleSetDistrict}
+              handleSetID={setDistrictID}
+              searchSelectValue={setDistrict}
               data={optionDistrict}
               title="district"
               classTitle="district-filter"

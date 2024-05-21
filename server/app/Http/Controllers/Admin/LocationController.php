@@ -94,7 +94,10 @@ class LocationController extends Controller {
         return response()->json($district);
     }
     public function getWard(Request $request){
-        
+        $name = $request->get('name');
+        $district_id = $request->get('district_id');
+        $ward = Ward::where('name','like',$name.'%')->where('district_id',$district_id)->orderBy('name','ASC')->get();
+        return response()->json($ward);
     }
     public function getAddress(Request $request){
         

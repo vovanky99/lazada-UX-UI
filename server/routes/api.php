@@ -81,9 +81,9 @@ Route::prefix('/admin')->group(function(){
     //admin controller
     Route::controller(AdminController::class)->group(function(){
         Route::post('/update','store');
+        Route::get('/get-search-location','getSearchLocation');
     });
     });
-    
 });
 
 /* location */
@@ -91,6 +91,7 @@ Route::controller(LocationController::class)->group(function(){
     Route::get('/get-country','getCountry');
     Route::get('/get-city','getCity');
     Route::get('/get-district','getDistrict');
+    Route::get('/get-ward','getWard');
     Route::get('/all-location','getLocation');
     Route::post('/create-country','createCountry');
     Route::post('/create-city','createCity');

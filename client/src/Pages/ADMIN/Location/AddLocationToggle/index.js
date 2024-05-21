@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from '../Location.module.scss';
 import Button from '~/components/Button';
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import { SelectLocation } from '../SelectLocation';
+import { SelectLocation } from '~/Layout/Component/SelectLocation';
 
 const cx = classNames.bind(styles);
 

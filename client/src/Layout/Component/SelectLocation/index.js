@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 
-import styles from '../Location.module.scss';
+import styles from './SelectLocation.module.scss';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import Debounce from '~/Hooks/Debounce';
@@ -8,15 +8,25 @@ import Debounce from '~/Hooks/Debounce';
 const cx = classNames.bind(styles);
 
 export const SelectLocation = forwardRef(function Select(
-  { data, title, classTitle, NullValue = false, handleSetID = () => {}, searchSelectValue = () => {} },
+  {
+    IDValue,
+    searchValue,
+    data,
+    title,
+    classTitle,
+    isLabel = true,
+    NullValue = false,
+    handleSetID = () => {},
+    searchSelectValue = () => {},
+  },
   ref,
 ) {
   const searchRef = useRef();
   const selectRef = useRef();
   const optionRef = useRef();
   const [select, setSelect] = useState(false);
-  const [ID, setID] = useState('');
-  const [search, setSearch] = useState('');
+  const [ID, setID] = useState(IDValue || '');
+  const [search, setSearch] = useState(searchValue || '');
 
   /* set search value use debounce */
   const searchDebounce = Debounce(search, 500);
@@ -87,7 +97,7 @@ export const SelectLocation = forwardRef(function Select(
   return (
     <>
       <div ref={selectRef} className={cx('select-container', 'form-group flex-grow-1')}>
-        <label className="form-label text-capitalize">{title}</label>
+        {isLabel ? <label className="form-label text-capitalize">{title}</label> : ''}
         <Tippy
           interactive
           visible={select}
@@ -95,7 +105,7 @@ export const SelectLocation = forwardRef(function Select(
           placement="bottom"
           render={(attrs) => (
             <ul ref={optionRef} className={cx('option')} {...attrs}>
-              {data.length > 0 && NullValue ? (
+              {data?.length > 0 && NullValue ? (
                 <li className={cx('option-single', `select-option-${classTitle || title}`)} data-value="" data-id="">
                   Null
                 </li>
@@ -128,7 +138,7 @@ export const SelectLocation = forwardRef(function Select(
             onChange={(e) => {
               setSearch(e.target.value);
             }}
-            data-id=""
+            data-id={ID}
           />
         </Tippy>
       </div>

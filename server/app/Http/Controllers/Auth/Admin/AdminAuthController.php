@@ -25,7 +25,7 @@ class AdminAuthController extends Controller
        }
     }
     public function getAmin(Request $request){
-        $admin = Admin::where('id',Auth::user()->id)->select('admin.*')->with('role','addressT','addressP')->first();
+        $admin = Admin::where('id',Auth::user()->id)->select('admin.*')->with('role','address_t.ward.districts.cities.countries','address_p')->first();
         return response()->json($admin);
     }
 }

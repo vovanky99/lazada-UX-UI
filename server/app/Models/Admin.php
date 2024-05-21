@@ -37,10 +37,10 @@ class Admin extends Authenticatable
     public function role(){
         return $this->belongsTo(Role::class,'role_id','id');
     }
-    public function addressP(){
+    public function address_p(){
         return $this->belongsTo(Address::class,'permanent_residennce_registration','id');
     }
-    public function addressT(){
+    public function address_t(){
         return $this->belongsTo(Address::class,'temporary_registration','id');
     }
 }

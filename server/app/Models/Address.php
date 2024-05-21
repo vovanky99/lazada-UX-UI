@@ -16,15 +16,15 @@ class Address extends Model
         'home',
         'phone',
         'street_address',
-        'wrad_id',
+        'ward_id',
     ];
-    public function Users(){
+    public function users(){
         return $this->belongsTo(User::class,'addressable_id','id');
     }
     public function shop(){
         return $this->belongsTo(Address::class,'address_id');
     }
-    public function Ward(){
+    public function ward(){
         return $this->belongsTo(Ward::class,'ward_id','id');
     }
     public function address(){
@@ -33,7 +33,7 @@ class Address extends Model
     public function adminP(){
         return $this->hasOne(Admin::class,'permanent_residennce_registration','id');
     }
-    public function AdminT(){
+    public function adminT(){
         return $this->hasOne(Admin::class,'temporary_registration','id');
     }
 }

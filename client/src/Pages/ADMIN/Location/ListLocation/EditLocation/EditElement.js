@@ -3,7 +3,6 @@ import React from 'react';
 import { useState } from 'react';
 
 import styles from '../../Location.module.scss';
-import axios from '~/api/axios';
 import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
