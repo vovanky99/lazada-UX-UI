@@ -9,7 +9,7 @@ import SideBar from '../SideBar';
 import Store from '~/Redux/Store';
 import { getAdmin } from '~/Redux/Actions/Auth';
 import axios from '~/api/axios';
-import BreadCrumb from '~/components/BreadCrumb';
+import BreadCrumb from '~/Layout/Component/BreadCrumb';
 import config from '~/config';
 
 const cx = classNames.bind(styles);

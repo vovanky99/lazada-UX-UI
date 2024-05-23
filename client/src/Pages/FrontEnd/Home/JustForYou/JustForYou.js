@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 function JustForYou() {
   return (
     <div className={cx('wrapper')}>
-      <span className={cx('jfy-title', 'text-capitalize')}>Just For You</span>
+      <h4 className={cx('jfy-title', 'text-capitalize')}>Just For You</h4>
       <JFYContent />
     </div>
   );

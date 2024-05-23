@@ -1,10 +1,10 @@
 import classNames from 'classnames/bind';
-import { Button, Image } from 'react-bootstrap';
 import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-import styles from '../SlickSlide.module.scss';
+import styles from '../SlideShow.module.scss';
+import Images from '~/components/Images';
 
 const cx = classNames.bind(styles);
 
@@ -88,7 +88,7 @@ export default function ShowHIghLight({ changeSetShowHighlight, dt, title, image
           <button id="img-hl-prev" className={cx('img-hl-prev')}>
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
-          <Image src={imagesHighlight} alt={imagesHighlight} />
+          <Images src={imagesHighlight} alt={imagesHighlight} />
           <button id="img-hl-next" className={cx('', 'img-hl-next')}>
             <FontAwesomeIcon icon={faChevronRight} />
           </button>
@@ -99,9 +99,9 @@ export default function ShowHIghLight({ changeSetShowHighlight, dt, title, image
             {dt.map((d, index) => (
               <div key={index} className={cx('img-wrapper')}>
                 {imagesHighlight == d.title ? (
-                  <Image className={cx('img-hl-click', 'img-hl-active')} src={d.title} alt={d.title} />
+                  <Images className={cx('img-hl-click', 'img-hl-active')} src={d.title} alt={d.title} />
                 ) : (
-                  <Image className={cx('img-hl-click')} src={d.title} alt={d.title} />
+                  <Images className={cx('img-hl-click')} src={d.title} alt={d.title} />
                 )}
               </div>
             ))}

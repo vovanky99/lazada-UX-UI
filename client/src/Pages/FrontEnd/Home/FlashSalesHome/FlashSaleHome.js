@@ -1,12 +1,12 @@
 import classNames from 'classnames/bind';
-import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import styles from './FlashSaleHome.module.scss';
-import Timer from '~/components/Timer';
-import { Link } from 'react-router-dom';
-import { Col, Image, Row } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
+import Timer from '~/Layout/Component/Timer';
 import axios from '~/api/axios';
+import Images from '~/components/Images';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
@@ -33,7 +33,7 @@ function FlashSaleHome() {
         <div className={cx('fs-content-header')}>
           <div className={cx('fs-content-header-left')}>
             <div className={cx('fs-text')}>
-              <span className={cx('title-flash-sale')}>flash sale</span>
+              <h4 className={cx('title-flash-sale')}>flash sale</h4>
             </div>
             <div className={cx('fs-content-header-timer')}>
               <div className={cx('timer-time')}>
@@ -42,7 +42,7 @@ function FlashSaleHome() {
             </div>
           </div>
           <div className={cx('fs-content-header-right')}>
-            <Button className={cx('change-button')} href="#" variant="outline-danger">
+            <Button className={cx('change-button')} to="#">
               SHOP ALL PRODUCTS
             </Button>
           </div>
@@ -52,7 +52,7 @@ function FlashSaleHome() {
             <div className={cx('fs-content-body-container')} key={index}>
               <Link to={`products/${product.title}/${product.id}`} className={cx(`fs-content-body-unit`)}>
                 <div className={cx('fs-img-container')}>
-                  <Image src={product.images} />
+                  <Images src={product.images} alt={product.images} />
                 </div>
                 <div className={cx('fs-card-text')}>
                   <span className={cx('fs-card-title')} style={{ WebkitLineClamp: '2', lineClamp: '2' }}>

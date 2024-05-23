@@ -23,22 +23,13 @@ class AdminController extends Controller{
         $ward_id = $request->ward_id;
         try{
             $admin = Admin::findOrFail(Auth::user()->id);
-             if($admin->temporary_registration =='' &&$address && $ward_id){
-                $addressT = Address::create([
-                    'addressable_type'=>User::class,
-                    'addressable_id'=>$admin->id,
-                    'street_address'=>$address,
-                    'ward_id'=>$ward_id,
-                ]);
-                $address_id  = $addressT->id;
-            }
-            else if($ward_id != $admin->address_t->id || $admin->address_t->street_address != $address ){
+            if($ward_id != $admin->address_t->id || $admin->address_t->street_address != $address ){
                 $add = Address::findOrFail($admin->address_t->id);
-                $add->street_address = $address;
-                $add->ward_id = $ward_id;
-                $add->save();
-                $address_id  = $admin->address_t->id;
-                
+                $add->update([
+                    'street_address' => $address,
+                    'ward_id' => $ward_id,
+                ]);
+                $address_id  = $admin->address_t->id; 
             }
             $admin->update([
                 'name'=>$name,
@@ -46,11 +37,11 @@ class AdminController extends Controller{
                 'temporary_registration'=>$address_id,
                 'phone_number'=>$phone
             ]);
-            return response()->json(['message'=>'updated success!'
+            return response()->json(['success'=>'updated success!'
         ]);
         }
         catch(Exception $e){
-            return response()->json(['message'=>$e],200);
+            return response()->json(['error'=>$e]);
         }  
     }
     public function getSearchLocation(Request $request){

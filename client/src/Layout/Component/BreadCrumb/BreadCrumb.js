@@ -4,7 +4,6 @@ import styles from './BreadCrumb.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import Bread from './Bread';
-import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 

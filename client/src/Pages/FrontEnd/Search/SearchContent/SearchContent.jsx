@@ -7,7 +7,7 @@ import { faClock, faCommentDots, faStar as faStarRegular } from '@fortawesome/fo
 
 import styles from './SearchContent.module.scss';
 import Products from '~/Layout/FrontEnd/Products';
-import Pagination from '~/components/Pagination';
+import Pagination from '~/Layout/Component/Pagination';
 import Button from '~/components/Button';
 import Images from '~/components/Images';
 

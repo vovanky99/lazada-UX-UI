@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { getDay, getMonth, getYear, format, getDate } from 'date-fns';
+import { getMonth, getYear, format, getDate } from 'date-fns';
 
 import { months } from './Month';
 import { useDynamicYears } from './years';

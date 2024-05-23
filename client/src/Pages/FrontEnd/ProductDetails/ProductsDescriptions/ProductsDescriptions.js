@@ -1,15 +1,15 @@
 import { Image } from 'react-bootstrap';
-
-import classNames from 'classnames/bind';
-import styles from '../ProductDetails.module.scss';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import { useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
+
+import styles from '../ProductDetails.module.scss';
 import ProductsSuggest from '../ProductsSuggest';
-import SlideReviews from '~/components/SlickSlider/SlideReviews';
-import Pagination from '~/components/Pagination';
+import SlideReviews from '~/Layout/Component/SlideShow/SlideReviews';
+import Pagination from '~/Layout/Component/Pagination';
 
 const cx = classNames.bind(styles);
 

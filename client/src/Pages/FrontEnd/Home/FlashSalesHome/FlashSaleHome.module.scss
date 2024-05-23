@@ -194,11 +194,9 @@
   }
 }
 .title-flash-sale {
-  overflow: hidden;
   font-size: 2.2rem;
   color: #424242;
-  text-overflow: ellipsis;
-  text-transform: capitalize;
+  margin-bottom: 0 !important;
   margin-bottom: 5px;
 }
 

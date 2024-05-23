@@ -1,7 +1,6 @@
-import Button from '../Button';
+import Button from '~/components/Button';
 import { AdminRoutes, LifeShopRoutes, ManageShopRoutes } from '~/Routes';
-import { Children, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 export default function Bread({ path, rolePath, disabled = false, className, children }) {
   const [routes, setRoutes] = useState(null);

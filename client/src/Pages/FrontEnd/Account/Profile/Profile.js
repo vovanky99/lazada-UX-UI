@@ -3,7 +3,7 @@ import style from './Profile.module.scss';
 import Account from '../Account';
 import { useEffect, useState } from 'react';
 import Images from '~/components/Images';
-import DateOption from '~/components/DateOption';
+import DateOption from '~/Layout/Component/DateOption';
 import { indexOf } from 'lodash';
 
 const cx = classNames.bind(style);

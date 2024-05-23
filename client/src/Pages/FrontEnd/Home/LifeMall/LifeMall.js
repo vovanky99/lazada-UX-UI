@@ -33,7 +33,7 @@ function LifeMall() {
     <div className={cx('wrapper')}>
       <div className={cx('lfc-container')}>
         <div className={cx('lfc-header', 'd-flex flex-row justify-content-between align-items-center')}>
-          <span className={cx('lfc-header-left')}>Life Mall</span>
+          <h4 className={cx('lfc-header-left')}>Life Mall</h4>
           <Link className={cx('lfc-header-right')}>
             <span className="text-capitalize" href="#">
               Shop More <FontAwesomeIcon icon={faChevronRight} />

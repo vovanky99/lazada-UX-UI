@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import styles from './ProductDetails.module.scss';
+import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBolt,
@@ -15,9 +15,10 @@ import {
   faTruckFast,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import SlickSlide from '~/components/SlickSlider/SlickSlider';
-import { useEffect, useRef, useState } from 'react';
-import Timer from '~/components/Timer';
+
+import styles from './ProductDetails.module.scss';
+import Slide from '~/Layout/Component/SlideShow/Slide';
+import Timer from '~/Layout/Component/Timer';
 import LocationShipping from './LocationShip';
 import ProductsDescriptions from './ProductsDescriptions';
 import BreadCumbs from './BreadCumbs';
@@ -277,7 +278,7 @@ export default function ProductDetails() {
           </h1> */}
             <section className={cx('images-products', 'd-flex flex-row col-5')}>
               {images.length != 0 ? (
-                <SlickSlide
+                <Slide
                   data={images}
                   title={product.title}
                   srcHighlightParent={srcHighlightImgCat}

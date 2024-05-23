@@ -53,11 +53,9 @@
   padding: 5px;
   border-bottom: 1px solid #0000000d;
   .lfc-header-left {
-    overflow: hidden;
+    margin-bottom: 0 !important;
     font-size: 2.1rem;
     color: #424242;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
   .lfc-header-right {
     span {

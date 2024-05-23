@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-import styles from './SlickSlide.module.scss';
-import ShowHighLight from './ShowHighLight';
+import styles from './SlideShow.module.scss';
+import ShowHighLight from './SlideHighLight';
 
 const cx = classNames.bind(styles);
 
-export default function SlickSlide({
+export default function Slide({
   data,
   changeSrcHL,
   srcHL,

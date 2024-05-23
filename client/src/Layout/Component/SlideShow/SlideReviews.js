@@ -1,11 +1,10 @@
 import classNames from 'classnames/bind';
-import { Button, Image } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-import styles from './SlickSlide.module.scss';
-import './css/affec.css';
+import styles from './SlideShow.module.scss';
+import Images from '~/components/Images';
 
 const cx = classNames.bind(styles);
 
@@ -162,19 +161,19 @@ export default function SlideReviews({ data, wrapper, activeSlide, numberShow = 
     <div className={cx('wrapper-slideshow', wrapper + '')}>
       <div className={cx('reviews-img-all', 'd-flex gap-3')}>
         <div>
-          <Image
+          <Images
             className={cx('zoom-click', 'zoom_in')}
             src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljs1xxgeaqic92_tn.webp"
           />
         </div>
         <div>
-          <Image
+          <Images
             className={cx('zoom-click', 'zoom_in')}
             src="https://img.lazcdn.com/g/p/0ef88b13ea61cf3c78fa2ef33a4dbc1f.jpg_80x80q80.jpg_.webp"
           />
         </div>
         <div>
-          <Image
+          <Images
             className={cx('zoom-click', 'zoom_in')}
             src="https://down-vn.img.susercontent.com/file/sg-11134201-7rbk4-lognsnfg8a5c9b_tn"
           />
@@ -187,13 +186,13 @@ export default function SlideReviews({ data, wrapper, activeSlide, numberShow = 
         <div id="value-zoom-in-content" className={cx('value-zoom-in-content')}>
           <ul id="rating-media-list" className={cx('rating-media-list', 'transform-rating-media')}>
             <li>
-              <Image src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljs1xxgeaqic92_tn.webp" />
+              <Images src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljs1xxgeaqic92_tn.webp" />
             </li>
             <li>
-              <Image src="https://img.lazcdn.com/g/p/0ef88b13ea61cf3c78fa2ef33a4dbc1f.jpg_80x80q80.jpg_.webp" />
+              <Images src="https://img.lazcdn.com/g/p/0ef88b13ea61cf3c78fa2ef33a4dbc1f.jpg_80x80q80.jpg_.webp" />
             </li>
             <li>
-              <Image src="https://down-vn.img.susercontent.com/file/sg-11134201-7rbk4-lognsnfg8a5c9b_tn" />
+              <Images src="https://down-vn.img.susercontent.com/file/sg-11134201-7rbk4-lognsnfg8a5c9b_tn" />
             </li>
           </ul>
         </div>

@@ -8,7 +8,6 @@ use App\Http\Controllers\Auth\Client\SocialAuthController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -29,12 +28,10 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [LifeShopController::class,'logout']);
-    // get user client
+    // get user client shop
     Route::get('/user',[LifeShopController::class,'getUser']);
-
     //get admin 
     Route::get('/admin',[AdminAuthController::class,'getAmin']);
-
 });
 
 /* life shop */

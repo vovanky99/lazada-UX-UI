@@ -10,7 +10,7 @@ import { AuthSocial, SignUp } from '~/Redux/Actions/Auth';
 import axios from '~/api/axios';
 import style from './register.module.scss';
 import routes from '~/config/routes';
-import DateOption from '~/components/DateOption';
+import DateOption from '~/Layout/Component/DateOption';
 import Button from '~/components/Button';
 import { REGISTER_ERROR } from '~/Redux/Actions/Types';
 

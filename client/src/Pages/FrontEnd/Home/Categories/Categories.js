@@ -26,7 +26,7 @@ function Categories() {
   }, []);
   return (
     <div className={cx('wrapper')}>
-      <span className={cx('cat-title')}>Categories</span>
+      <h4 className={cx('cat-title')}>Categories</h4>
       <div className={cx('cat-content', 'd-flex flex-row flex-wrap')}>
         {data.map((cat) => (
           <div className={cx('cat-content-container')} key={cat.id}>

@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 export default function AllAdmin() {
   return (
     <>
-      <section>All Admin</section>
+      <div className={cx('main_admin')}></div>
     </>
   );
 }

@@ -62,8 +62,10 @@ export default function Profile() {
       data.append('address', address);
       data.append('ward_id', wardID);
       try {
-        await axios.post('/api/admin/update', data);
-        window.location.reload();
+        const res = await axios.post('/api/admin/update', data);
+        if (res.data.success) {
+          window.location.reload();
+        }
       } catch (e) {
         console.log(e);
       }
