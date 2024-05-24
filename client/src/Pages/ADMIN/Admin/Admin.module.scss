@@ -1,0 +1,52 @@
+// page all admin
+.filter-data {
+  margin-bottom: 20px;
+  .filter-content {
+    gap: 10px;
+    label {
+      font-size: 1.5rem;
+    }
+    > div {
+      &:last-child {
+        gap: 20px;
+      }
+      &:nth-child(-n + 8) {
+        flex-basis: calc((100% - 70px) / 4);
+      }
+    }
+    .filter-element {
+      > div {
+        gap: 10px;
+      }
+    }
+  }
+}
+
+.data-table {
+  table {
+    thead {
+    }
+    tbody {
+      td {
+        div {
+          width: 75%;
+          margin: 0 auto;
+          img {
+            width: 100%;
+            border-radius: 50%;
+          }
+        }
+        .toll-edit {
+          gap: 5px;
+          border-left: none;
+          padding: 5px;
+          button,
+          a {
+            font-size: 1.4rem;
+            padding: 5px 10px;
+          }
+        }
+      }
+    }
+  }
+}

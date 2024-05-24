@@ -16,7 +16,7 @@ class Categories extends Model
         'parent_id',
         'status'
     ];
-    public function children()
+    public function childrens()
     {
         return $this->hasMany(Categories::class,'parent_id','id');
     }

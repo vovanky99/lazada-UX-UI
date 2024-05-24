@@ -3,9 +3,9 @@ import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 
 import styles from '../Location.module.scss';
-import axios from '~/api/axios';
-import { SelectLocation } from '~/Layout/Component/SelectLocation';
+import { SearchSelect } from '~/Layout/Component/SearchSelect';
 import EditLocation from './EditLocation';
+import GetLocation, { GetAllLocation } from '~/Services/Location/GetLocation';
 
 const cx = classNames.bind(styles);
 
@@ -61,92 +61,41 @@ export default function ListLocation() {
 
   /* get Country */
   useEffect(() => {
-    const getCountry = async () => {
-      try {
-        const res = await axios.get('/api/get-country', {
-          params: {
-            name: country,
-          },
-        });
-        if (res.data) {
-          setOptionCountry(res.data);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getCountry();
+    GetLocation('country', country)
+      .then((result) => setOptionCountry(result))
+      .catch((e) => console.log(e));
   }, [country]);
 
   /* get City */
   useEffect(() => {
-    const getCity = async () => {
-      try {
-        const res = await axios.get('/api/get-city', {
-          params: {
-            name: city,
-            country_id: countryID,
-          },
-        });
-        if (res.data) {
-          setOptionCity(res.data);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getCity();
-  }, [city, countryID, district]);
+    GetLocation('city', city, countryID)
+      .then((result) => setOptionCity(result))
+      .catch((e) => console.log(e));
+  }, [city, countryID]);
 
   /* get District */
   useEffect(() => {
-    const getDistrict = async () => {
-      try {
-        const res = await axios.get('/api/get-district', {
-          params: {
-            name: district,
-            city_id: cityID,
-          },
-        });
-        if (res.data) {
-          setOptionDistrict(res.data);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getDistrict();
+    GetLocation('district', district, cityID)
+      .then((result) => setOptionDistrict(result))
+      .catch((e) => console.log(e));
   }, [district, cityID]);
 
   /* get data for table */
   useEffect(() => {
-    // const formFilter = FilterRef.current;
-    const getDataTable = async () => {
-      try {
-        const res = await axios.get('/api/all-location', {
-          params: {
-            country_id: countryID,
-            city_id: cityID,
-            district_id: districtID,
-          },
-        });
-        if (res.data) {
-          setDataTable(res.data);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getDataTable();
+    GetAllLocation(countryID, cityID, districtID)
+      .then((result) => setDataTable(result))
+      .catch((e) => console.log(e));
   }, [countryID, cityID, districtID, deleteLocation]);
 
   return (
     <>
       <div className={cx('filter-data')}>
-        <h4>filter Location</h4>
+        <h4>
+          <b>filter Location</b>
+        </h4>
         <form ref={FilterRef} className={cx('filter-form', 'd-flex flex-row flex-wrap gap-3 align-items-end')}>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
-            <SelectLocation
+            <SearchSelect
               NullValue
               handleSetID={setCountryID}
               searchSelectValue={setCountry}
@@ -156,7 +105,7 @@ export default function ListLocation() {
             />
           </div>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
-            <SelectLocation
+            <SearchSelect
               NullValue
               handleSetID={setCityID}
               searchSelectValue={setCity}
@@ -166,7 +115,7 @@ export default function ListLocation() {
             />
           </div>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
-            <SelectLocation
+            <SearchSelect
               NullValue
               handleSetID={setDistrictID}
               searchSelectValue={setDistrict}

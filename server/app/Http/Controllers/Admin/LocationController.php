@@ -10,6 +10,32 @@ use App\Models\Ward;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller {
+
+     // get location for datatable
+     public function index(Request $request){
+        $country_id = $request->get('country_id');
+        $city_id = $request->get('city_id');
+        $district_id = $request->get('district_id');
+        if($country_id && $city_id && $district_id){
+            $countries = Country::where('country.id',$country_id)->with(['cities'=>function($query) use ($city_id,$district_id){
+                $query->where('id',$city_id)->with(['districts'=>function($query) use ($district_id){
+                    $query->where('id',$district_id)->with('wards');
+                }]);
+            }])->orderBy('name','asc')->get();      
+        }
+        else if($country_id && $city_id ){
+            $countries = Country::where('country.id',$country_id)->with(['cities'=>function($query) use ($city_id){
+                $query->where('id',$city_id)->with('districts.wards');
+            }])->orderBy('name','asc')->get();        
+        }
+        else if($country_id){
+            $countries = Country::with('cities.districts.wards')->where('country.id',$country_id)->orderBy('name','asc')->get();  
+        }
+        else{
+            $countries = Country::with('cities.districts.wards')->orderBy('name','asc')->get();  
+        }
+        return response()->json($countries);
+    }
     public function createCountry(Request $request){
         $name = $request->name;
         $country = Country::where('name',$name)->first();
@@ -83,49 +109,27 @@ class LocationController extends Controller {
     }
     public function getCity(Request $request){
         $name = $request->get('name');
-        $country_id = $request->get('country_id');
+        $country_id = $request->get('foreign_id');
         $city = City::where('name','like',$name.'%')->where('country_id',$country_id)->orderBy('name','ASC')->get();
         return response()->json($city);
     }
     public function getDistrict(Request $request){
         $name = $request->get('name');
-        $city_id = $request->get('city_id');
+        $city_id = $request->get('foreign_id');
         $district = District::where('name','like',$name.'%')->where('city_id',$city_id)->orderBy('name','ASC')->get();
         return response()->json($district);
     }
     public function getWard(Request $request){
         $name = $request->get('name');
-        $district_id = $request->get('district_id');
+        $district_id = $request->get('foreign_id');
         $ward = Ward::where('name','like',$name.'%')->where('district_id',$district_id)->orderBy('name','ASC')->get();
         return response()->json($ward);
     }
     public function getAddress(Request $request){
         
     }
-    public function getLocation(Request $request){
-        $country_id = $request->get('country_id');
-        $city_id = $request->get('city_id');
-        $district_id = $request->get('district_id');
-        if($country_id && $city_id && $district_id){
-            $countries = Country::where('country.id',$country_id)->with(['cities'=>function($query) use ($city_id,$district_id){
-                $query->where('id',$city_id)->with(['districts'=>function($query) use ($district_id){
-                    $query->where('id',$district_id)->with('wards');
-                }]);
-            }])->orderBy('name','asc')->get();      
-        }
-        else if($country_id && $city_id ){
-            $countries = Country::where('country.id',$country_id)->with(['cities'=>function($query) use ($city_id){
-                $query->where('id',$city_id)->with('districts.wards');
-            }])->orderBy('name','asc')->get();        
-        }
-        else if($country_id){
-            $countries = Country::with('cities.districts.wards')->where('country.id',$country_id)->orderBy('name','asc')->get();  
-        }
-        else{
-            $countries = Country::with('cities.districts.wards')->orderBy('name','asc')->get();  
-        }
-        return response()->json($countries);
-    }
+
+   
 
     public function deleteLocation($type,$id){
         if($type=='ward'){

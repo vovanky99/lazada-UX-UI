@@ -1,11 +1,13 @@
 import classNames from 'classnames/bind';
+import { useEffect, useState } from 'react';
 
 import styles from './Location.module.scss';
 import Button from '~/components/Button';
-import { useEffect, useState } from 'react';
-import axios from '~/api/axios';
 import { AddLocationToggle } from './AddLocationToggle';
 import ListLocation from './ListLocation';
+import Wrapper from '~/Layout/Component/Wrapper';
+import CreateLocation from '~/Services/Location/CreateLocation';
+import GetLocation from '~/Services/Location/GetLocation';
 
 const cx = classNames.bind(styles);
 
@@ -99,24 +101,21 @@ export default function Location() {
     const data = new FormData();
     data.append('name', nameCountry);
     if (nameCountry !== '') {
-      try {
-        const res = await axios.post('/api/create-country', data);
-        if (res.data) {
-          if (res.data.error) {
-            setAddCountryError(res.data.error);
+      CreateLocation('country', data)
+        .then((result) => {
+          if (result.error) {
+            setAddCountryError(result.error);
             if (addCountrySuccess !== '') {
               setAddCountrySuccess('');
             }
           } else {
-            setAddCountrySuccess(res.data.success);
+            setAddCountrySuccess(result.success);
             if (addCountryError !== '') {
               setAddCountryError('');
             }
           }
-        }
-      } catch (e) {
-        console.log(e);
-      }
+        })
+        .catch((e) => console.log(e));
     }
   };
 
@@ -126,26 +125,24 @@ export default function Location() {
     data.append('country_id', CountryID);
     data.append('name', nameCity);
     if (nameCity !== '' && CountryID !== '') {
-      try {
-        const res = await axios.post('/api/create-city', data);
-        if (res.data) {
-          if (res.data.error) {
-            setAddCityError(res.data.error);
+      CreateLocation('city', data)
+        .then((result) => {
+          if (result.error) {
+            setAddCityError(result.error);
             if (addCitySuccess !== '') {
               setAddCitySuccess('');
             }
           } else {
-            setAddCitySuccess(res.data.success);
+            setAddCitySuccess(result.success);
             if (addCityError !== '') {
               setAddCityError('');
             }
           }
-        }
-      } catch (e) {
-        console.log(e);
-      }
+        })
+        .catch((e) => console.log(e));
     }
   };
+
   /* add district */
   const handleAddDistrict = async () => {
     const data = new FormData();
@@ -154,24 +151,21 @@ export default function Location() {
     data.append('city_id', CityID);
     data.append('fee_ship', feeShip);
     if (nameDistrict !== '' && CityID !== '' && CountryID !== '' && feeShip !== '') {
-      try {
-        const res = await axios.post('/api/create-district', data);
-        if (res.data) {
-          if (res.data.error) {
-            setAddDistrictError(res.data.error);
+      CreateLocation('district', data)
+        .then((result) => {
+          if (result.error) {
+            setAddDistrictError(result.error);
             if (addDistrictSuccess !== '') {
               setAddDistrictSuccess('');
             }
           } else {
-            setAddDistrictSuccess(res.data.success);
+            setAddDistrictSuccess(result.success);
             if (addDistrictError !== '') {
               setAddDistrictError('');
             }
           }
-        }
-      } catch (e) {
-        console.log(e);
-      }
+        })
+        .catch((e) => console.log(e));
     }
   };
 
@@ -183,177 +177,139 @@ export default function Location() {
     data.append('city_id', CityID);
     data.append('district_id', districtID);
     if (nameWard && districtID && CityID && CountryID) {
-      try {
-        const res = await axios.post('/api/create-ward', data);
-        if (res.data) {
-          if (res.data.error) {
-            setAddWardError(res.data.error);
+      CreateLocation('ward', data)
+        .then((result) => {
+          if (result.error) {
+            setAddWardError(result.error);
             if (addWardSuccess !== '') {
               setAddWardSuccess('');
             }
           } else {
-            setAddWardSuccess(res.data.success);
+            setAddWardSuccess(result.success);
             if (addWardError !== '') {
               setAddWardError('');
             }
           }
-        }
-      } catch (e) {
-        console.log(e);
-      }
+        })
+        .catch((e) => console.log(e));
     }
   };
 
   /* get Country */
   useEffect(() => {
-    const getCountry = async () => {
-      try {
-        const res = await axios.get('/api/get-country', {
-          params: {
-            name: searchCountry,
-          },
-        });
-        if (res.data) {
-          setCountryValue(res.data);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getCountry();
-  }, [searchCountry, city]);
+    GetLocation('country', searchCountry)
+      .then((result) => setCountryValue(result))
+      .catch((e) => console.log(e));
+  }, [searchCountry]);
 
   /* get City */
   useEffect(() => {
-    const getCity = async () => {
-      try {
-        const res = await axios.get('/api/get-city', {
-          params: {
-            name: searchCity,
-            country_id: CountryID,
-          },
-        });
-        if (res.data) {
-          setCityValue(res.data);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getCity();
-  }, [searchCity, CountryID, district]);
+    GetLocation('city', searchCity, CountryID)
+      .then((result) => setCityValue(result))
+      .catch((e) => console.log(e));
+  }, [searchCity, CountryID]);
 
   /* get District */
   useEffect(() => {
-    const getDistrict = async () => {
-      try {
-        const res = await axios.get('/api/get-district', {
-          params: {
-            name: searchDistrict,
-            city_id: CityID,
-          },
-        });
-        if (res.data) {
-          setDistrictValue(res.data);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getDistrict();
-  }, [searchDistrict, CityID, ward]);
+    GetLocation('district', searchDistrict, CityID)
+      .then((result) => setDistrictValue(result))
+      .catch((e) => console.log(e));
+  }, [searchDistrict, CityID]);
 
   return (
-    <div className={cx('location')}>
-      <h3 className={cx('location_title', 'text-capitalize')}>location</h3>
-      <section className={cx('location_header', 'd-flex flex-row')}>
-        <div className={cx('add-country')}>
-          <Button onClick={handleBTNCountryClick} gradient_primary type="button">
-            Add Country
-          </Button>
-          {country ? (
-            <AddLocationToggle
-              title="Country"
-              messageError={addCountryError}
-              messageSuccess={addCountrySuccess}
-              onSubmitForm={handleAddContry}
-              setNameValue={setNameCountry}
-            />
-          ) : (
-            ''
-          )}
-        </div>
-        <div className={cx('add-city')}>
-          <Button onClick={handleBTNCityClick} gradient_primary type="button">
-            Add City
-          </Button>
-          {city ? (
-            <AddLocationToggle
-              title="City"
-              searchSelectCountryValue={setSearchCountry}
-              messageSuccess={addCitySuccess}
-              messageError={addCityError}
-              countryData={countryValue}
-              handleSetCountryID={setCountryID}
-              onSubmitForm={handleAddCity}
-              setNameValue={setNameCity}
-            />
-          ) : (
-            ''
-          )}
-        </div>
-        <div className={cx('add-district')}>
-          <Button onClick={handleBTNDistrictClick} gradient_primary type="button">
-            Add District
-          </Button>
-          {district ? (
-            <AddLocationToggle
-              title="District"
-              searchSelectCountryValue={setSearchCountry}
-              searchSelectCityValue={setSearchCity}
-              messageSuccess={addDistrictSuccess}
-              messageError={addDistrictError}
-              countryData={countryValue}
-              cityData={cityValue}
-              handleSetCountryID={setCountryID}
-              handleSetCityID={setCityID}
-              onSubmitForm={handleAddDistrict}
-              setNameValue={setNameDistrict}
-              setFeeShipValue={setFeeShip}
-            />
-          ) : (
-            ''
-          )}
-        </div>
-        <div className={cx('add-ward')}>
-          <Button onClick={handleBTNWardClick} gradient_primary type="button">
-            Add Ward
-          </Button>
-          {ward ? (
-            <AddLocationToggle
-              title="Ward"
-              searchSelectCountryValue={setSearchCountry}
-              searchSelectCityValue={setSearchCity}
-              searchSelectDistrictValue={setSearchDistrict}
-              messageSuccess={addWardSuccess}
-              messageError={addWardError}
-              countryData={countryValue}
-              cityData={cityValue}
-              districtData={districtValue}
-              onSubmitForm={handleAddWard}
-              handleSetCountryID={setCountryID}
-              handleSetCityID={setCityID}
-              handleSetDistrictID={setDistrictID}
-              setNameValue={setNameWard}
-            />
-          ) : (
-            ''
-          )}
-        </div>
-      </section>
-      <section className={cx('location_footer')}>
+    <>
+      <Wrapper
+        title="location"
+        BtnAddRender={
+          <>
+            <div className={cx('add-country')}>
+              <Button onClick={handleBTNCountryClick} gradient_primary type="button">
+                Add Country
+              </Button>
+              {country ? (
+                <AddLocationToggle
+                  title="Country"
+                  messageError={addCountryError}
+                  messageSuccess={addCountrySuccess}
+                  onSubmitForm={handleAddContry}
+                  setNameValue={setNameCountry}
+                />
+              ) : (
+                ''
+              )}
+            </div>
+            <div className={cx('add-city')}>
+              <Button onClick={handleBTNCityClick} gradient_primary type="button">
+                Add City
+              </Button>
+              {city ? (
+                <AddLocationToggle
+                  title="City"
+                  searchSelectCountryValue={setSearchCountry}
+                  messageSuccess={addCitySuccess}
+                  messageError={addCityError}
+                  countryData={countryValue}
+                  handleSetCountryID={setCountryID}
+                  onSubmitForm={handleAddCity}
+                  setNameValue={setNameCity}
+                />
+              ) : (
+                ''
+              )}
+            </div>
+            <div className={cx('add-district')}>
+              <Button onClick={handleBTNDistrictClick} gradient_primary type="button">
+                Add District
+              </Button>
+              {district ? (
+                <AddLocationToggle
+                  title="District"
+                  searchSelectCountryValue={setSearchCountry}
+                  searchSelectCityValue={setSearchCity}
+                  messageSuccess={addDistrictSuccess}
+                  messageError={addDistrictError}
+                  countryData={countryValue}
+                  cityData={cityValue}
+                  handleSetCountryID={setCountryID}
+                  handleSetCityID={setCityID}
+                  onSubmitForm={handleAddDistrict}
+                  setNameValue={setNameDistrict}
+                  setFeeShipValue={setFeeShip}
+                />
+              ) : (
+                ''
+              )}
+            </div>
+            <div className={cx('add-ward')}>
+              <Button onClick={handleBTNWardClick} gradient_primary type="button">
+                Add Ward
+              </Button>
+              {ward ? (
+                <AddLocationToggle
+                  title="Ward"
+                  searchSelectCountryValue={setSearchCountry}
+                  searchSelectCityValue={setSearchCity}
+                  searchSelectDistrictValue={setSearchDistrict}
+                  messageSuccess={addWardSuccess}
+                  messageError={addWardError}
+                  countryData={countryValue}
+                  cityData={cityValue}
+                  districtData={districtValue}
+                  onSubmitForm={handleAddWard}
+                  handleSetCountryID={setCountryID}
+                  handleSetCityID={setCityID}
+                  handleSetDistrictID={setDistrictID}
+                  setNameValue={setNameWard}
+                />
+              ) : (
+                ''
+              )}
+            </div>
+          </>
+        }
+      >
         <ListLocation />
-      </section>
-    </div>
+      </Wrapper>
+    </>
   );
 }

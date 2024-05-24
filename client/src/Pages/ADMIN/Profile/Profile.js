@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 import Images from '~/components/Images';
 import Button from '~/components/Button';
 import axios from '~/api/axios';
-import CldUploadImg from '~/service/cloudinary/CldUploadImg';
-import { SelectLocation } from '~/Layout/Component/SelectLocation';
+import CldUploadImg from '~/Services/cloudinary/CldUploadImg';
+import { SearchSelect } from '~/Layout/Component/SearchSelect';
+import GetLocation from '~/Services/Location/GetLocation';
 
 const cx = classNames.bind(styles);
 
@@ -25,18 +26,16 @@ export default function Profile() {
   const [nameValid, setNameValid] = useState('');
   const [phoneValid, setPhoneValid] = useState('');
   const [addressValid, setAddressValid] = useState('');
-  const [searchCountryValue, setSearchCountryValue] = useState(
-    Admin.address_t.ward.districts.cities.countries.name || '',
-  );
-  const [searchCityValue, setSearchCityValue] = useState(Admin.address_t.ward.districts.cities.name || '');
-  const [searchDistrictValue, setSearchDistrictValue] = useState(Admin.address_t.ward.districts.name || '');
+  const [searchCountryValue, setSearchCountryValue] = useState(Admin.address_t.ward.district.city.country.name || '');
+  const [searchCityValue, setSearchCityValue] = useState(Admin.address_t.ward.district.city.name || '');
+  const [searchDistrictValue, setSearchDistrictValue] = useState(Admin.address_t.ward.district.name || '');
   const [searchWardValue, setSearchWardValue] = useState(Admin.address_t.ward.name || '');
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
   const [district, setDistrict] = useState('');
   const [ward, setWard] = useState('');
-  const [countryID, setCountryID] = useState(Admin.address_t.ward.districts.cities.country_id || '');
-  const [cityID, setCityID] = useState(Admin.address_t.ward.districts.city_id || '');
+  const [countryID, setCountryID] = useState(Admin.address_t.ward.district.city.country_id || '');
+  const [cityID, setCityID] = useState(Admin.address_t.ward.district.city_id || '');
   const [districtID, setDistrictID] = useState(Admin.address_t.ward.district_id || '');
   const [wardID, setWardID] = useState(Admin.address_t.ward_id || '');
 
@@ -44,10 +43,8 @@ export default function Profile() {
   const uploadImage = (img) => {
     let image = new FormData();
     image.append('file', img);
-    const result = CldUploadImg(image);
-    result.then((result) => {
-      setUpload(result.url);
-    });
+    // handle upload file up cloudinary
+    CldUploadImg(image).then((result) => setUpload(result.url));
   };
 
   /* handle onsubmit form */
@@ -186,81 +183,30 @@ export default function Profile() {
 
   /* get country value */
   useEffect(() => {
-    const getCountry = async () => {
-      try {
-        const res = await axios.get('/api/get-country', {
-          params: {
-            name: searchCountryValue,
-          },
-        });
-        if (res.data) {
-          setCountry(res.data);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getCountry();
+    GetLocation('country', searchCountryValue)
+      .then((result) => setCountry(result))
+      .catch((e) => console.log(e));
   }, [searchCountryValue]);
 
   /* get city value */
   useEffect(() => {
-    const getCity = async () => {
-      try {
-        const res = await axios.get('/api/get-city', {
-          params: {
-            name: searchCityValue,
-            country_id: countryID,
-          },
-        });
-        if (res.data) {
-          setCity(res.data);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getCity();
+    GetLocation('city', searchCityValue, countryID)
+      .then((result) => setCity(result))
+      .catch((e) => console.log(e));
   }, [searchCityValue, countryID]);
 
   /* get district value */
   useEffect(() => {
-    const getDistrict = async () => {
-      try {
-        const res = await axios.get('/api/get-district', {
-          params: {
-            name: searchDistrictValue,
-            city_id: cityID,
-          },
-        });
-        if (res.data) {
-          setDistrict(res.data);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getDistrict();
+    GetLocation('district', searchDistrictValue, cityID)
+      .then((result) => setDistrict(result))
+      .catch((e) => console.log(e));
   }, [searchDistrictValue, cityID]);
 
   /* get ward value */
   useEffect(() => {
-    const getWard = async () => {
-      try {
-        const res = await axios.get('/api/get-ward', {
-          params: {
-            name: searchWardValue,
-            district_id: districtID,
-          },
-        });
-        if (res.data) {
-          setWard(res.data);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getWard();
+    GetLocation('ward', searchWardValue, districtID)
+      .then((result) => setWard(result))
+      .catch((e) => console.log(e));
   }, [searchWardValue, districtID]);
 
   return (
@@ -333,7 +279,7 @@ export default function Profile() {
           <div className={cx('profile_location', 'form-group col-6 px-3 mb-3')}>
             <label className={cx('input_title', 'form-label')}>Select Location</label>
             <div className={cx('form-group d-flex flex-row gap-3 flex-wrap')}>
-              <SelectLocation
+              <SearchSelect
                 IDValue={countryID}
                 searchValue={searchCountryValue}
                 isLabel={false}
@@ -342,7 +288,7 @@ export default function Profile() {
                 searchSelectValue={setSearchCountryValue}
                 handleSetID={setCountryID}
               />
-              <SelectLocation
+              <SearchSelect
                 IDValue={cityID}
                 searchValue={searchCityValue}
                 isLabel={false}
@@ -351,7 +297,7 @@ export default function Profile() {
                 searchSelectValue={setSearchCityValue}
                 handleSetID={setCityID}
               />
-              <SelectLocation
+              <SearchSelect
                 IDValue={districtID}
                 searchValue={searchDistrictValue}
                 isLabel={false}
@@ -360,7 +306,7 @@ export default function Profile() {
                 searchSelectValue={setSearchDistrictValue}
                 handleSetID={setDistrictID}
               />
-              <SelectLocation
+              <SearchSelect
                 IDValue={wardID}
                 searchValue={searchWardValue}
                 isLabel={false}

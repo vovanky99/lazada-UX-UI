@@ -12,16 +12,9 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __construct()
-    {
-        return $this->middleware('auth');
-    }
-    public function index()
-    {
-        //
-        $role = Role::paginate(15);
-        $count_role = Role::count();
-        return view('role/index',compact('role','count_role'));
+    public function index(){
+        $role = Role::all();
+        return response()->json($role);
     }
 
     public function search(Request $request){

@@ -11,10 +11,10 @@ class AdminAuthController extends Controller
 {
     public function login(Request $request)
     {
-    //    $request->validate([
-    //     'username'=>'required',
-    //     'password'=>'required'
-    //    ]);
+       $request->validate([
+        'username'=>'required',
+        'password'=>'required'
+       ]);
        $credentials = $request->only('username','password');
        if(Auth::guard('admin')->attempt($credentials)){
         $admin = Auth::guard('admin')->user();
@@ -24,8 +24,9 @@ class AdminAuthController extends Controller
            return response()->json(['message'=>'Invalid credentials',401]);
        }
     }
+
     public function getAmin(Request $request){
-        $admin = Admin::where('id',Auth::user()->id)->select('admin.*')->with('role','address_t.ward.districts.cities.countries','address_p')->first();
+        $admin = Admin::where('id',Auth::user()->id)->select('admin.*')->with('role','address_t.ward.district.city.country','address_p')->first();
         return response()->json($admin);
     }
 }

@@ -20,7 +20,9 @@ export default function EditElement({
     <>
       <div className={cx('flex-grow-1 d-flex flex-column')}>
         <div className={cx('form-group d-flex flex-column')}>
-          <label className="form-label text-capitalize">{title}</label>
+          <label className="form-label text-capitalize">
+            <b>{title}</b>
+          </label>
           <input
             value={name}
             className="form-control"

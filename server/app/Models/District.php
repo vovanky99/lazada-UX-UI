@@ -14,13 +14,10 @@ class District extends Model
         'fee_ship',
         'city_id'
     ];
-    public function cities(){
+    public function city(){
         return $this->belongsTo(City::class,'city_id','id');
     }
     public function wards(){
         return $this->hasMany(Ward::class,'district_id','id');
     }
-    // public function District(){
-    //     return $this->hasManyThrough(City::class,District::class);
-    // }
 }

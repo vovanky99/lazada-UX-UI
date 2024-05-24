@@ -8,6 +8,8 @@ import axios from '~/api/axios';
 import Button from '~/components/Button';
 import EditElement from './EditElement';
 import { Link } from 'react-router-dom';
+import DeleteLocation, { DeleteSingleLocation } from '~/Services/Location/DeleteLocation';
+import EditLocation from '~/Services/Location/EditLocation';
 
 const cx = classNames.bind(styles);
 
@@ -55,149 +57,147 @@ export default function Element({ country, city, district, ward, handleOnchangeD
   });
   /* handle delete location*/
   const handleDeleteLocation = async (e) => {
-    try {
-      const res = await axios.delete(`/api/delete-location/${e.target.dataset.value}/${e.target.dataset.id}`);
-      if (res.data) {
+    DeleteSingleLocation(e.target.dataset.value, e.target.dataset.id)
+      .then(() => {
         handleOnchangeDelete(1);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+      })
+      .catch((e) => console.log(e));
   };
 
-  /* handle delete country */
+  /* handle delete Country */
   const handleDeleteCountry = async (e) => {
     if (e.target.dataset.id) {
-      try {
-        const res = await axios.delete(`/api/delete-country/${e.target.dataset.id}`);
-        if (res.data) {
+      DeleteLocation('country', e.target.dataset.id)
+        .then((result) => {
           handleOnchangeDelete(1);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-      setMessageCountrySuccess('delete city success!');
-      setMessageCountryError('');
+          setMessageCountrySuccess('delete country success!');
+          if (messageCountryError) {
+            setMessageCountryError('');
+          }
+        })
+        .catch((e) => console.log(e));
     } else {
-      setMessageCountrySuccess('');
+      if (messageCountrySuccess) {
+        setMessageCountrySuccess('');
+      }
       setMessageCountryError('country is value empty!');
     }
   };
 
-  /* handle delete city */
+  /* handle delete City */
   const handleDeleteCity = async (e) => {
     if (e.target.dataset.id) {
-      try {
-        const res = await axios.delete(`/api/delete-city/${e.target.dataset.id}`);
-        if (res.data) {
+      DeleteLocation('city', e.target.dataset.id)
+        .then((result) => {
           handleOnchangeDelete(1);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-      setMessageCitySuccess('delete city success!');
-      setMessageCityError('');
+          setMessageCitySuccess('delete city success!');
+          if (messageCityError) {
+            setMessageCityError('');
+          }
+        })
+        .catch((e) => console.log(e));
     } else {
-      setMessageCitySuccess('');
+      if (messageCitySuccess) {
+        setMessageCitySuccess('');
+      }
       setMessageCityError('city is value empty!');
     }
   };
 
-  /* handle delete district */
+  /* handle delete District */
   const handleDeleteDistrict = async (e) => {
     if (e.target.dataset.id) {
-      try {
-        const res = await axios.delete(`/api/delete-district/${e.target.dataset.id}`);
-        if (res.data) {
+      DeleteLocation('district', e.target.dataset.id)
+        .then((result) => {
           handleOnchangeDelete(1);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-      setMessageDistrictSuccess('delete district success!');
-      setMessageDistrictError('');
+          setMessageDistrictSuccess('delete district success!');
+          if (messageDistrictError) {
+            setMessageDistrictError('');
+          }
+        })
+        .catch((e) => console.log(e));
     } else {
-      setMessageDistrictSuccess('');
+      if (messageDistrictSuccess) {
+        setMessageDistrictSuccess('');
+      }
       setMessageDistrictError('district is value empty!');
     }
   };
 
-  /* handle delete ward */
+  /* handle delete Ward */
   const handleDeleteWard = async (e) => {
     if (e.target.dataset.id) {
-      try {
-        const res = await axios.delete(`/api/delete-ward/${e.target.dataset.id}`);
-        if (res.data) {
+      DeleteLocation('ward', e.target.dataset.id)
+        .then((e) => {
           handleOnchangeDelete(1);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-      setMessageWardSuccess('delete ward Success');
-      setMessageWardError('');
+          setMessageWardSuccess('delete ward Success');
+          if (messageWardError) {
+            setMessageWardError('');
+          }
+        })
+        .catch((e) => console.log(e));
     } else {
-      setMessageWardSuccess('');
+      if (messageWardSuccess) {
+        setMessageWardSuccess('');
+      }
       setMessageWardError('ward is value empty!');
     }
   };
 
-  /* handle edit ward */
+  /* handle edit Country */
   const handleEditCountry = async (e) => {
     if (e.target.dataset.id && e.target.dataset.name) {
       const data = new FormData();
       data.append('name', e.target.dataset.name);
-      try {
-        const res = await axios.patch(`/api/edit-country/${e.target.dataset.id}`, data);
-        if (res.data) {
+      EditLocation('country', e.target.dataset.id, data)
+        .then((e) => {
           handleOnchangeDelete(1);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-      setMessageCountrySuccess('edit country Success');
-      setMessageCountryError('');
+          setMessageCountrySuccess('edit country Success');
+          if (messageCountryError) {
+            setMessageCountryError('');
+          }
+        })
+        .catch((e) => console.log(e));
     } else {
       setMessageCountrySuccess('');
       setMessageCountryError('country is value empty!');
     }
   };
 
-  /* handle edit ward */
+  /* handle edit City */
   const handleEditCity = async (e) => {
     if (e.target.dataset.id && e.target.dataset.name) {
       const data = new FormData();
       data.append('name', e.target.dataset.name);
-      try {
-        const res = await axios.patch(`/api/edit-city/${e.target.dataset.id}`, data);
-        if (res.data) {
+      EditLocation('city', e.target.dataset.id, data)
+        .then((e) => {
           handleOnchangeDelete(1);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-      setMessageCitySuccess('edit city Success');
-      setMessageCityError('');
+          setMessageCitySuccess('edit city Success');
+          if (messageCityError) {
+            setMessageCityError('');
+          }
+        })
+        .catch((e) => console.log(e));
     } else {
       setMessageCitySuccess('');
       setMessageCityError('city is value empty!');
     }
   };
 
-  /* handle edit ward */
+  /* handle edit District */
   const handleEditDistrict = async (e) => {
     if (e.target.dataset.id && e.target.dataset.name) {
       const data = new FormData();
       data.append('name', e.target.dataset.name);
-      try {
-        const res = await axios.patch(`/api/edit-ditrict/${e.target.dataset.id}`, data);
-        if (res.data) {
+      EditLocation('district', e.target.dataset.id, data)
+        .then((e) => {
           handleOnchangeDelete(1);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-      setMessageDistrictError('');
-      setMessageDistrictSuccess('edit ditrict Success');
+          setMessageDistrictSuccess('edit ditrict Success');
+          if (messageDistrictError) {
+            setMessageDistrictError('');
+          }
+        })
+        .catch((e) => console.log(e));
     } else {
       setMessageDistrictSuccess('');
       setMessageDistrictError('ditrict is value empty!');
@@ -209,16 +209,15 @@ export default function Element({ country, city, district, ward, handleOnchangeD
     if (e.target.dataset.id && e.target.dataset.name) {
       const data = new FormData();
       data.append('name', e.target.dataset.name);
-      try {
-        const res = await axios.patch(`/api/edit-ward/${e.target.dataset.id}`, data);
-        if (res.data) {
+      EditLocation('ward', e.target.dataset.id, data)
+        .then((e) => {
           handleOnchangeDelete(1);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-      setMessageWardSuccess('edit ward Success');
-      setMessageWardError('');
+          setMessageWardSuccess('edit ward Success');
+          if (messageWardError) {
+            setMessageWardError('');
+          }
+        })
+        .catch((e) => console.log(e));
     } else {
       setMessageWardSuccess('');
       setMessageWardError('ward is value empty!');
@@ -234,7 +233,9 @@ export default function Element({ country, city, district, ward, handleOnchangeD
         offset={[0, 0]}
         render={(attrs, index) => (
           <div className={cx('toggle-edit', 'edit-element text-center')} {...attrs} tabIndex="-1">
-            <h5>Edit Location</h5>
+            <h5>
+              <b> Edit Location</b>
+            </h5>
             <div className={cx('edit-content', 'd-flex flex-row')}>
               <div className={cx('edit-country', 'flex-grow-1')}>
                 <EditElement
@@ -289,19 +290,21 @@ export default function Element({ country, city, district, ward, handleOnchangeD
           <td>{city?.name || ''}</td>
           <td>{district?.name || ''}</td>
           <td>{ward?.name || ''}</td>
-          <td className={cx('toll-edit')}>
-            <Button gradient_primary type="button" onClick={handleToggleEditLocation}>
-              Edit
-            </Button>
-            <Button
-              data-value={ward ? `ward` : district ? 'district' : city ? 'city' : 'country'}
-              data-id={ward?.id || district?.id || city?.id || country?.id}
-              gradient_danger
-              type="button"
-              onClick={handleDeleteLocation}
-            >
-              Delete
-            </Button>
+          <td>
+            <div className={cx('toll-edit', 'd-flex flex-row justify-content-center flex-wrap')}>
+              <Button gradient_primary type="button" onClick={handleToggleEditLocation}>
+                Edit
+              </Button>
+              <Button
+                data-value={ward ? `ward` : district ? 'district' : city ? 'city' : 'country'}
+                data-id={ward?.id || district?.id || city?.id || country?.id}
+                gradient_danger
+                type="button"
+                onClick={handleDeleteLocation}
+              >
+                Delete
+              </Button>
+            </div>
           </td>
         </tr>
       </Tippy>

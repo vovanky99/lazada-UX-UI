@@ -14,7 +14,7 @@ class City extends Model
         'area',
         'country_id'
     ];
-    public function countries(){
+    public function country(){
         return $this->belongsTo(Country::class,'country_id','id');
     }
     public function districts(){

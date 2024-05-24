@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Auth\Client\AuthController as LifeShopController;
 use App\Http\Controllers\Auth\Admin\AdminAuthController;
 use App\Http\Controllers\Auth\Client\SocialAuthController;
@@ -22,10 +24,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [LifeShopController::class,'logout']);
     // get user client shop
@@ -36,22 +34,22 @@ Route::middleware('auth:sanctum')->group(function(){
 
 /* life shop */
 Route::prefix('')->group(function(){
-    /*auth */
+    //auth
     Route::post('/login', [LifeShopController::class,'login']);
     Route::post('/register', [LifeShopController::class,'register']);
-    /*social auth */
+    // social auth 
     Route::get('/auth/{provider}', [SocialAuthController::class,'redirectToProvider']);
     Route::get('/auth/{provider}/callback', [SocialAuthController::class,'handleProviderCallback']);
     Route::get('/decrypt-cookie',[SocialAuthController::class,'decryptCookie']);
 
-    /*search auth */
+    //search auth 
     Route::prefix('/search')->name('search.')->group(function(){
         Route::get('',[SearchController::class,'getSearchAll'])->name('result');
         Route::get('/getcat',[SearchController::class,'getSearchCat'])->name('searchcat');
         Route::get('/header',[SearchController::class,'getSearchSuggest'])->name('header');
     });
 
-    /*products detail */
+    // products detail 
     Route::prefix('/product-detail')->group(function(){
         Route::get('',[ProductDetailController::class,'getProductDetail']);
         Route::post('/reports-product',[ProductDetailController::class,'SendReports'])->middleware('auth:sanctum');
@@ -59,13 +57,13 @@ Route::prefix('')->group(function(){
         Route::get('/get-address',[ProductDetailController::class,'getAddress']);
     });
 
-    /*home page */
-    Route::prefix('/posts')->name('posts.')->group(function () {
-        Route::get('/products',[HomeController::class,'getProductsAll'])->name('get_products'); 
-        Route::get('/shop',[HomeController::class,'getShop'])->name('get_shop'); 
-        Route::get('/cat',[HomeController::class,'getCat'])->name('get_cat'); 
-        Route::get('/flashsale',[HomeController::class,'getflashSale'])->name('get_flashsale'); 
-        Route::get('/menu',[HomeController::class,'getMenu'])->name('get_menu'); 
+    // home page
+    Route::prefix('/posts')->group(function () {
+        Route::get('/products',[HomeController::class,'getProductsAll']); 
+        Route::get('/shop',[HomeController::class,'getShop']); 
+        Route::get('/cat',[HomeController::class,'getCat']); 
+        Route::get('/flashsale',[HomeController::class,'getflashSale']); 
+        Route::get('/menu',[HomeController::class,'getMenu']); 
     });
 });
 
@@ -75,21 +73,33 @@ Route::prefix('/admin')->group(function(){
     Route::post('/admin-login', [AdminAuthController::class,'login']);
 
     Route::middleware('auth:sanctum')->group(function(){
-    //admin controller
-    Route::controller(AdminController::class)->group(function(){
-        Route::post('/update','store');
-        Route::get('/get-search-location','getSearchLocation');
-    });
+        //admin controller
+        Route::controller(AdminController::class)->group(function(){ 
+            Route::post('/update','store');
+            Route::get('/get-search-location','getSearchLocation');
+            Route::get('/get-all-admin','getAllAdmin');
+            Route::delete('/delete-admin','deleteAdmin');
+        });
+        // Role Controller
+        Route::controller(RoleController::class)->group(function(){
+            Route::get('/get-role','index');
+        });
+        // Department Controller
+        Route::controller(DepartmentController::class)->group(function(){
+            Route::get('/get-department','index');
+        });
     });
 });
 
+
+
 /* location */
 Route::controller(LocationController::class)->group(function(){
+    Route::get('/all-location','index');
     Route::get('/get-country','getCountry');
     Route::get('/get-city','getCity');
     Route::get('/get-district','getDistrict');
     Route::get('/get-ward','getWard');
-    Route::get('/all-location','getLocation');
     Route::post('/create-country','createCountry');
     Route::post('/create-city','createCity');
     Route::post('/create-district','createDistrict');

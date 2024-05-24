@@ -1,0 +1,15 @@
+.main_wrapper {
+}
+.wrapper_title {
+  text-transform: capitalize;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+.wrapper_btn-add {
+  position: relative;
+  gap: 10px;
+  margin-bottom: 15px;
+  > div {
+    z-index: 1;
+  }
+}

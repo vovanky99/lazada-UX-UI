@@ -25,44 +25,44 @@ function Timer({ deadline, day = false, text = false, className, textFs, dateCla
     return () => clearInterval(interval);
   }, []);
   return (
-    <Row className={className}>
+    <div className={className + ' row'}>
       {days >= -365 || day == false ? (
         ''
       ) : (
-        <Col>
+        <div className="col">
           <div className="box d-flex">
             <span id="day" className={dateClass}>
               {days + 365}
             </span>
             {text ? <span className={textFs}>D</span> : <span className={textFs}>:</span>}
           </div>
-        </Col>
+        </div>
       )}
-      <Col>
+      <div className="col">
         <div className="box d-flex">
           <span id="hour" className={dateClass}>
             {hours}
           </span>
           {text ? <span className={textFs}>H</span> : <span className={textFs}>:</span>}
         </div>
-      </Col>
-      <Col>
+      </div>
+      <div className="col">
         <div className="box d-flex">
           <span id="minute" className={dateClass}>
             {minutes == 0 ? 0 : minutes + 60}
           </span>
           {text ? <span className={textFs}>M</span> : <span className={textFs}>:</span>}
         </div>
-      </Col>
-      <Col>
+      </div>
+      <div className="col">
         <div className="box d-flex ">
           <span id="second" className={dateClass}>
             {seconds + 60}
           </span>
           {text && <span className={textFs}>S</span>}
         </div>
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 }
 

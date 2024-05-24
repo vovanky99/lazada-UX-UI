@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from '../Location.module.scss';
 import Button from '~/components/Button';
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import { SelectLocation } from '~/Layout/Component/SelectLocation';
+import { SearchSelect } from '~/Layout/Component/SearchSelect';
 
 const cx = classNames.bind(styles);
 
@@ -60,7 +60,7 @@ export const AddLocationToggle = forwardRef(function AddToggle(
         <form onSubmit={handleSubmitForm} className={cx('d-flex flex-column')}>
           <div className={cx('form-group d-flex flex-row flex-wrap mb-3 ')}>
             {countryData ? (
-              <SelectLocation
+              <SearchSelect
                 searchSelectValue={searchSelectCountryValue}
                 data={countryData}
                 handleSetID={handleSetCountryID}
@@ -70,7 +70,7 @@ export const AddLocationToggle = forwardRef(function AddToggle(
               ''
             )}
             {cityData ? (
-              <SelectLocation
+              <SearchSelect
                 searchSelectValue={searchSelectCityValue}
                 data={cityData}
                 handleSetID={handleSetCityID}
@@ -80,7 +80,7 @@ export const AddLocationToggle = forwardRef(function AddToggle(
               ''
             )}
             {districtData ? (
-              <SelectLocation
+              <SearchSelect
                 handleSetID={handleSetDistrictID}
                 searchSelectValue={searchSelectDistrictValue}
                 data={districtData}

@@ -13,7 +13,7 @@ class Ward extends Model
         'name',
         'district_id'
     ];
-    public function districts(){
+    public function district(){
         return $this->belongsTo(District::class,'district_id','id');
     }
     public function address(){

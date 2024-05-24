@@ -1,151 +1,67 @@
-.location {
-  &_title {
-    font-size: 2rem;
-    margin-bottom: 10px;
+.add-container {
+  width: 50%;
+  padding: 10px;
+  position: absolute;
+  left: 0;
+  top: 40px;
+  background-color: white;
+  box-shadow: 0px 0px 3px var(--box_shadow_admin);
+}
+
+.add-city,
+.add-country,
+.add-district,
+.add-ward {
+  > button {
+    padding: 5px 15px;
   }
-  &_header {
-    position: relative;
-    gap: 10px;
-    margin-bottom: 15px;
+}
+.message {
+  font-size: 1.6rem;
+}
+.filter-data {
+  h4 {
+    font-size: 1.7rem;
+    text-transform: capitalize;
+  }
+
+  form {
     > div {
-      z-index: 99;
-      .add-container {
-        width: 50%;
-        padding: 10px;
-        position: absolute;
-        left: 0;
-        top: 40px;
-        background-color: white;
-        box-shadow: 0px 0px 3px var(--box_shadow_admin);
-      }
-    }
-    .add-city,
-    .add-country,
-    .add-district,
-    .add-ward {
-      > button {
-        padding: 5px 15px;
-      }
-    }
-  }
-  .message {
-    font-size: 1.6rem;
-  }
-  &_footer {
-    .filter-data {
-      h4 {
-        font-size: 1.8rem;
-        text-transform: capitalize;
-      }
-      .filter-form {
-        margin-bottom: 20px;
-        &_submit {
-          padding: 0px;
-          height: 35px;
-        }
-      }
-    }
-  }
-}
-
-form {
-  > div {
-    gap: 10px;
-  }
-  label {
-    font-size: 1.5rem;
-  }
-  input {
-    font-size: 1.5rem;
-    border-color: var(--border_color_admin);
-    &::placeholder {
-      text-transform: capitalize;
-    }
-    &:focus {
-      border-color: var(--input_focus_admin) !important;
-    }
-  }
-}
-
-table {
-  // border: 1px solid;
-  tr {
-    vertical-align: middle;
-    text-align: center;
-    border-bottom: none;
-  }
-  td {
-    border-top: none !important;
-  }
-  th,
-  td {
-    border: 1px solid var(--border_color_admin);
-  }
-  thead {
-    width: calc(100% - 5px) !important;
-    th {
-      font-size: 1.6rem;
-    }
-  }
-  thead,
-  tbody tr {
-    table-layout: fixed;
-    display: table;
-    width: 100%;
-  }
-  tbody {
-    overflow-y: scroll;
-    height: 100vh;
-    width: 100%;
-    display: block;
-    tr {
-      &:hover td {
-        background-color: #109c62;
-        border-color: #109c62;
-      }
-    }
-    td {
-      font-size: 1.4rem;
-    }
-    &::-webkit-scrollbar {
-      width: 5px;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: #7a7a7a;
-      border-radius: 10px;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: #f2edf3;
-    }
-  }
-  .toll-edit {
-    button {
-      font-size: 1.4rem;
-      padding: 5px 10px;
-      &:not(:last-child) {
-        margin-right: 10px !important;
-      }
-    }
-  }
-  .toggle-edit {
-    background-color: white !important;
-    box-shadow: 0px 0px 3px 1px var(--box_shadow_admin) !important;
-    padding: 10px 20px !important;
-    h5 {
-      font-size: 2rem;
-      font-weight: 600;
-    }
-    .edit-content {
       gap: 10px;
-      > div {
-        label {
-          font-size: 1.6rem;
-          font-weight: 600;
-        }
-        input {
-          &:focus {
-            border-color: var(--input_focus_admin) !important;
-          }
+    }
+  }
+  .filter-form {
+    margin-bottom: 20px;
+    &_submit {
+      padding: 0px;
+      height: 35px;
+    }
+  }
+}
+.toll-edit {
+  gap: 5px;
+  border-left: none;
+  button {
+    font-size: 1.4rem;
+    padding: 5px 10px;
+  }
+}
+.toggle-edit {
+  background-color: white !important;
+  box-shadow: 0px 0px 3px 1px var(--box_shadow_admin) !important;
+  padding: 10px 20px !important;
+  h5 {
+    font-size: 1.8rem;
+  }
+  .edit-content {
+    gap: 10px;
+    > div {
+      label {
+        font-size: 1.5rem;
+      }
+      input {
+        &:focus {
+          border-color: var(--input_focus_admin) !important;
         }
       }
     }

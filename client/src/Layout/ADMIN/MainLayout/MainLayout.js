@@ -50,7 +50,7 @@ export default function MainLayout({ children }) {
       {isAdminAuth ? (
         <>
           <Header />
-          <div className={cx('main', 'd-flex flex-row')}>
+          <div className={cx('main_admin', 'd-flex flex-row')}>
             <SideBar />
             <main className={cx('main-content', 'd-flex flex-column flex-grow-1')}>
               {breadCrumb ? <BreadCrumb path={path} isAdmin /> : ''}

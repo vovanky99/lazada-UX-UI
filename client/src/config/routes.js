@@ -27,6 +27,7 @@ export const adminRoutes = {
   ProfileAdmin: '/admin/profile',
   AllAdmin: '/admin/all-admin',
   EditAdmin: '/admin/edit-admin',
+  AddAdmin: '/admin/add-admin',
   AllShop: '/admin/all-shop',
   EditShop: '/admin/edit-shop',
   Location: '/admin/location',

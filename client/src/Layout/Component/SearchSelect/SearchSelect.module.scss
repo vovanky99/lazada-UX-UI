@@ -14,6 +14,21 @@
     }
   }
 }
+.select-container {
+  label {
+    font-size: 1.5rem;
+  }
+  input {
+    font-size: 1.5rem;
+    border-color: var(--border_color_admin);
+    &::placeholder {
+      text-transform: capitalize;
+    }
+    &:focus {
+      border-color: var(--input_focus_admin) !important;
+    }
+  }
+}
 
 // handle scroll option
 .option {

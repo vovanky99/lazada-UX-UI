@@ -1,0 +1,41 @@
+// form select
+.form-select,
+.form-date {
+  label {
+    font-size: 1.5rem;
+  }
+  select {
+    font-size: 1.5rem;
+    border-color: var(--border_color_admin);
+    &::placeholder {
+      text-transform: capitalize;
+    }
+    &:focus {
+      border-color: var(--input_focus_admin) !important;
+    }
+  }
+}
+
+// form date
+.form-date {
+  input {
+    position: relative;
+    font-size: 1.5rem;
+    border-color: var(--border_color_admin);
+    &:focus {
+      border-color: var(--input_focus_admin) !important;
+    }
+  }
+  input[type='date']::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+  }
+}
