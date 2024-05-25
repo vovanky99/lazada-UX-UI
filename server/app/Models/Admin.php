@@ -44,4 +44,7 @@ class Admin extends Authenticatable
     public function address_t(){
         return $this->belongsTo(Address::class,'temporary_registration','id');
     }
+    public function department(){
+        return $this->belongsTo(Department::class,'department_id','id');
+    }
 }

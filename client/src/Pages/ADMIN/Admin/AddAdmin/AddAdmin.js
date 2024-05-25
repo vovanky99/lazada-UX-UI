@@ -18,7 +18,7 @@ import useDebounce from '~/Hooks/Debounce/Debounce';
 
 const cx = classNames.bind(styles);
 
-export default function AllAdmin() {
+export default function AddAdmin() {
   const nameRef = useRef();
   const avatarRef = useRef();
   const usernameRef = useRef();
@@ -42,35 +42,27 @@ export default function AllAdmin() {
   const [gender, setGender] = useState('');
   const [birthday, setBirthDay] = useState('');
   const [citizenIdentificationCard, setCitizenIdentificationCard] = useState('');
-  const [bornCountry, setBornCountry] = useState('');
   const [searchBornCountry, setSearchBornCountry] = useState('');
   const [bornCountryID, setBornCountryID] = useState('');
   const [bornCountryData, setBornCountryData] = useState('');
-  const [bornCity, setBornCity] = useState('');
   const [searchBornCity, setSearchBornCity] = useState('');
   const [bornCityID, setBornCityID] = useState('');
   const [bornCityData, setBornCityData] = useState('');
-  const [bornDistrict, setBornDistrict] = useState('');
   const [searchBornDistrict, setSearchBornDistrict] = useState('');
   const [bornDistrictID, setBornDistrictID] = useState('');
   const [bornDistrictData, setBornDistrictData] = useState('');
-  const [bornWard, setBornWard] = useState('');
   const [searchBornWard, setSearchBornWard] = useState('');
   const [bornWardID, setBornWardID] = useState('');
   const [bornWardData, setBornWardData] = useState('');
-  const [liveAtCountry, setLiveAtCountry] = useState('');
   const [searchLiveAtCountry, setSearchLiveAtCountry] = useState('');
   const [liveAtCountryID, setLiveAtCountryID] = useState('');
   const [liveAtCountryData, setLiveAtCountryData] = useState('');
-  const [liveAtCity, setLiveAtCity] = useState('');
   const [searchLiveAtCity, setSearchLiveAtCity] = useState('');
   const [liveAtCityID, setLiveAtCityID] = useState('');
   const [liveAtCityData, setLiveAtCityData] = useState('');
-  const [liveAtDistrict, setLiveAtDistrict] = useState('');
   const [searchLiveAtDistrict, setSearchLiveAtDistrict] = useState('');
   const [liveAtDistrictID, setLiveAtDistrictID] = useState('');
   const [liveAtDistrictData, setLiveAtDistrictData] = useState('');
-  const [liveAtWard, setLiveAtWard] = useState('');
   const [searchLiveAtWard, setSearchLiveAtWard] = useState('');
   const [liveAtWardID, setLiveAtWardID] = useState('');
   const [liveAtWardData, setLiveAtWardData] = useState('');
@@ -387,15 +379,15 @@ export default function AllAdmin() {
           </div>
           <div className={cx('form-content', 'd-flex flex-row flex-wrap')}>
             <div className={cx('form-content_name')}>
-              <SearchSelect inputRef={nameRef} title="full name" useTippy={false} searchSelectValue={setName} />
+              <SearchSelect ref={nameRef} title="full name" useTippy={false} searchSelectValue={setName} />
             </div>
             <div className={cx('form-content_username')}>
-              <SearchSelect inputRef={usernameRef} title="username" useTippy={false} searchSelectValue={setUsername} />
+              <SearchSelect ref={usernameRef} title="username" useTippy={false} searchSelectValue={setUsername} />
               {validUsername ? <div className="text-danger text-capitalize">{validUsername}</div> : ''}
             </div>
             <div className={cx('form-content_password')}>
               <SearchSelect
-                inputRef={passwordRef}
+                ref={passwordRef}
                 inputType="password"
                 title="password"
                 useTippy={false}
@@ -403,17 +395,17 @@ export default function AllAdmin() {
               />
             </div>
             <div className={cx('form-content_phone')}>
-              <SearchSelect inputRef={phoneRef} title="phone" useTippy={false} searchSelectValue={setPhone} />
+              <SearchSelect ref={phoneRef} title="phone" useTippy={false} searchSelectValue={setPhone} />
             </div>
             <div className={cx('form-content_gender')}>
-              <FormSelect selectRef={genderRef} title="gender" handleSetValue={setGender} />
+              <FormSelect ref={genderRef} title="gender" handleSetValue={setGender} />
             </div>
             <div className={cx('form-content_birthday')}>
-              <FormDate inputRef={birthdayRef} title="birthday" handleSetValue={setBirthDay} />
+              <FormDate ref={birthdayRef} title="birthday" handleSetValue={setBirthDay} />
             </div>
             <div className={cx('form-content_citizen-card')}>
               <SearchSelect
-                inputRef={citizenCardRef}
+                ref={citizenCardRef}
                 inputType="number"
                 title="Citizen Card"
                 useTippy={false}
@@ -422,7 +414,7 @@ export default function AllAdmin() {
             </div>
             <div className={cx('form-content_role')}>
               <SearchSelect
-                inputRef={roleRef}
+                ref={roleRef}
                 title="role"
                 data={roleData}
                 searchSelectValue={setRole}
@@ -431,7 +423,7 @@ export default function AllAdmin() {
             </div>
             <div className={cx('form-content_department')}>
               <SearchSelect
-                inputRef={departmentRef}
+                ref={departmentRef}
                 title="department"
                 data={departmentData}
                 searchSelectValue={setDepartment}
@@ -468,7 +460,7 @@ export default function AllAdmin() {
                   searchSelectValue={setSearchBornDistrict}
                 />
                 <SearchSelect
-                  inputRef={wardBornRef}
+                  ref={wardBornRef}
                   title="ward"
                   isLabel={false}
                   data={bornWardData}
@@ -477,7 +469,7 @@ export default function AllAdmin() {
                   searchSelectValue={setSearchBornWard}
                 />
                 <FormText
-                  textRef={addressBornRef}
+                  ref={addressBornRef}
                   title="address"
                   rows={3}
                   isLabel={false}
@@ -517,7 +509,7 @@ export default function AllAdmin() {
                 />
                 <SearchSelect
                   title="ward"
-                  inputRef={wardLiveRef}
+                  ref={wardLiveRef}
                   classTitle="live-ward"
                   isLabel={false}
                   data={liveAtWardData}
@@ -526,7 +518,7 @@ export default function AllAdmin() {
                   searchSelectValue={setSearchLiveAtWard}
                 />
                 <FormText
-                  textRef={addressLiveRef}
+                  ref={addressLiveRef}
                   title="address"
                   rows={3}
                   isLabel={false}

@@ -22,18 +22,18 @@ class Address extends Model
         return $this->belongsTo(User::class,'addressable_id','id');
     }
     public function shop(){
-        return $this->belongsTo(Address::class,'address_id');
+        return $this->hasOne(Address::class,'address_id');
     }
     public function ward(){
-        return $this->belongsTo(Ward::class,'ward_id','id');
+        return $this->belongsTo(Ward::class,'ward_id');
     }
-    public function address(){
-        return $this->hasOne(User::class,'address_id','id');
-    }
-    public function adminP(){
+    public function admin_p(){
         return $this->hasOne(Admin::class,'permanent_residennce_registration','id');
     }
-    public function adminT(){
+    public function admin_t(){
         return $this->hasOne(Admin::class,'temporary_registration','id');
+    }
+    public function shop_owner(){
+        return $this->hasOne(Address::class,'address_id','id');
     }
 }

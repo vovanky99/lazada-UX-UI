@@ -1,12 +1,23 @@
-import classNames from 'classnames/bind';
-import styles from '../Admin.module.scss';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-const cx = classNames.bind(styles);
+import { ShowData } from '~/Services/General/HandleData';
+import EditChild from './EditChild';
 
-export default function AllAdmin() {
-  return (
-    <>
-      <section>All Admin</section>
-    </>
-  );
+export default function EditAdmin() {
+  const param = useParams();
+
+  const [data, setData] = useState(null);
+
+  /* handle get data */
+  useEffect(() => {
+    const id = param.id;
+    ShowData('admin', 'admin', id)
+      .then((result) => {
+        setData(result[0]);
+      })
+      .catch((e) => console.log(e));
+  }, [param.id]);
+
+  return <>{data ? <EditChild data={data} /> : ''}</>;
 }

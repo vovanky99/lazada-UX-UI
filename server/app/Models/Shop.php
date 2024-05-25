@@ -21,19 +21,16 @@ class Shop extends Model
     public function messages(){
         return $this->hasMany(MessagesShop::class,'shop_id');
     }
-    public function user(){
-        return $this->belongsTo(User::class,'user_id','id');
+    public function shop_owner(){
+        return $this->hasMany(ShopOwner::class,'shop_id');
     }
     public function product(){
-        return $this->hasMany(Products::class,'shop_id','id');
+        return $this->hasMany(Products::class,'shop_id');
     }
     public function followShop(){
         return $this->hasMany(FollowShop::class,'shop_id');
     }
     public function Address(){
-        return $this->hasMany(Address::class,'addressable_id');
-    }
-    public function addressDefault(){
         return $this->belongsTo(Address::class,'address_id');
     }
     

@@ -42,34 +42,6 @@ class CategoriesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(catRequest $request)
-    {
-        //
-        if($request->cat_id > 0){
-            DB::select('CALL create_cat(?,?)',array($request->title,$request->cat_id));
-        }
-        else{
-            // DB::select('EXEC create_cat_not_child ?',array($request->title));
-            DB::select('CALL create_cat_not_child(?)',array($request->title));
-        }
-        $categories = Categories::paginate(15);
-        $count_cat = Categories::count();
-        return view('categories/index',compact('categories','count_cat'));
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-        $cat = Categories::find($id);
-        return view('categories/show',compact('cat'));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
@@ -87,15 +59,5 @@ class CategoriesController extends Controller
     {
         //
         
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-        DB::select('call delete_cat(?)',array($id));
-        return redirect()->route('cat.index');
     }
 }

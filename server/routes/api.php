@@ -76,9 +76,11 @@ Route::prefix('/admin')->group(function(){
     Route::middleware('auth:sanctum')->group(function(){
         //admin controller
         Route::controller(AdminController::class)->group(function(){ 
-            Route::post('/update','store');
+            Route::post('/update','update');
             Route::post('/create-admin','create');
             Route::get('/get-all-admin','getAllAdmin');
+            Route::get('/show-admin/{id}','showAdmin');
+            Route::patch('/edit-admin/{id}','editAdmin');
             Route::delete('/delete-admin','deleteAdmin');
         });
         // Role Controller
@@ -89,12 +91,26 @@ Route::prefix('/admin')->group(function(){
         Route::controller(DepartmentController::class)->group(function(){
             Route::get('/get-department','getDepartment');
         });
+        /* location */
+        Route::controller(LocationController::class)->group(function(){
+            Route::post('/create-country','createCountry');
+            Route::post('/create-city','createCity');
+            Route::post('/create-district','createDistrict');
+            Route::post('/create-ward','createWard');
+            Route::delete('/delete-location/{type}/{id}','deleteLocation');
+            Route::delete('/delete-country/{id}','deleteCountry');
+            Route::delete('/delete-city/{id}','deleteCity');
+            Route::delete('/delete-district/{id}','deleteDistrict');
+            Route::delete('/delete-ward/{id}','deleteWard');
+            Route::patch('/edit-country/{id}','editCountry');
+            Route::patch('/edit-city/{id}','editCity');
+            Route::patch('/edit-district/{id}','editDistrict');
+            Route::patch('/edit-ward/{id}','editWard');
+        });
     });
 });
 
-
-
-/* location */
+/* location public*/
 Route::controller(LocationController::class)->group(function(){
     Route::get('/all-location','index');
     Route::get('/get-country','getCountry');
@@ -102,23 +118,9 @@ Route::controller(LocationController::class)->group(function(){
     Route::get('/get-district','getDistrict');
     Route::get('/get-ward','getWard');
     Route::get('/get-search-location','getSearchLocation');
-    Route::post('/create-country','createCountry');
-    Route::post('/create-city','createCity');
-    Route::post('/create-district','createDistrict');
-    Route::post('/create-ward','createWard');
-    Route::delete('/delete-location/{type}/{id}','deleteLocation');
-    Route::delete('/delete-country/{id}','deleteCountry');
-    Route::delete('/delete-city/{id}','deleteCity');
-    Route::delete('/delete-district/{id}','deleteDistrict');
-    Route::delete('/delete-ward/{id}','deleteWard');
-    Route::patch('/edit-country/{id}','editCountry');
-    Route::patch('/edit-city/{id}','editCity');
-    Route::patch('/edit-district/{id}','editDistrict');
-    Route::patch('/edit-ward/{id}','editWard');
 });
 
 /* check user */
-
 Route::controller(CheckController::class)->group(function(){
     Route::get('/check-username','CheckUsername');
 });

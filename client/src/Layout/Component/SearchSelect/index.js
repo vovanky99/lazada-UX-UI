@@ -7,26 +7,28 @@ import Debounce from '~/Hooks/Debounce';
 
 const cx = classNames.bind(styles);
 
-export const SearchSelect = forwardRef(function Select({
-  useTippy = true,
-  IDValue,
-  inputType = 'text',
-  inputClassname,
-  ContainerClassname,
-  searchValue,
-  data,
-  title,
-  classTitle,
-  isLabel = true,
-  NullValue = false,
-  handleSetID = () => {},
-  searchSelectValue = () => {},
-  inputRef,
-}) {
+export const SearchSelect = forwardRef(function Select(
+  {
+    useTippy = true,
+    valueID,
+    inputType = 'text',
+    inputClassname,
+    ContainerClassname,
+    searchValue,
+    data,
+    title,
+    classTitle,
+    isLabel = true,
+    NullValue = false,
+    handleSetID = () => {},
+    searchSelectValue = () => {},
+  },
+  ref,
+) {
   const selectRef = useRef();
   const optionRef = useRef();
   const [select, setSelect] = useState(false);
-  const [ID, setID] = useState(IDValue || '');
+  const [ID, setID] = useState(valueID || '');
   const [search, setSearch] = useState(searchValue || '');
 
   /* set search value use debounce */
@@ -131,7 +133,7 @@ export const SearchSelect = forwardRef(function Select({
             onClickOutside={handleClickOutsideSelect}
           >
             <input
-              ref={inputRef}
+              ref={ref}
               type={inputType}
               className={cx('search', inputClassname ? `${inputClassname}` : ' form-control py-2')}
               onClick={handleClickSelect}
@@ -145,7 +147,7 @@ export const SearchSelect = forwardRef(function Select({
           </Tippy>
         ) : (
           <input
-            ref={inputRef}
+            ref={ref}
             type={inputType}
             className={cx('search', inputClassname ? `${inputClassname}` : ' form-control py-2')}
             placeholder={`Enter Select ${title}`}

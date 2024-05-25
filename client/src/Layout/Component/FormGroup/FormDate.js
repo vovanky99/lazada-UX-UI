@@ -5,14 +5,10 @@ import { format } from 'date-fns';
 
 const cx = classNames.bind(styles);
 
-export const FormDate = forwardRef(function Form({
-  title,
-  containerClass,
-  inputClassname,
-  handleSetValue = () => {},
-  data,
-  inputRef,
-}) {
+export const FormDate = forwardRef(function Form(
+  { title, containerClass, inputClassname, handleSetValue = () => {}, data },
+  ref,
+) {
   const [value, setValue] = useState(() => {
     if (data) {
       return format(new Date(data), 'yyyy-MM-dd');
@@ -29,7 +25,7 @@ export const FormDate = forwardRef(function Form({
       <label className={cx('form-label text-capitalize')}>{title}</label>
       <input
         className={cx(inputClassname ? `${inputClassname}` : ' form-control py-2')}
-        ref={inputRef}
+        ref={ref}
         type="date"
         value={value}
         onChange={(e) => {

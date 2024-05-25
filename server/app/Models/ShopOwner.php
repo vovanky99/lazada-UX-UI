@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PhpParser\Node\Stmt\Return_;
 
 class ShopOwner extends Model
 {
@@ -20,9 +21,17 @@ class ShopOwner extends Model
         'description',
         'is_owner',
         'address_id',
+        'shop_id',
     ];
 
     protected $hidden =[
         'password',
     ];
+
+    public function address(){
+        return $this->belongsTo(Address::class,'address_id','id');
+    }
+    public function shop(){
+        return $this->belongsTo(Shop::class,'shop_id','id');
+    }
 }

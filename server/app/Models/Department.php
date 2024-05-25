@@ -13,6 +13,9 @@ class Department extends Model
     protected $fillable = [
         'name',
         'description',
-        'manager_id',
+        'manager_id',   
     ];
+    public function admins(){
+        return $this->hasMany(Admin::class,'department_id','id');
+    }
 }

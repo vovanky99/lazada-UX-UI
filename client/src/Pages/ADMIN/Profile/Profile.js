@@ -269,7 +269,7 @@ export default function Profile() {
             <label className={cx('input_title', 'form-label')}>Select Location</label>
             <div className={cx('form-group d-flex flex-row gap-3 flex-wrap')}>
               <SearchSelect
-                IDValue={countryID}
+                valueID={countryID}
                 searchValue={searchCountryValue}
                 isLabel={false}
                 title="country"
@@ -278,7 +278,7 @@ export default function Profile() {
                 handleSetID={setCountryID}
               />
               <SearchSelect
-                IDValue={cityID}
+                valueID={cityID}
                 searchValue={searchCityValue}
                 isLabel={false}
                 title="city"
@@ -287,7 +287,7 @@ export default function Profile() {
                 handleSetID={setCityID}
               />
               <SearchSelect
-                IDValue={districtID}
+                valueID={districtID}
                 searchValue={searchDistrictValue}
                 isLabel={false}
                 title="district"
@@ -296,7 +296,7 @@ export default function Profile() {
                 handleSetID={setDistrictID}
               />
               <SearchSelect
-                IDValue={wardID}
+                valueID={wardID}
                 searchValue={searchWardValue}
                 isLabel={false}
                 title="ward"

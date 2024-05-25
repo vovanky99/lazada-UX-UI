@@ -147,9 +147,7 @@ export default function Element({ country, city, district, ward, handleOnchangeD
   /* handle edit Country */
   const handleEditCountry = async (e) => {
     if (e.target.dataset.id && e.target.dataset.name) {
-      const data = new FormData();
-      data.append('name', e.target.dataset.name);
-      EditLocation('country', e.target.dataset.id, data)
+      EditLocation('country', e.target.dataset.id, { name: e.target.dataset.name })
         .then((e) => {
           handleOnchangeDelete(1);
           setMessageCountrySuccess('edit country Success');
@@ -167,9 +165,7 @@ export default function Element({ country, city, district, ward, handleOnchangeD
   /* handle edit City */
   const handleEditCity = async (e) => {
     if (e.target.dataset.id && e.target.dataset.name) {
-      const data = new FormData();
-      data.append('name', e.target.dataset.name);
-      EditLocation('city', e.target.dataset.id, data)
+      EditLocation('city', e.target.dataset.id, { name: e.target.dataset.name })
         .then((e) => {
           handleOnchangeDelete(1);
           setMessageCitySuccess('edit city Success');
@@ -187,9 +183,7 @@ export default function Element({ country, city, district, ward, handleOnchangeD
   /* handle edit District */
   const handleEditDistrict = async (e) => {
     if (e.target.dataset.id && e.target.dataset.name) {
-      const data = new FormData();
-      data.append('name', e.target.dataset.name);
-      EditLocation('district', e.target.dataset.id, data)
+      EditLocation('district', e.target.dataset.id, { name: e.target.dataset.name })
         .then((e) => {
           handleOnchangeDelete(1);
           setMessageDistrictSuccess('edit ditrict Success');
@@ -207,9 +201,7 @@ export default function Element({ country, city, district, ward, handleOnchangeD
   /* handle edit ward */
   const handleEditWard = async (e) => {
     if (e.target.dataset.id && e.target.dataset.name) {
-      const data = new FormData();
-      data.append('name', e.target.dataset.name);
-      EditLocation('ward', e.target.dataset.id, data)
+      EditLocation('ward', e.target.dataset.id, { name: e.target.dataset.name })
         .then((e) => {
           handleOnchangeDelete(1);
           setMessageWardSuccess('edit ward Success');

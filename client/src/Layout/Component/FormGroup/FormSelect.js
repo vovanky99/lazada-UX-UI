@@ -14,17 +14,11 @@ const status = [
   { name: 'Show', id: '1' },
 ];
 
-export const FormSelect = forwardRef(function Form({
-  containerClass,
-  selectClass,
-  isStatus = false,
-  defaultValue,
-  title,
-  handleSetValue = () => {},
-  data,
-  selectRef,
-}) {
-  const [value, setValue] = useState('');
+export const FormSelect = forwardRef(function Form(
+  { containerClass, selectClass, isStatus = false, defaultValue, title, handleSetValue = () => {}, data },
+  ref,
+) {
+  const [value, setValue] = useState(defaultValue || '');
   useEffect(() => {
     handleSetValue(value);
   });
@@ -32,8 +26,8 @@ export const FormSelect = forwardRef(function Form({
     <div className={cx('form-select', containerClass || ' form-group flex-grow-1')}>
       <label className={cx('form-label text-capitalize')}>{title}</label>
       <select
-        ref={selectRef}
-        value={defaultValue}
+        ref={ref}
+        value={value}
         className={cx(selectClass || 'form-control py-2')}
         onChange={(e) => {
           setValue(e.target.value);

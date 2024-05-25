@@ -12,9 +12,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller{
-    public function store(Request $request){
+
+    //update profile
+    public function update(Request $request){
         $name = $request->name;
         $address = $request->address;
         $phone = $request->phone;
@@ -44,6 +47,7 @@ class AdminController extends Controller{
         }  
     }
 
+    // Store a newly created resource in storage.
     public function create(Request $request){
         $name = $request->name;
         $username = $request->username;
@@ -198,6 +202,80 @@ class AdminController extends Controller{
         }
         $admin = $admins->get();
         return response()->json($admin);
+    }
+
+    public function showAdmin($id){
+        $admin =  Admin::where('id',$id)->with('address_t.ward.district.city.country')->with('address_p.ward.district.city.country')->with('role','department')->get();
+        return response()->json($admin);
+    }
+
+    // handle edit admin
+    public function editAdmin(Request $request,$id){
+        $name = $request->name;
+        $password = $request->password;
+        $avatar = $request->avatar;
+        $phone = $request->phone;
+        $gender = $request->gender;
+        $birthday = $request->birthday;
+        $citizen_card = $request->citizen_card;
+        $born_ward_id = $request->born_ward_id;
+        $live_ward_id = $request->live_ward_id;
+        $address_born = $request->address_born;
+        $address_live = $request->address_live;
+        $role_id = $request->role_id;
+        $department_id = $request->department_id;
+        $validator = $request->validate([
+            'password'=>['required','min:8','max:16'],
+        ]);
+        $adminUp = Admin::findOrFail($id);              
+        $admin = DB::table('admin')->select('admin.*','address_born.street_address as address_born_street','address_live.street_address as address_live_street','address_born.ward_id as address_born_ward','address_live.ward_id as address_live_ward')->join('address as address_born','admin.permanent_residennce_registration','=','address_born.id')->join('address as address_live','admin.temporary_registration','=','address_live.id')->where('admin.id',$id)->first();
+        
+        //update born at when have change
+        if($address_born != $admin->address_born_street || $born_ward_id !=$admin->address_born_ward){
+            $add_born = Address::findOrFail($adminUp->address_p->id);
+            $add_born->update([
+                'street_address' => $address_born,
+                'ward_id' => $born_ward_id,
+            ]);
+        }
+        //update live at when have change
+        if($address_live != $admin->address_live_street || $live_ward_id !=$admin->address_live_ward){
+            $add_live = Address::findOrFail($adminUp->address_t->id);
+            $add_live->update([
+                'ward_id'=>$live_ward_id,
+                'street_address'=>$address_live
+            ]);
+        }
+
+         //update admin
+         
+         if($password !=''){
+            $adminUp->update([
+                'name'=>$name,
+                'avatar'=>$avatar,
+                'password'=>Hash::make($password),
+                'phone_number'=>$phone,
+                'gender'=>$gender,
+                'birthday'=>$birthday,
+                'citizen_identification_card'=>$citizen_card,
+                'role_id'=>$role_id,
+                'department_id'=>$department_id,
+            ]);
+         }
+         else{
+            dd(1);
+            $adminUp->update([
+                'name'=>$name,
+                'avatar'=>$avatar,
+                'phone_number'=>$phone,
+                'gender'=>$gender,
+                'birthday'=>$birthday,
+                'citizen_identification_card'=>$citizen_card,
+                'role_id'=>$role_id,
+                'department_id'=>$department_id,
+            ]);
+         }    
+        return response()->json($adminUp);
     }
     public function deleteAdmin($id){
         $admin = Admin::find($id);

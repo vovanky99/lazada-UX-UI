@@ -2,7 +2,7 @@ import axios from '~/api/axios';
 
 export default async function DeleteLocation(location, id) {
   try {
-    const res = await axios.delete(`/api/delete-${location}/${id}`);
+    const res = await axios.delete(`/api/admin/delete-${location}/${id}`);
     return res.data;
   } catch (e) {
     console.log(e);
@@ -11,7 +11,7 @@ export default async function DeleteLocation(location, id) {
 
 export async function DeleteSingleLocation(value, id) {
   try {
-    const res = await axios.delete(`/api/delete-location/${value}/${id}`);
+    const res = await axios.delete(`/api/admin/delete-location/${value}/${id}`);
     return res.data;
   } catch (e) {
     console.log(e);

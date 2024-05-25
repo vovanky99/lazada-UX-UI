@@ -26,7 +26,7 @@ export const adminRoutes = {
   Home: '/admin',
   ProfileAdmin: '/admin/profile',
   AllAdmin: '/admin/all-admin',
-  EditAdmin: '/admin/edit-admin',
+  EditAdmin: '/admin/edit-admin/:id',
   AddAdmin: '/admin/add-admin',
   AllShop: '/admin/all-shop',
   EditShop: '/admin/edit-shop',

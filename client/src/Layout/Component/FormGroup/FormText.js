@@ -4,17 +4,10 @@ import styles from './FormGroup.module.scss';
 
 const cx = classNames.bind(styles);
 
-export const FormText = forwardRef(function Form({
-  title,
-  isLabel = true,
-  containerClass,
-  rows,
-  cols,
-  textClassname,
-  handleSetValue = () => {},
-  data,
-  textRef,
-}) {
+export const FormText = forwardRef(function Form(
+  { title, isLabel = true, containerClass, rows, cols, textClassname, handleSetValue = () => {}, data },
+  ref,
+) {
   const [value, setValue] = useState(data || '');
 
   useEffect(() => {
@@ -24,7 +17,7 @@ export const FormText = forwardRef(function Form({
     <div className={cx('form-text', containerClass || 'form-group flex-grow-1')}>
       {isLabel ? <label className={cx('form-label text-capitalize')}>{title}</label> : ''}
       <textarea
-        ref={textRef}
+        ref={ref}
         className={cx(textClassname ? textClassname + ' form-control' : ' form-control')}
         cols={cols}
         rows={rows}
