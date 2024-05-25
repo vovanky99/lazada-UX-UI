@@ -5,10 +5,14 @@ import { format } from 'date-fns';
 
 const cx = classNames.bind(styles);
 
-export const FormDate = forwardRef(function Form(
-  { title, containerClass, inputClassname, handleSetValue = () => {}, data },
+export const FormDate = forwardRef(function Form({
+  title,
+  containerClass,
+  inputClassname,
+  handleSetValue = () => {},
+  data,
   inputRef,
-) {
+}) {
   const [value, setValue] = useState(() => {
     if (data) {
       return format(new Date(data), 'yyyy-MM-dd');

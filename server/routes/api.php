@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Auth\Client\AuthController as LifeShopController;
 use App\Http\Controllers\Auth\Admin\AdminAuthController;
 use App\Http\Controllers\Auth\Client\SocialAuthController;
+use App\Http\Controllers\CheckController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;
@@ -76,17 +77,17 @@ Route::prefix('/admin')->group(function(){
         //admin controller
         Route::controller(AdminController::class)->group(function(){ 
             Route::post('/update','store');
-            Route::get('/get-search-location','getSearchLocation');
+            Route::post('/create-admin','create');
             Route::get('/get-all-admin','getAllAdmin');
             Route::delete('/delete-admin','deleteAdmin');
         });
         // Role Controller
         Route::controller(RoleController::class)->group(function(){
-            Route::get('/get-role','index');
+            Route::get('/get-role','getRole');
         });
         // Department Controller
         Route::controller(DepartmentController::class)->group(function(){
-            Route::get('/get-department','index');
+            Route::get('/get-department','getDepartment');
         });
     });
 });
@@ -100,6 +101,7 @@ Route::controller(LocationController::class)->group(function(){
     Route::get('/get-city','getCity');
     Route::get('/get-district','getDistrict');
     Route::get('/get-ward','getWard');
+    Route::get('/get-search-location','getSearchLocation');
     Route::post('/create-country','createCountry');
     Route::post('/create-city','createCity');
     Route::post('/create-district','createDistrict');
@@ -113,5 +115,10 @@ Route::controller(LocationController::class)->group(function(){
     Route::patch('/edit-city/{id}','editCity');
     Route::patch('/edit-district/{id}','editDistrict');
     Route::patch('/edit-ward/{id}','editWard');
+});
 
+/* check user */
+
+Route::controller(CheckController::class)->group(function(){
+    Route::get('/check-username','CheckUsername');
 });

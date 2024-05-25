@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import styles from '../Admin.module.scss';
 import Button from '~/components/Button';
 import config from '~/config';
-import Wrapper from '~/Layout/Component/Wrapper';
+import WrapperMain from '~/Layout/Component/WrapperMain';
 import { SearchSelect } from '~/Layout/Component/SearchSelect';
 import { FormSelect } from '~/Layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/Layout/Component/FormGroup/FormDate';
@@ -145,7 +145,7 @@ export default function AllAdmin() {
 
   /* handle get District live at */
   useEffect(() => {
-    GetLocation('city', searchLiveAtDistrict, liveAtCityID)
+    GetLocation('district', searchLiveAtDistrict, liveAtCityID)
       .then((result) => setLiveAtDistrictData(result))
       .catch((e) => {
         console.log(e);
@@ -154,7 +154,7 @@ export default function AllAdmin() {
 
   /* handle get ward live at */
   useEffect(() => {
-    GetLocation('city', searchLiveAtWard, liveAtDistrictID)
+    GetLocation('ward', searchLiveAtWard, liveAtDistrictID)
       .then((result) => setLiveAtWardData(result))
       .catch((e) => {
         console.log(e);
@@ -206,7 +206,7 @@ export default function AllAdmin() {
 
   return (
     <>
-      <Wrapper
+      <WrapperMain
         title="Admin"
         BtnAddRender={
           <div className={cx('btn-add')}>
@@ -277,7 +277,7 @@ export default function AllAdmin() {
                     data={liveAtCountryData}
                     NullValue={true}
                     handleSetID={setLiveAtCountryID}
-                    searchSelectValue={setLiveAtCountry}
+                    searchSelectValue={setSearchLiveAtCountry}
                   />
                   <SearchSelect
                     title="city"
@@ -286,7 +286,7 @@ export default function AllAdmin() {
                     data={liveAtCityData}
                     NullValue={true}
                     handleSetID={setLiveAtCityID}
-                    searchSelectValue={setLiveAtCity}
+                    searchSelectValue={setSearchLiveAtCity}
                   />
                   <SearchSelect
                     title="district"
@@ -295,7 +295,7 @@ export default function AllAdmin() {
                     data={liveAtDistrictData}
                     NullValue={true}
                     handleSetID={setLiveAtDistrictID}
-                    searchSelectValue={setLiveAtDistrict}
+                    searchSelectValue={setSearchLiveAtDistrict}
                   />
                   <SearchSelect
                     title="ward"
@@ -304,7 +304,7 @@ export default function AllAdmin() {
                     data={liveAtWardData}
                     NullValue={true}
                     handleSetID={setLiveAtWardID}
-                    searchSelectValue={setLiveAtWard}
+                    searchSelectValue={setSearchLiveAtWard}
                   />
                 </div>
               </div>
@@ -314,7 +314,7 @@ export default function AllAdmin() {
         <div className={cx('data-table')}>
           <ListAdmin data={dataTable} />
         </div>
-      </Wrapper>
+      </WrapperMain>
     </>
   );
 }

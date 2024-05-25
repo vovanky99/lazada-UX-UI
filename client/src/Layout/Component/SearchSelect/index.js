@@ -7,24 +7,22 @@ import Debounce from '~/Hooks/Debounce';
 
 const cx = classNames.bind(styles);
 
-export const SearchSelect = forwardRef(function Select(
-  {
-    useTippy = true,
-    IDValue,
-    inputType = 'text',
-    inputClassname,
-    ContainerClassname,
-    searchValue,
-    data,
-    title,
-    classTitle,
-    isLabel = true,
-    NullValue = false,
-    handleSetID = () => {},
-    searchSelectValue = () => {},
-  },
+export const SearchSelect = forwardRef(function Select({
+  useTippy = true,
+  IDValue,
+  inputType = 'text',
+  inputClassname,
+  ContainerClassname,
+  searchValue,
+  data,
+  title,
+  classTitle,
+  isLabel = true,
+  NullValue = false,
+  handleSetID = () => {},
+  searchSelectValue = () => {},
   inputRef,
-) {
+}) {
   const selectRef = useRef();
   const optionRef = useRef();
   const [select, setSelect] = useState(false);
@@ -152,6 +150,7 @@ export const SearchSelect = forwardRef(function Select(
             className={cx('search', inputClassname ? `${inputClassname}` : ' form-control py-2')}
             placeholder={`Enter Select ${title}`}
             value={search}
+            autoComplete={inputType === 'password' ? `current-password` : ''}
             onChange={(e) => {
               setSearch(e.target.value);
             }}

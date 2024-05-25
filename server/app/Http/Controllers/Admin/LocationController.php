@@ -186,4 +186,35 @@ class LocationController extends Controller {
         $ward->name = $name;
         return response()->json(['success'=>"Edit Ward Success"]);
     }
+    public function getSearchLocation(Request $request){
+        $title = $request->get('q');
+        $ward = Ward::where('name','like','%'.$title.'%')->with('district.city.country')->limit(5)->get();
+        if(count($ward)==0){
+            $district = District::where('name','like','%'.$title.'%')->with('city.country')->limit(5)->get(5);
+            if(count($district)==0){
+                $city = City::where('name','like','%'.$title.'%')->limit(5)->get(5);
+                if(count($city)==0){
+                    $country = Country::where('id',$city->country)->get();
+                    if(count($country)==0){
+                        return response()->json([]);
+                    }
+                    else{
+                        return response()->json($country);
+                    }
+
+                }
+                else{
+                    return response()->json($city);
+                }
+            }
+            else{
+            return response()->json($district);
+            }
+
+        }
+        else{
+            return response()->json($ward);
+        }
+
+    }
 }

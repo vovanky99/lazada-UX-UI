@@ -121,10 +121,10 @@ button.reviews_score.score_active {
 
 //login
 .login-valid {
-  border-color: red !important;
+  border-color: var(--border_danger) !important;
 }
 
-/* navlink for sidebar */
+// navlink for sidebar
 #sidebar a.active {
   background-color: #f3f0f0;
 }
@@ -132,4 +132,9 @@ button.reviews_score.score_active {
 #sidebar a.active p,
 #sidebar a.active svg {
   color: #b66dff;
+}
+
+// for main page
+.border_danger {
+  border-color: var(--border_danger) !important ;
 }

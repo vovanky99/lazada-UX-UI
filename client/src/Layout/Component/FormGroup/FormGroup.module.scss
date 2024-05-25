@@ -19,12 +19,14 @@
 // form date
 .form-date {
   input {
-    position: relative;
     font-size: 1.5rem;
     border-color: var(--border_color_admin);
     &:focus {
       border-color: var(--input_focus_admin) !important;
     }
+  }
+  input[type='date'] {
+    position: relative;
   }
   input[type='date']::-webkit-calendar-picker-indicator {
     background: transparent;
@@ -37,5 +39,23 @@
     right: 0;
     top: 0;
     width: auto;
+  }
+}
+
+// form text
+.form-text {
+  label {
+    font-size: 1.5rem;
+  }
+  textarea {
+    font-size: 1.5rem;
+    border-color: var(--border_color_admin);
+    &:focus {
+      border-color: var(--input_focus_admin);
+      box-shadow: none;
+    }
+    &::placeholder {
+      text-transform: capitalize;
+    }
   }
 }

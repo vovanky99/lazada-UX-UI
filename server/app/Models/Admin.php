@@ -24,6 +24,7 @@ class Admin extends Authenticatable
         'permanent_residennce_registration',
         'temporary_registration',
         'role_id',
+        'department_id',
     ];
 
     protected $hidden =[

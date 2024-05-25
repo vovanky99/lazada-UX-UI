@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('img_cover');
             $table->boolean('status');
             $table->string('descriptions');
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

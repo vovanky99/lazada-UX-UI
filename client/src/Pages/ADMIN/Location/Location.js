@@ -5,7 +5,7 @@ import styles from './Location.module.scss';
 import Button from '~/components/Button';
 import { AddLocationToggle } from './AddLocationToggle';
 import ListLocation from './ListLocation';
-import Wrapper from '~/Layout/Component/Wrapper';
+import WrapperMain from '~/Layout/Component/WrapperMain';
 import CreateLocation from '~/Services/Location/CreateLocation';
 import GetLocation from '~/Services/Location/GetLocation';
 
@@ -218,7 +218,7 @@ export default function Location() {
 
   return (
     <>
-      <Wrapper
+      <WrapperMain
         title="location"
         BtnAddRender={
           <>
@@ -309,7 +309,7 @@ export default function Location() {
         }
       >
         <ListLocation />
-      </Wrapper>
+      </WrapperMain>
     </>
   );
 }

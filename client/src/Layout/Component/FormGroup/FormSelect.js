@@ -14,10 +14,16 @@ const status = [
   { name: 'Show', id: '1' },
 ];
 
-export const FormSelect = forwardRef(function Form(
-  { containerClass, selectClass, isStatus = false, defaultValue, title, handleSetValue = () => {}, data },
+export const FormSelect = forwardRef(function Form({
+  containerClass,
+  selectClass,
+  isStatus = false,
+  defaultValue,
+  title,
+  handleSetValue = () => {},
+  data,
   selectRef,
-) {
+}) {
   const [value, setValue] = useState('');
   useEffect(() => {
     handleSetValue(value);

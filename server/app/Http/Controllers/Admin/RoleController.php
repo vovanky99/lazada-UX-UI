@@ -16,42 +16,26 @@ class RoleController extends Controller
         $role = Role::all();
         return response()->json($role);
     }
-
-    public function search(Request $request){
-        $role = Role::where('name','like','%'.$request->search.'%');
-        $count_role = $role->count();
-        $role = $role->paginate(15);
-        return view('role/index',compact('role','count_role'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-        return view('role/create');
+    public function getRole(Request $request){
+        $q = $request->get('name');
+        if($q){
+            $role = Role::where('name','like',$q.'%')->get();
+        }
+        else{
+            $role = Role::all();
+        }
+        return response()->json($role);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RoleRequest $request)
+    public function create(RoleRequest $request)
     {
         //
         $dt = new Role;
         $dt->create($request->all());
         return redirect()->route('dt.index');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-        $role = Role::find($id);
-        return view('role/show',compact('role'));
     }
 
     /**

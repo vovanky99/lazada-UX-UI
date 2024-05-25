@@ -5,16 +5,13 @@ namespace App\Http\Controllers\Admin ;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Admin;
-use App\Models\City;
-use App\Models\Country;
-use App\Models\District;
+use App\Models\Department;
 use App\Models\Role;
-use App\Models\User;
-use App\Models\Ward;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller{
     public function store(Request $request){
@@ -46,37 +43,84 @@ class AdminController extends Controller{
             return response()->json(['error'=>$e]);
         }  
     }
-    public function getSearchLocation(Request $request){
-        $title = $request->get('q');
-        $ward = Ward::where('name','like','%'.$title.'%')->with('district.city.country')->limit(5)->get();
-        if(count($ward)==0){
-            $district = District::where('name','like','%'.$title.'%')->with('city.country')->limit(5)->get(5);
-            if(count($district)==0){
-                $city = City::where('name','like','%'.$title.'%')->limit(5)->get(5);
-                if(count($city)==0){
-                    $country = Country::where('id',$city->country)->get();
-                    if(count($country)==0){
-                        return response()->json([]);
-                    }
-                    else{
-                        return response()->json($country);
-                    }
 
-                }
-                else{
-                    return response()->json($city);
-                }
-            }
-            else{
-            return response()->json($district);
-            }
+    public function create(Request $request){
+        $name = $request->name;
+        $username = $request->username;
+        $password = $request->password;
+        $avatar = $request->avatar;
+        $phone = $request->phone;
+        $gender = $request->gender;
+        $birthday = $request->birthday;
+        $citizen_card = $request->citizen_card;
+        $born_ward_id = $request->born_ward_id;
+        $live_ward_id = $request->live_ward_id;
+        $address_born = $request->address_born;
+        $address_live = $request->address_live;
+        $role_id = $request->role_id;
+        $role_name = $request->role_name;
+        $department_id = $request->department_id;
+        $department_name = $request->department_name;
 
+        // set role id if variable role_id is empty
+        if($role_id==''){
+            $role = Role::create([
+                'name'=>$role_name,
+                'description'=>$role_name
+            ]);
+            $role_id = $role->id;
         }
-        else{
-            return response()->json($ward);
+        // set department id if variable department_id is empty
+        if($department_id ==''){
+            $department = Department::create([
+                'name'=>$department_name,
+                'description'=>$department_name
+            ]);
+            $department_id = $department->id;
         }
+        
+        //create admin
+        $admin = Admin::create([
+            'name'=>$name,
+            'username'=>$username,
+            'password'=>Hash::make($password),
+            'avatar'=>$avatar,
+            'phone_number'=>$phone,
+            'gender'=>$gender,
+            'birthday'=>$birthday,
+            'citizen_identification_card'=>$citizen_card,
+            // 'permanent_residennce_registration'=>$permanent_id,
+            // 'temporary_registration '=>$temporary_id,
+            'role_id'=>$role_id,
+            'department_id'=>$department_id,
+        ]);
 
+        //create address born and set id for address born
+        $addressBorn = Address::create([
+            'addressable_type'=>Admin::class,
+            'addressable_id'=>$admin->id,
+            'street_address'=>$address_born,
+            'ward_id'=>$born_ward_id,
+        ]);
+        $permanent_id = $addressBorn->id;
+
+        //create address live and set id for address live
+        $addressLive = Address::create([
+            'addressable_type'=>Admin::class,
+            'addressable_id'=>$admin->id,
+            'street_address'=>$address_live,
+            'ward_id'=>$live_ward_id,
+        ]);
+        $temporary_id = $addressLive->id;
+
+        //update admin after created address born and live
+        $admin->update([
+            'permanent_residennce_registration'=>$permanent_id,
+            'temporary_registration'=>$temporary_id,
+        ]);
+        return response()->json(['success'=>'created success!']);
     }
+
 
     public function getAllAdmin(Request $request){
         $name = $request->get('name');
@@ -113,10 +157,10 @@ class AdminController extends Controller{
             $admins->where('admin.status',$status);
         } 
         if($workAt ){
-            $admins->where('admin.created_at',$workAt);
+            $admins->where('admin.created_at','>',$workAt);
         } 
         if($leaveOffWork){
-            $admins->where([['admin.updated_at',$leaveOffWork],['admin.status',1]]);
+            $admins->where([['admin.updated_at','<',$leaveOffWork],['admin.status',1]]);
         }
         if($LiveAtWard){
             $admins->where('address_live.ward_id',$LiveAtWard);

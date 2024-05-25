@@ -44,9 +44,9 @@ export default function ListAdmin({ data }) {
                   <td>{d.gender == 1 ? 'Male' : 'Female'}</td>
                   <td>{d.role_name}</td>
                   <td>{d.status == 1 ? 'Work' : 'Leave Of Work'}</td>
+                  <td>{d.birthday}</td>
                   <td>{`${d.city_born_name} - ${d.country_born_name}`}</td>
                   <td>{`${d.city_live_name} - ${d.country_live_name}`}</td>
-                  <td>{d.birthday}</td>
                   <td>
                     <div className={cx('toll-edit', 'd-flex flex-row justify-content-center flex-wrap')}>
                       <Button gradient_primary type="button" to={config.adminRoutes.EditAdmin}>

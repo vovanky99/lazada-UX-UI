@@ -165,21 +165,10 @@ export default function Profile() {
   }, [address]);
 
   /* handle avatar value */
-  useEffect(() => {
-    const a = document.querySelectorAll('.change-avatar');
+  const handleBTNChangeAvatar = (e) => {
     const inputFile = avatarRef.current;
-    const handleClick = (e) => {
-      inputFile.click();
-    };
-    if (a) {
-      a.forEach((e) => e.addEventListener('click', handleClick));
-    }
-    return () => {
-      if (a) {
-        a.forEach((e) => e.removeEventListener('click', handleClick));
-      }
-    };
-  }, [avatar]);
+    inputFile.click();
+  };
 
   /* get country value */
   useEffect(() => {
@@ -224,7 +213,7 @@ export default function Profile() {
               'form-group col-12 d-flex justify-content-center align-items-center mb-5 flex-column',
             )}
           >
-            <Button className={cx('avatar_container', 'change-avatar')} type="button" transparent>
+            <Button onClick={handleBTNChangeAvatar} className={cx('avatar_container')} type="button" transparent>
               <Images src={`${avatar}`} alt={avatar} />
             </Button>
             <input
@@ -236,7 +225,7 @@ export default function Profile() {
               style={{ display: 'none' }}
               accept="image/*"
             />
-            <Button type="button" className={cx('avatar_btn-change', 'change-avatar')} gradient_primary>
+            <Button onClick={handleBTNChangeAvatar} type="button" className={cx('avatar_btn-change')} gradient_primary>
               Change Avatar
             </Button>
           </div>
