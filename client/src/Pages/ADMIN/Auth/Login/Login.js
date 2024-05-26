@@ -63,9 +63,9 @@ export default function Login() {
   /* redirect when admin had login  */
   useEffect(() => {
     if (localStorage.getItem('adminToken')) {
-      return navigate('/admin');
+      return navigate(`${config.adminRoutes.Home}`);
     }
-  }, [localStorage.getItem('adminToken')]);
+  });
 
   /* login admin */
   const handleSubmitLogin = (e) => {

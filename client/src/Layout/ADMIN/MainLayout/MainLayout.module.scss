@@ -1,5 +1,7 @@
 .main_admin {
+  position: relative;
   .main-content {
+    margin-left: var(--admin_sidebar_width);
     padding: 45px 35px;
     background-color: #f2edf3;
     min-height: 100vh;
@@ -31,6 +33,7 @@
         }
         thead {
           width: calc(100% - 5px) !important;
+          text-transform: capitalize;
           th {
             font-size: 1.6rem;
           }

@@ -21,6 +21,7 @@ const cx = classNames.bind(styles);
 export default function EditChild({ data }) {
   const navigate = useNavigate();
   const nameRef = useRef();
+  const statusRef = useRef();
   const avatarRef = useRef();
   const passwordRef = useRef();
   const phoneRef = useRef();
@@ -39,6 +40,7 @@ export default function EditChild({ data }) {
   const [avatar, setAvatar] = useState(data.avatar || '');
   const [phone, setPhone] = useState(data.phone_number || '');
   const [gender, setGender] = useState(data.gender || '');
+  const [status, setStatus] = useState(data.status || '');
   const [birthday, setBirthDay] = useState(data.birthday || '');
   const [citizenIdentificationCard, setCitizenIdentificationCard] = useState(data.citizen_identification_card || '');
   const [searchBornCountry, setSearchBornCountry] = useState(data.address_t.ward.district.city.country.name || '');
@@ -119,6 +121,13 @@ export default function EditChild({ data }) {
       phoneRef.current.classList.remove('border_danger');
     }
 
+    // valid status
+    if (status === '') {
+      statusRef.current.classList.add('border_danger');
+    } else {
+      statusRef.current.classList.remove('border_danger');
+    }
+
     // valid gender
     if (gender === '') {
       genderRef.current.classList.add('border_danger');
@@ -181,26 +190,12 @@ export default function EditChild({ data }) {
     } else {
       addressLiveRef.current.classList.remove('border_danger');
     }
-    // set data form
-    // let datas = new FormData();
-    // datas.append('name', name);
-    // datas.append('password', password);
-    // datas.append('avatar', avatar);
-    // datas.append('phone', phone);
-    // datas.append('birthday', birthday);
-    // datas.append('citizen_card', citizenIdentificationCard);
-    // datas.append('born_ward_id', bornWardID);
-    // datas.append('live_ward_id', liveAtWardID);
-    // datas.append('address_born', addressBorn);
-    // datas.append('address_live', addressLive);
-    // datas.append('gender', gender);
-    // datas.append('role_id', roleID);
-    // datas.append('department_id', departmentID);
 
     if (
       name.length >= 6 &&
       phone &&
       birthday &&
+      status &&
       gender &&
       citizenIdentificationCard &&
       roleID &&
@@ -214,6 +209,7 @@ export default function EditChild({ data }) {
       EditData('admin', 'admin', data.id, {
         name: name,
         password: password,
+        status: status,
         avatar: avatar,
         phone: phone,
         birthday: birthday,
@@ -377,6 +373,15 @@ export default function EditChild({ data }) {
               </div>
               <div className={cx('form-content_gender')}>
                 <FormSelect ref={genderRef} title="gender" defaultValue={gender} handleSetValue={setGender} />
+              </div>
+              <div className={cx('form-content_status')}>
+                <FormSelect
+                  ref={statusRef}
+                  title="status"
+                  isStatus={true}
+                  defaultValue={status}
+                  handleSetValue={setStatus}
+                />
               </div>
               <div className={cx('form-content_birthday')}>
                 <FormDate ref={birthdayRef} title="birthday" data={birthday} handleSetValue={setBirthDay} />

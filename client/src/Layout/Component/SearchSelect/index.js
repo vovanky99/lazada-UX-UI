@@ -108,7 +108,7 @@ export const SearchSelect = forwardRef(function Select(
             offset={[0, 0]}
             placement="bottom"
             render={(attrs) => (
-              <ul ref={optionRef} className={cx('option')} {...attrs}>
+              <ul ref={optionRef} className={cx('option')} {...attrs} tabIndex="-1">
                 {data?.length > 0 && NullValue ? (
                   <li className={cx('option-single', `select-option-${classTitle || title}`)} data-value="" data-id="">
                     Null

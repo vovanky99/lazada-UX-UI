@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\RoleController;
@@ -91,6 +92,12 @@ Route::prefix('/admin')->group(function(){
         Route::controller(DepartmentController::class)->group(function(){
             Route::get('/get-department','getDepartment');
         });
+        /* Category public */
+        Route::controller(CategoriesController::class)->group(function(){
+            Route::post('/create-category','store');
+            Route::patch('/edit-category/{id}','update');
+            Route::delete('/delete-category/{id}','delete');
+        });
         /* location */
         Route::controller(LocationController::class)->group(function(){
             Route::post('/create-country','createCountry');
@@ -118,6 +125,11 @@ Route::controller(LocationController::class)->group(function(){
     Route::get('/get-district','getDistrict');
     Route::get('/get-ward','getWard');
     Route::get('/get-search-location','getSearchLocation');
+});
+
+/* Category public */
+Route::controller(CategoriesController::class)->group(function(){
+    Route::get('/get-category','getCategory');
 });
 
 /* check user */

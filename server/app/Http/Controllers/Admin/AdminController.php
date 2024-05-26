@@ -213,6 +213,7 @@ class AdminController extends Controller{
     public function editAdmin(Request $request,$id){
         $name = $request->name;
         $password = $request->password;
+        $status = $request->status;
         $avatar = $request->avatar;
         $phone = $request->phone;
         $gender = $request->gender;
@@ -253,6 +254,7 @@ class AdminController extends Controller{
             $adminUp->update([
                 'name'=>$name,
                 'avatar'=>$avatar,
+                'status'=>$status,
                 'password'=>Hash::make($password),
                 'phone_number'=>$phone,
                 'gender'=>$gender,
@@ -263,10 +265,10 @@ class AdminController extends Controller{
             ]);
          }
          else{
-            dd(1);
             $adminUp->update([
                 'name'=>$name,
                 'avatar'=>$avatar,
+                'status'=>$status,
                 'phone_number'=>$phone,
                 'gender'=>$gender,
                 'birthday'=>$birthday,

@@ -11,8 +11,10 @@ class Categories extends Model
     use HasFactory;
     public $table = 'categories';
     protected $fillable = [
-        'title',
+        'name',
         'slug',
+        '_lft',
+        '_rgt',
         'parent_id',
         'status'
     ];
@@ -26,6 +28,10 @@ class Categories extends Model
     public function childrenRecursive(){
         return $this->children()->with('childrenRecursive');
     }
+    // public function set_title_attribute($value){
+    //     $this->attributes['title'] = $value;
+    //     $this->attributes['slug'] = str_slug($value);
+    // }
     public function blogs(){
         return $this->hasMany(Blogs::class,'category_id','id');
     }
