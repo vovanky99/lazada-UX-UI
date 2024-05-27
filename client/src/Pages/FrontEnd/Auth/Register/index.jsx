@@ -6,13 +6,13 @@ import { faFacebookF, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 import { useDispatch } from 'react-redux';
 import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-regular';
 
-import { AuthSocial, SignUp } from '~/Redux/Actions/Auth';
+import { AuthSocial } from '~/redux/Actions/Auth';
 import axios from '~/api/axios';
 import style from './register.module.scss';
 import routes from '~/config/routes';
 import DateOption from '~/layout/Component/DateOption';
 import Button from '~/components/Button';
-import { REGISTER_ERROR } from '~/Redux/Actions/Types';
+import { REGISTER_ERROR } from '~/redux/Actions/Types';
 
 const cx = classNames.bind(style);
 const csrf = () => axios.get('/sanctum/csrf-cookie');

@@ -1,4 +1,4 @@
-@use '../../..~/globalStyles/mixin.scss' as mixin;
+@use '../../../globalStyles/mixin.scss' as mixin;
 
 @include mixin.breakpoint(lg) {
   .channels {

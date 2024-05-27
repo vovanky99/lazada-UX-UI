@@ -3,12 +3,11 @@ import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { Logout } from '~/Redux/Actions/Auth';
-import axios from '~/api/axios';
+import { Logout } from '~/redux/Actions/Auth';
 import styles from './LinkBars.module.scss';
 import routes from '~/config/routes';
 import config from '~/config';
-import Store from '~/Redux/Store';
+import Store from '~/redux/Store';
 
 const cx = classNames.bind(styles);
 

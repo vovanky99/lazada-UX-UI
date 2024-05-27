@@ -8,8 +8,8 @@ import routes from '~/config/routes';
 import SignIn from './SignIn.module.scss';
 import Button from '~/components/Button';
 import { faEye, faEyeSlash } from '@fortawesome/fontawesome-free-regular';
-import { AuthSocial } from '~/Redux/Actions/Auth';
-import { LOG_ERROR } from '~/Redux/Actions/Types';
+import { AuthSocial } from '~/redux/Actions/Auth';
+import { LOG_ERROR } from '~/redux/Actions/Types';
 import axios from '~/api/axios';
 import { useNavigate } from 'react-router-dom';
 

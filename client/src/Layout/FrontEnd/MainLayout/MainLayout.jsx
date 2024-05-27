@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from '~/api/axios';
 
-import { getUser } from '~/Redux/Actions/Auth';
+import { getUser } from '~/redux/Actions/Auth';
 import routes from '~/config/routes';
 import { useEffect } from 'react';
 
@@ -11,7 +11,7 @@ import Footer from '~/layout/FrontEnd/Footer';
 import Header from '~/layout/FrontEnd/Header';
 import styles from './mainLayout.module.scss';
 import Main from '../Main';
-import Store from '~/Redux/Store';
+import Store from '~/redux/Store';
 
 const cx = classNames.bind(styles);
 

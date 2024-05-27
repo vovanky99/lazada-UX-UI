@@ -13,7 +13,7 @@ import GetRole from '~/api/Role/GetRole';
 import GetLocation from '~/api/Location/GetLocation';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import CreateAdmin from '~/api/Admin/CreateAdmin';
-import CheckUsername from '~/api/Check/CheckUsername';
+import CheckUsername from '~/services/Check/CheckUsername';
 import useDebounce from '~/hooks/Debounce/Debounce';
 
 const cx = classNames.bind(styles);
