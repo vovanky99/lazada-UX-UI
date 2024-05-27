@@ -32,7 +32,7 @@
           border: 1px solid var(--border_color_admin);
         }
         thead {
-          width: calc(100% - 5px) !important;
+          // width: calc(100% - 5px) !important;
           text-transform: capitalize;
           th {
             font-size: 1.6rem;
@@ -59,15 +59,18 @@
             font-size: 1.4rem;
           }
           &::-webkit-scrollbar {
-            width: 5px;
+            width: 0;
           }
-          &::-webkit-scrollbar-thumb {
-            background-color: #7a7a7a;
-            border-radius: 10px;
-          }
-          &::-webkit-scrollbar-track {
-            background-color: #f2edf3;
-          }
+          // &::-webkit-scrollbar-thumb {
+          //   background-color: var(--scroll_bar_color);
+          //   border-radius: 10px;
+          //   &:hover {
+          //     background-color: var(--scroll_bar_hover_color);
+          //   }
+          // }
+          // &::-webkit-scrollbar-track {
+          //   background-color: var(--scroll_bar_background);
+          // }
         }
       }
     }

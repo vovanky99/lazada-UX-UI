@@ -56,6 +56,7 @@ export default function AllCategory() {
       const data = new FormData();
       data.append('name', title);
       data.append('parent_id', catParentID);
+      setCreateSuccess('');
       CreateCategory(data)
         .then((result) => {
           if (result.success) {
@@ -97,11 +98,11 @@ export default function AllCategory() {
         setDataTable(result);
       })
       .catch((e) => console.log(e));
-  }, [parentID, status, nameFilter, deleteSuccess]);
+  }, [parentID, status, nameFilter, deleteSuccess, reloadData]);
   return (
     <>
       <WrapperMain
-        title="AllCategory"
+        title="All Category"
         BtnAddRender={
           <>
             <Tippy
@@ -121,6 +122,7 @@ export default function AllCategory() {
                     <SearchSelect
                       title="cat parent"
                       classTitle="cat_parent"
+                      NullValue={true}
                       data={catData}
                       handleSetID={setCatParentID}
                       searchSelectValue={setSearchTitle}

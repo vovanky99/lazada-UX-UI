@@ -41,19 +41,28 @@ class CategoriesController extends Controller
         if(!$checkTitle){
             if($parent_id){
                 $parent = Categories::find($parent_id);
-                $parent->_rgt +=2;
-                $parent->save();
 
-                //update node for cat
+                //update _lft for cat
                 $updateNode = DB::table('categories')->where('_lft','>',$parent->_lft)->get();
                 if($updateNode){
                     foreach($updateNode as $up){
                         $cat = Categories::find($up->id);
                         $cat->_lft +=2;
+                        $cat->save();
+                    }
+                }
+
+                //update _rgt for cat
+                $updateNode = DB::table('categories')->where('_rgt','>',$parent->_lft)->get();
+                if($updateNode){
+                    foreach($updateNode as $up){
+                        $cat = Categories::find($up->id);
                         $cat->_rgt +=2;
                         $cat->save();
                     }
                 }
+
+
                 // create cat
                 Categories::create([
                     'name'=>$name,
@@ -71,7 +80,6 @@ class CategoriesController extends Controller
                 else{
                     $_rgt = 0;
                 }
-                // dd(1);
                 // create cat
                 Categories::create([
                     'name'=>$name,
@@ -106,18 +114,27 @@ class CategoriesController extends Controller
                 // change cat empty to cat have value
                 if(!$cat->parent_id && $parent_id){
                     $parent = Categories::find($parent_id);
-                    $parent->_rgt +=2;
-                    $parent->save();
-                    //update node for cat
+
+                    //update _lft for cat
                     $updateNode = DB::table('categories')->where('_lft','>',$parent->_lft)->get();
                     if($updateNode){
                         foreach($updateNode as $up){
                             $cat = Categories::find($up->id);
                             $cat->_lft +=2;
-                            $cat->_rgt +=2;
                             $cat->save();
                         }
                     }
+
+                     //update _rgt for cat
+                     $updateNode = DB::table('categories')->where('_rgt','>',$parent->_lft)->get();
+                     if($updateNode){
+                         foreach($updateNode as $up){
+                             $cat = Categories::find($up->id);
+                             $cat->_rgt +=2;
+                             $cat->save();
+                         }
+                     }
+
                     // update cat
                     $cat->update([
                         'name'=>$name,
@@ -130,27 +147,23 @@ class CategoriesController extends Controller
                 else{
                     if($cat->parent_id < $parent_id){
                         $parent = Categories::find($parent_id);
-                        //update node for cat smaller
                         $catParentOld = Categories::find($cat->parent_id);
-                        $updateNodeSmall = DB::table('categories')->where('_lft','>',$catParentOld->_lft)->where('_lft','<',$parent->_lft)->get();
+
+                        // update left node
+                        $updateNodeSmall = DB::table('categories')->where('_lft','>=',$catParentOld->_lft)->where('_rgt','<',$parent->_rgt)->get();
                         if($updateNodeSmall){
                             foreach($updateNodeSmall as $up){
                                 $cat = Categories::find($up->id);
-                                $cat->_lft -=2;
                                 $cat->_rgt -=2;
                                 $cat->save();
                             }
                         }
-                        // update for parent now
-                        $parent->_lft -=2;
-                        $parent->save();
                         //update node for cat larger
-                        $updateNode = DB::table('categories')->where('_lft','>',$parent->_lft)->get();
+                        $updateNode =DB::table('categories')->where('_lft','>',$catParentOld->_lft)->where('_rgt','=<',$parent->_rgt)->get(); 
                         if($updateNode){
                             foreach($updateNode as $up){
                                 $cat = Categories::find($up->id);
                                 $cat->_lft +=2;
-                                $cat->_rgt +=2;
                                 $cat->save();
                             }
                         }
@@ -166,28 +179,22 @@ class CategoriesController extends Controller
                     }
                     else{
                         $parent = Categories::find($parent_id);
-                        // update for parent now
-                        $parent->_rgt +=2;
-                        $parent->save();
-                        //update node for cat larger
+                        //update _lft for cat
                         $updateNode = DB::table('categories')->where('_lft','>',$parent->_lft)->get();
                         if($updateNode){
                             foreach($updateNode as $up){
                                 $cat = Categories::find($up->id);
                                 $cat->_lft +=2;
-                                $cat->_rgt +=2;
                                 $cat->save();
                             }
                         }
 
-                        //update node for cat smaller
-                        $catParentOld = Categories::find($cat->parent_id);
-                        $updateNodeSmall = DB::table('categories')->where('_lft','>',$catParentOld->_lft)->where('_lft','<',$parent->_lft)->get();
-                        if($updateNodeSmall){
-                            foreach($updateNodeSmall as $up){
+                        //update _rgt for cat
+                        $updateNode = DB::table('categories')->where('_rgt','>',$parent->_lft)->get();
+                        if($updateNode){
+                            foreach($updateNode as $up){
                                 $cat = Categories::find($up->id);
-                                $cat->_lft -=2;
-                                $cat->_rgt -=2;
+                                $cat->_rgt +=2;
                                 $cat->save();
                             }
                         }
@@ -226,12 +233,31 @@ class CategoriesController extends Controller
         return response()->json($cats);
     }
     public function delete($id){
-           try{
-             Categories::find($id)->delete();
-             return response()->json(['success'=>'deleted success!']);
+        try{
+            $cat = Categories::find($id);
+            if($cat){
+                $update = Categories::where('_rgt','>',$cat->_rgt)->where('_lft','>',$cat->_lft)->get();
+                $updateParent = Categories::where('_rgt','>',$cat->_rgt)->where('_lft','<',$cat->_lft)->get();
+                $TotalNode = $cat->_rgt - $cat->_lft + 1 ;
+                // update for same level and lower level
+                foreach($update as $up){
+                    $c = Categories::find($up->id);
+                    $c->_lft -= $TotalNode;
+                    $c->_rgt -= $TotalNode;
+                    $c->save();
+                }
+                //update for parent
+                foreach($updateParent as $up){
+                    $c = Categories::find($up->id);
+                    $c->_rgt-=$TotalNode;
+                    $c->save();
+                }
+                $cat->delete();
+            }
+            return response()->json(['success'=>'deleted success!']);
         }
-           catch(Exception $e){
-            return response()->json($e);
-           }
+        catch(Exception $e){
+        return response()->json($e);
+        }
     }
 }

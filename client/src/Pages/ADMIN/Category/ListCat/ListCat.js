@@ -112,7 +112,7 @@ export default function ListCat({ handleDelete = () => {}, index, P_id, P_name, 
         <tr key={index} className={cx(`tbody-element`)}>
           <td>{P_name}</td>
           <td>{P_cat_name}</td>
-          <td>{P_status}</td>
+          <td>{P_status == 1 ? 'Show' : 'Hide'}</td>
           <td>
             <div className={cx('toll-edit', 'd-flex flex-row justify-content-center flex-wrap')}>
               <Button gradient_primary type="button" onClick={handleToggleEdit}>
