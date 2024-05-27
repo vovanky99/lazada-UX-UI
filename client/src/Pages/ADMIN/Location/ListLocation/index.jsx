@@ -6,6 +6,7 @@ import styles from '../Location.module.scss';
 import { SearchSelect } from '~/layout/Component/SearchSelect';
 import EditLocation from './EditLocation';
 import GetLocation, { GetAllLocation } from '~/api/Location/GetLocation';
+import Location from '~/layout/Component/Location';
 
 const cx = classNames.bind(styles);
 
@@ -93,38 +94,17 @@ export default function ListLocation() {
         <h4>
           <b>filter Location</b>
         </h4>
-        <form ref={FilterRef} className={cx('filter-form', 'd-flex flex-row flex-wrap gap-3 align-items-end')}>
+        <div ref={FilterRef} className={cx('filter-form', 'd-flex flex-row flex-wrap gap-3 align-items-end')}>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
-            <SearchSelect
-              NullValue
-              handleSetID={setCountryID}
-              searchSelectValue={setCountry}
-              data={optionCountry}
-              title="country"
-              classTitle="country-filter"
-            />
+            <Location title="country" classTitle="country-filter" handleSetID={setCountryID} />
           </div>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
-            <SearchSelect
-              NullValue
-              handleSetID={setCityID}
-              searchSelectValue={setCity}
-              data={optionCity}
-              title="city"
-              classTitle="city-filter"
-            />
+            <Location title="city" classTitle="city-filter" ForeignID={countryID} handleSetID={setCityID} />
           </div>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
-            <SearchSelect
-              NullValue
-              handleSetID={setDistrictID}
-              searchSelectValue={setDistrict}
-              data={optionDistrict}
-              title="district"
-              classTitle="district-filter"
-            />
+            <Location title="district" classTitle="district-filter" ForeignID={cityID} handleSetID={setDistrictID} />
           </div>
-        </form>
+        </div>
       </div>
       <table className={cx('table')}>
         <thead>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import styles from '../../Location.module.scss';
 import Button from '~/components/Button';
+import Location from '~/layout/Component/Location';
 
 const cx = classNames.bind(styles);
 
@@ -16,19 +17,18 @@ export default function EditElement({
   title,
 }) {
   const [name, setName] = useState(data?.name);
+  const [ID, setID] = useState(data?.id || '');
   return (
     <>
       <div className={cx('flex-grow-1 d-flex flex-column')}>
         <div className={cx('form-group d-flex flex-column')}>
-          <label className="form-label text-capitalize">
-            <b>{title}</b>
-          </label>
-          <input
-            value={name}
-            className="form-control"
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
+          <Location
+            title={title}
+            classTitle={`edit-${title}`}
+            SearchValue={name}
+            ValueID={ID}
+            handleSetID={setID}
+            handleSetName={setName}
           />
         </div>
         {messageError ? <div className="text-warning fs-5">{messageError}</div> : ''}
@@ -36,7 +36,7 @@ export default function EditElement({
         <div className="d-flex flex-row justify-content-center">
           <Button
             data-name={name}
-            data-id={data?.id || ''}
+            data-id={ID}
             transparent
             type="button"
             className={cx('text-primary')}
@@ -44,13 +44,7 @@ export default function EditElement({
           >
             Edit
           </Button>
-          <Button
-            onClick={handleDelete}
-            data-id={data?.id || ''}
-            transparent
-            type="button"
-            className={cx('text-danger')}
-          >
+          <Button onClick={handleDelete} data-id={ID} transparent type="button" className={cx('text-danger')}>
             Delete
           </Button>
         </div>

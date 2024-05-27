@@ -1,13 +1,15 @@
 import classNames from 'classnames/bind';
-import styles from './Profile.module.scss';
 import { useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
+
+import styles from './Profile.module.scss';
 import Images from '~/components/Images';
 import Button from '~/components/Button';
-import axios from '~/api/axios';
 import CldUploadImg from '~/services/cloudinary/CldUploadImg';
 import { SearchSelect } from '~/layout/Component/SearchSelect';
-import GetLocation from '~/api/Location/GetLocation';
+import Location from '~/layout/Component/Location';
+import { UpdateProfile } from '~/api/General/HandleData';
+import { FormText } from '~/layout/Component/FormGroup/FormText';
 
 const cx = classNames.bind(styles);
 
@@ -20,24 +22,19 @@ export default function Profile() {
   const [name, setName] = useState(Admin.name);
   const [avatar, setAvatar] = useState(Admin.avatar);
   const [upload, setUpload] = useState('');
-  const [changeAvatar, setChangeAvatar] = useState(null);
   const [phone, setPhone] = useState(Admin.phone_number);
   const [address, setAddress] = useState(Admin.address_t.street_address || '');
   const [nameValid, setNameValid] = useState('');
   const [phoneValid, setPhoneValid] = useState('');
   const [addressValid, setAddressValid] = useState('');
-  const [searchCountryValue, setSearchCountryValue] = useState(Admin.address_t.ward.district.city.country.name || '');
-  const [searchCityValue, setSearchCityValue] = useState(Admin.address_t.ward.district.city.name || '');
-  const [searchDistrictValue, setSearchDistrictValue] = useState(Admin.address_t.ward.district.name || '');
-  const [searchWardValue, setSearchWardValue] = useState(Admin.address_t.ward.name || '');
-  const [country, setCountry] = useState('');
-  const [city, setCity] = useState('');
-  const [district, setDistrict] = useState('');
-  const [ward, setWard] = useState('');
   const [countryID, setCountryID] = useState(Admin.address_t.ward.district.city.country_id || '');
   const [cityID, setCityID] = useState(Admin.address_t.ward.district.city_id || '');
   const [districtID, setDistrictID] = useState(Admin.address_t.ward.district_id || '');
   const [wardID, setWardID] = useState(Admin.address_t.ward_id || '');
+  const CountryName = Admin.address_t.ward.district.city.country.name || '';
+  const CityName = Admin.address_t.ward.district.city.name || '';
+  const DistrictName = Admin.address_t.ward.district.name || '';
+  const WardName = Admin.address_t.ward.name || '';
 
   /* handle upload image */
   const uploadImage = (img) => {
@@ -59,10 +56,13 @@ export default function Profile() {
       data.append('address', address);
       data.append('ward_id', wardID);
       try {
-        const res = await axios.post('/api/admin/update', data);
-        if (res.data.success) {
-          window.location.reload();
-        }
+        UpdateProfile('admin', { data: data })
+          .then((result) => {
+            if (result.success) {
+              window.location.reload();
+            }
+          })
+          .catch((e) => console.log(e));
       } catch (e) {
         console.log(e);
       }
@@ -100,7 +100,6 @@ export default function Profile() {
     };
     if (file) {
       render.readAsDataURL(file);
-      setChangeAvatar(file);
     }
   };
 
@@ -110,8 +109,11 @@ export default function Profile() {
     const handleKeyUp = (e) => {
       if (e.target.value === '') {
         setNameValid(`name don't empty`);
+        n.classList.add('border_danger');
       } else if (nameValid !== '') {
+        n.classList.add('border_danger');
         setNameValid('');
+        n.classList.remove('border_danger');
       }
     };
     if (n) {
@@ -130,8 +132,10 @@ export default function Profile() {
     const handleKeyUp = (e) => {
       if (e.target.value === '') {
         setPhoneValid(`phone don't empty`);
+        p.classList.add('border_danger');
       } else if (phoneValid !== '') {
         setPhoneValid('');
+        p.classList.remove('border_danger');
       }
     };
     if (p) {
@@ -150,8 +154,10 @@ export default function Profile() {
     const handleKeyUp = (e) => {
       if (e.target.value === '') {
         setAddressValid(`address don't empty`);
+        a.classList.add('border_danger');
       } else if (addressValid !== '') {
         setAddressValid('');
+        a.classList.remove('border_danger');
       }
     };
     if (a) {
@@ -164,49 +170,16 @@ export default function Profile() {
     };
   }, [address]);
 
-  /* handle avatar value */
+  /* handle click select avatar */
   const handleBTNChangeAvatar = (e) => {
     const inputFile = avatarRef.current;
     inputFile.click();
   };
 
-  /* get country value */
-  useEffect(() => {
-    GetLocation('country', searchCountryValue)
-      .then((result) => setCountry(result))
-      .catch((e) => console.log(e));
-  }, [searchCountryValue]);
-
-  /* get city value */
-  useEffect(() => {
-    GetLocation('city', searchCityValue, countryID)
-      .then((result) => setCity(result))
-      .catch((e) => console.log(e));
-  }, [searchCityValue, countryID]);
-
-  /* get district value */
-  useEffect(() => {
-    GetLocation('district', searchDistrictValue, cityID)
-      .then((result) => setDistrict(result))
-      .catch((e) => console.log(e));
-  }, [searchDistrictValue, cityID]);
-
-  /* get ward value */
-  useEffect(() => {
-    GetLocation('ward', searchWardValue, districtID)
-      .then((result) => setWard(result))
-      .catch((e) => console.log(e));
-  }, [searchWardValue, districtID]);
-
   return (
     <>
       <div className={cx('main_profile')}>
-        <form
-          onSubmit={handleSubmitProfile}
-          noValidate
-          className={cx('form-profile', 'd-flex flex-row flex-wrap')}
-          encType="multipart/form-data"
-        >
+        <form onSubmit={handleSubmitProfile} noValidate className={cx('form-profile', 'd-flex flex-row flex-wrap')}>
           <div
             className={cx(
               'avatar',
@@ -230,17 +203,7 @@ export default function Profile() {
             </Button>
           </div>
           <div className={cx('form-group col-6 px-3 mb-3')}>
-            <label className="form-label text-capitalize">name:</label>
-            <input
-              ref={nameRef}
-              name="name"
-              value={name}
-              type="text"
-              className="form-control py-2"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
+            <SearchSelect title="name" ref={nameRef} useTippy={false} searchValue={name} searchSelectValue={setName} />
             {nameValid ? (
               <div className={cx('message-valid', 'text-danger text-capitalize ps-3')}>{nameValid}</div>
             ) : (
@@ -248,16 +211,13 @@ export default function Profile() {
             )}
           </div>
           <div className={cx('form-group col-6 px-3 mb-3')}>
-            <label className="form-label text-capitalize">phone:</label>
-            <input
+            <SearchSelect
               ref={phoneRef}
-              name="phone"
-              value={phone}
-              type="number"
-              className="form-control  py-2 mb-3"
-              onChange={(e) => {
-                setPhone(e.target.value);
-              }}
+              title="phone"
+              inputType="number"
+              useTippy={false}
+              searchValue={phone}
+              searchSelectValue={setPhone}
             />
             {phoneValid ? (
               <div className={cx('message-valid', 'text-danger text-capitalize ps-3')}>{phoneValid}</div>
@@ -268,62 +228,41 @@ export default function Profile() {
           <div className={cx('profile_location', 'form-group col-6 px-3 mb-3')}>
             <label className={cx('input_title', 'form-label')}>Select Location</label>
             <div className={cx('form-group d-flex flex-row gap-3 flex-wrap')}>
-              <SearchSelect
-                valueID={countryID}
-                searchValue={searchCountryValue}
-                isLabel={false}
+              <Location
                 title="country"
-                data={country}
-                searchSelectValue={setSearchCountryValue}
+                useLabel={false}
+                ValueID={countryID}
                 handleSetID={setCountryID}
+                SearchValue={CountryName}
               />
-              <SearchSelect
-                valueID={cityID}
-                searchValue={searchCityValue}
-                isLabel={false}
+              <Location
                 title="city"
-                data={city}
-                searchSelectValue={setSearchCityValue}
+                useLabel={false}
+                ValueID={cityID}
+                ForeignID={countryID}
                 handleSetID={setCityID}
+                SearchValue={CityName}
               />
-              <SearchSelect
-                valueID={districtID}
-                searchValue={searchDistrictValue}
-                isLabel={false}
+              <Location
                 title="district"
-                data={district}
-                searchSelectValue={setSearchDistrictValue}
+                useLabel={false}
+                ValueID={districtID}
+                ForeignID={cityID}
                 handleSetID={setDistrictID}
+                SearchValue={DistrictName}
               />
-              <SearchSelect
-                valueID={wardID}
-                searchValue={searchWardValue}
-                isLabel={false}
+              <Location
                 title="ward"
-                data={ward}
-                searchSelectValue={setSearchWardValue}
+                useLabel={false}
+                ValueID={wardID}
+                ForeignID={districtID}
                 handleSetID={setWardID}
+                SearchValue={WardName}
               />
             </div>
-            {phoneValid ? (
-              <div className={cx('message-valid', 'text-danger text-capitalize ps-3')}>{phoneValid}</div>
-            ) : (
-              ''
-            )}
           </div>
           <div className={cx('profile_address', 'form-group col-6 px-3 mb-3')}>
-            <label className="form-label text-capitalize">address:</label>
-            <textarea
-              ref={addressRef}
-              name="address"
-              value={address}
-              className="form-control py-2"
-              rows={5}
-              onChange={(e) => {
-                setAddress(e.target.value);
-              }}
-              placeholder="Please Enter Street Address... "
-            />
+            <FormText title="Address" rows={5} handleSetValue={setAddress} data={address} ref={addressRef} />
             {addressValid ? (
               <div className={cx('message-valid', 'text-danger ps-3 text-capitalize')}>{addressValid}</div>
             ) : (

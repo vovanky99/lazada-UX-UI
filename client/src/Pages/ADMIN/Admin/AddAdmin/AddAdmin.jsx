@@ -1,20 +1,21 @@
 import classNames from 'classnames/bind';
+import { useEffect, useRef, useState } from 'react';
+
 import styles from '../Admin.module.scss';
 import WrapperMain from '~/layout/Component/WrapperMain';
 import { SearchSelect } from '~/layout/Component/SearchSelect';
-import { useEffect, useRef, useState } from 'react';
 import Button from '~/components/Button';
 import Images from '~/components/Images';
 import CldUploadImg from '~/services/cloudinary/CldUploadImg';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
-import GetDepartment from '~/api/Department/GetDepartment';
-import GetRole from '~/api/Role/GetRole';
-import GetLocation from '~/api/Location/GetLocation';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import CreateAdmin from '~/api/Admin/CreateAdmin';
 import CheckUsername from '~/services/Check/CheckUsername';
 import useDebounce from '~/hooks/Debounce/Debounce';
+import Location from '~/layout/Component/Location';
+import Department from '../Department';
+import Role from '../Role';
 
 const cx = classNames.bind(styles);
 
@@ -42,38 +43,21 @@ export default function AddAdmin() {
   const [gender, setGender] = useState('');
   const [birthday, setBirthDay] = useState('');
   const [citizenIdentificationCard, setCitizenIdentificationCard] = useState('');
-  const [searchBornCountry, setSearchBornCountry] = useState('');
   const [bornCountryID, setBornCountryID] = useState('');
-  const [bornCountryData, setBornCountryData] = useState('');
   const [searchBornCity, setSearchBornCity] = useState('');
   const [bornCityID, setBornCityID] = useState('');
-  const [bornCityData, setBornCityData] = useState('');
-  const [searchBornDistrict, setSearchBornDistrict] = useState('');
   const [bornDistrictID, setBornDistrictID] = useState('');
-  const [bornDistrictData, setBornDistrictData] = useState('');
-  const [searchBornWard, setSearchBornWard] = useState('');
   const [bornWardID, setBornWardID] = useState('');
-  const [bornWardData, setBornWardData] = useState('');
-  const [searchLiveAtCountry, setSearchLiveAtCountry] = useState('');
   const [liveAtCountryID, setLiveAtCountryID] = useState('');
-  const [liveAtCountryData, setLiveAtCountryData] = useState('');
-  const [searchLiveAtCity, setSearchLiveAtCity] = useState('');
   const [liveAtCityID, setLiveAtCityID] = useState('');
-  const [liveAtCityData, setLiveAtCityData] = useState('');
-  const [searchLiveAtDistrict, setSearchLiveAtDistrict] = useState('');
   const [liveAtDistrictID, setLiveAtDistrictID] = useState('');
-  const [liveAtDistrictData, setLiveAtDistrictData] = useState('');
-  const [searchLiveAtWard, setSearchLiveAtWard] = useState('');
   const [liveAtWardID, setLiveAtWardID] = useState('');
-  const [liveAtWardData, setLiveAtWardData] = useState('');
   const [addressBorn, setAddressBorn] = useState('');
   const [addressLive, setAddressLive] = useState('');
-  const [role, setRole] = useState('');
   const [roleID, setRoleID] = useState('');
-  const [roleData, setRoleData] = useState('');
+  const [role, setRole] = useState('');
   const [department, setDepartment] = useState('');
   const [departmentID, setDepartmentID] = useState('');
-  const [departmentData, setDepartmentData] = useState('');
   const [submitError, setSubmitError] = useState('');
   const [submitSuccess, setSubmitSuccess] = useState('');
 
@@ -254,95 +238,6 @@ export default function AddAdmin() {
       setSubmitError('please enter full!');
     }
   };
-  /* handle get role */
-  useEffect(() => {
-    GetRole(role)
-      .then((result) => {
-        setRoleData(result);
-      })
-      .catch((e) => console.log(e));
-  }, [role]);
-
-  /* handle get department */
-  useEffect(() => {
-    GetDepartment(department)
-      .then((result) => {
-        setDepartmentData(result);
-      })
-      .catch((e) => console.log(e));
-  }, [department]);
-
-  /* handle get Country born */
-  useEffect(() => {
-    GetLocation('country', searchBornCountry)
-      .then((result) => setBornCountryData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchBornCountry]);
-
-  /* handle get City born */
-  useEffect(() => {
-    GetLocation('city', searchBornCity, bornCountryID)
-      .then((result) => setBornCityData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchBornCity, bornCountryID]);
-
-  /* handle get District born */
-  useEffect(() => {
-    GetLocation('district', searchBornDistrict, bornCityID)
-      .then((result) => setBornDistrictData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchBornDistrict, bornCityID]);
-
-  /* handle get Ward born */
-  useEffect(() => {
-    GetLocation('ward', searchBornWard, bornDistrictID)
-      .then((result) => setBornWardData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchBornWard, bornDistrictID]);
-
-  /* handle get Country live at */
-  useEffect(() => {
-    GetLocation('country', searchLiveAtCountry)
-      .then((result) => setLiveAtCountryData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchLiveAtCountry]);
-
-  /* handle get City live at */
-  useEffect(() => {
-    GetLocation('city', searchLiveAtCity, liveAtCountryID)
-      .then((result) => setLiveAtCityData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchLiveAtCity, liveAtCountryID]);
-
-  /* handle get District live at */
-  useEffect(() => {
-    GetLocation('district', searchLiveAtDistrict, liveAtCityID)
-      .then((result) => setLiveAtDistrictData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchLiveAtDistrict, liveAtCityID]);
-
-  /* handle get ward live at */
-  useEffect(() => {
-    GetLocation('ward', searchLiveAtWard, liveAtDistrictID)
-      .then((result) => setLiveAtWardData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchLiveAtWard, liveAtDistrictID]);
 
   /* handle check username */
   const CheckUser = useDebounce(username, 500);
@@ -374,7 +269,7 @@ export default function AddAdmin() {
             <Button className={cx('select-avatar')} type="button" onClick={handleSelectAvatar} transparent>
               <Images src={avatar} alt={avatar} />
             </Button>
-            <input ref={avatarRef} type="file" onChange={handleChangeAvatar} />
+            <input ref={avatarRef} type="file" onChange={handleChangeAvatar} accept="image/*" />
             <label className="text-capitalize form-label">avatar</label>
           </div>
           <div className={cx('form-content', 'd-flex flex-row flex-wrap')}>
@@ -413,20 +308,14 @@ export default function AddAdmin() {
               />
             </div>
             <div className={cx('form-content_role')}>
-              <SearchSelect
-                ref={roleRef}
-                title="role"
-                data={roleData}
-                searchSelectValue={setRole}
-                handleSetID={setRoleID}
-              />
+              <Role ref={roleRef} title="role" NullValue={false} handleSetName={setRole} handleSetID={setRoleID} />
             </div>
             <div className={cx('form-content_department')}>
-              <SearchSelect
+              <Department
+                NullValue={false}
                 ref={departmentRef}
                 title="department"
-                data={departmentData}
-                searchSelectValue={setDepartment}
+                handleSetName={setDepartment}
                 handleSetID={setDepartmentID}
               />
             </div>
@@ -435,38 +324,28 @@ export default function AddAdmin() {
             <div className={cx('filter-element', 'form-group d-flex flex-column')}>
               <label className="form-label">Born</label>
               <div className={cx('born-at', 'form-group d-flex flex-row flex-wrap')}>
-                <SearchSelect
-                  title="country"
-                  isLabel={false}
-                  data={bornCountryData}
-                  NullValue={true}
-                  handleSetID={setBornCountryID}
-                  searchSelectValue={setSearchBornCountry}
-                />
-                <SearchSelect
+                <Location title="country" classTitle="country_born" useLabel={false} handleSetID={setBornCountryID} />
+                <Location
                   title="city"
-                  isLabel={false}
-                  data={bornCityData}
-                  NullValue={true}
+                  classTitle="city_born"
+                  ForeignID={bornCountryID}
+                  useLabel={false}
                   handleSetID={setBornCityID}
-                  searchSelectValue={setSearchBornCity}
                 />
-                <SearchSelect
+                <Location
                   title="district"
-                  isLabel={false}
-                  data={bornDistrictData}
-                  NullValue={true}
+                  ForeignID={bornCityID}
+                  classTitle="district_born"
+                  useLabel={false}
                   handleSetID={setBornDistrictID}
-                  searchSelectValue={setSearchBornDistrict}
                 />
-                <SearchSelect
-                  ref={wardBornRef}
+                <Location
                   title="ward"
-                  isLabel={false}
-                  data={bornWardData}
-                  NullValue={true}
+                  ForeignID={bornDistrictID}
+                  ref={wardBornRef}
+                  classTitle="ward_born"
+                  useLabel={false}
                   handleSetID={setBornWardID}
-                  searchSelectValue={setSearchBornWard}
                 />
                 <FormText
                   ref={addressBornRef}
@@ -480,42 +359,28 @@ export default function AddAdmin() {
             <div className={cx('filter-element', 'form-group d-flex flex-column')}>
               <label className="form-label">Live</label>
               <div className={cx('live-at', 'form-group d-flex flex-row flex-wrap')}>
-                <SearchSelect
-                  title="country"
-                  classTitle="live-country"
-                  isLabel={false}
-                  data={liveAtCountryData}
-                  NullValue={true}
-                  handleSetID={setLiveAtCountryID}
-                  searchSelectValue={setSearchLiveAtCountry}
-                />
-                <SearchSelect
+                <Location title="country" classTitle="country_live" useLabel={false} handleSetID={setLiveAtCountryID} />
+                <Location
                   title="city"
-                  classTitle="live-city"
-                  isLabel={false}
-                  data={liveAtCityData}
-                  NullValue={true}
+                  classTitle="city_live"
+                  ForeignID={liveAtCountryID}
+                  useLabel={false}
                   handleSetID={setLiveAtCityID}
-                  searchSelectValue={setSearchLiveAtCity}
                 />
-                <SearchSelect
+                <Location
                   title="district"
-                  classTitle="live-district"
-                  isLabel={false}
-                  data={liveAtDistrictData}
-                  NullValue={true}
+                  ForeignID={liveAtCityID}
+                  classTitle="district_live"
+                  useLabel={false}
                   handleSetID={setLiveAtDistrictID}
-                  searchSelectValue={setSearchLiveAtDistrict}
                 />
-                <SearchSelect
+                <Location
                   title="ward"
+                  ForeignID={liveAtDistrictID}
                   ref={wardLiveRef}
-                  classTitle="live-ward"
-                  isLabel={false}
-                  data={liveAtWardData}
-                  NullValue={true}
+                  classTitle="ward_live"
+                  useLabel={false}
                   handleSetID={setLiveAtWardID}
-                  searchSelectValue={setSearchLiveAtWard}
                 />
                 <FormText
                   ref={addressLiveRef}

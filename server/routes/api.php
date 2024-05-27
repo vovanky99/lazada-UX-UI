@@ -78,7 +78,7 @@ Route::prefix('/admin')->group(function(){
     Route::middleware('auth:sanctum')->group(function(){
         //admin controller
         Route::controller(AdminController::class)->group(function(){ 
-            Route::post('/update','update');
+            Route::post('/update-profile','UpdateProfile');
             Route::post('/create-admin','create');
             Route::get('/get-all-admin','getAllAdmin');
             Route::get('/show-admin/{id}','showAdmin');

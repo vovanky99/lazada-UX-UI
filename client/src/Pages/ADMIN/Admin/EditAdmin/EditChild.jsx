@@ -15,6 +15,9 @@ import { SearchSelect } from '~/layout/Component/SearchSelect';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
+import Location from '~/layout/Component/Location';
+import Department from '../Department';
+import Role from '../Role';
 
 const cx = classNames.bind(styles);
 
@@ -43,39 +46,32 @@ export default function EditChild({ data }) {
   const [status, setStatus] = useState(data.status || '');
   const [birthday, setBirthDay] = useState(data.birthday || '');
   const [citizenIdentificationCard, setCitizenIdentificationCard] = useState(data.citizen_identification_card || '');
-  const [searchBornCountry, setSearchBornCountry] = useState(data.address_t.ward.district.city.country.name || '');
   const [bornCountryID, setBornCountryID] = useState(data.address_t.ward.district.city.country.id || '');
-  const [bornCountryData, setBornCountryData] = useState('');
-  const [searchBornCity, setSearchBornCity] = useState(data.address_t.ward.district.city.name || '');
   const [bornCityID, setBornCityID] = useState(data.address_t.ward.district.city.id || '');
-  const [bornCityData, setBornCityData] = useState('');
-  const [searchBornDistrict, setSearchBornDistrict] = useState(data.address_t.ward.district.name || '');
   const [bornDistrictID, setBornDistrictID] = useState(data.address_t.ward.district.id || '');
-  const [bornDistrictData, setBornDistrictData] = useState('');
-  const [searchBornWard, setSearchBornWard] = useState(data.address_t.ward.name || '');
   const [bornWardID, setBornWardID] = useState(data.address_t.ward.id || '');
-  const [bornWardData, setBornWardData] = useState('');
-  const [searchLiveAtCountry, setSearchLiveAtCountry] = useState(data.address_p.ward.district.city.country.name || '');
   const [liveAtCountryID, setLiveAtCountryID] = useState(data.address_p.ward.district.city.country.id || '');
-  const [liveAtCountryData, setLiveAtCountryData] = useState('');
-  const [searchLiveAtCity, setSearchLiveAtCity] = useState(data.address_p.ward.district.city.name || '');
   const [liveAtCityID, setLiveAtCityID] = useState(data.address_p.ward.district.city.id || '');
-  const [liveAtCityData, setLiveAtCityData] = useState('');
-  const [searchLiveAtDistrict, setSearchLiveAtDistrict] = useState(data.address_p.ward.district.name || '');
   const [liveAtDistrictID, setLiveAtDistrictID] = useState(data.address_p.ward.district.id || '');
-  const [liveAtDistrictData, setLiveAtDistrictData] = useState('');
-  const [searchLiveAtWard, setSearchLiveAtWard] = useState(data.address_p.ward.name || '');
   const [liveAtWardID, setLiveAtWardID] = useState(data.address_p.ward.id || '');
-  const [liveAtWardData, setLiveAtWardData] = useState('');
   const [addressBorn, setAddressBorn] = useState(data.address_t.street_address || '');
   const [addressLive, setAddressLive] = useState(data.address_p.street_address || '');
-  const [role, setRole] = useState(data.role.name || '');
   const [roleID, setRoleID] = useState(data.role_id || '');
-  const [roleData, setRoleData] = useState('');
-  const [department, setDepartment] = useState(data.department.name || '');
   const [departmentID, setDepartmentID] = useState(data.department_id || '');
-  const [departmentData, setDepartmentData] = useState('');
   const [submitError, setSubmitError] = useState('');
+
+  /* set data value */
+  const role = data.role?.name || '';
+  const department = data.department?.name || '';
+  const LiveAtNameCountry = data.address_p.ward.district.city.country.name || '';
+  const LiveAtNameCity = data.address_p.ward.district.city.name || '';
+  const LiveAtNameDistrict = data.address_p.ward.district.name || '';
+  const LiveAtNameWard = data.address_p.ward.name || '';
+  const BornNameCountry = data.address_t.ward.district.city.country.name || '';
+  const BornNameCity = data.address_t.ward.district.city.name || '';
+  const BornNameWard = data.address_t.ward.name || '';
+  const BornNameDistrict = data.address_t.ward.district.name || '';
+
   // handle click avatar
   const handleSelectAvatar = (e) => {
     const a = avatarRef.current;
@@ -236,96 +232,6 @@ export default function EditChild({ data }) {
     }
   };
 
-  /* handle get role */
-  useEffect(() => {
-    GetRole(role)
-      .then((result) => {
-        setRoleData(result);
-      })
-      .catch((e) => console.log(e));
-  }, [role]);
-
-  /* handle get department */
-  useEffect(() => {
-    GetDepartment(department)
-      .then((result) => {
-        setDepartmentData(result);
-      })
-      .catch((e) => console.log(e));
-  }, [department]);
-
-  /* handle get Country born */
-  useEffect(() => {
-    GetLocation('country', searchBornCountry)
-      .then((result) => setBornCountryData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchBornCountry]);
-
-  /* handle get City born */
-  useEffect(() => {
-    GetLocation('city', searchBornCity, bornCountryID)
-      .then((result) => setBornCityData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchBornCity, bornCountryID]);
-
-  /* handle get District born */
-  useEffect(() => {
-    GetLocation('district', searchBornDistrict, bornCityID)
-      .then((result) => setBornDistrictData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchBornDistrict, bornCityID]);
-
-  /* handle get Ward born */
-  useEffect(() => {
-    GetLocation('ward', searchBornWard, bornDistrictID)
-      .then((result) => setBornWardData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchBornWard, bornDistrictID]);
-
-  /* handle get Country live at */
-  useEffect(() => {
-    GetLocation('country', searchLiveAtCountry)
-      .then((result) => setLiveAtCountryData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchLiveAtCountry]);
-
-  /* handle get City live at */
-  useEffect(() => {
-    GetLocation('city', searchLiveAtCity, liveAtCountryID)
-      .then((result) => setLiveAtCityData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchLiveAtCity, liveAtCountryID]);
-
-  /* handle get District live at */
-  useEffect(() => {
-    GetLocation('district', searchLiveAtDistrict, liveAtCityID)
-      .then((result) => setLiveAtDistrictData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchLiveAtDistrict, liveAtCityID]);
-
-  /* handle get ward live at */
-  useEffect(() => {
-    GetLocation('ward', searchLiveAtWard, liveAtDistrictID)
-      .then((result) => setLiveAtWardData(result))
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchLiveAtWard, liveAtDistrictID]);
-
   return (
     <>
       {data ? (
@@ -339,7 +245,7 @@ export default function EditChild({ data }) {
               <Button className={cx('select-avatar')} type="button" onClick={handleSelectAvatar} transparent>
                 <Images src={avatar} alt={avatar} />
               </Button>
-              <input ref={avatarRef} type="file" onChange={handleChangeAvatar} />
+              <input ref={avatarRef} type="file" onChange={handleChangeAvatar} accept="image/*" />
               <label className="text-capitalize form-label">avatar</label>
             </div>
             <div className={cx('form-content', 'd-flex flex-row flex-wrap')}>
@@ -397,24 +303,20 @@ export default function EditChild({ data }) {
                 />
               </div>
               <div className={cx('form-content_role')}>
-                <SearchSelect
-                  ref={roleRef}
+                <Role
                   title="role"
-                  valueID={roleID}
-                  searchValue={role}
-                  data={roleData}
-                  searchSelectValue={setRole}
+                  ValueID={departmentID}
+                  ref={roleRef}
+                  SearchValue={department}
                   handleSetID={setRoleID}
                 />
               </div>
               <div className={cx('form-content_department')}>
-                <SearchSelect
-                  valueID={departmentID}
-                  searchValue={department}
-                  ref={departmentRef}
+                <Department
                   title="department"
-                  data={departmentData}
-                  searchSelectValue={setDepartment}
+                  ref={departmentRef}
+                  ValueID={departmentID}
+                  SearchValue={department}
                   handleSetID={setDepartmentID}
                 />
               </div>
@@ -423,42 +325,37 @@ export default function EditChild({ data }) {
               <div className={cx('filter-element', 'form-group d-flex flex-column')}>
                 <label className="form-label">Born</label>
                 <div className={cx('born-at', 'form-group d-flex flex-row flex-wrap')}>
-                  <SearchSelect
+                  <Location
                     title="country"
-                    valueID={bornCountryID}
-                    searchValue={searchBornCountry}
-                    isLabel={false}
-                    data={bornCountryData}
+                    SearchValue={BornNameCountry}
+                    classTitle="country_born"
+                    useLabel={false}
                     handleSetID={setBornCountryID}
-                    searchSelectValue={setSearchBornCountry}
                   />
-                  <SearchSelect
+                  <Location
                     title="city"
-                    valueID={bornCityID}
-                    searchValue={searchBornCity}
-                    isLabel={false}
-                    data={bornCityData}
+                    classTitle="city_born"
+                    SearchValue={BornNameCity}
+                    ForeignID={bornCountryID}
+                    useLabel={false}
                     handleSetID={setBornCityID}
-                    searchSelectValue={setSearchBornCity}
                   />
-                  <SearchSelect
+                  <Location
                     title="district"
-                    valueID={bornDistrictID}
-                    searchValue={searchBornCity}
-                    isLabel={false}
-                    data={bornDistrictData}
+                    SearchValue={BornNameDistrict}
+                    ForeignID={bornCityID}
+                    classTitle="district_born"
+                    useLabel={false}
                     handleSetID={setBornDistrictID}
-                    searchSelectValue={setSearchBornDistrict}
                   />
-                  <SearchSelect
-                    ref={wardBornRef}
-                    valueID={bornWardID}
-                    searchValue={searchBornWard}
+                  <Location
                     title="ward"
-                    isLabel={false}
-                    data={bornWardData}
+                    SearchValue={BornNameWard}
+                    ForeignID={bornDistrictID}
+                    classTitle="ward_born"
+                    useLabel={false}
+                    ref={wardBornRef}
                     handleSetID={setBornWardID}
-                    searchSelectValue={setSearchBornWard}
                   />
                   <FormText
                     ref={addressBornRef}
@@ -473,46 +370,37 @@ export default function EditChild({ data }) {
               <div className={cx('filter-element', 'form-group d-flex flex-column')}>
                 <label className="form-label">Live</label>
                 <div className={cx('live-at', 'form-group d-flex flex-row flex-wrap')}>
-                  <SearchSelect
+                  <Location
                     title="country"
-                    classTitle="live-country"
-                    valueID={liveAtCountryID}
-                    searchValue={searchLiveAtCountry}
-                    isLabel={false}
-                    data={liveAtCountryData}
+                    classTitle="country_live"
+                    SearchValue={LiveAtNameCountry}
+                    useLabel={false}
                     handleSetID={setLiveAtCountryID}
-                    searchSelectValue={setSearchLiveAtCountry}
                   />
-                  <SearchSelect
+                  <Location
                     title="city"
-                    classTitle="live-city"
-                    valueID={liveAtCityID}
-                    searchValue={searchLiveAtCity}
-                    isLabel={false}
-                    data={liveAtCityData}
+                    classTitle="city_live"
+                    SearchValue={LiveAtNameCity}
+                    ForeignID={liveAtCountryID}
+                    useLabel={false}
                     handleSetID={setLiveAtCityID}
-                    searchSelectValue={setSearchLiveAtCity}
                   />
-                  <SearchSelect
+                  <Location
                     title="district"
-                    classTitle="live-district"
-                    valueID={liveAtDistrictID}
-                    searchValue={searchLiveAtDistrict}
-                    isLabel={false}
-                    data={liveAtDistrictData}
+                    ForeignID={liveAtCityID}
+                    SearchValue={LiveAtNameDistrict}
+                    classTitle="district_live"
+                    useLabel={false}
                     handleSetID={setLiveAtDistrictID}
-                    searchSelectValue={setSearchLiveAtDistrict}
                   />
-                  <SearchSelect
+                  <Location
                     title="ward"
-                    classTitle="live-ward"
-                    valueID={liveAtWardID}
-                    searchValue={searchLiveAtWard}
                     ref={wardLiveRef}
-                    isLabel={false}
-                    data={liveAtWardData}
+                    SearchValue={LiveAtNameWard}
+                    ForeignID={liveAtDistrictID}
+                    classTitle="ward_live"
+                    useLabel={false}
                     handleSetID={setLiveAtWardID}
-                    searchSelectValue={setSearchLiveAtWard}
                   />
                   <FormText
                     ref={addressLiveRef}

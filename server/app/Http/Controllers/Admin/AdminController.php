@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Log;
 class AdminController extends Controller{
 
     //update profile
-    public function update(Request $request){
+    public function UpdateProfile(Request $request){
         $name = $request->name;
         $address = $request->address;
         $phone = $request->phone;

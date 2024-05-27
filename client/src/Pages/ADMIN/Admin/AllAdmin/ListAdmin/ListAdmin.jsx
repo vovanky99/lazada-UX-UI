@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 
 export default function ListAdmin({ data }) {
   const handleDeleteAdmin = (e) => {
-    DeleteAdmin()
+    DeleteAdmin(e.target.datatset.id)
       .then()
       .catch((e) => console.log(e));
   };

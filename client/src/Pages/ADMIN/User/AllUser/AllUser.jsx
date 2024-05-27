@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from '../User.module.scss';
@@ -6,11 +6,11 @@ import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
 import config from '~/config';
 import { SearchSelect } from '~/layout/Component/SearchSelect';
-import GetLocation from '~/api/Location/GetLocation';
 import GetUser from '~/api/User/GetUser';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
-import ListUser from './LisUser';
+import ListUser from './ListUser';
+import Location from '~/layout/Component/Location';
 
 const cx = classNames.bind(styles);
 
@@ -24,67 +24,15 @@ export default function AllUser() {
   const [birthdayTo, setBirthdayTo] = useState('');
   const [birthdayFrom, setBirthdayFrom] = useState('');
   const [countryID, setCountryID] = useState('');
-  const [searchCountry, setSearchCountry] = useState('');
-  const [countryData, setCountryData] = useState('');
   const [cityID, setCityID] = useState('');
-  const [searchCity, setSearchCity] = useState('');
-  const [cityData, setCityData] = useState('');
   const [districtID, setDistrictID] = useState('');
-  const [searchDistrict, setSearchDistrict] = useState('');
-  const [districtData, setDistrictData] = useState('');
   const [wardID, setWardID] = useState('');
-  const [searchWard, setSearchWard] = useState('');
-  const [wardData, setWardData] = useState('');
   const [deleteSuccess, setDeleteSuccess] = useState(1);
   const [dataTable, setDataTable] = useState(null);
 
   const handleDeleteSuccess = (value) => {
     setDeleteSuccess(deleteSuccess + value);
   };
-
-  /* get Country */
-  useEffect(() => {
-    GetLocation('country', searchCountry)
-      .then((result) => {
-        setCountryData(result);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchCountry]);
-
-  /* get City */
-  useEffect(() => {
-    GetLocation('city', searchCity, countryID)
-      .then((result) => {
-        setCityData(result);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchCity, countryID]);
-
-  /* get District */
-  useEffect(() => {
-    GetLocation('district', searchDistrict, cityID)
-      .then((result) => {
-        setDistrictData(result);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchDistrict, cityID]);
-
-  /* get Ward */
-  useEffect(() => {
-    GetLocation('ward', searchWard, districtID)
-      .then((result) => {
-        setWardData(result);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [searchWard, districtID]);
 
   /* get data table  */
   useEffect(() => {
@@ -149,35 +97,13 @@ export default function AllUser() {
             <FormSelect title="gender" handleSetValue={setGender} />
             <FormSelect title="status" isStatus={true} handleSetValue={setStatus} />
             <FormDate title="birthday" handleSetValue={setBirthday} />
+            <FormDate title="birthday to" handleSetValue={setBirthdayTo} />
+            <FormDate title="birthday from" handleSetValue={setBirthdayFrom} />
             <div className={cx('filter_address', 'd-flex flex-row flex-wrap')}>
-              <SearchSelect
-                title="country"
-                NullValue={true}
-                data={countryData}
-                searchSelectValue={setSearchCountry}
-                handleSetID={setCountryID}
-              />
-              <SearchSelect
-                title="city"
-                NullValue={true}
-                data={cityData}
-                searchSelectValue={setSearchCity}
-                handleSetID={setCityID}
-              />
-              <SearchSelect
-                title="district"
-                NullValue={true}
-                data={districtData}
-                searchSelectValue={setSearchDistrict}
-                handleSetID={setDistrictID}
-              />
-              <SearchSelect
-                title="ward"
-                NullValue={true}
-                data={wardData}
-                searchSelectValue={setSearchWard}
-                handleSetID={setWardID}
-              />
+              <Location title="country" handleSetID={setCountryID} />
+              <Location title="city" ValueID={countryID} handleSetID={setCityID} />
+              <Location title="district" ValueID={cityID} handleSetID={setDistrictID} />
+              <Location title="ward" ValueID={districtID} handleSetID={setWardID} />
             </div>
           </div>
         </div>

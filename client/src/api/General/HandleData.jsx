@@ -19,3 +19,12 @@ export async function EditData(prefixServer = '', type, id, { ...data }) {
     console.log(e);
   }
 }
+
+export async function UpdateProfile(prefixServer = '', { data }) {
+  try {
+    const res = await axios.post(`/api${prefixServer ? '/' + prefixServer : ''}/update-profile`, data);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
