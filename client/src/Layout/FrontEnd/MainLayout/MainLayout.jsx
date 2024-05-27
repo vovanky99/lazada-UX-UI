@@ -7,8 +7,8 @@ import { getUser } from '~/Redux/Actions/Auth';
 import routes from '~/config/routes';
 import { useEffect } from 'react';
 
-import Footer from '~/Layout/FrontEnd/Footer';
-import Header from '~/Layout/FrontEnd/Header';
+import Footer from '~/layout/FrontEnd/Footer';
+import Header from '~/layout/FrontEnd/Header';
 import styles from './mainLayout.module.scss';
 import Main from '../Main';
 import Store from '~/Redux/Store';

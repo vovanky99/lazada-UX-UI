@@ -1,14 +1,14 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import ThemeProvider from 'react-bootstrap/ThemeProvider';
 
-import './GlobalStyles/GlobalStyles.module.scss';
-import './GlobalStyles//AddStyles.scss';
-import './GlobalStyles/LazyLoad.scss';
+import '~/globalStyles/GlobalStyles.module.scss';
+import '~/globalStyles//AddStyles.scss';
+import '~/globalStyles/LazyLoad.scss';
 
-import { LifeShopRoutes, AdminRoutes } from '~/Routes';
+import { LifeShopRoutes, AdminRoutes } from '~/routes';
 import React from 'react';
-import LifeShopLayout from '~/Layout/FrontEnd/MainLayout';
-import AdminLayout from '~/Layout/ADMIN/MainLayout';
+import LifeShopLayout from '~/layout/FrontEnd/MainLayout';
+import AdminLayout from '~/layout/ADMIN/MainLayout';
 import config from './config';
 
 function App() {

@@ -1,30 +1,34 @@
 import config from '~/config';
 
 // public route
-import HomePages from '~/Pages/FrontEnd/Home';
-import SignIn from '~/Pages/FrontEnd/Auth/SignIn';
-import Register from '~/Pages/FrontEnd/Auth/Register';
-import ProductDetails from '~/Pages/FrontEnd/ProductDetails';
-import Cat from '~/Pages/FrontEnd/Cat';
-import Search from '~/Pages/FrontEnd/Search';
-import Cart from '~/Pages/FrontEnd/Cart';
-import Profile from '~/Pages/FrontEnd/Account/Profile';
-import Order from '~/Pages/FrontEnd/Account/Order';
-import Address from '~/Pages/FrontEnd/Account/Address';
-import UserBank from '~/Pages/FrontEnd/Account/UserBank';
-import Error from '~/Pages/FrontEnd/Error';
+import HomePages from '~/pages/FrontEnd/Home';
+import SignIn from '~/pages/FrontEnd/Auth/SignIn';
+import Register from '~/pages/FrontEnd/Auth/Register';
+import ProductDetails from '~/pages/FrontEnd/ProductDetails';
+import Cat from '~/pages/FrontEnd/Cat';
+import Search from '~/pages/FrontEnd/Search';
+import Cart from '~/pages/FrontEnd/Cart';
+import Profile from '~/pages/FrontEnd/Account/Profile';
+import Order from '~/pages/FrontEnd/Account/Order';
+import Address from '~/pages/FrontEnd/Account/Address';
+import UserBank from '~/pages/FrontEnd/Account/UserBank';
+import Error from '~/pages/FrontEnd/Error';
 
 //route admin
-import AdminLogin from '~/Pages/ADMIN/Auth/Login';
-import AdminHome from '~/Pages/ADMIN/Home';
-import AllAdmin from '~/Pages/ADMIN/Admin/AllAdmin';
-import EditAdmin from '~/Pages/ADMIN/Admin/EditAdmin';
-import AllShop from '~/Pages/ADMIN/Shop/AllShop';
-import EditShop from '~/Pages/ADMIN/Shop/EditShop';
-import ProfileAdmin from '~/Pages/ADMIN/Profile';
-import LocationAdmin from '~/Pages/ADMIN/Location';
-import AddAdmin from '~/Pages/ADMIN/Admin/AddAdmin';
-import Category from '~/Pages/ADMIN/Category';
+import AdminLogin from '~/pages/ADMIN/Auth/Login';
+import AdminHome from '~/pages/ADMIN/Home';
+import AllAdmin from '~/pages/ADMIN/Admin/AllAdmin';
+import EditAdmin from '~/pages/ADMIN/Admin/EditAdmin';
+import AllShop from '~/pages/ADMIN/Shop/AllShop';
+import AddShop from '~/pages/ADMIN/Shop/AddShop';
+import EditShop from '~/pages/ADMIN/Shop/EditShop';
+import ProfileAdmin from '~/pages/ADMIN/Profile';
+import LocationAdmin from '~/pages/ADMIN/Location';
+import AddAdmin from '~/pages/ADMIN/Admin/AddAdmin';
+import Category from '~/pages/ADMIN/Category';
+import AllUser from '~/pages/ADMIN/User/AllUser';
+import AddUser from '~/pages/ADMIN/User/AddUser';
+import EditUser from '~/pages/ADMIN/User/EditUser';
 
 const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages },
@@ -69,6 +73,11 @@ const AdminRoutes = [
     breadcrumbName: 'All Shop',
   },
   {
+    path: config.adminRoutes.AddShop,
+    components: AddShop,
+    breadcrumbName: 'Add Shop',
+  },
+  {
     path: config.adminRoutes.EditShop,
     components: EditShop,
     breadcrumbName: 'Edit Shop',
@@ -87,6 +96,21 @@ const AdminRoutes = [
     path: config.adminRoutes.Category,
     components: Category,
     breadcrumbName: 'Category',
+  },
+  {
+    path: config.adminRoutes.AllUser,
+    components: AllUser,
+    breadcrumbName: 'All User',
+  },
+  {
+    path: config.adminRoutes.AddUser,
+    components: AddUser,
+    breadcrumbName: 'Add User',
+  },
+  {
+    path: config.adminRoutes.EditUser,
+    components: EditUser,
+    breadcrumbName: 'Edit User',
   },
 ];
 

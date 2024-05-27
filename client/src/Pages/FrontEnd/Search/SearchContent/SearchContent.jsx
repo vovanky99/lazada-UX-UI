@@ -6,8 +6,8 @@ import { faBars, faExclamation, faGrip, faShirt } from '@fortawesome/free-solid-
 import { faClock, faCommentDots, faStar as faStarRegular } from '@fortawesome/fontawesome-free-regular';
 
 import styles from './SearchContent.module.scss';
-import Products from '~/Layout/FrontEnd/Products';
-import Pagination from '~/Layout/Component/Pagination';
+import Products from '~/layout/FrontEnd/Products';
+import Pagination from '~/layout/Component/Pagination';
 import Button from '~/components/Button';
 import Images from '~/components/Images';
 

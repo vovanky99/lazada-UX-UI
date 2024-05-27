@@ -21,8 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id',
         'phone_number',
+        'birthday',
+        'gender',
         'status',
         'address_id',
         'avatar',
@@ -48,14 +49,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function role(){
-        return $this->belongsTo(Role::class,'role_id','id');
-    }
-    public function shop(){
-        return $this->hasOne(Shop::class,'user_id','id');
+    public function address_user(){
+        return $this->hasMany(AddressUser::class,'user_id');
     }
     public function reviews(){
-        return $this->hasOne(Reviews::class,'user_id','id');
+        return $this->hasMany(Reviews::class,'user_id','id');
     }
     public function order(){
         return $this->hasMany(OrderCart::class,'user_id','id');

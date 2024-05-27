@@ -18,8 +18,11 @@ class Address extends Model
         'street_address',
         'ward_id',
     ];
-    public function users(){
-        return $this->belongsTo(User::class,'addressable_id','id');
+    public function address_user(){
+        return $this->hasMany(AddressUser::class,'address_id');
+    }
+    public function user(){
+        return $this->belongsTo(User::class,'address_id','id');
     }
     public function shop(){
         return $this->hasOne(Address::class,'address_id');
