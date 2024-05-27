@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\Client\AuthController as LifeShopController;
 use App\Http\Controllers\Auth\Admin\AdminAuthController;
 use App\Http\Controllers\Auth\Client\SocialAuthController;
@@ -114,6 +115,13 @@ Route::prefix('/admin')->group(function(){
             Route::patch('/edit-district/{id}','editDistrict');
             Route::patch('/edit-ward/{id}','editWard');
         });
+        Route::controller(UsersController::class)->group(function(){
+            Route::get('/get-user','index');
+            Route::post('/create-user','Store');
+            Route::get('/show-user/{id}','Show');
+            Route::patch('/edit-user','Update');
+            Route::get('/delete-user','DeleteUser');
+        });
     });
 });
 
@@ -132,7 +140,10 @@ Route::controller(CategoriesController::class)->group(function(){
     Route::get('/get-category','getCategory');
 });
 
-/* check user */
+
+/* check */
 Route::controller(CheckController::class)->group(function(){
     Route::get('/check-username','CheckUsername');
+    Route::get('/check-email','CheckEmail');
+    Route::get('/check-phone','Checkphone');
 });

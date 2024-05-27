@@ -1,0 +1,33 @@
+// all user
+.add_user {
+  a {
+    padding: 5px 20px;
+  }
+}
+.filter_data {
+  margin-bottom: 20px;
+  .filter_content {
+    gap: 10px;
+    > div {
+      flex-basis: calc((100% - 20px) / 3);
+    }
+    .filter_address {
+      gap: 10px;
+      flex-basis: 100%;
+      > div {
+        flex-basis: calc((100% - 30px) / 4);
+      }
+    }
+  }
+}
+.data_table {
+  .toll-edit {
+    gap: 5px;
+    border-left: none;
+    a,
+    button {
+      font-size: 1.4rem;
+      padding: 5px 10px;
+    }
+  }
+}

@@ -7,6 +7,10 @@ import Button from '~/components/Button';
 import config from '~/config';
 import { SearchSelect } from '~/layout/Component/SearchSelect';
 import GetLocation from '~/api/Location/GetLocation';
+import GetUser from '~/api/User/GetUser';
+import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
+import { FormDate } from '~/layout/Component/FormGroup/FormDate';
+import ListUser from './LisUser';
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +21,8 @@ export default function AllUser() {
   const [status, setStatus] = useState('');
   const [gender, setGender] = useState('');
   const [birthday, setBirthday] = useState('');
+  const [birthdayTo, setBirthdayTo] = useState('');
+  const [birthdayFrom, setBirthdayFrom] = useState('');
   const [countryID, setCountryID] = useState('');
   const [searchCountry, setSearchCountry] = useState('');
   const [countryData, setCountryData] = useState('');
@@ -29,6 +35,12 @@ export default function AllUser() {
   const [wardID, setWardID] = useState('');
   const [searchWard, setSearchWard] = useState('');
   const [wardData, setWardData] = useState('');
+  const [deleteSuccess, setDeleteSuccess] = useState(1);
+  const [dataTable, setDataTable] = useState(null);
+
+  const handleDeleteSuccess = (value) => {
+    setDeleteSuccess(deleteSuccess + value);
+  };
 
   /* get Country */
   useEffect(() => {
@@ -75,7 +87,42 @@ export default function AllUser() {
   }, [searchWard, districtID]);
 
   /* get data table  */
-  useEffect(() => {}, [countryID, cityID, districtID, wardID]);
+  useEffect(() => {
+    GetUser({
+      country: countryID,
+      city: cityID,
+      district: districtID,
+      ward: wardID,
+      birthday_to: birthdayTo,
+      birthday_from: birthdayFrom,
+      name,
+      phone,
+      email,
+      status,
+      gender,
+      birthday,
+    })
+      .then((result) => {
+        setDataTable(result);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [
+    countryID,
+    cityID,
+    districtID,
+    wardID,
+    name,
+    phone,
+    email,
+    status,
+    gender,
+    birthday,
+    birthdayTo,
+    birthdayFrom,
+    deleteSuccess,
+  ]);
 
   return (
     <>
@@ -95,9 +142,64 @@ export default function AllUser() {
           <h4 className={cx('text-capitalize')}>
             <b>Filter User</b>
           </h4>
-          <div className={cx('filter_content')}>
-            <SearchSelect />
+          <div className={cx('filter_content', 'd-flex flex-row flex-wrap')}>
+            <SearchSelect title="name" useTippy={false} searchSelectValue={setName} />
+            <SearchSelect title="email" useTippy={false} searchSelectValue={setEmail} />
+            <SearchSelect title="Phone" inputType="number" useTippy={false} searchSelectValue={setPhone} />
+            <FormSelect title="gender" handleSetValue={setGender} />
+            <FormSelect title="status" isStatus={true} handleSetValue={setStatus} />
+            <FormDate title="birthday" handleSetValue={setBirthday} />
+            <div className={cx('filter_address', 'd-flex flex-row flex-wrap')}>
+              <SearchSelect
+                title="country"
+                NullValue={true}
+                data={countryData}
+                searchSelectValue={setSearchCountry}
+                handleSetID={setCountryID}
+              />
+              <SearchSelect
+                title="city"
+                NullValue={true}
+                data={cityData}
+                searchSelectValue={setSearchCity}
+                handleSetID={setCityID}
+              />
+              <SearchSelect
+                title="district"
+                NullValue={true}
+                data={districtData}
+                searchSelectValue={setSearchDistrict}
+                handleSetID={setDistrictID}
+              />
+              <SearchSelect
+                title="ward"
+                NullValue={true}
+                data={wardData}
+                searchSelectValue={setSearchWard}
+                handleSetID={setWardID}
+              />
+            </div>
           </div>
+        </div>
+        <div className={cx('data_table')}>
+          <table>
+            <thead>
+              <tr className="text-capitalize">
+                <th>name</th>
+                <th>avatar</th>
+                <th>status</th>
+                <th>gender</th>
+                <th>email</th>
+                <th>phone number</th>
+                <th>address</th>
+                <th>birthday</th>
+                <th>Tolls</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ListUser data={dataTable} handleDeleteSuccess={handleDeleteSuccess} />
+            </tbody>
+          </table>
         </div>
       </WrapperMain>
     </>

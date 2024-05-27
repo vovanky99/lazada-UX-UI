@@ -18,9 +18,6 @@ class Address extends Model
         'street_address',
         'ward_id',
     ];
-    public function address_user(){
-        return $this->hasMany(AddressUser::class,'address_id');
-    }
     public function user(){
         return $this->belongsTo(User::class,'address_id','id');
     }
