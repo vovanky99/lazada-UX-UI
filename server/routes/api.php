@@ -119,7 +119,7 @@ Route::prefix('/admin')->group(function(){
             Route::get('/get-user','index');
             Route::post('/create-user','Store');
             Route::get('/show-user/{id}','Show');
-            Route::patch('/edit-user','Update');
+            Route::patch('/edit-user/{id}','Update');
             Route::get('/delete-user','DeleteUser');
         });
     });

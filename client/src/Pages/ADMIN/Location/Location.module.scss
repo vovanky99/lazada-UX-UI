@@ -6,6 +6,11 @@
   top: 40px;
   background-color: white;
   box-shadow: 0px 0px 3px var(--box_shadow_admin);
+  > form {
+    > div {
+      gap: 10px;
+    }
+  }
 }
 
 .add-city,

@@ -1,28 +1,38 @@
 import classNames from 'classnames/bind';
-import React from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
 import { useState } from 'react';
 
 import styles from '../../Location.module.scss';
 import Button from '~/components/Button';
+// import Location from '~/layout/Component/Location';
+import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
+import { SearchSelect } from '~/layout/Component/SearchSelect';
 import Location from '~/layout/Component/Location';
 
 const cx = classNames.bind(styles);
 
-export default function EditElement({
+function EditElement({
   data,
   messageError,
   messageSuccess,
+  ForeignID,
+  handleSetID = () => {},
   handleDelete = () => {},
   handleEdit = () => {},
   title,
 }) {
   const [name, setName] = useState(data?.name);
   const [ID, setID] = useState(data?.id || '');
+
+  useEffect(() => {
+    handleSetID(ID);
+  });
   return (
     <>
       <div className={cx('flex-grow-1 d-flex flex-column')}>
         <div className={cx('form-group d-flex flex-column')}>
           <Location
+            ForeignID={ForeignID}
             title={title}
             classTitle={`edit-${title}`}
             SearchValue={name}
@@ -31,12 +41,13 @@ export default function EditElement({
             handleSetName={setName}
           />
         </div>
-        {messageError ? <div className="text-warning fs-5">{messageError}</div> : ''}
-        {messageSuccess ? <div className="text-success fs-5">{messageSuccess}</div> : ''}
+        <MessageSuccess message={messageSuccess} />
+        <MessageSuccess message={messageError} />
         <div className="d-flex flex-row justify-content-center">
           <Button
             data-name={name}
             data-id={ID}
+            data-foreign={ForeignID}
             transparent
             type="button"
             className={cx('text-primary')}
@@ -52,3 +63,5 @@ export default function EditElement({
     </>
   );
 }
+
+export default EditElement;

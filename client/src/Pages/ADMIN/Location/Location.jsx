@@ -47,6 +47,7 @@ export default function Location() {
   const [CountryID, setCountryID] = useState('');
   const [CityID, setCityID] = useState('');
   const [districtID, setDistrictID] = useState('');
+  const [reloadData, setReloadData] = useState(1);
 
   /* toggle add country  */
   const handleBTNCountryClick = () => {
@@ -109,6 +110,7 @@ export default function Location() {
               setAddCountrySuccess('');
             }
           } else {
+            setReloadData(reloadData + 1);
             setAddCountrySuccess(result.success);
             if (addCountryError !== '') {
               setAddCountryError('');
@@ -133,6 +135,7 @@ export default function Location() {
               setAddCitySuccess('');
             }
           } else {
+            setReloadData(reloadData + 1);
             setAddCitySuccess(result.success);
             if (addCityError !== '') {
               setAddCityError('');
@@ -159,6 +162,7 @@ export default function Location() {
               setAddDistrictSuccess('');
             }
           } else {
+            setReloadData(reloadData + 1);
             setAddDistrictSuccess(result.success);
             if (addDistrictError !== '') {
               setAddDistrictError('');
@@ -185,6 +189,7 @@ export default function Location() {
               setAddWardSuccess('');
             }
           } else {
+            setReloadData(reloadData + 1);
             setAddWardSuccess(result.success);
             if (addWardError !== '') {
               setAddWardError('');
@@ -308,7 +313,7 @@ export default function Location() {
           </>
         }
       >
-        <ListLocation />
+        <ListLocation reloadData={reloadData} />
       </WrapperMain>
     </>
   );

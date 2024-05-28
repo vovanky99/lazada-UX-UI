@@ -23,6 +23,9 @@ export default function Element({ country, city, district, ward, handleOnchangeD
   const [messageDistrictSuccess, setMessageDistrictSuccess] = useState('');
   const [messageWardError, setMessageWardError] = useState('');
   const [messageWardSuccess, setMessageWardSuccess] = useState('');
+  const [countryID, setCountryID] = useState(country?.id || '');
+  const [cityID, setCityID] = useState(city?.id || '');
+  const [districtID, setDistrictID] = useState(district?.id || '');
 
   /* handle toggle edit  location*/
   const handleToggleEditLocation = () => {
@@ -165,7 +168,7 @@ export default function Element({ country, city, district, ward, handleOnchangeD
   /* handle edit City */
   const handleEditCity = async (e) => {
     if (e.target.dataset.id && e.target.dataset.name) {
-      EditLocation('city', e.target.dataset.id, { name: e.target.dataset.name })
+      EditLocation('city', e.target.dataset.id, { name: e.target.dataset.name, foreign_id: e.target.dataset.foreign })
         .then((e) => {
           handleOnchangeDelete(1);
           setMessageCitySuccess('edit city Success');
@@ -183,7 +186,10 @@ export default function Element({ country, city, district, ward, handleOnchangeD
   /* handle edit District */
   const handleEditDistrict = async (e) => {
     if (e.target.dataset.id && e.target.dataset.name) {
-      EditLocation('district', e.target.dataset.id, { name: e.target.dataset.name })
+      EditLocation('district', e.target.dataset.id, {
+        name: e.target.dataset.name,
+        foreign_id: e.target.dataset.foreign,
+      })
         .then((e) => {
           handleOnchangeDelete(1);
           setMessageDistrictSuccess('edit ditrict Success');
@@ -201,7 +207,7 @@ export default function Element({ country, city, district, ward, handleOnchangeD
   /* handle edit ward */
   const handleEditWard = async (e) => {
     if (e.target.dataset.id && e.target.dataset.name) {
-      EditLocation('ward', e.target.dataset.id, { name: e.target.dataset.name })
+      EditLocation('ward', e.target.dataset.id, { name: e.target.dataset.name, foreign_id: e.target.dataset.foreign })
         .then((e) => {
           handleOnchangeDelete(1);
           setMessageWardSuccess('edit ward Success');
@@ -228,48 +234,59 @@ export default function Element({ country, city, district, ward, handleOnchangeD
             <h5>
               <b> Edit Location</b>
             </h5>
-            <div className={cx('edit-content', 'd-flex flex-row')}>
-              <div className={cx('edit-country', 'flex-grow-1')}>
-                <EditElement
-                  title="country"
-                  data={country}
-                  messageError={messageCountryError}
-                  messageSuccess={messageCountrySuccess}
-                  handleDelete={handleDeleteCountry}
-                  handleEdit={handleEditCountry}
-                />
+            {/* use toggle edit to avoid  premature api calls */}
+            {toggleEdit ? (
+              <div className={cx('edit-content', 'd-flex flex-row')}>
+                <div className={cx('edit-country', 'flex-grow-1')}>
+                  <EditElement
+                    title="country"
+                    data={country}
+                    handleSetID={setCountryID}
+                    messageError={messageCountryError}
+                    messageSuccess={messageCountrySuccess}
+                    handleDelete={handleDeleteCountry}
+                    handleEdit={handleEditCountry}
+                  />
+                </div>
+                <div className={cx('edit-city', 'flex-grow-1')}>
+                  <EditElement
+                    title="city"
+                    data={city}
+                    handleSetID={setCityID}
+                    ForeignID={countryID}
+                    messageError={messageCityError}
+                    messageSuccess={messageCitySuccess}
+                    handleDelete={handleDeleteCity}
+                    handleEdit={handleEditCity}
+                  />
+                </div>
+                <div className={cx('edit-district', 'flex-grow-1')}>
+                  <EditElement
+                    title="district"
+                    handleSetID={setDistrictID}
+                    ForeignID={cityID}
+                    data={district}
+                    messageError={messageDistrictError}
+                    messageSuccess={messageDistrictSuccess}
+                    handleDelete={handleDeleteDistrict}
+                    handleEdit={handleEditDistrict}
+                  />
+                </div>
+                <div className={cx('edit-ward', 'flex-grow-1')}>
+                  <EditElement
+                    title="ward"
+                    data={ward}
+                    ForeignID={districtID}
+                    messageError={messageWardError}
+                    messageSuccess={messageWardSuccess}
+                    handleDelete={handleDeleteWard}
+                    handleEdit={handleEditWard}
+                  />
+                </div>
               </div>
-              <div className={cx('edit-city', 'flex-grow-1')}>
-                <EditElement
-                  title="city"
-                  data={city}
-                  messageError={messageCityError}
-                  messageSuccess={messageCitySuccess}
-                  handleDelete={handleDeleteCity}
-                  handleEdit={handleEditCity}
-                />
-              </div>
-              <div className={cx('edit-district', 'flex-grow-1')}>
-                <EditElement
-                  title="district"
-                  data={district}
-                  messageError={messageDistrictError}
-                  messageSuccess={messageDistrictSuccess}
-                  handleDelete={handleDeleteDistrict}
-                  handleEdit={handleEditDistrict}
-                />
-              </div>
-              <div className={cx('edit-ward', 'flex-grow-1')}>
-                <EditElement
-                  title="ward"
-                  data={ward}
-                  messageError={messageWardError}
-                  messageSuccess={messageWardSuccess}
-                  handleDelete={handleDeleteWard}
-                  handleEdit={handleEditWard}
-                />
-              </div>
-            </div>
+            ) : (
+              ''
+            )}
           </div>
         )}
         onClickOutside={handleToggleEditOutside}

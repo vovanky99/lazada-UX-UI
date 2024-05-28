@@ -1,15 +1,12 @@
 import classNames from 'classnames/bind';
 import styles from '../Admin.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { EditData } from '~/api/General/HandleData';
 import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
 import CldUploadImg from '~/services/cloudinary/CldUploadImg';
-import GetRole from '~/api/Role/GetRole';
-import GetDepartment from '~/api/Department/GetDepartment';
-import GetLocation from '~/api/Location/GetLocation';
 import Images from '~/components/Images';
 import { SearchSelect } from '~/layout/Component/SearchSelect';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';

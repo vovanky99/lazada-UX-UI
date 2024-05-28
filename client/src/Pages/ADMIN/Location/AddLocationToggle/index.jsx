@@ -4,6 +4,8 @@ import styles from '../Location.module.scss';
 import Button from '~/components/Button';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { SearchSelect } from '~/layout/Component/SearchSelect';
+import MessageDanger from '~/layout/Component/Message/MessageDanger';
+import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
 
 const cx = classNames.bind(styles);
 
@@ -29,6 +31,9 @@ export const AddLocationToggle = forwardRef(function AddToggle(
 ) {
   const nameRef = useRef();
   const feeRef = useRef();
+  const countryRef = useRef();
+  const cityRef = useRef();
+  const districtRef = useRef();
 
   const [name, setName] = useState('');
   const [feeShip, setFeeShip] = useState('');
@@ -46,10 +51,42 @@ export const AddLocationToggle = forwardRef(function AddToggle(
   /*submit form */
   const handleSubmitForm = (e) => {
     e.preventDefault();
+    const n = nameRef.current;
+
+    // valid country
+    if (countryRef && countryData) {
+      const t = countryRef.current;
+      if (t.value === '') {
+        t.classList.add('border_danger');
+      } else {
+        t.classList.remove('border_danger');
+      }
+    }
+
+    //valid city
+    if (cityRef && cityData) {
+      const t = cityRef.current;
+      if (t.value === '') {
+        t.classList.add('border_danger');
+      } else {
+        t.classList.remove('border_danger');
+      }
+    }
+
+    // //valid district
+    if (districtRef && districtData) {
+      const t = districtRef.current;
+      if (t.value === '') {
+        t.classList.add('border_danger');
+      } else {
+        t.classList.remove('border_danger');
+      }
+    }
+
     if (name === '') {
-      nameRef.current.style['border-color'] = 'red';
+      n.classList.add('border_danger');
     } else {
-      nameRef.current.style['border-color'] = '#dee2e6';
+      n.classList.remove('border_danger');
       onSubmitForm();
     }
   };
@@ -57,10 +94,11 @@ export const AddLocationToggle = forwardRef(function AddToggle(
   return (
     <>
       <div className={cx('add-container')}>
-        <form onSubmit={handleSubmitForm} className={cx('d-flex flex-column')}>
+        <form onSubmit={handleSubmitForm} className={cx('d-flex flex-column')} noValidate>
           <div className={cx('form-group d-flex flex-row flex-wrap mb-3 ')}>
             {countryData ? (
               <SearchSelect
+                ref={countryRef}
                 searchSelectValue={searchSelectCountryValue}
                 data={countryData}
                 handleSetID={handleSetCountryID}
@@ -71,6 +109,7 @@ export const AddLocationToggle = forwardRef(function AddToggle(
             )}
             {cityData ? (
               <SearchSelect
+                ref={cityRef}
                 searchSelectValue={searchSelectCityValue}
                 data={cityData}
                 handleSetID={handleSetCityID}
@@ -81,6 +120,7 @@ export const AddLocationToggle = forwardRef(function AddToggle(
             )}
             {districtData ? (
               <SearchSelect
+                ref={districtRef}
                 handleSetID={handleSetDistrictID}
                 searchSelectValue={searchSelectDistrictValue}
                 data={districtData}
@@ -90,45 +130,22 @@ export const AddLocationToggle = forwardRef(function AddToggle(
               ''
             )}
             {title === 'District' ? (
-              <div className={cx('form-group flex-grow-1')}>
-                <label className="form-label">Fee Ship</label>
-                <input
-                  ref={feeRef}
-                  value={feeShip}
-                  className={cx('form-control py-2')}
-                  placeholder={`Enter Fee Ship`}
-                  onChange={(e) => {
-                    const re = /^[a-z\b]+$/;
-                    setFeeShip(e.target.value.replace(re, ''));
-                  }}
-                />
-              </div>
+              <SearchSelect
+                ref={feeRef}
+                title="fee ship"
+                classTitle="fee_ship"
+                searchSelectValue={setFeeShip}
+                searchValue={feeShip}
+                inputType="number"
+                useTippy={false}
+              />
             ) : (
               ''
             )}
-            <div className={cx('form-group flex-grow-1')}>
-              <label className="form-label">Name</label>
-              <input
-                ref={nameRef}
-                value={name}
-                className={cx('form-control py-2')}
-                placeholder={`Enter Name ${title}`}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-            </div>
+            <SearchSelect ref={nameRef} title="name" searchSelectValue={setName} searchValue={name} useTippy={false} />
           </div>
-          {messageSuccess ? (
-            <div className={cx('message', 'text-success px-3 mb-3 text-capitalize')}>{messageSuccess}</div>
-          ) : (
-            ''
-          )}
-          {messageError ? (
-            <div className={cx('message', 'text-danger px-3 mb-3 text-capitalize')}>{messageError}</div>
-          ) : (
-            ''
-          )}
+          <MessageSuccess message={messageSuccess} />
+          <MessageDanger message={messageError} />
           <Button gradient_primary type="submit">
             Submit
           </Button>

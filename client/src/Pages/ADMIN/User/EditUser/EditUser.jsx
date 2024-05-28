@@ -1,18 +1,24 @@
-import classNames from 'classnames/bind';
+import { useLocation, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-import styles from '../User.module.scss';
-import WrapperMain from '~/layout/Component/WrapperMain';
-import { useParams } from 'react-router-dom';
+import { ShowData } from '~/api/General/HandleData';
+import EditDetail from './EditDetail';
 
-const cx = classNames.bind(styles);
+export default function EditAdmin() {
+  const param = useParams();
+  const location = useLocation();
 
-export default function EditUser() {
-  const params = useParams();
-  return (
-    <>
-      <WrapperMain title="Edit User">
-        <div className={cx('filter_data')}></div>
-      </WrapperMain>
-    </>
-  );
+  const [data, setData] = useState(null);
+
+  /* handle get data */
+  useEffect(() => {
+    const id = param.id;
+    ShowData('admin', 'user', id)
+      .then((result) => {
+        setData(result[0]);
+      })
+      .catch((e) => console.log(e));
+  }, [param.id]);
+
+  return <>{data ? <EditDetail data={data} /> : ''}</>;
 }

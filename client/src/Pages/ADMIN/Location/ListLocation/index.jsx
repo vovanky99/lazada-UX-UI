@@ -10,15 +10,9 @@ import Location from '~/layout/Component/Location';
 
 const cx = classNames.bind(styles);
 
-export default function ListLocation() {
+export default function ListLocation({ reloadData }) {
   const FilterRef = useRef();
-  const [dataTable, setDataTable] = useState([]);
-  const [optionCountry, setOptionCountry] = useState([]);
-  const [optionCity, setOptionCity] = useState([]);
-  const [optionDistrict, setOptionDistrict] = useState([]);
-  const [country, setCountry] = useState('');
-  const [city, setCity] = useState('');
-  const [district, setDistrict] = useState('');
+  const [dataTable, setDataTable] = useState(null);
   const [countryID, setCountryID] = useState('');
   const [cityID, setCityID] = useState('');
   const [districtID, setDistrictID] = useState('');
@@ -60,33 +54,12 @@ export default function ListLocation() {
     return rows;
   };
 
-  /* get Country */
-  useEffect(() => {
-    GetLocation('country', country)
-      .then((result) => setOptionCountry(result))
-      .catch((e) => console.log(e));
-  }, [country]);
-
-  /* get City */
-  useEffect(() => {
-    GetLocation('city', city, countryID)
-      .then((result) => setOptionCity(result))
-      .catch((e) => console.log(e));
-  }, [city, countryID]);
-
-  /* get District */
-  useEffect(() => {
-    GetLocation('district', district, cityID)
-      .then((result) => setOptionDistrict(result))
-      .catch((e) => console.log(e));
-  }, [district, cityID]);
-
   /* get data for table */
   useEffect(() => {
     GetAllLocation(countryID, cityID, districtID)
       .then((result) => setDataTable(result))
       .catch((e) => console.log(e));
-  }, [countryID, cityID, districtID, deleteLocation]);
+  }, [countryID, cityID, districtID, deleteLocation, reloadData]);
 
   return (
     <>

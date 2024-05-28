@@ -36,12 +36,6 @@ class CheckController extends Controller
     public function CheckEmail(){
         $type = Request()->get('type');
         $email = Request()->get('email');
-        // if($type == 'admin'){
-        //     $admin = Admin::where('email',$email)->first();
-        //     if($admin){
-        //         return response()->json(['error'=>'Username already exists']);
-        //     }
-        // }
         if($type == 'user'){
             $user = User::where('email',$email)->first();
             if($user){

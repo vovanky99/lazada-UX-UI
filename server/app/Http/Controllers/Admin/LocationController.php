@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\District;
 use App\Models\Ward;
+use Exception;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller {
@@ -164,27 +165,53 @@ class LocationController extends Controller {
     }
     public function editCountry(Request $request,$id){
         $name = $request->name;
-        $ward = Country::where('id',$id)->first();
-        $ward->name = $name;
-        return response()->json(['success'=>"Edit Country Success"]);
+        $country = Country::find($id);
+        $country->name = $name;
+        $country->save();
+        return response()->json(['success'=>"Edit Country Success!"]);
+
     }
     public function editCity(Request $request,$id){
         $name = $request->name;
-        $ward = City::where('id',$id)->first();
-        $ward->name = $name;
-        return response()->json(['success'=>"Edit City Success"]);
+        $parent_id = $request->foreign_id;
+        if($parent_id){
+            $city = City::find($id);
+            $city->name = $name;
+            $city->country_id = $parent_id;
+            $city->save();
+            return response()->json(['success'=>"Edit City Success!"]);
+        }
+        else{
+            return response()->json(['error'=>"Edit City failed!"]);
+        }
     }
     public function editDistrict(Request $request,$id){
         $name = $request->name;
-        $ward = District::where('id',$id)->first();
-        $ward->name = $name;
-        return response()->json(['success'=>"Edit District Success"]);
+        $parent_id = $request->foreign_id;
+        if($parent_id){
+            $district = District::find($id);
+            $district->name = $name;
+            $district->city_id = $parent_id;
+            $district->save();
+            return response()->json(['success'=>"Edit District Success!"]);
+        }
+        else{
+            return response()->json(['error'=>"Edit District Failed!"]);
+        }
     }
     public function editWard(Request $request,$id){
         $name = $request->name;
-        $ward = Ward::where('id',$id)->first();
-        $ward->name = $name;
-        return response()->json(['success'=>"Edit Ward Success"]);
+        $parent_id = $request->foreign_id;
+        if($parent_id){
+            $Ward = Ward::find($id);
+            $Ward->name = $name;
+            $Ward->city_id = $parent_id;
+            $Ward->save();
+            return response()->json(['success'=>"Edit Ward Success!"]);
+        }
+        else{
+            return response()->json(['error'=>"Edit Ward Failed!"]);
+        }
     }
     public function getSearchLocation(Request $request){
         $title = $request->get('q');

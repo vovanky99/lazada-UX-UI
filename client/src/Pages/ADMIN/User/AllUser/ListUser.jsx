@@ -37,7 +37,7 @@ export default function ListUser({ data }, handleDeleteSuccess = () => {}) {
               <td>{d.birthday}</td>
               <td>
                 <div className={cx('toll-edit', 'd-flex flex-row justify-content-center flex-wrap')}>
-                  <Button gradient_primary type="button" to={`/admin/edit-admin/${d.id}`}>
+                  <Button gradient_primary type="button" to={`/admin/edit-user/${d.id}`}>
                     Edit
                   </Button>
                   <Button data-id={d.id} gradient_danger type="button" onClick={handleDeleteUser}>

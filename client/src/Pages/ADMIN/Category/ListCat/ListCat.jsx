@@ -18,7 +18,6 @@ export default function ListCat({ handleDelete = () => {}, index, P_id, P_name, 
   const [status, setStatus] = useState(P_status || '');
   const [searchParent, setSearchParent] = useState(P_cat_name || '');
   const [showEdit, setShowEdit] = useState(false);
-  console.log(searchParent);
   // show edit cat
   const handleToggleEdit = (e) => {
     setShowEdit(true);
@@ -55,10 +54,13 @@ export default function ListCat({ handleDelete = () => {}, index, P_id, P_name, 
 
   /* get cat for edit Cat */
   useEffect(() => {
-    GetCategory(searchParent).then((result) => {
-      setParentData(result);
-    });
-  }, [searchParent]);
+    /* use show edit to avoid  premature api calls */
+    if (showEdit) {
+      GetCategory(searchParent).then((result) => {
+        setParentData(result);
+      });
+    }
+  }, [searchParent, showEdit]);
 
   //delete cat
   const handleDeleteCat = (e) => {

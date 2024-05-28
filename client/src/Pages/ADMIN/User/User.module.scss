@@ -21,13 +21,76 @@
   }
 }
 .data_table {
-  .toll-edit {
-    gap: 5px;
-    border-left: none;
-    a,
-    button {
-      font-size: 1.4rem;
-      padding: 5px 10px;
+  table {
+    thead {
+    }
+    tbody {
+      // vertical-align: middle;
+      td {
+        div.avatar {
+          width: 50px;
+          height: 50px;
+          margin: auto;
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+          }
+        }
+        .toll-edit {
+          gap: 5px;
+          border-left: none;
+          padding: 5px;
+          button,
+          a {
+            font-size: 1.4rem;
+            padding: 5px 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// edit user
+.edit_user-content {
+  gap: 10px;
+  .avatar {
+    label {
+      font-size: 1.5rem;
+    }
+    input {
+      display: none;
+    }
+    .select-avatar {
+      height: 100px;
+      width: 100px;
+      padding: 0;
+      img {
+        border: 1px solid var(--border_color_admin);
+        border-radius: 50%;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  > div {
+    gap: 10px;
+  }
+  .form-content {
+    > div {
+      flex-basis: calc((100% - 30px) / 4);
+    }
+  }
+  .location {
+    .filter-element {
+      label {
+        font-size: 1.5rem;
+      }
+      .born {
+        gap: 10px;
+      }
     }
   }
 }
