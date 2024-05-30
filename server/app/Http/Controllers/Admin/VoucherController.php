@@ -3,130 +3,58 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Voucher;
-use App\Models\Categories;
-use App\Models\ProductsType;
-use App\Http\Requests\VoucherRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VoucherController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function __construct()
-    {
-       return $this->middleware('auth');
-    }
-    public function index()
-    {
-        //
-        $voucher = Voucher::paginate(15);
-        $count_voucher = Voucher::count();
-        $cat = Categories::all();
-        $pd_type = ProductsType::all();
-        return view('voucher/index',compact('voucher','count_voucher','cat','pd_type'));
-    }
-
-    public function search(Request $request){
-        if($request->search_cat>0 && $request->search_pd_type>0){
-            $voucher = Voucher::where([['title','like','%'.$request->search.'%'],[
-                'categories_id','=',$request->search_cat
-            ],[
-                'products_type_id','=',$request->search_pd_type
-            ]]);
-            $count_voucher = $voucher->count();
-            $voucher = $voucher->paginate(15);
+    public function index(){
+        $name = request()->get('name');
+        $status = request()->get('status');
+        $category_id = request()->get('category_id');
+        $code = request()->get('code');
+        $start_day = request()->get('start_day');
+        $end_day = request()->get('end_day');
+        $voucher = DB::table('voucher')->select('voucher.*','categories.name as cat_name')->leftJoin('categories','categories.id','=','voucher.category_id')->where([['voucher.name','like','%'.$name.'%'],['code','like','%'.$code.'%']]);
+        if($status == '1' || $status =='0'){
+            $voucher->where('voucher.status',$status);
         }
-        elseif($request->search_cat>0){
-            
-            $voucher = Voucher::where('title','like','%'.$request->search.'%')->where('categories_id','=',$request->search_cat);
-            $count_voucher = $voucher->count();
-            $voucher = $voucher->paginate(15);
+        if($category_id){
+            $voucher->where('category_id',$category_id);
         }
-        elseif($request->search_pd_type>0){
-            
-            $voucher = Voucher::where('title','like','%'.$request->search.'%')->where('products_type_id','=',$request->search_pd_type);
-            $count_voucher = $voucher->count();
-            $voucher = $voucher->paginate(15);
+        if($start_day){
+            $voucher->where('start_day','>=',$start_day);
+        }
+        if($end_day){
+            $voucher->where('end_day','>=',$end_day);
+        }
+        $vouchers = $voucher->get();
+        return response()->json($vouchers);
+    }
+    public function store(){
+        $voucher = Voucher::create(
+            request()->all(),
+        );
+        if($voucher){
+            return response()->json(['success'=>'created success!']);
         }
         else{
-            $voucher = Voucher::where('title','like','%'.$request->search.'%');
-            $count_voucher = $voucher->count();
-            $voucher = $voucher->paginate(15);
+            return response()->json(['error'=>'created failed!']);
         }
-        $selected_pd_type = $request->search_pd_type;
-        $selected_cat = $request->search_cat;
-        $cat = Categories::all();
-        $pd_type = ProductsType::all();
-        return view('voucher/index',compact('voucher','count_voucher','cat','pd_type','selected_pd_type','selected_cat'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-        $cat = Categories::all();
-        $pd_type = ProductsType::all();
-        return view('voucher/create',compact('cat','pd_type'));
+    public function show($id){
+        $voucher =  DB::table('voucher')->select('voucher.*','categories.name as cat_name')->leftJoin('categories','categories.id','=','voucher.category_id')->where('voucher.id',$id)->first();
+        return response()->json($voucher);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(VoucherRequest $request)
-    {
-        //
-        $voucher1 = new Voucher;
-        $voucher1->create($request->all());
-        $voucher = Voucher::paginate(15);
-        $count_voucher = Voucher::count();
-        $cat = Categories::all();
-        $pd_type = ProductsType::all();
-        return view('voucher/index',compact('voucher','count_voucher','cat','pd_type'));
+    public function update(Voucher $voucher,$id){
+        $voucher = Voucher::findOrFail($id);
+        $data = request()->all();
+        $voucher->update($data);
+        return response()->json(['success'=>'updated success!']);
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-        $voucher = Voucher::find($id);
-        return view('voucher/show',compact('voucher'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-        $voucher = Voucher::find($id);
-        $cat = Categories::all();
-        $pd_type = ProductsType::all();
-        return view('voucher/edit',compact('voucher','cat','pd_type'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(VoucherRequest $request, string $id)
-    {
-        //
-        Voucher::find($id)->update($request->all());
-        return redirect()->route('voucher.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function delete($id){
         Voucher::find($id)->delete();
-        return redirect()->route('voucher.index');
+        return response()->json(['success'=>'deleted success!']);
     }
 }

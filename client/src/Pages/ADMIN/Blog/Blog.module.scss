@@ -1,0 +1,64 @@
+.add_blog {
+  gap: 10px;
+  > div {
+    &:first-child {
+      flex-basis: 100%;
+    }
+    flex-basis: calc((100% - 20px) / 2);
+    &:nth-last-child(4) {
+      flex-basis: 100%;
+    }
+    &:last-child {
+      flex-basis: 100%;
+    }
+  }
+  .add_blog-btn {
+    button {
+      padding: 5px 20px;
+    }
+  }
+  .message {
+    font-size: 1.4rem;
+  }
+}
+.filter_data {
+  margin-bottom: 20px;
+  .filter_content {
+    gap: 10px;
+    > div {
+      &:nth-child(1) {
+        flex-basis: 85%;
+      }
+      &:nth-child(2) {
+        flex-basis: calc(100% - 85% - 10px);
+      }
+    }
+  }
+}
+.data_table {
+  .list_cat_tippy {
+    padding: 20px;
+    gap: 10px;
+    box-shadow: 0px 0px 3px 1px var(--box_shadow_admin);
+    background-color: white;
+    .list_cat_tippy_content {
+      gap: 10px;
+      > div {
+        gap: 10px;
+        &:last-child {
+          button {
+            padding: 5px 20px;
+          }
+        }
+      }
+    }
+  }
+  .toll-edit {
+    gap: 5px;
+    border-left: none;
+    button {
+      font-size: 1.4rem;
+      padding: 5px 10px;
+    }
+  }
+}

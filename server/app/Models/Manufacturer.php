@@ -13,5 +13,6 @@ class Manufacturer extends Model
         'name',
         'descriptions',
         'logo',
+        'status',
     ];
 }

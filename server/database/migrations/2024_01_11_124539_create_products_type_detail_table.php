@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('product_type_detail', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('name');
+            $table->boolean('status')->default(1);
             $table->string('image');
             $table->foreignId('product_type_id')->references('id')->on('product_type')->onDelete('cascade');
             $table->timestamps();

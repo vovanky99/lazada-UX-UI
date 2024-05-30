@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from '~/api/axios';
 
-import { getUser } from '~/redux/Actions/Auth';
+import { getUser, setSession } from '~/redux/Actions/Auth';
 import routes from '~/config/routes';
 import { useEffect } from 'react';
 
@@ -17,22 +17,19 @@ const cx = classNames.bind(styles);
 
 function MainLayout({ children }) {
   //login action
-  const csrf = () => axios.get('/sanctum/csrf-cookie');
   const location = useLocation();
   const navigate = useNavigate();
   const isAuth = useSelector((state) => state.Auth.isAuthenticated);
   // user logined
+  const token = localStorage.getItem('token');
   useEffect(() => {
     const logined = () => {
-      if (
-        localStorage.getItem('token') &&
-        (location.pathname === routes.register || location.pathname === routes.signIn)
-      ) {
+      if (token && (location.pathname === routes.register || location.pathname === routes.signIn)) {
         navigate(-1);
       }
     };
     logined();
-  }, [isAuth, localStorage.getItem('token')]);
+  }, [isAuth, token]);
 
   /* handle set localstorage auth social */
   useEffect(() => {
@@ -55,7 +52,8 @@ function MainLayout({ children }) {
       const getDecryptedCookieValue = async (cookie) => {
         try {
           const res = await axios.get(`/api/decrypt-cookie?cookie=` + cookie);
-          localStorage.setItem('token', res.data.decryptedValue.slice(res.data.decryptedValue.indexOf('|') + 1));
+          Store.dispatch(setSession(res.data.decryptedValue.slice(res.data.decryptedValue.indexOf('|') + 1), 'token'));
+          // localStorage.setItem('token', res.data.decryptedValue.slice(res.data.decryptedValue.indexOf('|') + 1));
         } catch (e) {
           return null;
         }
@@ -75,19 +73,11 @@ function MainLayout({ children }) {
 
   /* handle get user */
   useEffect(() => {
-    // set auth token for header
-    const setAuthToken = (token) => {
-      if (token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      } else {
-        delete axios.defaults.headers.common['Authorization'];
-      }
-    };
     // get user
     const fetchData = async () => {
       const token = localStorage.getItem('token');
       if (token && isAuth === false) {
-        setAuthToken(token);
+        Store.dispatch(setSession(token, 'token'));
         Store.dispatch(getUser(token));
       }
     };

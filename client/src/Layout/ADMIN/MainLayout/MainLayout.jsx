@@ -1,22 +1,23 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import styles from './MainLayout.module.scss';
-import Store from '~/redux/Store';
-import { getAdmin } from '~/redux/Actions/Auth';
-import axios from '~/api/axios';
+import { getAdmin, setSession } from '~/redux/Actions/Auth';
 import BreadCrumb from '~/layout/Component/BreadCrumb';
 import config from '~/config';
 import Header from '../Header';
 import SideBar from '../SideBar';
+import Store from '~/redux/Store';
+import axios from '~/api/axios';
 
 const cx = classNames.bind(styles);
 
 export default function MainLayout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
+  // const dispatch = useDispatch();
   const params = useParams();
   const isAdminAuth = useSelector((state) => state.Auth.adminAuthenticated);
   const [breadCrumb, setBreadCrumb] = useState(false);
@@ -24,17 +25,17 @@ export default function MainLayout({ children }) {
 
   /* get admin  */
   useEffect(() => {
-    const adminToken = localStorage.getItem('adminToken');
-
-    if (adminToken) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${adminToken}`;
-      Store.dispatch(getAdmin(adminToken));
+    const token = localStorage.getItem('adminToken');
+    if (token) {
+      Store.dispatch(setSession(token, 'adminToken'));
+      Store.dispatch(getAdmin());
     } else {
       navigate(`${config.adminRoutes.SignIn}`);
     }
   }, [localStorage.getItem('adminToken')]);
 
   /* show hide breadcrumb */
+  const Path = location.pathname;
   useEffect(() => {
     if (!params.length) {
       if (location.pathname.split('/').slice(1).length > 1) {
@@ -44,7 +45,7 @@ export default function MainLayout({ children }) {
       }
       setPath(location.pathname);
     }
-  }, [breadCrumb, location.pathname]);
+  }, [breadCrumb, Path]);
   return (
     <>
       {isAdminAuth ? (

@@ -6,8 +6,8 @@
 }
 
 .slide_active {
-  border-color: #ee4d2d !important;
-  color: #ee4d2d;
+  border-color: var(--default_color) !important;
+  color: var(--default_color);
   position: relative;
 }
 .slide_active::before {
@@ -20,8 +20,8 @@
   transform: rotate(135deg);
 }
 .slide_active::after {
-  border-right: 1px solid white;
-  border-bottom: 1px solid white;
+  border-right: 1px solid var(--white);
+  border-bottom: 1px solid var(--white);
   width: 4px;
   height: 8px;
   bottom: 0.1rem;
@@ -37,27 +37,27 @@ img.zoom_in {
 }
 img.zoom_out {
   cursor: zoom-out;
-  border: 2px solid #ee4d2d;
+  border: 2px solid --default_color;
   padding: 2px;
 }
 .images_active {
-  border: 2px solid var(--brand-primary-color, #ee4d2d);
+  border: 2px solid var(--brand-primary-color, --default_color);
 }
 .img-hl-active {
-  border: 2px solid var(--brand-primary-color, #ee4d2d);
+  border: 2px solid var(--brand-primary-color, --default_color);
 }
 
 // rating
 .rating_active {
-  border: 1px solid #ee4d2d !important;
-  color: #ee4d2d !important;
+  border: 1px solid var(--default_color) !important;
+  color: var(--default_color) !important;
 }
 
 //pagiantion
 .pagination_active {
   border-color: #16849b !important ;
   background-color: #1a9cb7 !important;
-  color: #fff !important;
+  color: var(--white) !important;
 }
 
 .account_navlink_active {
@@ -67,7 +67,7 @@ img.zoom_out {
 /*page account*/
 // select gender
 .stardust-radio_active .outer-circle_active {
-  border-color: #ee4d2d !important;
+  border-color: var(--default_color) !important;
 }
 .stardust-radio_active .outer-circle_active .inner-circle_active {
   opacity: 1 !important;
@@ -76,28 +76,28 @@ img.zoom_out {
 // add danger login and register
 
 input.danger_validated {
-  border-color: #f44336 !important;
+  border-color: var(--border_danger_client) !important;
 }
 input.danger_validated:focus {
-  border-color: #f44336 !important;
+  border-color: var(--border_danger_client) !important;
 }
 
 select.danger_validated {
-  border-color: #f44336 !important;
+  border-color: var(--border_danger_client) !important;
 }
 
 select.danger_validated:focus {
-  border-color: #f44336 !important;
+  border-color: var(--border_danger_client) !important ;
 }
 
 // add active validated page account bank
 input.active_validated:focus + label,
 input.active_validated:required:valid + label {
-  color: #dc3545 !important;
+  color: var(--border_danger_client) !important;
 }
 
 input.active_validated {
-  border-color: #dc3545 !important;
+  border-color: var(--border_danger_client) !important;
 }
 
 // active button submit account credit
@@ -118,10 +118,8 @@ button.reviews_score.score_active {
 }
 
 /* admin */
-
-//login
-.login-valid {
-  border-color: var(--border_danger) !important;
+.border_danger {
+  border-color: var(--border_danger) !important ;
 }
 
 // navlink for sidebar
@@ -132,9 +130,4 @@ button.reviews_score.score_active {
 #sidebar a.active p,
 #sidebar a.active svg {
   color: #b66dff;
-}
-
-// for main page
-.border_danger {
-  border-color: var(--border_danger) !important ;
 }

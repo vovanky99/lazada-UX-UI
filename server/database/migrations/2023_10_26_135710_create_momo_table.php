@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('momo', function (Blueprint $table) {
-            $table->bigIncrements('id')->Unique();
+            $table->bigIncrements('id');
             $table->string('txn_id')->unique();
-            $table->integer('status');
-            $table->bigInteger('amount');
+            $table->boolean('status')->default(0);
+            $table->double('amount');
             $table->timestamps();
         });
     }

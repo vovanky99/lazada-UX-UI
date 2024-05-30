@@ -1,4 +1,4 @@
-@use '../../../GlobalStyles/mixin.scss' as mixin;
+@use '../../../assets/Styles/mixin.scss' as mixin;
 
 @include mixin.breakpoint(lg) {
   .search-wrapper {

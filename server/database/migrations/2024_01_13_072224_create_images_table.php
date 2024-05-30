@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('images', function (Blueprint $table) {
-            $table->bigIncrements('id')->Unique();
-            $table->text('title');
+            $table->bigIncrements('id');
+            $table->text('name');
+            $table->boolean('status')->default(1);
             $table->morphs('imageable');
             $table->timestamps();
         });

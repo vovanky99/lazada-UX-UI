@@ -18,7 +18,7 @@ class Payment extends Model
     public function paymentable(){
         return $this->morphTo();
     }
-    public function order(){
+    public function orders(){
         return $this->hasMany(OrderCart::class,'payment_id','id');
     }
 }

@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from '../Category.module.scss';
 import Button from '~/components/Button';
 import Tippy from '@tippyjs/react/headless';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 import { useEffect, useState } from 'react';
 import GetCategory from '~/api/Category/GetCategory';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
@@ -90,16 +90,16 @@ export default function ListCat({ handleDelete = () => {}, index, P_id, P_name, 
             </h5>
             <form className={cx('list_cat_tippy_content', 'd-flex flex-column')} noValidate onSubmit={handleEditCat}>
               <div className="d-flex flex-row flex-wrap">
-                <SearchSelect
+                <FormSearch
                   title="parent"
                   valueID={parentID}
-                  searchValue={searchParent}
+                  Value={searchParent}
                   data={parentData}
-                  searchSelectValue={setSearchParent}
+                  searchValue={setSearchParent}
                   handleSetID={setParentID}
                 />
-                <FormSelect title="status" isStatus={true} defaultValue={status} handleSetValue={setStatus} />
-                <SearchSelect title="name" searchValue={name} useTippy={false} searchSelectValue={setName} />
+                <FormSelect title="status" useStatus={true} defaultValue={status} handleSetValue={setStatus} />
+                <FormSearch title="name" Value={name} useTippy={false} searchValue={setName} />
               </div>
               <div className="d-flex flex-row justify-content-center">
                 <Button gradient_primary type="submit">

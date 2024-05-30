@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BlogsRequest;
 use App\Models\Blogs;
-use App\Models\Categories;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BlogsController extends Controller
 {
@@ -15,139 +13,54 @@ class BlogsController extends Controller
      */
     public function index()
     {
-        //
-        $blogs = Blogs::paginate(15);
-        $count_blogs = Blogs::count();
-        $cat = Categories::all();
-        return view('blogs/index',compact('blogs','count_blogs','cat'));
-    }
-
-    public function search(Request $request){
-
-        if($request->search_cat>0){
-            $blogs = Blogs::where('title','like','%'.$request->search.'%')->where('categories_id','=',$request->search_cat);
-            $count_blogs = $blogs->count();
-            $blogs = $blogs->paginate(15);
+        $title = request()->get('title');
+        $status = request()->get('status');
+        $category_id = request()->get('category_id');
+        $blogs = DB::table('blogs')->where('blogs.title','like','%'.$title.'%')->select('blogs.*','categories.name as cat_name')->leftJoin('categories','blogs.category_id','=','categories.id');
+        if($status =='1' && $status =='0'){
+            $blogs->where('blogs.status',$status);
         }
-        else{
-            $blogs = Blogs::where('title','like','%'.$request->search.'%');
-            $count_blogs = $blogs->count();
-            $blogs = $blogs->paginate(15);
-        }
-        $selected_cat = $request->search_cat;
-        $cat = Categories::all();
-        return view('blogs/index',compact('blogs','count_blogs','cat','selected_cat'));
-   
-    }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-        $cat = Categories::all();
-        return view('blogs/create',compact('cat'));
+        // if($category_id){
+        //     $blogs->whereIn('category_id',explode(',',$category_id));
+        // }
+        $blog = $blogs->get();
+        return response()->json($blog);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BlogsRequest $request)
+    public function store()
     {
-        //
         $blogs = new Blogs;
-        $getImg = '';
-        if($request->hasFile('new_img')){
-            $this->validate($request,[
-                'new_img' => 'mimes:jpg,jpeg,png,gif|max:10000',
-            ],[
-                'new_img.mines' =>`avatar don't .jpg .jpeg .png .gif`,
-                'new_img.max'=>`avatar can't limit 9MB `,
-            ]);
-            $img = $request->new_img;
-            $getImg = $img->getClientOriginalName();
-            $destinationPath = public_path('upload/images/blogs');
-            $img->move($destinationPath,$getImg);
-        }
-
-        $blogs->create([
-            'title'=>$request->title,
-            'descriptions'=>$request->descriptions,
-            'content'=>$request->content,
-            'status'=>$request->status,
-            'img'=>$getImg,
-            'categories_id'=>$request->categories_id
-        ]);
-        return redirect()->route('blogs.index');
+        $blogs->create(request()->all());
+        return response()->json(['success'=>'created success!']);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
-        $blogs = Blogs::find($id);
-        return view('blogs/show',compact('blogs'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-        $cat = Categories::all();
-        $blogs = Blogs::find($id);
-        return view('blogs/edit',compact('blogs','cat'));
+        $blogs = DB::table('blogs')->where('blogs.id',$id)->select('blogs.*','categories.name as cat_name')->join('blogs','blogs.category_id','=','categories.id')->first();
+        return response()->json($blogs);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(BlogsRequest $request, string $id)
+    public function update( $id)
     {
-        //
-        $blogs = Blogs::find($id);
-        $getImg = '';
-        if($request->hasFile('new_img')){
-            $this->validate($request,[
-                'new_img' => 'mimes:jpg,jpeg,png,gif|max:10000',
-            ],[
-                'new_img.mimes' =>`avatar don't .jpg .jpeg .png .gif`,
-                'new_img.max'=>`avatar can't limit 9MB `,
-            ]);
-            $img = $request->new_img;
-            $getImg = $img->getClientOriginalName();
-            $destinationPath = public_path('upload/images/blogs');
-            $img->move($destinationPath,$getImg);
-        }
-        if($request->new_img == ''){
-            $getImg = $blogs->img;
-        }
-        $blogs->update([
-            'title'=>$request->title,
-            'descriptions'=>$request->descriptions,
-            'content'=>$request->content,
-            'status'=>$request->status,
-            'img'=>$getImg,
-            'categories_id'=>$request->categories_id
-        ]);
-        return redirect()->route('blogs.index');
+        $blogs = Blogs::findOrFails($id);
+        $blogs->update(request()->all());
+        return response()->json(['success'=>'updated success!']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function delete($id){
         Blogs::find($id)->delete();
-        return redirect()->route('blogs.index');
-    }
-    public function delete_multiple(Request $request){
-        $ids = $request->ids;
-        Blogs::whereIn('id',explode(",",$ids))->delete();
-        return response()->json(['status'=>true,'message'=>"blogs deleted successfully."]);
+        return response()->json(['status'=>"deleted success!"]);
     }
 }

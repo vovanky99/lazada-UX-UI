@@ -11,18 +11,18 @@ class AdminAuthController extends Controller
 {
     public function login(Request $request)
     {
-       $request->validate([
-        'username'=>'required',
-        'password'=>'required'
-       ]);
-       $credentials = $request->only('username','password');
-       if(Auth::guard('admin')->attempt($credentials)){
-        $admin = Auth::guard('admin')->user();
-        return response()->json(['token'=>$admin->createToken('admin-token')->plainTextToken]);
-       }
-       else{
-           return response()->json(['message'=>'Invalid credentials',401]);
-       }
+        $request->validate([
+            'username'=>'required',
+            'password'=>'required'
+           ]);
+           $credentials = $request->only('username','password');
+           if(Auth::guard('admin')->attempt($credentials)){
+            $user = Auth::guard('admin')->user();
+            return response()->json(['token'=>$user->createToken('admin-token')->plainTextToken]);
+           }
+           else{
+               return response()->json(['message'=>'Invalid credentials',401]);
+           }
     }
 
     public function getAmin(Request $request){

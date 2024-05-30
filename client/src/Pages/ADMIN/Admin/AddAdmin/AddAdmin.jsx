@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import styles from '../Admin.module.scss';
 import WrapperMain from '~/layout/Component/WrapperMain';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 import Button from '~/components/Button';
 import Images from '~/components/Images';
 import CldUploadImg from '~/services/cloudinary/CldUploadImg';
@@ -274,23 +274,23 @@ export default function AddAdmin() {
           </div>
           <div className={cx('form-content', 'd-flex flex-row flex-wrap')}>
             <div className={cx('form-content_name')}>
-              <SearchSelect ref={nameRef} title="full name" useTippy={false} searchSelectValue={setName} />
+              <FormSearch ref={nameRef} title="full name" useTippy={false} searchValue={setName} />
             </div>
             <div className={cx('form-content_username')}>
-              <SearchSelect ref={usernameRef} title="username" useTippy={false} searchSelectValue={setUsername} />
+              <FormSearch ref={usernameRef} title="username" useTippy={false} searchValue={setUsername} />
               {validUsername ? <div className="text-danger text-capitalize">{validUsername}</div> : ''}
             </div>
             <div className={cx('form-content_password')}>
-              <SearchSelect
+              <FormSearch
                 ref={passwordRef}
                 inputType="password"
                 title="password"
                 useTippy={false}
-                searchSelectValue={setPassword}
+                searchValue={setPassword}
               />
             </div>
             <div className={cx('form-content_phone')}>
-              <SearchSelect ref={phoneRef} title="phone" useTippy={false} searchSelectValue={setPhone} />
+              <FormSearch ref={phoneRef} title="phone" useTippy={false} searchValue={setPhone} />
             </div>
             <div className={cx('form-content_gender')}>
               <FormSelect ref={genderRef} title="gender" handleSetValue={setGender} />
@@ -299,20 +299,20 @@ export default function AddAdmin() {
               <FormDate ref={birthdayRef} title="birthday" handleSetValue={setBirthDay} />
             </div>
             <div className={cx('form-content_citizen-card')}>
-              <SearchSelect
+              <FormSearch
                 ref={citizenCardRef}
                 inputType="number"
                 title="Citizen Card"
                 useTippy={false}
-                searchSelectValue={setCitizenIdentificationCard}
+                searchValue={setCitizenIdentificationCard}
               />
             </div>
             <div className={cx('form-content_role')}>
-              <Role ref={roleRef} title="role" NullValue={false} handleSetName={setRole} handleSetID={setRoleID} />
+              <Role ref={roleRef} title="role" useNull={false} handleSetName={setRole} handleSetID={setRoleID} />
             </div>
             <div className={cx('form-content_department')}>
               <Department
-                NullValue={false}
+                useNull={false}
                 ref={departmentRef}
                 title="department"
                 handleSetName={setDepartment}
@@ -351,7 +351,7 @@ export default function AddAdmin() {
                   ref={addressBornRef}
                   title="address"
                   rows={3}
-                  isLabel={false}
+                  useLabel={false}
                   handleSetValue={setAddressBorn}
                 />
               </div>
@@ -386,7 +386,7 @@ export default function AddAdmin() {
                   ref={addressLiveRef}
                   title="address"
                   rows={3}
-                  isLabel={false}
+                  useLabel={false}
                   handleSetValue={setAddressLive}
                 />
               </div>

@@ -260,4 +260,15 @@ class CategoriesController extends Controller
         return response()->json($e);
         }
     }
+    public function TodoListCat(){
+        $name = request()->get('name');
+        $id = request()->get('id');
+        if($id){
+            $cat = Categories::whereNotIn('id',$id)->where('name','like','%'.$name.'%')->get();
+        }
+        else{
+            $cat = Categories::where('name','like','%'.$name.'%')->get();
+        }
+        return response()->json($cat);
+    }
 }

@@ -1,9 +1,9 @@
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Logout } from '~/redux/Actions/Auth';
+import { Logout, setSession } from '~/redux/Actions/Auth';
 import styles from './LinkBars.module.scss';
 import routes from '~/config/routes';
 import config from '~/config';
@@ -13,6 +13,7 @@ const cx = classNames.bind(styles);
 
 function LinkBars({ IDLinkBars }) {
   const user = useSelector((state) => state.Auth.user);
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
     const fetchData = async () => {
@@ -21,10 +22,10 @@ function LinkBars({ IDLinkBars }) {
       if (token && cookie) {
         Store.dispatch(Logout());
         document.cookie = 'authToken=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=';
-        localStorage.removeItem('token');
+        dispatch(setSession('', 'token'));
       } else {
         Store.dispatch(Logout());
-        localStorage.removeItem('token');
+        dispatch(setSession('', 'token'));
       }
     };
     fetchData();

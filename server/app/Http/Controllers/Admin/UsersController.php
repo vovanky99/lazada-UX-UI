@@ -28,38 +28,38 @@ class UsersController extends Controller
         $birthday_to = $request->birthday_to;
         $birthday_from = $request->birthday_from;
         $user = DB::table('users')->select('users.*','country.name as country_name','city.name as city_name')->leftJoin('address','address.id','=','users.address_id')->leftJoin('ward','ward.id','=','address.ward_id')->leftJoin('district','district.id','=','ward.district_id')->leftJoin('city','city.id','=','district.city_id')->leftJoin('country','country.id','=','city.country_id')->where([['users.name','like',$name."%"],['users.phone_number','like','%'.$phone.'%']]);
-        // if($status == '1' || $status =='0'){
-        //     $user->where('users.status',$status);
-        // }
-        // if($gender =='1' || $gender =='0'){
-        //     $user->where('users.gender',$gender);
-        // }
-        // if($email){
-        //     $user->where('users.email','%'.$email.'%');
-        // }
-        // if($birthday){
-        //     $user->where('users.birthday',$birthday);
-        // }
-        // else {
-        //     if($birthday_to){
-        //         $user->where('users.birthday','>=',$birthday_to);
-        //     }
-        //     if($birthday_from){
-        //         $user->where('users.birthday','<=',$birthday_from);
-        //     }
-        // }
-        // if($ward){
-        //     $user->where('address.ward_id',$ward);
-        // }
-        // else if($district){
-        //     $user->where('ward.district_id',$district);
-        // }
-        // else if($city){
-        //     $user->where('district.city_id',$city);
-        // }
-        // else if($country){
-        //     $user->where('district.country_id',$country);
-        // }
+        if($status == '1' || $status =='0'){
+            $user->where('users.status',$status);
+        }
+        if($gender =='1' || $gender =='0'){
+            $user->where('users.gender',$gender);
+        }
+        if($email){
+            $user->where('users.email','%'.$email.'%');
+        }
+        if($birthday){
+            $user->where('users.birthday',$birthday);
+        }
+        else {
+            if($birthday_to){
+                $user->where('users.birthday','>=',$birthday_to);
+            }
+            if($birthday_from){
+                $user->where('users.birthday','<=',$birthday_from);
+            }
+        }
+        if($ward){
+            $user->where('address.ward_id',$ward);
+        }
+        else if($district){
+            $user->where('ward.district_id',$district);
+        }
+        else if($city){
+            $user->where('district.city_id',$city);
+        }
+        else if($country){
+            $user->where('district.country_id',$country);
+        }
         $users = $user->get();
         return response()->json($users);
     }
@@ -111,7 +111,7 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function Show(string $id)
+    public function show(string $id)
     {
         $user = User::where('id',$id)->with('address.ward.district.city.country')->get();
         return response()->json($user);
@@ -186,7 +186,7 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function Delete(string $id)
+    public function delete(string $id)
     {
 
         $users = User::findOrFail($id);

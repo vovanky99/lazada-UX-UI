@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react';
 import GetRole from '~/api/Role/GetRole';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 
 const Role = forwardRef(function Role(
   {
@@ -9,7 +9,7 @@ const Role = forwardRef(function Role(
     ValueID,
     SearchValue,
     useLabel = true,
-    NullValue = true,
+    useNull = true,
     handleSetID = () => {},
     handleSetName = () => {},
   },
@@ -40,16 +40,16 @@ const Role = forwardRef(function Role(
 
   return (
     <>
-      <SearchSelect
+      <FormSearch
         ref={ref}
         valueID={value}
-        isLabel={useLabel}
-        searchValue={searchValue}
+        useLabel={useLabel}
+        Value={searchValue}
         title={title}
         classTitle={classTitle}
-        NullValue={NullValue}
+        useNull={useNull}
         data={Data}
-        searchSelectValue={setSearchValue}
+        searchValue={setSearchValue}
         handleSetID={setValue}
       />
     </>

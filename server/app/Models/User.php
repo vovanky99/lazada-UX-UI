@@ -55,11 +55,11 @@ class User extends Authenticatable
     public function order(){
         return $this->hasMany(OrderCart::class,'user_id','id');
     }
-    public function address_Users(){
+    public function address_users(){
         return $this->hasMany(Address::class,'addressable_id');
     }
     public function providers(){
-        return $this->hasMany(Provider::class,'user_id','id');
+        return $this->hasMany(Providers::class,'user_id','id');
     }
     public function followShop(){
         return $this->hasMany(FollowShop::class,'user_id');

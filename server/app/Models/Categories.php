@@ -25,13 +25,9 @@ class Categories extends Model
     public function parent(){
         return $this->belongsTo(Categories::class,'parent_id','id');
     }
-    public function childrenRecursive(){
-        return $this->children()->with('childrenRecursive');
+    public function children_recursive(){
+        return $this->childrens()->with('children_recursive');
     }
-    // public function set_title_attribute($value){
-    //     $this->attributes['title'] = $value;
-    //     $this->attributes['slug'] = str_slug($value);
-    // }
     public function blogs(){
         return $this->hasMany(Blogs::class,'category_id','id');
     }

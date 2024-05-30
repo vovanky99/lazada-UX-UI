@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cod', function (Blueprint $table) {
-            $table->bigIncrements('id')->Unique();
+            $table->bigIncrements('id');
             $table->string('txn_id')->unique();
-            $table->integer('status');
+            $table->integer('status')->default(0);
             $table->bigInteger('amount');
             $table->timestamps();
         });

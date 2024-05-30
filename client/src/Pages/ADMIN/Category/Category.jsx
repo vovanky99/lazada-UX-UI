@@ -4,7 +4,7 @@ import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
 import Tippy from '@tippyjs/react/headless';
 import { useEffect, useRef, useState } from 'react';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 import GetCategory from '~/api/Category/GetCategory';
 import CreateCategory from '~/api/Category/CreateCategory';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
@@ -119,15 +119,15 @@ export default function AllCategory() {
                     className={cx('form_add_cat', 'd-flex flex-row flex-wrap')}
                     noValidate
                   >
-                    <SearchSelect
+                    <FormSearch
                       title="cat parent"
                       classTitle="cat_parent"
-                      NullValue={true}
+                      useNull={true}
                       data={catData}
                       handleSetID={setCatParentID}
-                      searchSelectValue={setSearchTitle}
+                      searchValue={setSearchTitle}
                     />
-                    <SearchSelect ref={nameRef} title="title" useTippy={false} searchSelectValue={setTitle} />
+                    <FormSearch ref={nameRef} title="title" useTippy={false} searchValue={setTitle} />
                     {createError ? (
                       <div className={cx('message', 'text-danger text-capitalize text-center')}>{createError}</div>
                     ) : (
@@ -161,15 +161,15 @@ export default function AllCategory() {
             <b>filter Data</b>
           </h4>
           <div className={cx('filter_content', 'd-flex flex-row flex-wrap')}>
-            <SearchSelect title="name" useTippy={false} searchSelectValue={setNameFilter} />
-            <FormSelect title="status" isStatus={true} handleSetValue={setStatus} />
-            <SearchSelect
+            <FormSearch title="name" useTippy={false} searchValue={setNameFilter} />
+            <FormSelect title="status" useStatus={true} handleSetValue={setStatus} />
+            <FormSearch
               title="parent"
               titleClass="parent-id"
               data={parentData}
-              NullValue={true}
+              useNull={true}
               handleSetID={setParentID}
-              searchSelectValue={setSearchParent}
+              searchValue={setSearchParent}
             />
           </div>
         </div>

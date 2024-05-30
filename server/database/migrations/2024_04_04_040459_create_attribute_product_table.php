@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('attribute_product', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->boolean('status');
+            $table->string('descriptions');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->string('description');
             $table->timestamps();
         });
     }

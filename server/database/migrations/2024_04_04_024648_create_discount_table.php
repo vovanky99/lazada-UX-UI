@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('discount', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->double('number',2);
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->softDeletes();

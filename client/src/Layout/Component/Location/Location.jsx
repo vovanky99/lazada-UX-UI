@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react';
 import GetLocation from '~/api/Location/GetLocation';
-import { SearchSelect } from '../SearchSelect';
+import { FormSearch } from '../FormSearch';
 
 const Location = forwardRef(function Location(
   {
@@ -39,16 +39,16 @@ const Location = forwardRef(function Location(
   }, [searchValue, ForeignID]);
   return (
     <>
-      <SearchSelect
+      <FormSearch
         ref={ref}
         valueID={value}
-        isLabel={useLabel}
-        searchValue={searchValue}
+        useLabel={useLabel}
+        Value={searchValue}
         title={title}
         classTitle={classTitle}
-        NullValue={true}
+        useNull={true}
         data={Data}
-        searchSelectValue={setSearchValue}
+        searchValue={setSearchValue}
         handleSetID={setValue}
       />
     </>

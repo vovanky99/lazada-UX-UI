@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react';
 import GetDepartment from '~/api/Department/GetDepartment';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 
 const Department = forwardRef(function Department(
   {
@@ -8,7 +8,7 @@ const Department = forwardRef(function Department(
     classTitle,
     ValueID,
     SearchValue,
-    NullValue = true,
+    useNull = true,
     useLabel = true,
     handleSetID = () => {},
     handleSetName = () => {},
@@ -40,16 +40,16 @@ const Department = forwardRef(function Department(
 
   return (
     <>
-      <SearchSelect
+      <FormSearch
         ref={ref}
         valueID={value}
-        isLabel={useLabel}
-        searchValue={searchValue}
+        useLabel={useLabel}
+        Value={searchValue}
         title={title}
         classTitle={classTitle}
-        NullValue={NullValue}
+        useNull={useNull}
         data={Data}
-        searchSelectValue={setSearchValue}
+        searchValue={setSearchValue}
         handleSetID={setValue}
       />
     </>

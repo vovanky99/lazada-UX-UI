@@ -8,7 +8,7 @@ import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
 import CldUploadImg from '~/services/cloudinary/CldUploadImg';
 import Images from '~/components/Images';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
@@ -247,32 +247,20 @@ export default function EditChild({ data }) {
             </div>
             <div className={cx('form-content', 'd-flex flex-row flex-wrap')}>
               <div className={cx('form-content_name')}>
-                <SearchSelect
-                  ref={nameRef}
-                  title="full name"
-                  searchValue={name}
-                  useTippy={false}
-                  searchSelectValue={setName}
-                />
+                <FormSearch ref={nameRef} title="full name" Value={name} useTippy={false} searchValue={setName} />
               </div>
               <div className={cx('form-content_password')}>
-                <SearchSelect
+                <FormSearch
                   ref={passwordRef}
-                  searchValue={password}
+                  Value={password}
                   inputType="password"
                   title="password"
                   useTippy={false}
-                  searchSelectValue={setPassword}
+                  searchValue={setPassword}
                 />
               </div>
               <div className={cx('form-content_phone')}>
-                <SearchSelect
-                  ref={phoneRef}
-                  title="phone"
-                  searchValue={phone}
-                  useTippy={false}
-                  searchSelectValue={setPhone}
-                />
+                <FormSearch ref={phoneRef} title="phone" Value={phone} useTippy={false} searchValue={setPhone} />
               </div>
               <div className={cx('form-content_gender')}>
                 <FormSelect ref={genderRef} title="gender" defaultValue={gender} handleSetValue={setGender} />
@@ -281,7 +269,7 @@ export default function EditChild({ data }) {
                 <FormSelect
                   ref={statusRef}
                   title="status"
-                  isStatus={true}
+                  useStatus={true}
                   defaultValue={status}
                   handleSetValue={setStatus}
                 />
@@ -290,13 +278,13 @@ export default function EditChild({ data }) {
                 <FormDate ref={birthdayRef} title="birthday" data={birthday} handleSetValue={setBirthDay} />
               </div>
               <div className={cx('form-content_citizen-card')}>
-                <SearchSelect
+                <FormSearch
                   ref={citizenCardRef}
-                  searchValue={citizenIdentificationCard}
+                  Value={citizenIdentificationCard}
                   inputType="number"
                   title="Citizen Card"
                   useTippy={false}
-                  searchSelectValue={setCitizenIdentificationCard}
+                  searchValue={setCitizenIdentificationCard}
                 />
               </div>
               <div className={cx('form-content_role')}>
@@ -359,7 +347,7 @@ export default function EditChild({ data }) {
                     data={addressBorn}
                     title="address"
                     rows={3}
-                    isLabel={false}
+                    useLabel={false}
                     handleSetValue={setAddressBorn}
                   />
                 </div>
@@ -404,7 +392,7 @@ export default function EditChild({ data }) {
                     data={addressLive}
                     title="address"
                     rows={3}
-                    isLabel={false}
+                    useLabel={false}
                     handleSetValue={setAddressLive}
                   />
                 </div>

@@ -12,6 +12,7 @@ class ReportsProduct extends Model
     protected $fillable = [
         'title_id',
         'content',
+        'status',
         'user_id',
         'product_id',
     ];

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('order_cart', function (Blueprint $table) {
             $table->bigIncrements('id')->Unique();
-            $table->integer('status');
+            $table->boolean('status')->default(1);
             $table->foreignId('payment_id')->nullable()->unsigned()->references('id')->on('payment')->onDelete('cascade');
             $table->foreignId('user_id')->unsigned()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

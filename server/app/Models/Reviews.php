@@ -18,13 +18,13 @@ class Reviews extends Model
         'user_id',
         'product_id',
     ];
-    public function users(){
+    public function user(){
         return $this->belongsTo(User::class,'user_id','id');
     }
     public function parent(){
         return $this->belongsTo(Reviews::class,'parent_id','id');
     }
-    public function products(){
+    public function product(){
         return $this->belongsTo(Products::class,'product_id','id');
     }
     public function images(){

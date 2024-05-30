@@ -11,6 +11,7 @@ class Role extends Model
     public $table = 'role';
     protected $fillable = [
         'name',
+        'status',
         'description',
     ];
     public function admins(){

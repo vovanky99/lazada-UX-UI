@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faBars } from '@fortawesome/free-solid-svg-icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
@@ -12,11 +12,12 @@ import Images from '~/components/Images';
 import Button from '~/components/Button';
 import config from '~/config';
 import Store from '~/redux/Store';
-import { AdminLogout } from '~/redux/Actions/Auth';
+import { AdminLogout, setSession } from '~/redux/Actions/Auth';
 
 const cx = classNames.bind(styles);
 
 export default function Header() {
+  const dispatch = useDispatch();
   const logoRef = useRef();
   const navMenuRef = useRef();
   const btnAccountRef = useRef();
@@ -39,7 +40,7 @@ export default function Header() {
     const token = localStorage.getItem('adminToken');
     if (token) {
       Store.dispatch(AdminLogout());
-      localStorage.removeItem('adminToken');
+      dispatch(setSession('', 'adminToken'));
     }
   };
 

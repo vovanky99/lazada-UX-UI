@@ -15,7 +15,17 @@ const status = [
 ];
 
 export const FormSelect = forwardRef(function Form(
-  { containerClass, selectClass, isStatus = false, defaultValue, title, handleSetValue = () => {}, data },
+  {
+    containerClass,
+    selectClass,
+    useStatus = false,
+    defaultValue,
+    title,
+    name,
+    handleSetValue = () => {},
+    data,
+    handleOnchage = () => {},
+  },
   ref,
 ) {
   const [value, setValue] = useState(defaultValue || '');
@@ -26,11 +36,13 @@ export const FormSelect = forwardRef(function Form(
     <div className={cx('form-select', containerClass || ' form-group flex-grow-1')}>
       <label className={cx('form-label text-capitalize')}>{title}</label>
       <select
+        name={name}
         ref={ref}
         value={value}
         className={cx(selectClass || 'form-control py-2')}
         onChange={(e) => {
           setValue(e.target.value);
+          handleOnchage(e);
         }}
       >
         {defaultValue ? '' : <option value="">Null</option>}
@@ -40,7 +52,7 @@ export const FormSelect = forwardRef(function Form(
                 {d.name}
               </option>
             ))
-          : isStatus
+          : useStatus
           ? status.map((d, index) => (
               <option value={d.id} key={index}>
                 {d.name}

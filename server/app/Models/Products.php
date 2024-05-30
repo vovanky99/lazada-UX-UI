@@ -10,8 +10,9 @@ class Products extends Model
     use HasFactory;
     public $table = 'products';
     protected $fillable = [
-        'title',
+        'name',
         'images',
+        'status',
         'price',
         'discount',
         'quantities',
@@ -26,10 +27,13 @@ class Products extends Model
     public function images(){
         return $this->morphMany(Images::class,'imageable');
     }
-    public function attributeProduct(){
+    public function attributes_product(){
         return $this->hasMany(AttributeProduct::class,'product_id');
     }
-    public function orderProduct(){
+    public function product_type(){
+        return $this->hasMany(ProductType::class,'product_id','id');
+    }
+    public function orders_product(){
         return $this->hasMany(OrderProduct::class,'product_id','id');
     }
     public function categories(){
@@ -41,9 +45,7 @@ class Products extends Model
     public function discount(){
         return $this->belongsTo(Discount::class,'discount_id','id');
     }
-    public function productType(){
-        return $this->hasMany(ProductType::class,'product_id','id');
-    }
+
     public function product(){
         return $this->belongsTo(Products::class,'product_id');
     }

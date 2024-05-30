@@ -12,11 +12,11 @@ class FollowShop extends Model
     protected $fillable = [
         'user_id','shop_id'
     ];
-    public function shop(){
-        return $this->belongsTo(Shop::class,'shop_id');
+    public function shops(){
+        return $this->hasMany(Shop::class,'shop_id');
     }
     
-    public function user(){
-        return $this->belongsTo(User::class,'user_id');
+    public function users(){
+        return $this->hasMany(User::class,'user_id');
     }
 }

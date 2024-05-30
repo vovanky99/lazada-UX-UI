@@ -6,7 +6,7 @@ import styles from '../../Location.module.scss';
 import Button from '~/components/Button';
 // import Location from '~/layout/Component/Location';
 import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 import Location from '~/layout/Component/Location';
 
 const cx = classNames.bind(styles);

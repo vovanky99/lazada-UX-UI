@@ -1,0 +1,41 @@
+.filter_data {
+  margin-bottom: 20px;
+  .filter_content {
+    gap: 10px;
+    > div {
+      flex-basis: calc((100% - 20px) / 3);
+    }
+  }
+}
+.data_table {
+  .toll-edit {
+    gap: 5px;
+    border-left: none;
+    padding: 5px;
+    button,
+    a {
+      font-size: 1.4rem;
+      padding: 5px 10px;
+    }
+  }
+}
+
+.add_voucher,
+.edit_voucher {
+  gap: 10px;
+  .message {
+    flex-basis: 100%;
+    font-size: 1.4rem;
+  }
+  > div {
+    gap: 10;
+    flex-basis: calc((100% - 30px) / 4);
+  }
+  .descriptions {
+    flex-basis: 100%;
+    margin-bottom: 10px;
+  }
+  .btn_create {
+    flex-basis: 100%;
+  }
+}

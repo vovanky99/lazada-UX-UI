@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payment', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('status');
+            $table->boolean('status')->default(1);
             $table->morphs('paymentable');
             $table->dateTimeTz('payment_datetime');
             $table->timestamps();

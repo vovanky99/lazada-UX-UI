@@ -10,7 +10,7 @@ class AttributeProduct extends Model
     use HasFactory;
     public $table = 'attribute_product';
     protected $fillable =[
-        'name','product_id','description'
+        'name','product_id','descriptions','status'
     ];
     public function product(){
         return $this->belongsTo(Products::class,'product_id');

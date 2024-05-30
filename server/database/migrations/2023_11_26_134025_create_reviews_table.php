@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Kalnoy\Nestedset\NestedSet;
 
 return new class extends Migration
 {
@@ -14,10 +15,10 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->bigIncrements('id')->Unique();
             $table->string('title',50);
-            $table->longText('content_review',500);
-            $table->boolean('status');
+            $table->longText('content',500);
+            $table->boolean('status')->default(1);
             $table->double('review_star',5);
-            $table->integer('parent_id')->nullable();
+            NestedSet::columns($table);
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();

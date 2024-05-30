@@ -28,3 +28,17 @@ export async function UpdateProfile(prefixServer = '', { data }) {
     console.log(e);
   }
 }
+
+export async function TodoListData({ prefixServer, type, name, id }) {
+  try {
+    const res = await axios.get(`/api${prefixServer ? '/' + prefixServer : ''}/todo-list-${type}`, {
+      params: {
+        name: name,
+        id: id,
+      },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}

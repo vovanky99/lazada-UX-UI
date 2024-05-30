@@ -10,12 +10,13 @@ class ProductTypeDetail extends Model
     use HasFactory;
     public $table = 'product_type_detail';
     protected $fillable =[
-        'title',
+        'name',
         'image',
+        'status',
         'product_type_id'
     ];
 
-    public function ProductType(){
+    public function product_type(){
         return $this->belongsTo(ProductType::class,'product_type_id');
     }
 }

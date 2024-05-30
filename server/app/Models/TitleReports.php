@@ -9,7 +9,7 @@ class TitleReports extends Model
 {
     protected $table ='title_reports';
     protected $fillable = [
-        'title',
+        'name',
     ];
     public function reports_product(){
         return $this->hasMany(TitleReports::class,'title_id');

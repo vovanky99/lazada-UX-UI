@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('voucher', function (Blueprint $table) {
-            $table->bigIncrements('id')->Unique();
-            $table->string('title',50);
+            $table->bigIncrements('id');
+            $table->string('name',20);
             $table->string('descriptions',200);
             $table->string('code',20);
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->double('percents',2);
-            $table->integer('quantity');
-            $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade')->nullable();
+            $table->double('quantity')->nullable()->comment('null:unlimmited');
+            $table->foreignId('category_id')->nullable()->comment('null:unlimmited')->references('id')->on('categories')->onDelete('cascade')->nullable();
             $table->dateTime('start_day');
             $table->dateTime('end_day');
             $table->timestamps();

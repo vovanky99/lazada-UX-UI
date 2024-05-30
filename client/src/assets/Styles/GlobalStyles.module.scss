@@ -3,7 +3,7 @@
 * {
   box-sizing: border-box !important;
   margin: 0;
-  font-family: shoppe-regular-font;
+  font-family: lifeshop-regular-font;
   --background_color: #f5f5f5;
   --primary: var(--default_color);
   --black: #000;
@@ -17,6 +17,9 @@
   --default_color: #ee4d2d;
   --media_width: 1188px;
   --media_width_signin: 810px;
+
+  //life shop
+  --border_danger_client: #f44336;
 
   // admin
   --admin_sidebar_width: 260px;
@@ -81,12 +84,12 @@
 }
 
 @font-face {
-  font-family: shoppe-regular-font;
-  src: url('../font/vietnamese-regular..woff2');
+  font-family: lifeshop-regular-font;
+  src: url('../Font/vietnamese-regular..woff2');
 }
 @font-face {
-  font-family: shoppe-font;
-  src: url('../font/latin-regular..woff2');
+  font-family: lifeshop-font;
+  src: url('../Font/latin-regular..woff2');
 }
 
 html {

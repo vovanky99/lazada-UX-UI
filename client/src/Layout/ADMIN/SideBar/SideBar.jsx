@@ -9,6 +9,7 @@ import {
   faCartShopping,
   faFlag,
   faGlobe,
+  faHeart,
   faIndustry,
   faShop,
   faTicket,
@@ -18,7 +19,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import config from '~/config';
 import Icon from '~/components/Icon';
-import { faProductHunt } from '@fortawesome/free-brands-svg-icons';
+import { faCriticalRole, faProductHunt } from '@fortawesome/free-brands-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -27,6 +28,13 @@ export default function SideBar() {
   return (
     <>
       <aside id="sidebar" className={cx('sidebar', 'd-flex flex-column ')}>
+        <NavLink
+          to={config.adminRoutes.Logo}
+          className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between ')}
+        >
+          <p className="text-capitalize">Logo</p>
+          <FontAwesomeIcon icon={faHeart} />
+        </NavLink>
         <NavLink
           to={config.adminRoutes.AllAdmin}
           className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between ')}
@@ -42,32 +50,32 @@ export default function SideBar() {
           <FontAwesomeIcon icon={faUser} />
         </NavLink>
         <NavLink
-          to={config.adminRoutes.Voucher}
+          to={config.adminRoutes.AllShop}
           className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between ')}
         >
-          <p className="text-capitalize">Voucher</p>
-          <FontAwesomeIcon icon={faTicket} />
+          <p className="text-capitalize">shop</p>
+          <FontAwesomeIcon icon={faShop} />
         </NavLink>
         <NavLink
-          to={config.adminRoutes.Order}
-          className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between ')}
-        >
-          <p className="text-capitalize">Order</p>
-          <FontAwesomeIcon icon={faCartShopping} />
-        </NavLink>
-        <NavLink
-          to={config.adminRoutes.Product}
+          to={config.adminRoutes.AllProduct}
           className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between ')}
         >
           <p className="text-capitalize">Product</p>
           <FontAwesomeIcon icon={faProductHunt} />
         </NavLink>
         <NavLink
-          to={config.adminRoutes.AllShop}
+          to={config.adminRoutes.OrderProduct}
           className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between ')}
         >
-          <p className="text-capitalize">shop</p>
-          <FontAwesomeIcon icon={faShop} />
+          <p className="text-capitalize">Order Product</p>
+          <FontAwesomeIcon icon={faCartShopping} />
+        </NavLink>
+        <NavLink
+          to={config.adminRoutes.Voucher}
+          className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between ')}
+        >
+          <p className="text-capitalize">Voucher</p>
+          <FontAwesomeIcon icon={faTicket} />
         </NavLink>
         <NavLink
           to={config.adminRoutes.ReportProduct}
@@ -89,6 +97,14 @@ export default function SideBar() {
         >
           <p className="text-capitalize">Bolgs</p>
           <FontAwesomeIcon icon={faBlog} />
+        </NavLink>
+
+        <NavLink
+          to={config.adminRoutes.Role}
+          className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between ')}
+        >
+          <p className="text-capitalize">Role</p>
+          <FontAwesomeIcon icon={faCriticalRole} />
         </NavLink>
         <NavLink
           to={config.adminRoutes.Department}

@@ -8,7 +8,7 @@ import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
 import CldUploadImg from '~/services/cloudinary/CldUploadImg';
 import Images from '~/components/Images';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
@@ -234,41 +234,29 @@ export default function EditDetail() {
           </div>
           <div className={cx('form-content', 'd-flex flex-row flex-wrap')}>
             <div className={cx('form-content_name')}>
-              <SearchSelect
-                ref={nameRef}
-                title="full name"
-                searchValue={name}
-                useTippy={false}
-                searchSelectValue={setName}
-              />
+              <FormSearch ref={nameRef} title="full name" Value={name} useTippy={false} searchValue={setName} />
             </div>
             <div className={cx('form-content_email')}>
-              <SearchSelect
-                ref={emailRef}
-                title="email"
-                searchValue={email}
-                useTippy={false}
-                searchSelectValue={setEmail}
-              />
+              <FormSearch ref={emailRef} title="email" Value={email} useTippy={false} searchValue={setEmail} />
             </div>
             <div className={cx('form-content_password')}>
-              <SearchSelect
+              <FormSearch
                 ref={passwordRef}
-                searchValue={password}
+                Value={password}
                 inputType="password"
                 title="password"
                 useTippy={false}
-                searchSelectValue={setPassword}
+                searchValue={setPassword}
               />
             </div>
             <div className={cx('form-content_phone')}>
-              <SearchSelect
+              <FormSearch
                 ref={phoneRef}
                 title="phone"
                 inputType="number"
-                searchValue={phone}
+                Value={phone}
                 useTippy={false}
-                searchSelectValue={setPhone}
+                searchValue={setPhone}
               />
             </div>
             <div className={cx('form-content_gender')}>
@@ -291,7 +279,7 @@ export default function EditDetail() {
                   data={address}
                   title="address"
                   rows={3}
-                  isLabel={false}
+                  useLabel={false}
                   handleSetValue={setAddress}
                 />
               </div>

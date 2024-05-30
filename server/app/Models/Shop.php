@@ -13,6 +13,7 @@ class Shop extends Model
     protected $fillable = [
         'name',
         'logo',
+        'status',
         'img_cover',
         'descriptions',
         'address_id',
@@ -21,13 +22,13 @@ class Shop extends Model
     public function messages(){
         return $this->hasMany(MessagesShop::class,'shop_id');
     }
-    public function shop_owner(){
+    public function shop_owners(){
         return $this->hasMany(ShopOwner::class,'shop_id');
     }
-    public function product(){
+    public function products(){
         return $this->hasMany(Products::class,'shop_id');
     }
-    public function followShop(){
+    public function followShops(){
         return $this->hasMany(FollowShop::class,'shop_id');
     }
     public function Address(){

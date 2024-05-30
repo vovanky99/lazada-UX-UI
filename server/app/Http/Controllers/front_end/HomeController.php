@@ -16,13 +16,13 @@ class HomeController extends Controller
     public function getCat()
     {
         //
-        $cat = Categories::join('products','products.category_id','=','categories.id')->where('categories.status','=','1')->select('categories.id','categories.title','products.images as images')->groupBy('categories.id')->offset(0)->take(16)->get();
+        $cat = Categories::join('products','products.category_id','=','categories.id')->where('categories.status','=','1')->select('categories.id','categories.name','products.image as images')->groupBy('categories.id')->offset(0)->take(16)->get();
         // $blog = Blogs::all();
         return response()->json($cat,200);
     }
 
     public function getMenu(){
-        $menu = Categories::with('childrenRecursive')->whereNull('parent_id')->get();
+        $menu = Categories::with('children_recursive')->whereNull('parent_id')->get();
         return response()->json($menu,200);
     }
 

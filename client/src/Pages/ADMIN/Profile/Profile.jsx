@@ -2,11 +2,11 @@ import classNames from 'classnames/bind';
 import { useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 
-import styles from './Profile.module.scss';
+import styles from '~/pages/ADMIN/Profile/Profile.module.scss';
 import Images from '~/components/Images';
 import Button from '~/components/Button';
 import CldUploadImg from '~/services/cloudinary/CldUploadImg';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 import Location from '~/layout/Component/Location';
 import { UpdateProfile } from '~/api/General/HandleData';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
@@ -41,7 +41,7 @@ export default function Profile() {
     let image = new FormData();
     image.append('file', img);
     // handle upload file up cloudinary
-    CldUploadImg(image).then((result) => setUpload(result.url));
+    CldUploadImg(image).then((result) => setAvatar(result.url));
   };
 
   /* handle onsubmit form */
@@ -50,7 +50,7 @@ export default function Profile() {
     // handle upadte admin
     const updateAdmin = async () => {
       let data = new FormData();
-      data.append('avatar', upload || avatar);
+      data.append('avatar', avatar);
       data.append('name', name);
       data.append('phone', phone);
       data.append('address', address);
@@ -95,7 +95,6 @@ export default function Profile() {
     const file = e.target.files[0];
     const render = new FileReader();
     render.onload = (e) => {
-      setAvatar(render.result);
       uploadImage(file);
     };
     if (file) {
@@ -203,7 +202,7 @@ export default function Profile() {
             </Button>
           </div>
           <div className={cx('form-group col-6 px-3 mb-3')}>
-            <SearchSelect title="name" ref={nameRef} useTippy={false} searchValue={name} searchSelectValue={setName} />
+            <FormSearch title="name" ref={nameRef} useTippy={false} Value={name} searchValue={setName} />
             {nameValid ? (
               <div className={cx('message-valid', 'text-danger text-capitalize ps-3')}>{nameValid}</div>
             ) : (
@@ -211,13 +210,13 @@ export default function Profile() {
             )}
           </div>
           <div className={cx('form-group col-6 px-3 mb-3')}>
-            <SearchSelect
+            <FormSearch
               ref={phoneRef}
               title="phone"
               inputType="number"
               useTippy={false}
-              searchValue={phone}
-              searchSelectValue={setPhone}
+              Value={phone}
+              searchValue={setPhone}
             />
             {phoneValid ? (
               <div className={cx('message-valid', 'text-danger text-capitalize ps-3')}>{phoneValid}</div>

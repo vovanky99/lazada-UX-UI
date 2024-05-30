@@ -1,0 +1,51 @@
+.add_category {
+  width: 25vw;
+  background-color: white;
+  box-shadow: 0 0 3px 1px var(--box_shadow_admin);
+  padding: 10px 20px;
+  h5 {
+    font-size: 1.6rem;
+  }
+  .form_add_cat {
+    gap: 10px;
+    > div {
+      flex-basis: 100%;
+    }
+  }
+  .message {
+    font-size: 1.4rem;
+  }
+}
+.filter_data {
+  margin-bottom: 20px;
+  .filter_content {
+    gap: 10px;
+  }
+}
+.data_table {
+  .list_cat_tippy {
+    padding: 20px;
+    gap: 10px;
+    box-shadow: 0px 0px 3px 1px var(--box_shadow_admin);
+    background-color: white;
+    .list_cat_tippy_content {
+      gap: 10px;
+      > div {
+        gap: 10px;
+        &:last-child {
+          button {
+            padding: 5px 20px;
+          }
+        }
+      }
+    }
+  }
+  .toll-edit {
+    gap: 5px;
+    border-left: none;
+    button {
+      font-size: 1.4rem;
+      padding: 5px 10px;
+    }
+  }
+}

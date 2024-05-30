@@ -7,6 +7,7 @@ const csrf = () => axios.get('/sanctum/csrf-cookie');
 export const getUser = () => {
   return async (dispatch) => {
     try {
+      csrf();
       const res = await axios.get('/api/user');
       dispatch({
         type: GET_USER,
@@ -18,9 +19,23 @@ export const getUser = () => {
   };
 };
 
+/* set session for auth */
+export const setSession = (accessToken, name) => {
+  return async (dispatch) => {
+    if (accessToken) {
+      localStorage.setItem(`${name}`, accessToken);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    } else {
+      localStorage.removeItem(`${name}`);
+      delete axios.defaults.headers.common['Authorization'];
+    }
+  };
+};
+
 export const getAdmin = () => {
   return async (dispatch) => {
     try {
+      csrf();
       const res = await axios.get('/api/admin');
       dispatch({
         type: GET_ADMIN,

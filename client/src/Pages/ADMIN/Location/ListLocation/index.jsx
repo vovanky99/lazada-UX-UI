@@ -3,7 +3,7 @@ import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 
 import styles from '../Location.module.scss';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 import EditLocation from './EditLocation';
 import GetLocation, { GetAllLocation } from '~/api/Location/GetLocation';
 import Location from '~/layout/Component/Location';

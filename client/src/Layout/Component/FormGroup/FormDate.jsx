@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 const cx = classNames.bind(styles);
 
 export const FormDate = forwardRef(function Form(
-  { title, containerClass, inputClassname, handleSetValue = () => {}, data },
+  { title, name, containerClass, inputClass, handleSetValue = () => {}, handleOnchange = () => {}, data },
   ref,
 ) {
   const [value, setValue] = useState(() => {
@@ -24,11 +24,13 @@ export const FormDate = forwardRef(function Form(
     <div className={cx('form-date', containerClass || 'form-group flex-grow-1')}>
       <label className={cx('form-label text-capitalize')}>{title}</label>
       <input
-        className={cx(inputClassname ? `${inputClassname}` : ' form-control py-2')}
+        name={name}
+        className={cx(inputClass ? `${inputClass}` : ' form-control py-2')}
         ref={ref}
         type="date"
         value={value}
         onChange={(e) => {
+          handleOnchange(e);
           setValue(e.target.value);
         }}
       />

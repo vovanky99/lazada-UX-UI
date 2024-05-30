@@ -1,27 +1,33 @@
 import classNames from 'classnames/bind';
 
-import styles from './SearchSelect.module.scss';
+import styles from './FormSearch.module.scss';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import Debounce from '~/hooks/Debounce';
 
 const cx = classNames.bind(styles);
 
-export const SearchSelect = forwardRef(function Select(
+export const FormSearch = forwardRef(function FormSearch(
   {
     useTippy = true,
+    name,
     valueID,
+    useTodoList = false,
+    todoListGetID = false,
     inputType = 'text',
-    inputClassname,
-    ContainerClassname,
-    searchValue,
+    inputClass,
+    ContainerClass,
+    Value,
+    min,
+    max,
     data,
     title,
     classTitle,
-    isLabel = true,
-    NullValue = false,
+    useLabel = true,
+    useNull = false,
     handleSetID = () => {},
-    searchSelectValue = () => {},
+    searchValue = () => {},
+    handleOnchange = () => {},
   },
   ref,
 ) {
@@ -29,7 +35,7 @@ export const SearchSelect = forwardRef(function Select(
   const optionRef = useRef();
   const [select, setSelect] = useState(false);
   const [ID, setID] = useState(valueID || '');
-  const [search, setSearch] = useState(searchValue || '');
+  const [search, setSearch] = useState(Value || '');
 
   /* set search value use debounce */
   const searchDebounce = Debounce(search, 500);
@@ -51,7 +57,7 @@ export const SearchSelect = forwardRef(function Select(
 
   /* set search select value */
   useEffect(() => {
-    searchSelectValue(searchDebounce);
+    searchValue(searchDebounce);
   });
 
   /* handle select country  */
@@ -62,6 +68,7 @@ export const SearchSelect = forwardRef(function Select(
     const handleClick = (e) => {
       setSearch(e.target.dataset.value);
       setSelect(false);
+
       setID(e.target.dataset.id);
       if (s) {
         s.dataset.id = e.target.dataset.id;
@@ -99,8 +106,8 @@ export const SearchSelect = forwardRef(function Select(
 
   return (
     <>
-      <div ref={selectRef} className={cx('select-container', ContainerClassname || 'form-group flex-grow-1')}>
-        {isLabel ? <label className="form-label text-capitalize">{title}</label> : ''}
+      <div ref={selectRef} className={cx('select-container', ContainerClass || 'form-group flex-grow-1')}>
+        {useLabel ? <label className="form-label text-capitalize">{title}</label> : ''}
         {useTippy ? (
           <Tippy
             interactive
@@ -109,7 +116,7 @@ export const SearchSelect = forwardRef(function Select(
             placement="bottom"
             render={(attrs) => (
               <ul ref={optionRef} className={cx('option')} {...attrs} tabIndex="-1">
-                {data?.length > 0 && NullValue ? (
+                {data?.length > 0 && useNull ? (
                   <li className={cx('option-single', `select-option-${classTitle || title}`)} data-value="" data-id="">
                     Null
                   </li>
@@ -135,11 +142,13 @@ export const SearchSelect = forwardRef(function Select(
             <input
               ref={ref}
               type={inputType}
-              className={cx('search', inputClassname ? `${inputClassname}` : ' form-control py-2')}
+              name={name}
+              className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
               onClick={handleClickSelect}
               placeholder={`Enter Select ${title}`}
               value={search}
               onChange={(e) => {
+                handleOnchange(e);
                 setSearch(e.target.value);
               }}
               data-id={ID}
@@ -149,11 +158,23 @@ export const SearchSelect = forwardRef(function Select(
           <input
             ref={ref}
             type={inputType}
-            className={cx('search', inputClassname ? `${inputClassname}` : ' form-control py-2')}
+            name={name}
+            min={min}
+            max={max}
+            className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
             placeholder={`Enter Select ${title}`}
             value={search}
             autoComplete={inputType === 'password' ? `current-password` : ''}
+            onKeyUp={(e) => {
+              if (min && e.target.value < min) {
+                setSearch(min);
+              }
+              if (max && parseInt(e.target.value) > max) {
+                setSearch(max);
+              }
+            }}
             onChange={(e) => {
+              handleOnchange(e);
               setSearch(e.target.value);
             }}
           />

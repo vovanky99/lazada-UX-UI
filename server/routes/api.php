@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BlogsController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\Auth\Client\AuthController as LifeShopController;
 use App\Http\Controllers\Auth\Admin\AdminAuthController;
 use App\Http\Controllers\Auth\Client\SocialAuthController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\CheckController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -98,6 +101,7 @@ Route::prefix('/admin')->group(function(){
             Route::post('/create-category','store');
             Route::patch('/edit-category/{id}','update');
             Route::delete('/delete-category/{id}','delete');
+            Route::get('/todo-list-cat','TodoListCat');
         });
         /* location */
         Route::controller(LocationController::class)->group(function(){
@@ -117,10 +121,23 @@ Route::prefix('/admin')->group(function(){
         });
         Route::controller(UsersController::class)->group(function(){
             Route::get('/get-user','index');
-            Route::post('/create-user','Store');
-            Route::get('/show-user/{id}','Show');
-            Route::patch('/edit-user/{id}','Update');
-            Route::get('/delete-user','DeleteUser');
+            Route::post('/create-user','store');
+            Route::get('/show-user/{id}','show');
+            Route::patch('/edit-user/{id}','update');
+            Route::get('/delete-user','delete');
+        });
+        Route::controller(VoucherController::class)->group(function(){
+            Route::post('/create-voucher','store');
+            Route::get('/show-voucher/{id}','show');
+            Route::patch('/edit-voucher/{id}','update');
+            Route::delete('/delete-voucher/{id}','delete');
+        });
+        Route::controller(BlogsController::class)->group(function(){
+            Route::get('/get-blogs','index');
+            Route::post('/create-blogs','store');
+            Route::get('/show-blogs/{id}','show');
+            Route::patch('/edit-blogs/{id}','update');
+            Route::delete('/delete-blogs/{id}','delete');
         });
     });
 });
@@ -138,6 +155,11 @@ Route::controller(LocationController::class)->group(function(){
 /* Category public */
 Route::controller(CategoriesController::class)->group(function(){
     Route::get('/get-category','getCategory');
+});
+
+/* voucher public */
+Route::controller(VoucherController::class)->group(function(){
+    Route::get('/get-voucher','index');
 });
 
 

@@ -5,7 +5,7 @@ import styles from '../Admin.module.scss';
 import Button from '~/components/Button';
 import config from '~/config';
 import WrapperMain from '~/layout/Component/WrapperMain';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
 import GetLocation from '~/api/Location/GetLocation';
@@ -111,7 +111,7 @@ export default function AllAdmin() {
             <b>Filter Admin</b>
           </h4>
           <form className={cx('filter-content', 'd-flex flex-row flex-wrap')}>
-            <SearchSelect title="name" useTippy={false} searchSelectValue={setName} />
+            <FormSearch title="name" useTippy={false} searchValue={setName} />
             <FormDate title="birthday" handleSetValue={setBirthDay} />
             <Role title="role" handleSetID={setRole} />
             <Department title="department" handleSetID={setDepartment} />

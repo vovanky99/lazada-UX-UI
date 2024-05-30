@@ -1,9 +1,9 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import ThemeProvider from 'react-bootstrap/ThemeProvider';
 
-import '~/globalStyles/GlobalStyles.module.scss';
-import '~/globalStyles//AddStyles.scss';
-import '~/globalStyles/LazyLoad.scss';
+import '~/assets/Styles/GlobalStyles.module.scss';
+import '~/assets/Styles//AddStyles.scss';
+import '~/assets/Styles/LazyLoad.scss';
 
 import { LifeShopRoutes, AdminRoutes } from '~/routes';
 import React from 'react';

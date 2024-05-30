@@ -120,7 +120,7 @@ function LogoBars() {
                   {searchResult.map((d, index) => (
                     <SearchResult
                       handleClickSearch={handleClickSearch}
-                      searchValue={searchValue}
+                      Value={searchValue}
                       title={d.title}
                       key={index}
                       // lengthBold={lengthBold}

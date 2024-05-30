@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('product_type', function (Blueprint $table) {
-            $table->bigIncrements('id')->Unique();
-            $table->string('title',50);
-            $table->boolean('status');
-            $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->bigIncrements('id');
+            $table->string('name',50);
+            $table->boolean('status')->default(1);
             $table->string('descriptions');
+            $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }

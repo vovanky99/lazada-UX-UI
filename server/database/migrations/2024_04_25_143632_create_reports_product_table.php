@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('reports_product', function (Blueprint $table) {
             $table->id();
             $table->string('content');
+            $table->boolean('status')->default(1);
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('title_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');

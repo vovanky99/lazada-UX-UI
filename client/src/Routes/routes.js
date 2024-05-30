@@ -29,6 +29,17 @@ import Category from '~/pages/ADMIN/Category';
 import AllUser from '~/pages/ADMIN/User/AllUser';
 import AddUser from '~/pages/ADMIN/User/AddUser';
 import EditUser from '~/pages/ADMIN/User/EditUser';
+import Voucher from '~/pages/ADMIN/Voucher';
+import Role from '~/pages/ADMIN/Role';
+import Blog from '~/pages/ADMIN/Blog';
+import Department from '~/pages/ADMIN/Department';
+import Manufacturer from '~/pages/ADMIN/Manufacturer';
+import ReportProduct from '~/pages/ADMIN/ReportProduct';
+import AddVoucher from '~/pages/ADMIN/Voucher/AddVoucher';
+import EditVoucher from '~/pages/ADMIN/Voucher/EditVoucher';
+import OrderProduct from '~/pages/ADMIN/OrderProduct';
+import EditBlog from '~/pages/ADMIN/Blog/EditBlog';
+import AddBlog from '~/pages/ADMIN/Blog/AddBlog';
 
 const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages },
@@ -111,6 +122,61 @@ const AdminRoutes = [
     path: config.adminRoutes.EditUser,
     components: EditUser,
     breadcrumbName: 'Edit User',
+  },
+  {
+    path: config.adminRoutes.Role,
+    components: Role,
+    breadcrumbName: 'Role',
+  },
+  {
+    path: config.adminRoutes.Voucher,
+    components: Voucher,
+    breadcrumbName: 'Voucher',
+  },
+  {
+    path: config.adminRoutes.AddVoucher,
+    components: AddVoucher,
+    breadcrumbName: 'Add Voucher',
+  },
+  {
+    path: config.adminRoutes.EditVoucher,
+    components: EditVoucher,
+    breadcrumbName: 'Edit Voucher',
+  },
+  {
+    path: config.adminRoutes.Blogs,
+    components: Blog,
+    breadcrumbName: 'Blog',
+  },
+  {
+    path: config.adminRoutes.EditBlogs,
+    components: EditBlog,
+    breadcrumbName: 'Edit Blog',
+  },
+  {
+    path: config.adminRoutes.AddBlogs,
+    components: AddBlog,
+    breadcrumbName: 'Add Blog',
+  },
+  {
+    path: config.adminRoutes.Department,
+    components: Department,
+    breadcrumbName: 'Department',
+  },
+  {
+    path: config.adminRoutes.Manufacturer,
+    components: Manufacturer,
+    breadcrumbName: 'Manufacturer',
+  },
+  {
+    path: config.adminRoutes.ReportProduct,
+    components: ReportProduct,
+    breadcrumbName: 'Report Product',
+  },
+  {
+    path: config.adminRoutes.OrderProduct,
+    components: OrderProduct,
+    breadcrumbName: 'Order',
   },
 ];
 

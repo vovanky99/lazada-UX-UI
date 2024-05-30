@@ -13,11 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shop', function (Blueprint $table) {
-            $table->bigIncrements('id')->Unique();
+            $table->bigIncrements('id');
             $table->string('name',50);
             $table->string('logo');
-            $table->string('img_cover');
-            $table->boolean('status');
+            $table->string('img_cover')->nullable();
+            $table->boolean('status')->default(1);
             $table->string('descriptions');
             $table->timestamps();
         });

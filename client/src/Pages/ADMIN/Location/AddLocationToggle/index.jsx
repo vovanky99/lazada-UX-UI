@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from '../Location.module.scss';
 import Button from '~/components/Button';
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 import MessageDanger from '~/layout/Component/Message/MessageDanger';
 import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
 
@@ -97,9 +97,9 @@ export const AddLocationToggle = forwardRef(function AddToggle(
         <form onSubmit={handleSubmitForm} className={cx('d-flex flex-column')} noValidate>
           <div className={cx('form-group d-flex flex-row flex-wrap mb-3 ')}>
             {countryData ? (
-              <SearchSelect
+              <FormSearch
                 ref={countryRef}
-                searchSelectValue={searchSelectCountryValue}
+                searchValue={searchSelectCountryValue}
                 data={countryData}
                 handleSetID={handleSetCountryID}
                 title="country"
@@ -108,9 +108,9 @@ export const AddLocationToggle = forwardRef(function AddToggle(
               ''
             )}
             {cityData ? (
-              <SearchSelect
+              <FormSearch
                 ref={cityRef}
-                searchSelectValue={searchSelectCityValue}
+                searchValue={searchSelectCityValue}
                 data={cityData}
                 handleSetID={handleSetCityID}
                 title="city"
@@ -119,10 +119,10 @@ export const AddLocationToggle = forwardRef(function AddToggle(
               ''
             )}
             {districtData ? (
-              <SearchSelect
+              <FormSearch
                 ref={districtRef}
                 handleSetID={handleSetDistrictID}
-                searchSelectValue={searchSelectDistrictValue}
+                searchValue={searchSelectDistrictValue}
                 data={districtData}
                 title="district"
               />
@@ -130,19 +130,19 @@ export const AddLocationToggle = forwardRef(function AddToggle(
               ''
             )}
             {title === 'District' ? (
-              <SearchSelect
+              <FormSearch
                 ref={feeRef}
                 title="fee ship"
                 classTitle="fee_ship"
-                searchSelectValue={setFeeShip}
-                searchValue={feeShip}
+                searchValue={setFeeShip}
+                Value={feeShip}
                 inputType="number"
                 useTippy={false}
               />
             ) : (
               ''
             )}
-            <SearchSelect ref={nameRef} title="name" searchSelectValue={setName} searchValue={name} useTippy={false} />
+            <FormSearch ref={nameRef} title="name" searchValue={setName} Value={name} useTippy={false} />
           </div>
           <MessageSuccess message={messageSuccess} />
           <MessageDanger message={messageError} />

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->bigIncrements('id')->Unique();
-            $table->string('title',50);
-            $table->text('descriptions',200);
+            $table->string('title');
+            $table->string('descriptions');
             $table->longText('content');
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->string('img');
             $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();

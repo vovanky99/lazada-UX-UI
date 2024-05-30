@@ -6,13 +6,17 @@ import config from '~/config';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import axios from '~/api/axios';
+import { setSession } from '~/redux/Actions/Auth';
+import MessageDanger from '~/layout/Component/Message/MessageDanger';
+import { useDispatch } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
 export default function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const usernameRef = useRef();
   const passwordRef = useRef();
-  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [usernameMessage, setUsernameMessage] = useState('');
@@ -27,20 +31,20 @@ export default function Login() {
     const handleKeyupUsername = (e) => {
       if (e.target.value === '') {
         setUsernameMessage(`Username don't empty`);
-        e.target.classList.add('login-valid');
+        e.target.classList.add('border_danger');
       } else {
         setUsernameMessage('');
-        e.target.classList.remove('login-valid');
+        e.target.classList.remove('border_danger');
       }
     };
     //validate password
     const handleKeyupPass = (e) => {
       if (e.target.value === '') {
         setPasswordMessage(`Password don't empty`);
-        e.target.classList.add('login-valid');
+        e.target.classList.add('border_danger');
       } else {
         setPasswordMessage('');
-        e.target.classList.remove('login-valid');
+        e.target.classList.remove('border_danger');
       }
     };
 
@@ -76,13 +80,11 @@ export default function Login() {
           axios.get('/sanctum/csrf-cookie');
           const res = await axios.post('/api/admin/admin-login', { username, password });
           if (res.data.token) {
-            localStorage.setItem('adminToken', res.data.token);
-            if (localStorage.getItem('adminToken')) {
-              navigate(`${config.adminRoutes.Home}`);
-            }
+            dispatch(setSession(res.data.token, 'adminToken'));
+            navigate(`${config.adminRoutes.Home}`);
           } else {
-            passwordRef.current.classList.add('login-valid');
-            usernameRef.current.classList.add('login-valid');
+            passwordRef.current.classList.add('border_danger');
+            usernameRef.current.classList.add('border_danger');
             setMessageSubmitError(`Username or Password don't correct`);
           }
         } catch (e) {
@@ -111,9 +113,10 @@ export default function Login() {
                   setUsername(e.target.value);
                 }}
                 type="text"
+                autoComplete="username"
                 placeholder="username"
               />
-              {usernameMessage !== '' ? <span className={cx('message', 'text-danger')}>{usernameMessage}</span> : ''}
+              <MessageDanger message={usernameMessage} classNames={cx('message')} />
             </div>
             <div className={cx('forget-pass', 'form-group d-flex flex-row justify-content-end')}>
               <Link to={config.adminRoutes.ResetPassword}>Forgot password?</Link>
@@ -125,17 +128,14 @@ export default function Login() {
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
+                autoComplete="current-password"
                 className="form-control form-control-lg"
                 type="password"
                 placeholder="password"
               />
-              {passwordMessage !== '' ? <span className={cx('message', 'text-danger')}>{passwordMessage}</span> : ''}
+              <MessageDanger message={passwordMessage} classNames={cx('message')} />
             </div>
-            {messageSubmitError != '' ? (
-              <div className={cx('message_submit-error', 'form-group text-danger')}>{messageSubmitError}</div>
-            ) : (
-              ''
-            )}
+            <MessageDanger message={messageSubmitError} classNames={cx('message_submit-error')} />
             <Button className={cx('btn-login', 'text-capitolize')} gradient_primary>
               Sign In
             </Button>

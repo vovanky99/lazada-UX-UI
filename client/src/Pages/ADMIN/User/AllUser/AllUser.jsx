@@ -5,7 +5,7 @@ import styles from '../User.module.scss';
 import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
 import config from '~/config';
-import { SearchSelect } from '~/layout/Component/SearchSelect';
+import { FormSearch } from '~/layout/Component/FormSearch';
 import GetUser from '~/api/User/GetUser';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
@@ -91,11 +91,11 @@ export default function AllUser() {
             <b>Filter User</b>
           </h4>
           <div className={cx('filter_content', 'd-flex flex-row flex-wrap')}>
-            <SearchSelect title="name" useTippy={false} searchSelectValue={setName} />
-            <SearchSelect title="email" useTippy={false} searchSelectValue={setEmail} />
-            <SearchSelect title="Phone" inputType="number" useTippy={false} searchSelectValue={setPhone} />
+            <FormSearch title="name" useTippy={false} searchValue={setName} />
+            <FormSearch title="email" useTippy={false} searchValue={setEmail} />
+            <FormSearch title="Phone" inputType="number" useTippy={false} searchValue={setPhone} />
             <FormSelect title="gender" handleSetValue={setGender} />
-            <FormSelect title="status" isStatus={true} handleSetValue={setStatus} />
+            <FormSelect title="status" useStatus={true} handleSetValue={setStatus} />
             <FormDate title="birthday" handleSetValue={setBirthday} />
             <FormDate title="birthday to" handleSetValue={setBirthdayTo} />
             <FormDate title="birthday from" handleSetValue={setBirthdayFrom} />
