@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import TodoList from '~/components/TodoList';
-import { TodoListData } from '~/api/General/HandleData';
+import { EditData, TodoListData } from '~/api/General/HandleData';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import FormImage from '~/layout/Component/FormGroup/FormImage';
 import MessageDanger from '~/layout/Component/Message/MessageDanger';
@@ -17,31 +17,32 @@ import UploadTinyMCE, { ImageUpload } from '~/services/UploadTinyMCE';
 
 const cx = classNames.bind(styles);
 
-export default function AddBlog() {
+export default function EditElement({ data }) {
   const titleRef = useRef();
   const descriptionsRef = useRef();
   const contentRef = useRef();
   const [catData, setCatData] = useState(null);
+  const [handleCat, setHandleCat] = useState(true);
   const [searchValue, setSearchValue] = useState('');
-  const [createMessageSuccess, setCreateMessageSuccess] = useState('');
-  const [createMessageError, setCreateMessageError] = useState('');
-  const [addBlog, setAddBlog] = useState({
-    title: '',
-    descriptions: '',
-    content: '',
-    status: 1,
-    img: '',
-    category_id: '',
+  const [editMessageSuccess, setEditMessageSuccess] = useState('');
+  const [editMessageError, setEditMessageError] = useState('');
+  const [editBlog, setEditBlog] = useState({
+    title: data.title || '',
+    descriptions: data.descriptions || '',
+    content: data.content || '',
+    status: data.status || '',
+    img: data.img || '',
+    category_id: [],
   });
   const handleSetImage = (value) => {
-    setAddBlog({
-      ...addBlog,
+    setEditBlog({
+      ...editBlog,
       img: value,
     });
   };
   const GetCategoryID = (value) => {
-    setAddBlog({
-      ...addBlog,
+    setEditBlog({
+      ...editBlog,
       category_id: value,
     });
   };
@@ -49,56 +50,71 @@ export default function AddBlog() {
     const { name, value } = e.target;
     if (name === 'category_id') {
     } else {
-      setAddBlog({ ...addBlog, [name]: value });
+      setEditBlog({ ...editBlog, [name]: value });
     }
   };
 
-  /*handle submit create blog */
-  const handleCreateBlog = (e) => {
+  // handle categories data when parent pass data
+  useEffect(() => {
+    const setCategoryID = () => {
+      if (data.categories && handleCat) {
+        data.categories.map((re, index) => editBlog.category_id.push(re.id));
+        setHandleCat(false);
+      }
+    };
+    setCategoryID();
+  }, [data]);
+  /*handle submit edit blog */
+  const handleEditBlog = (e) => {
     e.preventDefault();
-    if (addBlog.content.length < 300) {
+    if (editBlog.content.length < 300) {
       contentRef.current.editor.container.classList.add('border_danger');
     } else {
       contentRef.current.editor.container.classList.remove('border_danger');
     }
-    if (addBlog.descriptions.length < 100) {
+    if (editBlog.descriptions.length < 100) {
       descriptionsRef.current.classList.add('border_danger');
     } else {
       descriptionsRef.current.classList.remove('border_danger');
     }
-    if (addBlog.title.length < 20) {
+    if (editBlog.title.length < 20) {
       titleRef.current.classList.add('border_danger');
     } else {
       titleRef.current.classList.remove('border_danger');
     }
-    if (addBlog.content.length > 300 && addBlog.descriptions.length > 100 && addBlog.title.length > 20 && addBlog.img) {
-      setCreateMessageError('');
-      CreateBlog(addBlog)
+    if (
+      editBlog.content.length > 300 &&
+      editBlog.descriptions.length > 100 &&
+      editBlog.title.length > 20 &&
+      editBlog.img
+    ) {
+      setEditMessageError('');
+      EditData('admin', 'blogs', data.id, editBlog)
         .then((result) => {
           if (result.success) {
-            setCreateMessageSuccess(result.success);
+            setEditMessageSuccess(result.success);
           } else {
-            setCreateMessageError('create blog have issue!');
+            setEditMessageError('create blog have issue!');
           }
         })
         .catch((e) => console.log(e));
     } else {
-      setCreateMessageError(`please enter full if haven't image please check it`);
+      setEditMessageError(`please enter full if haven't image please check it`);
     }
   };
 
   /*get data for cat */
   useEffect(() => {
-    TodoListData({ prefixServer: 'admin', type: 'cat', name: searchValue, id: addBlog.category_id })
+    TodoListData({ prefixServer: 'admin', type: 'cat', name: searchValue, id: editBlog.category_id })
       .then((result) => {
         setCatData(result);
       })
       .catch((e) => console.log(e));
-  }, [addBlog.category_id, searchValue]);
+  }, [editBlog.category_id, searchValue]);
 
   const handleEditorChange = (e) => {
-    setAddBlog({
-      ...addBlog,
+    setEditBlog({
+      ...editBlog,
       content: e.target.getContent(),
     });
   };
@@ -106,10 +122,11 @@ export default function AddBlog() {
   return (
     <>
       <WrapperMain title="add Blog">
-        <form className={cx('add_blog', 'd-flex flex-wrap flex-row')} onSubmit={handleCreateBlog}>
+        <form className={cx('add_blog', 'd-flex flex-wrap flex-row')} onSubmit={handleEditBlog}>
           <div className={cx('add_blog_left', 'col-9')}>
             <TinyMCE
               ref={contentRef}
+              initialValue={editBlog.content}
               init={{
                 height: 550,
                 plugins: [
@@ -163,12 +180,14 @@ export default function AddBlog() {
             <FormImage
               className={cx('img')}
               title="image"
+              data={editBlog.img}
               name="img"
               handleSetValue={handleSetImage}
               useButton={false}
             />
             <FormSearch
               ref={titleRef}
+              Value={editBlog.title}
               containerClass={cx('form-group')}
               title="title"
               name="title"
@@ -179,13 +198,15 @@ export default function AddBlog() {
               containerClass={cx('form-group')}
               title="status"
               useStatus={true}
-              defaultValue={addBlog.status}
+              defaultValue={editBlog.status}
             />
             <TodoList
               containerClass={cx('form-group')}
               title="category"
               name="category_id"
               data={catData}
+              valueTodo={editBlog.category_id}
+              valueTodoData={data.categories}
               handleGetTodoList={GetCategoryID}
               handleSearchValue={setSearchValue}
               handleOnchange={handleOnchange}
@@ -193,6 +214,7 @@ export default function AddBlog() {
             <FormText
               containerClass={cx('form-group')}
               ref={descriptionsRef}
+              data={editBlog.descriptions}
               title="descriptions"
               rows={7}
               name="descriptions"
@@ -200,12 +222,13 @@ export default function AddBlog() {
             />
           </div>
           <div className={cx('add_blog-message', 'text-center col-12')}>
-            <MessageDanger message={createMessageError} classNames={cx('message')} />
-            <MessageSuccess message={createMessageSuccess} classNames={cx('message')} />
+            <MessageDanger message={editMessageError} classNames={cx('message')} />
+            <MessageSuccess message={editMessageSuccess} classNames={cx('message')} />
           </div>
+
           <div className={cx('add_blog-btn', 'text-center col-12')}>
             <Button type="submit" gradient_primary>
-              Create
+              Save
             </Button>
           </div>
         </form>

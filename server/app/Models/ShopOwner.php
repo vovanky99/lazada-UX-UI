@@ -25,8 +25,9 @@ class ShopOwner extends Model
         'shop_id',
     ];
 
-    protected $hidden =[
+    protected $hidden = [
         'password',
+        'remember_token',
     ];
 
     public function address(){

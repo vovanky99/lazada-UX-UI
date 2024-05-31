@@ -56,7 +56,14 @@
             }
           }
           td {
+            height: 100px;
             padding: 5px;
+            font-size: 1.4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          td > * {
             font-size: 1.4rem;
             overflow: hidden;
             text-overflow: ellipsis;

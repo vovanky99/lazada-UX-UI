@@ -11,12 +11,14 @@ export default function FormImage({
   name,
   title,
   className,
+  useButton = true,
+  data,
   handleOnchange = () => {},
   handleSetValue = () => {},
   accept = 'image/*',
 }) {
   const avatarRef = useRef();
-  const [avatar, setAvatar] = useState('');
+  const [avatar, setAvatar] = useState(data || '');
 
   useEffect(() => {
     handleSetValue(avatar);
@@ -65,9 +67,18 @@ export default function FormImage({
           style={{ display: 'none' }}
           accept="image/*"
         />
-        <Button onClick={handleBTNChangeAvatar} type="button" className={cx('form_image_btn-change')} gradient_primary>
-          {title}
-        </Button>
+        {useButton ? (
+          <Button
+            onClick={handleBTNChangeAvatar}
+            type="button"
+            className={cx('form_image_btn-change')}
+            gradient_primary
+          >
+            {title}
+          </Button>
+        ) : (
+          ''
+        )}
       </div>
     </>
   );

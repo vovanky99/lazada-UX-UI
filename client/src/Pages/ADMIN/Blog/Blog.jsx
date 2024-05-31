@@ -98,9 +98,12 @@ export default function Blog() {
           <table>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>parent</th>
+                <th>title</th>
+                <th>image</th>
                 <th>status</th>
+                <th>category</th>
+                <th>descriptions</th>
+                <th>content</th>
                 <th>tolls</th>
               </tr>
             </thead>
@@ -110,10 +113,12 @@ export default function Blog() {
                   handleDelete={AddDeleteSuccess}
                   index={index}
                   P_id={d.id}
-                  P_cat_name={d.cat_name}
-                  P_parent_id={d.parent_id}
+                  P_title={d.title}
+                  P_cat={d.categories}
+                  P_img={d.img}
+                  P_descriptions={d.descriptions}
                   P_status={d.status}
-                  P_name={d.name}
+                  P_content={d.content}
                 />
               ))}
             </tbody>

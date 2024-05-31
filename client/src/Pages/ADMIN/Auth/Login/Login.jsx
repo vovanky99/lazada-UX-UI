@@ -19,14 +19,22 @@ export default function Login() {
   const passwordRef = useRef();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [Auth, setAuth] = useState(false);
   const [usernameMessage, setUsernameMessage] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
   const [messageSubmitError, setMessageSubmitError] = useState('');
 
+  /* redirect when admin had login  */
+  useEffect(() => {
+    if (localStorage.getItem('adminToken')) {
+      return navigate(`${config.adminRoutes.Home}`);
+    }
+  });
   /* validate login */
   useEffect(() => {
     const u = usernameRef.current;
     const p = passwordRef.current;
+
     //validate username
     const handleKeyupUsername = (e) => {
       if (e.target.value === '') {
@@ -63,13 +71,6 @@ export default function Login() {
       }
     };
   }, [username, password]);
-
-  /* redirect when admin had login  */
-  useEffect(() => {
-    if (localStorage.getItem('adminToken')) {
-      return navigate(`${config.adminRoutes.Home}`);
-    }
-  });
 
   /* login admin */
   const handleSubmitLogin = (e) => {

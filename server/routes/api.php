@@ -169,3 +169,7 @@ Route::controller(CheckController::class)->group(function(){
     Route::get('/check-email','CheckEmail');
     Route::get('/check-phone','Checkphone');
 });
+
+// Route::controller(BlogsController::class)->group(function(){
+//     Route::get('/get-blogs','index');
+// });

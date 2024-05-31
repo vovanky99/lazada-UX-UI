@@ -29,7 +29,7 @@ class Categories extends Model
         return $this->childrens()->with('children_recursive');
     }
     public function blogs(){
-        return $this->hasMany(Blogs::class,'category_id','id');
+        return $this->hasManyThrough(Blogs::class,CategoryBlog::class);
     }
     public function slide(){
         return $this->belongsTo(Slide::class,'category_id','id');

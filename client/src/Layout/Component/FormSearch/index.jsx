@@ -16,7 +16,7 @@ export const FormSearch = forwardRef(function FormSearch(
     todoListGetID = false,
     inputType = 'text',
     inputClass,
-    ContainerClass,
+    containerClass,
     Value,
     min,
     max,
@@ -106,7 +106,7 @@ export const FormSearch = forwardRef(function FormSearch(
 
   return (
     <>
-      <div ref={selectRef} className={cx('select-container', ContainerClass || 'form-group flex-grow-1')}>
+      <div ref={selectRef} className={cx('select-container', containerClass || 'form-group flex-grow-1')}>
         {useLabel ? <label className="form-label text-capitalize">{title}</label> : ''}
         {useTippy ? (
           <Tippy

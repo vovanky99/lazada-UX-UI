@@ -13,9 +13,12 @@ const TodoList = forwardRef(function TodoList(
     name,
     title,
     data,
+    valueTodoData = null,
+    valueTodo = null,
     classTitle,
     offsetX = 0,
     offsetY = 0,
+    containerClass,
     handleGetTodoList = () => {},
     handleSearchValue = () => {},
     inputClass,
@@ -26,9 +29,9 @@ const TodoList = forwardRef(function TodoList(
   const wrapperRef = useRef();
   const [tippy, setTippy] = useState(false);
   const [value, setValue] = useState('');
-  const [todoData, setTodoData] = useState([]);
+  const [todoData, setTodoData] = useState(valueTodoData || []);
   // state save id for pass data
-  const [todo, setTodo] = useState([]);
+  const [todo, setTodo] = useState(valueTodo || []);
 
   const debounce = useDebounce(value, 500);
 
@@ -38,20 +41,19 @@ const TodoList = forwardRef(function TodoList(
   const handleClickInput = () => {
     setTippy(true);
   };
-
   useEffect(() => {
     const el = document.querySelectorAll(`.remove-todo`);
     const handleClick = (e) => {
       let temporaryValue;
       for (let i = 0; i < todoData.length; i++) {
-        if (todoData[i].id === e.currentTarget.dataset.id) {
+        if (parseInt(todoData[i].id) === parseInt(e.currentTarget.dataset.id)) {
           temporaryValue = i;
           break;
         }
       }
-      if (todoData[temporaryValue]?.id.indexOf(e.currentTarget.dataset.id) >= 0) {
-        setTodo((val) => val.filter((x) => x !== e.currentTarget.dataset.id));
-        setTodoData((val) => val.filter((x) => x.id !== e.currentTarget.dataset.id));
+      if (parseInt(todoData[temporaryValue]?.id) === parseInt(e.currentTarget.dataset.id)) {
+        setTodo((val) => val.filter((x) => parseInt(x) !== parseInt(e.currentTarget.dataset.id)));
+        setTodoData((val) => val.filter((x) => parseInt(x.id) !== parseInt(e.currentTarget.dataset.id)));
       }
     };
     if (el) {
@@ -121,7 +123,7 @@ const TodoList = forwardRef(function TodoList(
   });
 
   return (
-    <div className={cx('wrapper', 'form-group flex-grow-1')}>
+    <div className={cx('wrapper', containerClass || 'form-group flex-grow-1')}>
       <label className="form-label text-capitalize">{title}</label>
       <div ref={wrapperRef} className={cx('todo-list', 'form-control d-flex flex-row flex-wrap align-items-center')}>
         <div className={cx('list_container')}>

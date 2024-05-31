@@ -26,6 +26,7 @@ return new class extends Migration
             $table->foreignId('address_id')->references('id')->on('address')->onDelete('cascade');
             $table->foreignId('shop_id')->references('id')->on('shop')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
         Schema::table('shop',function(Blueprint $table){
