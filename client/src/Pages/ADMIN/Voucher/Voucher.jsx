@@ -69,7 +69,7 @@ export default function Voucher() {
         BtnAddRender={
           <>
             <Button className={cx('btn_add_cat')} to={`${config.adminRoutes.AddVoucher}`} gradient_primary>
-              Add Category
+              Add Voucher
             </Button>
           </>
         }

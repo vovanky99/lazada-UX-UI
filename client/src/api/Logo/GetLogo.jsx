@@ -8,3 +8,16 @@ export default async function GetLogo() {
     console.log(e);
   }
 }
+
+export async function Logo(type) {
+  try {
+    const res = await axios.get(`/api/get-web-logo`, {
+      params: {
+        type,
+      },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}

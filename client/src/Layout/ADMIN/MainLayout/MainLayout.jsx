@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import styles from './MainLayout.module.scss';
@@ -10,7 +10,6 @@ import config from '~/config';
 import Header from '../Header';
 import SideBar from '../SideBar';
 import Store from '~/redux/Store';
-import axios from '~/api/axios';
 
 const cx = classNames.bind(styles);
 

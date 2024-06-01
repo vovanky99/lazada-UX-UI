@@ -26,4 +26,15 @@ class LogoController extends Controller{
         Logo::findOrFail($id)->delete();
          return response()->json(['success'=>'deleted success!']);
     }
+    public function getLogo(){
+        if(request()->get('type') == 'lifeshop'){
+            $logo = Logo::where('type',2)->first();
+        return response()->json($logo);
+        }
+        else{
+            $logo = Logo::where('type',1)->first();
+            return response()->json($logo);
+        }
+
+    }
 }

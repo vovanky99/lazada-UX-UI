@@ -96,6 +96,8 @@ Route::prefix('/admin')->group(function(){
         // Department Controller
         Route::controller(DepartmentController::class)->group(function(){
             Route::get('/get-department','getDepartment');
+            Route::patch('/update-department','update');
+            Route::delete('/delete-department','delete');
         });
         /* Category public */
         Route::controller(CategoriesController::class)->group(function(){
@@ -142,6 +144,7 @@ Route::prefix('/admin')->group(function(){
         });
         Route::controller(LogoController::class)->group(function(){
             Route::get('/get-logo','index');
+            Route::get('/get-web-logo','getLogo');
             Route::post('/create-logo','store');
             Route::patch('/edit-logo/{id}','update');
             Route::delete('/delete-logo/{id}','delete');
@@ -177,6 +180,6 @@ Route::controller(CheckController::class)->group(function(){
     Route::get('/check-phone','Checkphone');
 });
 
-// Route::controller(BlogsController::class)->group(function(){
-//     Route::get('/get-blogs','index');
-// });
+Route::controller(LogoController::class)->group(function(){
+    Route::get('/get-web-logo','getLogo');
+});

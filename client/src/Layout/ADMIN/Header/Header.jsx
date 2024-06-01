@@ -13,6 +13,8 @@ import Button from '~/components/Button';
 import config from '~/config';
 import Store from '~/redux/Store';
 import { AdminLogout, setSession } from '~/redux/Actions/Auth';
+import { Logo } from '~/api/Logo/GetLogo';
+import AdminLogo from './Logo/AdminLogo';
 
 const cx = classNames.bind(styles);
 
@@ -25,6 +27,8 @@ export default function Header() {
   const admin = useSelector((state) => state.Auth.admin);
   const [showAccount, setShowAccount] = useState(false);
   const [showMessageNTF, setShowMessageNTF] = useState(false);
+  const [logo, setLogo] = useState(null);
+
   /* handle account tippy click outside */
   const ClickOutsideTippyAccount = () => {
     setShowAccount(false);
@@ -43,6 +47,15 @@ export default function Header() {
       dispatch(setSession('', 'adminToken'));
     }
   };
+
+  /* get logo */
+  useEffect(() => {
+    Logo()
+      .then((result) => {
+        setLogo(result[0]);
+      })
+      .catch((e) => console.log(e));
+  }, [logo]);
 
   /* account toggle */
   useEffect(() => {
@@ -87,7 +100,7 @@ export default function Header() {
     <header className={cx('header', 'd-flex flex-row')}>
       <Link ref={logoRef} className={cx('header_logo', 'd-flex justify-content-center')} to={'/admin'}>
         <div className={cx('img-contain', 'd-flex align-items-center')}>
-          <Images src={require('~/assets/Admin/logoAdmin/lifecircle.png')} />
+          <AdminLogo data={logo} />
         </div>
       </Link>
       <div className={cx('header_navbar-menu', 'd-flex justify-content-between flex-grow-1')}>
