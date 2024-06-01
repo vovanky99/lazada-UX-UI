@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BlogsController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\VoucherController;
@@ -138,6 +139,12 @@ Route::prefix('/admin')->group(function(){
             Route::get('/show-blogs/{id}','show');
             Route::patch('/edit-blogs/{id}','update');
             Route::delete('/delete-blogs/{id}','delete');
+        });
+        Route::controller(LogoController::class)->group(function(){
+            Route::get('/get-logo','index');
+            Route::post('/create-logo','store');
+            Route::patch('/edit-logo/{id}','update');
+            Route::delete('/delete-logo/{id}','delete');
         });
     });
 });

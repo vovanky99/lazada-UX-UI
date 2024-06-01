@@ -1,0 +1,54 @@
+.data_table {
+  div.avatar {
+    max-width: 100px;
+    max-height: 100px;
+    margin: auto;
+    img {
+      width: 100%;
+      height: 100%;
+      // border-radius: 50%;
+    }
+  }
+  .toll-edit {
+    gap: 5px;
+    border-left: none;
+    button {
+      font-size: 1.4rem;
+      padding: 5px 10px;
+    }
+  }
+}
+.logo {
+  .logo_element {
+    gap: 10px;
+    > button {
+      padding: 5px 20px;
+    }
+  }
+  .image {
+    button {
+      width: 200px;
+      height: 100%;
+    }
+    img {
+      border-radius: 0;
+    }
+  }
+}
+.btn_add_logo {
+  padding: 5px 20px;
+}
+.add_logo {
+  form {
+    gap: 20px;
+  }
+  .image {
+    button {
+      width: 200px;
+      height: 100%;
+    }
+    img {
+      border-radius: 0;
+    }
+  }
+}

@@ -7,7 +7,9 @@ use App\Models\Blogs;
 use App\Models\Categories;
 use App\Models\CategoryBlog;
 use Exception;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
+
+use function Laravel\Prompts\select;
 
 class BlogsController extends Controller
 {
@@ -20,12 +22,14 @@ class BlogsController extends Controller
         $status = request()->get('status');
         $category_id = request()->get('category_id');
         $blogs = Blogs::where('blogs.title','like','%'.$title.'%')->with('categories');
-        if($status =='1' && $status =='0'){
+        if($status =='1' || $status =='0'){
             $blogs->where('blogs.status',$status);
         }
-        // if($category_id){
-        //     $blogs->whereIn('category_id',explode(',',$category_id));
-        // }
+        if($category_id){
+            $blogs->whereIn('blogs.id',function($query) use($category_id){
+                $query->select('blog_id')->from('category_blog')->whereIn('category_id',$category_id);
+            });
+        }
         $blog = $blogs->get();
         return response()->json($blog);
     }
@@ -110,7 +114,6 @@ class BlogsController extends Controller
                 'status'=>$status,
                 'img'=>$img,
             ]);
-
             return response()->json(['success'=>'updated success!']);
         }
         catch(Exception $e){

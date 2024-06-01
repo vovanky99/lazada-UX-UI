@@ -7,7 +7,6 @@ const cx = classNames.bind(styles);
 
 export default function ListVoucher({
   handleDelete = () => {},
-  index,
   P_id,
   P_name,
   P_percents,
@@ -31,9 +30,8 @@ export default function ListVoucher({
 
   return (
     <>
-      <tr key={index} className={cx(`tbody-element`)}>
+      <tr className={cx(`tbody-element`)}>
         <td>{P_name}</td>
-        <td>{P_descriptions}</td>
         <td>{P_code}</td>
         <td>{P_status === 1 ? 'Show' : 'Hide'}</td>
         <td>{P_percents}</td>

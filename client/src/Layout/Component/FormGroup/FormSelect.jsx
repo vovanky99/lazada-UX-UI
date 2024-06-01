@@ -24,7 +24,7 @@ export const FormSelect = forwardRef(function Form(
     name,
     handleSetValue = () => {},
     data,
-    handleOnchage = () => {},
+    handleOnchange = () => {},
   },
   ref,
 ) {
@@ -42,7 +42,7 @@ export const FormSelect = forwardRef(function Form(
         className={cx(selectClass || 'form-control py-2')}
         onChange={(e) => {
           setValue(e.target.value);
-          handleOnchage(e);
+          handleOnchange(e);
         }}
       >
         {defaultValue ? '' : <option value="">Null</option>}

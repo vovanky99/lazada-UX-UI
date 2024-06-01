@@ -22,6 +22,7 @@ const routes = {
 
 export const adminRoutes = {
   Logo: '/admin/logo',
+  AddLogo: '/admin/add-logo',
   SignIn: '/admin/login',
   ResetPassword: '/admin/resetpass',
   Home: '/admin',

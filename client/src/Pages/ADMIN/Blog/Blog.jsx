@@ -1,20 +1,21 @@
 import classNames from 'classnames/bind';
-import styles from './Blog.module.scss';
+import { useEffect, useRef, useState } from 'react';
+
+import styles from '~/pages/ADMIN/Blog/Blog.module.scss';
 import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
-import { useEffect, useRef, useState } from 'react';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
-import ListBlog from './ListBlog';
+import ListBlog from '~/pages/ADMIN/Blog/ListBlog';
 import config from '~/config';
 import TodoList from '~/components/TodoList';
 import { TodoListData } from '~/api/General/HandleData';
 import GetBlog from '~/api/Blog/GetBlog';
+import useDebounce from '~/hooks/Debounce/Debounce';
 
 const cx = classNames.bind(styles);
 
 export default function Blog() {
-  const nameRef = useRef();
   const [dataTable, setDataTable] = useState(null);
   const [catData, setCatData] = useState(null);
   const [catName, setCatName] = useState('');
@@ -31,7 +32,14 @@ export default function Blog() {
   const handleGetTodoList = (value) => {
     setFilterBlogs({
       ...filterBlogs,
-      ['category_id']: value,
+      category_id: value,
+    });
+  };
+
+  const handleSearchValue = (value) => {
+    setFilterBlogs({
+      ...filterBlogs,
+      title: value,
     });
   };
 
@@ -80,7 +88,7 @@ export default function Blog() {
             <b>filter Data</b>
           </h4>
           <div className={cx('filter_content', 'd-flex flex-row flex-wrap')}>
-            <FormSearch title="title" name="title" useTippy={false} handleOnchange={handleOnchange} />
+            <FormSearch title="title" name="title" useTippy={false} searchValue={handleSearchValue} />
             <FormSelect title="status" name="status" useStatus={true} handleOnchange={handleOnchange} />
             <TodoList
               title="category"
@@ -103,7 +111,6 @@ export default function Blog() {
                 <th>status</th>
                 <th>category</th>
                 <th>descriptions</th>
-                <th>content</th>
                 <th>tolls</th>
               </tr>
             </thead>
@@ -111,14 +118,14 @@ export default function Blog() {
               {dataTable?.map((d, index) => (
                 <ListBlog
                   handleDelete={AddDeleteSuccess}
-                  index={index}
+                  key={index}
                   P_id={d.id}
                   P_title={d.title}
                   P_cat={d.categories}
                   P_img={d.img}
                   P_descriptions={d.descriptions}
                   P_status={d.status}
-                  P_content={d.content}
+                  // P_content={d.content}
                 />
               ))}
             </tbody>

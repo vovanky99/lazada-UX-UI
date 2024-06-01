@@ -58,7 +58,7 @@ export const FormSearch = forwardRef(function FormSearch(
   /* set search select value */
   useEffect(() => {
     searchValue(searchDebounce);
-  });
+  }, [searchDebounce]);
 
   /* handle select country  */
   useEffect(() => {

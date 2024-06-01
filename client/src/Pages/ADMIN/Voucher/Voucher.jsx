@@ -92,7 +92,6 @@ export default function Voucher() {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>descriptions</th>
                 <th>code</th>
                 <th>status</th>
                 <th>percents</th>
@@ -107,7 +106,7 @@ export default function Voucher() {
               {dataTable?.map((d, index) => (
                 <ListVoucher
                   handleDelete={AddDeleteSuccess}
-                  index={index}
+                  key={index}
                   P_id={d.id}
                   P_cat_name={d.cat_name}
                   P_cat_id={d.category_id}

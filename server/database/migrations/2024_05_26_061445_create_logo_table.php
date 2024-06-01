@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->double('type')->comment('1:Admin 2:Life Shop');
-            $table->string('description');
             $table->boolean('status')->default(1);
             $table->string('image');
             $table->timestamps();
