@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 
 import styles from './Products.module.scss';
-import { Image } from 'react-bootstrap';
+import Images from '~/components/Images';
 
 const cx = classNames.bind(styles);
 
@@ -9,7 +9,7 @@ export default function Products({ data, display = 'flex-column', imgWidth = '10
   return (
     <div className={cx('wrapper', display + ' d-flex')} style={{ gap: Gap }}>
       <div className={cx('img')} style={{ width: imgWidth }}>
-        <Image src={data.images} alt={data.images} />
+        <Images src={data.images} alt={data.images} />
       </div>
       <div className={cx('content', 'd-flex flex-column col')}>
         <div className={cx('title')}>{data.title}</div>

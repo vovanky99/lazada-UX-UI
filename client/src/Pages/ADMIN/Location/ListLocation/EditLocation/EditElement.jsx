@@ -15,7 +15,7 @@ function EditElement({
   data,
   messageError,
   messageSuccess,
-  ForeignID,
+  foreignID,
   handleSetID = () => {},
   handleDelete = () => {},
   handleEdit = () => {},
@@ -32,7 +32,7 @@ function EditElement({
       <div className={cx('flex-grow-1 d-flex flex-column')}>
         <div className={cx('form-group d-flex flex-column')}>
           <Location
-            ForeignID={ForeignID}
+            foreignID={foreignID}
             title={title}
             classTitle={`edit-${title}`}
             SearchValue={name}
@@ -47,7 +47,7 @@ function EditElement({
           <Button
             data-name={name}
             data-id={ID}
-            data-foreign={ForeignID}
+            data-foreign={foreignID}
             transparent
             type="button"
             className={cx('text-primary')}

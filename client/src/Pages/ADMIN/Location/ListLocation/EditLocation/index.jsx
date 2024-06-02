@@ -253,7 +253,7 @@ export default function Element({ country, city, district, ward, handleOnchangeD
                     title="city"
                     data={city}
                     handleSetID={setCityID}
-                    ForeignID={countryID}
+                    foreignID={countryID}
                     messageError={messageCityError}
                     messageSuccess={messageCitySuccess}
                     handleDelete={handleDeleteCity}
@@ -264,7 +264,7 @@ export default function Element({ country, city, district, ward, handleOnchangeD
                   <EditElement
                     title="district"
                     handleSetID={setDistrictID}
-                    ForeignID={cityID}
+                    foreignID={cityID}
                     data={district}
                     messageError={messageDistrictError}
                     messageSuccess={messageDistrictSuccess}
@@ -276,7 +276,7 @@ export default function Element({ country, city, district, ward, handleOnchangeD
                   <EditElement
                     title="ward"
                     data={ward}
-                    ForeignID={districtID}
+                    foreignID={districtID}
                     messageError={messageWardError}
                     messageSuccess={messageWardSuccess}
                     handleDelete={handleDeleteWard}

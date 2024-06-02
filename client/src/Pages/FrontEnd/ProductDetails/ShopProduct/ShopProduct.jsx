@@ -3,7 +3,7 @@ import styles from './ProductDetails.module.scss';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage, faShop } from '@fortawesome/free-solid-svg-icons';
-import { Image } from 'react-bootstrap';
+import Images from '~/components/Images';
 
 const cx = classNames.bind(styles);
 export default function ShopProduct() {
@@ -13,10 +13,10 @@ export default function ShopProduct() {
         <section className={cx('shop-products-content-left', 'd-flex')}>
           <Link to={routes.shop}>
             <div className={cx('shop-logo')}>
-              <Image src="https://down-vn.img.susercontent.com/file/vn-11134216-7qukw-ljuyqivjrhtu57_tn" />
+              <Images src="https://down-vn.img.susercontent.com/file/vn-11134216-7qukw-ljuyqivjrhtu57_tn" />
             </div>
             <div className={cx('shopmall')}>
-              <Image src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/productdetailspage/483071c49603aa7163a7.png" />
+              <Images src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/productdetailspage/483071c49603aa7163a7.png" />
             </div>
           </Link>
           <div className={cx('shop-name', 'd-flex flex-column justify-content-between')}>

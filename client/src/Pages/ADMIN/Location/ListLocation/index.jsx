@@ -72,10 +72,10 @@ export default function ListLocation({ reloadData }) {
             <Location title="country" classTitle="country-filter" handleSetID={setCountryID} />
           </div>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
-            <Location title="city" classTitle="city-filter" ForeignID={countryID} handleSetID={setCityID} />
+            <Location title="city" classTitle="city-filter" foreignID={countryID} handleSetID={setCityID} />
           </div>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
-            <Location title="district" classTitle="district-filter" ForeignID={cityID} handleSetID={setDistrictID} />
+            <Location title="district" classTitle="district-filter" foreignID={cityID} handleSetID={setDistrictID} />
           </div>
         </div>
       </div>

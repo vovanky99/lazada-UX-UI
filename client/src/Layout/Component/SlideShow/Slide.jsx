@@ -23,7 +23,7 @@ export default function Slide({
   const [showHighlight, setShowHighlight] = useState(false);
   const [slideStart, setSlideStart] = useState(0);
   const [slideEnd, setSlideEnd] = useState(numberShow);
-  const [imageHighlight, setImageHighlight] = useState('');
+  const [imageHighlight, setImagesHighlight] = useState('');
   const [srcHighlight, setSrcHighlight] = useState(data[0].title);
   let setDefaultHL = srcHL;
   let defaultSrcHighlight = '';
@@ -60,7 +60,7 @@ export default function Slide({
     let imgsHighlight = document.querySelector('.src-highlight');
     let body = document.querySelector('body');
     const handleOnclickShow = (e) => {
-      setImageHighlight(e.currentTarget.src);
+      setImagesHighlight(e.currentTarget.src);
       setShowHighlight(true);
       body.style['overflow'] = 'hidden';
     };

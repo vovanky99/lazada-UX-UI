@@ -13,7 +13,7 @@ import MessageDanger from '~/layout/Component/Message/MessageDanger';
 import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
 import CreateBlog from '~/api/Blog/CreateBlog';
 import TinyMCE from '~/components/TinyMCE';
-import UploadTinyMCE, { ImageUpload } from '~/services/UploadTinyMCE';
+import UploadTinyMCE, { ImagesUpload } from '~/services/UploadTinyMCE';
 
 const cx = classNames.bind(styles);
 
@@ -34,7 +34,7 @@ export default function EditElement({ data }) {
     img: data.img || '',
     category_id: [],
   });
-  const handleSetImage = (value) => {
+  const handleSetImages = (value) => {
     setEditBlog({
       ...editBlog,
       img: value,
@@ -182,7 +182,7 @@ export default function EditElement({ data }) {
               title="image"
               data={editBlog.img}
               name="img"
-              handleSetValue={handleSetImage}
+              handleSetValue={handleSetImages}
               useButton={false}
             />
             <FormSearch

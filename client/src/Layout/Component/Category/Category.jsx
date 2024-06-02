@@ -7,7 +7,7 @@ const Category = forwardRef(function Category(
     title,
     classTitle,
     ValueID,
-    ForeignID,
+    foreignID,
     SearchValue,
     useLabel = true,
     handleSetID = () => {},

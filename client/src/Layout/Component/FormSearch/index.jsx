@@ -28,6 +28,7 @@ export const FormSearch = forwardRef(function FormSearch(
     handleSetID = () => {},
     searchValue = () => {},
     handleOnchange = () => {},
+    handleOnclick = () => {},
   },
   ref,
 ) {
@@ -68,6 +69,7 @@ export const FormSearch = forwardRef(function FormSearch(
     const handleClick = (e) => {
       setSearch(e.target.dataset.value);
       setSelect(false);
+      handleOnclick(e);
 
       setID(e.target.dataset.id);
       if (s) {
@@ -117,7 +119,12 @@ export const FormSearch = forwardRef(function FormSearch(
             render={(attrs) => (
               <ul ref={optionRef} className={cx('option')} {...attrs} tabIndex="-1">
                 {data?.length > 0 && useNull ? (
-                  <li className={cx('option-single', `select-option-${classTitle || title}`)} data-value="" data-id="">
+                  <li
+                    className={cx('option-single', `select-option-${classTitle || title}`)}
+                    data-name={name}
+                    data-value=""
+                    data-id=""
+                  >
                     Null
                   </li>
                 ) : (
@@ -128,6 +135,7 @@ export const FormSearch = forwardRef(function FormSearch(
                       <li
                         className={cx('option-single', `select-option-${classTitle || title}`)}
                         data-value={d.name}
+                        data-name={name}
                         data-id={d.id}
                         key={d.id}
                       >

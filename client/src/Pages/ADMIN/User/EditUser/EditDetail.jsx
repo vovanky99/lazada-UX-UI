@@ -253,7 +253,7 @@ export default function EditDetail({ data }) {
                 <Location
                   title="city"
                   SearchValue={NameCity}
-                  ForeignID={countryID}
+                  foreignID={countryID}
                   ValueID={cityID}
                   useLabel={false}
                   handleSetID={setCityID}
@@ -261,7 +261,7 @@ export default function EditDetail({ data }) {
                 <Location
                   title="district"
                   SearchValue={NameDistrict}
-                  ForeignID={cityID}
+                  foreignID={cityID}
                   ValueID={districtID}
                   useLabel={false}
                   handleSetID={setDistrictID}
@@ -271,7 +271,7 @@ export default function EditDetail({ data }) {
                   ref={wardRef}
                   ValueID={wardID}
                   SearchValue={NameWard}
-                  ForeignID={districtID}
+                  foreignID={districtID}
                   useLabel={false}
                   handleSetID={setWardID}
                 />

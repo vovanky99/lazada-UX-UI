@@ -37,7 +37,7 @@ export default function Profile() {
   const WardName = Admin.address_t.ward.name || '';
 
   /* handle upload image */
-  const uploadImage = (img) => {
+  const uploadImages = (img) => {
     let image = new FormData();
     image.append('file', img);
     // handle upload file up cloudinary
@@ -95,7 +95,7 @@ export default function Profile() {
     const file = e.target.files[0];
     const render = new FileReader();
     render.onload = (e) => {
-      uploadImage(file);
+      uploadImages(file);
     };
     if (file) {
       render.readAsDataURL(file);
@@ -238,7 +238,7 @@ export default function Profile() {
                 title="city"
                 useLabel={false}
                 ValueID={cityID}
-                ForeignID={countryID}
+                foreignID={countryID}
                 handleSetID={setCityID}
                 SearchValue={CityName}
               />
@@ -246,7 +246,7 @@ export default function Profile() {
                 title="district"
                 useLabel={false}
                 ValueID={districtID}
-                ForeignID={cityID}
+                foreignID={cityID}
                 handleSetID={setDistrictID}
                 SearchValue={DistrictName}
               />
@@ -254,7 +254,7 @@ export default function Profile() {
                 title="ward"
                 useLabel={false}
                 ValueID={wardID}
-                ForeignID={districtID}
+                foreignID={districtID}
                 handleSetID={setWardID}
                 SearchValue={WardName}
               />

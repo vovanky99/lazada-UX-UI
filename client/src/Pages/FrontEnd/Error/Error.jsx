@@ -6,7 +6,7 @@ function Error() {
     >
       <div
         style={{
-          backgroundImage:
+          backgroundImages:
             'url(https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/shopmicrofe/6202cbd8f3f78638666d634bf423129b.png)',
           width: '120px',
           height: '120px',

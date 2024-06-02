@@ -1,11 +1,11 @@
 import axios from '~/api/axios';
 
-export default async function GetLocation(location, searchValue, ForeignID) {
+export default async function GetLocation(location, searchValue, foreignID) {
   try {
     const res = await axios.get(`/api/get-${location}`, {
       params: {
         name: searchValue,
-        foreign_id: ForeignID,
+        foreign_id: foreignID,
       },
     });
     return res.data;

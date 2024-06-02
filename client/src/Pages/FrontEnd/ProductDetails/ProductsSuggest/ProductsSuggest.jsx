@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
 import styles from '../ProductDetails.module.scss';
-import { Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import Images from '~/components/Images';
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +20,7 @@ export default function ProductsSuggest({ PD, shopPD }) {
               key={index}
             >
               <div className={cx('img')}>
-                <Image src={`${pd.images}`} />
+                <Images src={`${pd.images}`} />
               </div>
               <div className={cx('from-store-product-content', 'd-flex flex-column')}>
                 <h5>{pd.title}</h5>
@@ -44,7 +44,7 @@ export default function ProductsSuggest({ PD, shopPD }) {
               key={index}
             >
               <div className={cx('img')}>
-                <Image src={`${p.images}`} />
+                <Images src={`${p.images}`} />
               </div>
               <div className={cx('from-other-store-product-content', 'd-flex flex-column')}>
                 <h5>{p.title}</h5>

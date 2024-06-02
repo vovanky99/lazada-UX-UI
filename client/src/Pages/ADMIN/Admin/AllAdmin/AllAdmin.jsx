@@ -127,20 +127,20 @@ export default function AllAdmin() {
                   <Location
                     title="city"
                     classTitle="city_born"
-                    ForeignID={bornCountryID}
+                    foreignID={bornCountryID}
                     useLabel={false}
                     handleSetID={setBornCityID}
                   />
                   <Location
                     title="district"
-                    ForeignID={bornCityID}
+                    foreignID={bornCityID}
                     classTitle="district_born"
                     useLabel={false}
                     handleSetID={setBornDistrictID}
                   />
                   <Location
                     title="ward"
-                    ForeignID={bornDistrictID}
+                    foreignID={bornDistrictID}
                     classTitle="ward_born"
                     useLabel={false}
                     handleSetID={setBornWardID}
@@ -159,20 +159,20 @@ export default function AllAdmin() {
                   <Location
                     title="city"
                     classTitle="city_live"
-                    ForeignID={liveAtCountryID}
+                    foreignID={liveAtCountryID}
                     useLabel={false}
                     handleSetID={setLiveAtCityID}
                   />
                   <Location
                     title="district"
-                    ForeignID={liveAtCityID}
+                    foreignID={liveAtCityID}
                     classTitle="district_live"
                     useLabel={false}
                     handleSetID={setLiveAtDistrictID}
                   />
                   <Location
                     title="ward"
-                    ForeignID={liveAtDistrictID}
+                    foreignID={liveAtDistrictID}
                     classTitle="ward_live"
                     useLabel={false}
                     handleSetID={setLiveAtWardID}

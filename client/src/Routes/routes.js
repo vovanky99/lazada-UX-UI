@@ -20,7 +20,6 @@ import AdminHome from '~/pages/ADMIN/Home';
 import AllAdmin from '~/pages/ADMIN/Admin/AllAdmin';
 import EditAdmin from '~/pages/ADMIN/Admin/EditAdmin';
 import AllShop from '~/pages/ADMIN/Shop/AllShop';
-import AddShop from '~/pages/ADMIN/Shop/AddShop';
 import EditShop from '~/pages/ADMIN/Shop/EditShop';
 import ProfileAdmin from '~/pages/ADMIN/Profile';
 import LocationAdmin from '~/pages/ADMIN/Location';
@@ -42,6 +41,8 @@ import EditBlog from '~/pages/ADMIN/Blog/EditBlog';
 import AddBlog from '~/pages/ADMIN/Blog/AddBlog';
 import Logo from '~/pages/ADMIN/Logo';
 import AddLogo from '~/pages/ADMIN/Logo/AddLogo';
+import AddManu from '~/pages/ADMIN/Manufacturer/AddManu';
+import EditManu from '~/pages/ADMIN/Manufacturer/Editmanu/EditManu';
 
 const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages },
@@ -84,11 +85,6 @@ const AdminRoutes = [
     path: config.adminRoutes.AllShop,
     components: AllShop,
     breadcrumbName: 'All Shop',
-  },
-  {
-    path: config.adminRoutes.AddShop,
-    components: AddShop,
-    breadcrumbName: 'Add Shop',
   },
   {
     path: config.adminRoutes.EditShop,
@@ -169,6 +165,16 @@ const AdminRoutes = [
     path: config.adminRoutes.Manufacturer,
     components: Manufacturer,
     breadcrumbName: 'Manufacturer',
+  },
+  {
+    path: config.adminRoutes.AddManufacturer,
+    components: AddManu,
+    breadcrumbName: 'Add Manufacturer',
+  },
+  {
+    path: config.adminRoutes.EditManufacturer,
+    components: EditManu,
+    breadcrumbName: 'Edit Manufacturer',
   },
   {
     path: config.adminRoutes.ReportProduct,

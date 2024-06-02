@@ -11,7 +11,7 @@ import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import CreateAdmin from '~/api/Admin/CreateAdmin';
-import CheckUsername from '~/services/Check/CheckUsername';
+import CheckUsername from '~/api/Check/CheckUsername';
 import useDebounce from '~/hooks/Debounce/Debounce';
 import Location from '~/layout/Component/Location';
 import Department from '../Department';
@@ -328,20 +328,20 @@ export default function AddAdmin() {
                 <Location
                   title="city"
                   classTitle="city_born"
-                  ForeignID={bornCountryID}
+                  foreignID={bornCountryID}
                   useLabel={false}
                   handleSetID={setBornCityID}
                 />
                 <Location
                   title="district"
-                  ForeignID={bornCityID}
+                  foreignID={bornCityID}
                   classTitle="district_born"
                   useLabel={false}
                   handleSetID={setBornDistrictID}
                 />
                 <Location
                   title="ward"
-                  ForeignID={bornDistrictID}
+                  foreignID={bornDistrictID}
                   ref={wardBornRef}
                   classTitle="ward_born"
                   useLabel={false}
@@ -363,20 +363,20 @@ export default function AddAdmin() {
                 <Location
                   title="city"
                   classTitle="city_live"
-                  ForeignID={liveAtCountryID}
+                  foreignID={liveAtCountryID}
                   useLabel={false}
                   handleSetID={setLiveAtCityID}
                 />
                 <Location
                   title="district"
-                  ForeignID={liveAtCityID}
+                  foreignID={liveAtCityID}
                   classTitle="district_live"
                   useLabel={false}
                   handleSetID={setLiveAtDistrictID}
                 />
                 <Location
                   title="ward"
-                  ForeignID={liveAtDistrictID}
+                  foreignID={liveAtDistrictID}
                   ref={wardLiveRef}
                   classTitle="ward_live"
                   useLabel={false}

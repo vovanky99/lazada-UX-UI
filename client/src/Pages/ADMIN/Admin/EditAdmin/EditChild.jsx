@@ -321,14 +321,14 @@ export default function EditChild({ data }) {
                     title="city"
                     classTitle="city_born"
                     SearchValue={BornNameCity}
-                    ForeignID={bornCountryID}
+                    foreignID={bornCountryID}
                     useLabel={false}
                     handleSetID={setBornCityID}
                   />
                   <Location
                     title="district"
                     SearchValue={BornNameDistrict}
-                    ForeignID={bornCityID}
+                    foreignID={bornCityID}
                     classTitle="district_born"
                     useLabel={false}
                     handleSetID={setBornDistrictID}
@@ -336,7 +336,7 @@ export default function EditChild({ data }) {
                   <Location
                     title="ward"
                     SearchValue={BornNameWard}
-                    ForeignID={bornDistrictID}
+                    foreignID={bornDistrictID}
                     classTitle="ward_born"
                     useLabel={false}
                     ref={wardBornRef}
@@ -366,13 +366,13 @@ export default function EditChild({ data }) {
                     title="city"
                     classTitle="city_live"
                     SearchValue={LiveAtNameCity}
-                    ForeignID={liveAtCountryID}
+                    foreignID={liveAtCountryID}
                     useLabel={false}
                     handleSetID={setLiveAtCityID}
                   />
                   <Location
                     title="district"
-                    ForeignID={liveAtCityID}
+                    foreignID={liveAtCityID}
                     SearchValue={LiveAtNameDistrict}
                     classTitle="district_live"
                     useLabel={false}
@@ -382,7 +382,7 @@ export default function EditChild({ data }) {
                     title="ward"
                     ref={wardLiveRef}
                     SearchValue={LiveAtNameWard}
-                    ForeignID={liveAtDistrictID}
+                    foreignID={liveAtDistrictID}
                     classTitle="ward_live"
                     useLabel={false}
                     handleSetID={setLiveAtWardID}

@@ -6,7 +6,9 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\LogoController;
+use App\Http\Controllers\Admin\ManufacturerController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\Auth\Client\AuthController as LifeShopController;
@@ -148,6 +150,20 @@ Route::prefix('/admin')->group(function(){
             Route::post('/create-logo','store');
             Route::patch('/edit-logo/{id}','update');
             Route::delete('/delete-logo/{id}','delete');
+        });
+        Route::controller(ShopController::class)->group(function(){
+            Route::get('/get-shop','index');
+            Route::post('/create-shop','store');
+            Route::get('/show-shop','show');
+            Route::patch('/edit-shop/{id}','update');
+            Route::delete('/delete-shop/{id}','delete');
+        });
+        Route::controller(ManufacturerController::class)->group(function(){
+            Route::get('get-manu','index');
+            Route::post('create-manu','store');
+            Route::get('show-manu/{id}','show');
+            Route::patch('edit-manu/{id}','update');
+            Route::delete('delete-manu/{id}','delete');
         });
     });
 });

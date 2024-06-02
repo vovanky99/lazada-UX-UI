@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 
 export default function ListBlog({ handleDelete = () => {}, P_id, P_title, P_cat, P_img, P_descriptions, P_status }) {
   //delete cat
-  const handleDeleteCat = (e) => {
+  const handleDeleteBlogs = (e) => {
     DeleteBlog(e.target.dataset.id)
       .then((result) => {
         handleDelete(1);
@@ -38,7 +38,7 @@ export default function ListBlog({ handleDelete = () => {}, P_id, P_title, P_cat
             <Button gradient_primary type="button" to={`/admin/edit-blogs/${P_id}`}>
               Edit
             </Button>
-            <Button data-id={P_id} gradient_danger type="button" onClick={handleDeleteCat}>
+            <Button data-id={P_id} gradient_danger type="button" onClick={handleDeleteBlogs}>
               Delete
             </Button>
           </div>

@@ -1,4 +1,3 @@
-import { Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
@@ -10,6 +9,7 @@ import styles from '../ProductDetails.module.scss';
 import ProductsSuggest from '../ProductsSuggest';
 import SlideReviews from '~/layout/Component/SlideShow/SlideReviews';
 import Pagination from '~/layout/Component/Pagination';
+import Images from '~/components/Images';
 
 const cx = classNames.bind(styles);
 
@@ -145,7 +145,7 @@ export default function ProductsDescriptions({ id, PD_Description, PD_Reviews, P
               <div className={cx('products-comment-list')}>
                 <div className={cx('product-rating', 'd-flex')}>
                   <Link className={cx('user-review-avatar')}>
-                    <Image src="https://down-vn.img.susercontent.com/file/29baad6b574cef5ec3d6d576703c8e6f_tn" />
+                    <Images src="https://down-vn.img.susercontent.com/file/29baad6b574cef5ec3d6d576703c8e6f_tn" />
                   </Link>
                   <div className={cx('user-review-content')}>
                     <div className={cx('author-name')}>trrspnvhc9qhu8rojb_mbua7ytz2</div>
@@ -218,7 +218,7 @@ export default function ProductsDescriptions({ id, PD_Description, PD_Reviews, P
             key={index}
           >
             <div className={cx('img')}>
-              <Image src={`${pd.images}`} />
+              <Images src={`${pd.images}`} />
             </div>
             <div className={cx('shop-suggest-products-name')}>{pd.title}</div>
             <div className={cx('shop-suggest-products-price')}>

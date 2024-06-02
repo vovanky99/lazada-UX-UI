@@ -4,135 +4,60 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Manufacturer;
-use Illuminate\Http\Request;
-use App\Http\Requests\ManufRequest;
+use Exception;
 
 class ManufacturerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function __construct()
-    {
-        return $this->middleware('auth');
-    }
     public function index()
     {
-        //
-        $mft = Manufacturer::paginate(15);
-        $count_mft = Manufacturer::count();
-        return view('mft/index',compact('mft','count_mft'));
-    }
-
-    public function search(Request $request){
-        $mft = Manufacturer::where('name','LIKE','%'.$request->search.'%');
-        $count_mft = $mft->count();
-        $mft =$mft->paginate(15);
-        return view('mft/index',compact('count_mft','mft'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-        return view('mft/create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(ManufRequest $request)
-    {
-        //
-        $mft1 = new Manufacturer();
-        //get logo
-        $getlogo = '';
-        if($request->hasFile('new_logo')){
-            $this->validate($request,[
-                'new_logo'=>'mimes:jpg,jpeg,png,gif|max:10000'
-            ],[
-                'new_logo.mines' =>`avatar don't .jpg .jpeg .png .gif`,
-                'new_logo.max'=>`avatar can't limit 9MB `,
-            ]);
-            $logo = $request->new_logo;
-            $getlogo = $logo->getClientOriginalName();
-            $destinationPath = public_path('upload/images/manuf');
-            $logo->move($destinationPath,$getlogo);
+        $name = request()->name;
+        $status = request()->status;
+        try{
+            $manu = Manufacturer::where('name','like',$name.'%');
+            if($status =='1' || $status =="0"){
+                $manu->where('status',$status);
+            }
+            $man = $manu->get();
+            return response()->json($man);
         }
-        $mft1->name = $request->name;
-        $mft1->logo = $getlogo;
-        $mft1->descriptions = $request->descriptions;
-        $mft1->save();
-        $mft = Manufacturer::paginate(15);
-        $count_mft = Manufacturer::count();
-        return view('mft/index',compact('mft','count_mft'));
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-        $mft = Manufacturer::find($id);
-        return view('mft/show',compact('mft'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-        $mft = Manufacturer::find($id);
-        return view('mft/edit',compact('mft'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ManufRequest $request, string $id)
-    {
-        //
-        $mft1 = Manufacturer::find($id);
-        //get logo
-        $getlogo = '';
-        if($request->hasFile('new_logo')){
-            $this->validate($request,[
-                'new_logo'=>'mimes:jpg,jpeg,png,gif|max:10000',
-            ],[
-                'new_logo.mines' =>`avatar don't .jpg .jpeg .png .gif`,
-                'new_logo.max'=>`avatar can't limit 9MB `,
-            ]);
-            $logo =$request->new_logo;
-            $getlogo= $logo->getClientOriginalName();
-            $destinationPath = public_path('upload/images/manuf');
-            $logo->move($destinationPath,$getlogo);
+        catch(Exception $e){
+            return response()->json($e);
         }
-        if($request->new_logo == ''){
-            $mft1->logo = $mft1->logo;
-        }
-        else{
-            $mft1->logo = $getlogo;
-        }
-        $mft1->name = $request->name;
-        $mft1->descriptions = $request->descriptions;
-        $mft1->save();
-
-        $mft = Manufacturer::paginate(15);
-        $count_mft = Manufacturer::count();
-        return view('mft/index',compact('mft','count_mft'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function store()
     {
-        //
-        Manufacturer::find($id)->delete();
-        return redirect()->route('mft.index');
+        try{
+            Manufacturer::create(request()->all());
+            return response()->json(['success'=>'created success!']);
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
+    }
+
+    public function show($id)
+    {
+        $manu = Manufacturer::find($id);
+        return response()->json($manu);
+    }
+
+    public function update($id)
+    {
+        try{
+            Manufacturer::findOrFail($id)->update(
+            request()->all()
+            );
+            return response()->json(['success'=>'updated success!']);
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
+    }
+
+    public function destroy($id)
+    {
+       Manufacturer::findOrFail($id)->delete();
+       return response()->json(['success'=>'deleted success!']);
     }
 }

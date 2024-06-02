@@ -14,8 +14,8 @@ import { FormDate } from '~/layout/Component/FormGroup/FormDate';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import Location from '~/layout/Component/Location';
 import MessageDanger from '~/layout/Component/Message/MessageDanger';
-import CheckEmail from '~/services/Check/CheckEmail';
-import CheckPhone from '~/services/Check/CheckPhone';
+import CheckEmail from '~/api/Check/CheckEmail';
+import CheckPhone from '~/api/Check/CheckPhone';
 import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
 import CreateUser from '~/api/User/CreateUser';
 
@@ -271,9 +271,9 @@ export default function EditDetail() {
               <label className="form-label">Born</label>
               <div className={cx('born', 'form-group d-flex flex-row flex-wrap')}>
                 <Location title="country" useLabel={false} handleSetID={setCountryID} />
-                <Location title="city" ForeignID={countryID} useLabel={false} handleSetID={setCityID} />
-                <Location title="district" ForeignID={cityID} useLabel={false} handleSetID={setDistrictID} />
-                <Location title="ward" ref={wardRef} ForeignID={districtID} useLabel={false} handleSetID={setWardID} />
+                <Location title="city" foreignID={countryID} useLabel={false} handleSetID={setCityID} />
+                <Location title="district" foreignID={cityID} useLabel={false} handleSetID={setDistrictID} />
+                <Location title="ward" ref={wardRef} foreignID={districtID} useLabel={false} handleSetID={setWardID} />
                 <FormText
                   ref={addressRef}
                   data={address}
