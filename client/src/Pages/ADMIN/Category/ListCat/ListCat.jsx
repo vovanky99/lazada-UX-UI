@@ -4,10 +4,8 @@ import Button from '~/components/Button';
 import Tippy from '@tippyjs/react/headless';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { useEffect, useState } from 'react';
-import GetCategory from '~/api/Category/GetCategory';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
-import { EditData } from '~/api/General/HandleData';
-import DeleteCategory from '~/api/Category/DeleteCategory';
+import { DeleteData, EditData, GetData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -21,6 +19,11 @@ export default function ListCat({ handleDelete = () => {}, index, P_id, P_name, 
   // show edit cat
   const handleToggleEdit = (e) => {
     setShowEdit(true);
+  };
+
+  // hide edit cat
+  const handleClickOutside = () => {
+    setShowEdit(false);
   };
 
   const handleEditCat = (e) => {
@@ -56,7 +59,7 @@ export default function ListCat({ handleDelete = () => {}, index, P_id, P_name, 
   useEffect(() => {
     /* use show edit to avoid  premature api calls */
     if (showEdit) {
-      GetCategory(searchParent).then((result) => {
+      GetData('admin', 'category', searchParent).then((result) => {
         setParentData(result);
       });
     }
@@ -64,16 +67,11 @@ export default function ListCat({ handleDelete = () => {}, index, P_id, P_name, 
 
   //delete cat
   const handleDeleteCat = (e) => {
-    DeleteCategory(e.target.dataset.id)
+    DeleteData('admin', 'category', e.target.dataset.id)
       .then((result) => {
         handleDelete(1);
       })
       .catch((e) => console.log(e));
-  };
-
-  // hide edit cat
-  const handleClickOutside = () => {
-    setShowEdit(false);
   };
 
   return (

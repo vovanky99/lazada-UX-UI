@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import styles from '../Shop.module.scss';
+import styles from '~/pages/ADMIN/Shop/Shop.module.scss';
 import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
 import config from '~/config';
@@ -7,8 +7,8 @@ import { FormSearch } from '~/layout/Component/FormSearch';
 import { useEffect, useState } from 'react';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import Location from '~/layout/Component/Location';
-import GetShop from '~/api/Shop/GetShop';
 import Images from '~/components/Images';
+import { GetData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -30,7 +30,6 @@ export default function AllShop() {
   };
   const handleGetlocationID = (e) => {
     const { name, id } = e.target.dataset;
-    console.log(e.target.dataset);
     setFilterShop({
       ...filterShop,
       [name]: id,
@@ -47,7 +46,7 @@ export default function AllShop() {
   const handleDeleteShop = (e) => {};
 
   useEffect(() => {
-    GetShop(filterShop)
+    GetData('admin', 'shop', filterShop)
       .then((result) => {
         setDataTable(result);
       })

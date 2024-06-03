@@ -5,7 +5,7 @@ import styles from '~/pages/ADMIN/Logo/logo.module.scss';
 import LogoElement from './LogoElement';
 import Button from '~/components/Button';
 import config from '~/config';
-import GetLogo from '~/api/Logo/GetLogo';
+import { GetData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -23,7 +23,7 @@ export default function Logo() {
     setDeleteSuccess(deleteSuccess + value);
   };
   useEffect(() => {
-    GetLogo()
+    GetData('admin', 'logo')
       .then((result) => {
         setDataTable(result);
       })
@@ -42,9 +42,11 @@ export default function Logo() {
         }
       >
         <div className={cx('logo', 'd-flex flex-wrap flex-row')}>
-          {dataTable
-            ? dataTable.map((d, index) => <LogoElement handleDelete={handleDelete} key={index} Data={d} />)
-            : ''}
+          {dataTable ? (
+            dataTable.map((d, index) => <LogoElement handleDelete={handleDelete} key={index} Data={d} />)
+          ) : (
+            <></>
+          )}
         </div>
       </WrapperMain>
     </>

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->boolean('status')->default(1);
-            $table->string('description',100)->nullable();
+            $table->string('descriptions',100)->nullable();
             $table->timestamps();
         });
     }

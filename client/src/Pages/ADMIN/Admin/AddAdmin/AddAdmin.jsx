@@ -10,12 +10,12 @@ import CldUploadImg from '~/services/cloudinary/CldUploadImg';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
-import CreateAdmin from '~/api/Admin/CreateAdmin';
 import CheckUsername from '~/api/Check/CheckUsername';
 import useDebounce from '~/hooks/Debounce/Debounce';
 import Location from '~/layout/Component/Location';
 import Department from '../Department';
 import Role from '../Role';
+import { CreateData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -90,9 +90,7 @@ export default function AddAdmin() {
     }
   };
 
-  const handleSubmitForm = (e) => {
-    e.preventDefault();
-    // valid Name
+  const validated = () => {
     if (name === '' || name.length < 6) {
       nameRef.current.classList.add('border_danger');
     } else {
@@ -182,6 +180,11 @@ export default function AddAdmin() {
     } else {
       addressLiveRef.current.classList.remove('border_danger');
     }
+  };
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    validated();
     // set data form
     const data = new FormData();
     data.append('name', name);
@@ -227,7 +230,7 @@ export default function AddAdmin() {
       addressBorn &&
       addressLive
     ) {
-      CreateAdmin(data)
+      CreateData('admin', 'admin', data)
         .then((result) => {
           setSubmitSuccess(result.success);
         })

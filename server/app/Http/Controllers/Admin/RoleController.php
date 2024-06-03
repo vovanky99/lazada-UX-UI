@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Http\Requests\RoleRequest;
+use Exception;
 
 class RoleController extends Controller
 {
@@ -13,60 +14,68 @@ class RoleController extends Controller
      * Display a listing of the resource.
      */
     public function index(){
-        $role = Role::all();
+        $q = request()->get('name');
+        $role = Role::where('name','like',$q.'%')->whereNot('name','=','admin')->get();
         return response()->json($role);
     }
-    public function getRole(Request $request){
-        $q = $request->get('name');
-        if($q){
-            $role = Role::where('name','like',$q.'%')->get();
-        }
-        else{
-            $role = Role::all();
-        }
-        return response()->json($role);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function create(RoleRequest $request)
+    
+    public function store()
     {
-        //
-        $dt = new Role;
-        $dt->create($request->all());
-        return redirect()->route('dt.index');
+        
+        try{
+            $checkName = Role::where('name',request()->name)->first();
+            if($checkName){
+                return response()->json(['error'=>'role already exists!']);
+            }
+            else{
+                Role::create(
+                    request()->all(),
+                );
+                return response()->json(['success'=>'created success!']);
+            }
+
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function show($id)
     {
-        //
-        $role = Role::find($id);
-        return view('role/edit',compact('role'));
+       $role = Role::find($id);
+       return response()->json($role);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update($id)
     {
-        //
-        $dt = Role::find($id);
-        //validator
-        $dt->update($request->all());
-        return redirect()->route('voucher.index');
+        try{
+            Role::findOrFail($id)->update(
+               request()->all()
+            );
+            return response()->json(['success'=>'updated success!']);
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete($id)
     {
-        //
-        Role::find($id)->delete();
-        return redirect()->route('dt.index');
+        try{
+            Role::findOrFail($id);
+            return response()->json(['success'=>'deleted success!']);
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
     }
 }

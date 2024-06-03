@@ -6,11 +6,10 @@ import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
 import FormImage from '~/layout/Component/FormGroup/FormImage';
 import { FormSearch } from '~/layout/Component/FormSearch';
-import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import MessageDanger from '~/layout/Component/Message/MessageDanger';
 import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
-import CreateManu from '~/api/Manufacturer/CreateManu';
+import { CreateData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -61,7 +60,7 @@ export default function AddManu() {
     }
     if (addManu.name && addManu.descriptions.length > 50 && addManu.logo) {
       setCreateError('');
-      CreateManu(addManu)
+      CreateData('admin', 'manu', addManu)
         .then((result) => {
           if (result.success) {
             setCreateSuccess(result.success);

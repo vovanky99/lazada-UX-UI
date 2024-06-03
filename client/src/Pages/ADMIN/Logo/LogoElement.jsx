@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import { EditData } from '~/api/General/HandleData';
-import Deletelogo from '~/api/Logo/DeleteLogo';
+import { DeleteData, EditData } from '~/api/General/HandleData';
 import Button from '~/components/Button';
 import FormImage from '~/layout/Component/FormGroup/FormImage';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
@@ -51,7 +50,7 @@ export default function LogoElement({ Data, handleDelete }) {
     }
   };
   const handleDeleteLogo = (e) => {
-    Deletelogo(e.target.dataset.id).then((result) => {
+    DeleteData('admin', 'logo', e.target.dataset.id).then((result) => {
       if (result.success) {
         setMessageSuccess(result.success);
         handleDelete(1);

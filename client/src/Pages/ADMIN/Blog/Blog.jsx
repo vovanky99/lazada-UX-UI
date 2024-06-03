@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from '~/pages/ADMIN/Blog/Blog.module.scss';
 import WrapperMain from '~/layout/Component/WrapperMain';
@@ -9,9 +9,7 @@ import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import ListBlog from '~/pages/ADMIN/Blog/ListBlog';
 import config from '~/config';
 import TodoList from '~/components/TodoList';
-import { TodoListData } from '~/api/General/HandleData';
-import GetBlog from '~/api/Blog/GetBlog';
-import useDebounce from '~/hooks/Debounce/Debounce';
+import { GetData, TodoListData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -60,7 +58,7 @@ export default function Blog() {
 
   /* get all for Data tbale */
   useEffect(() => {
-    GetBlog(filterBlogs)
+    GetData('admin', 'blogs', filterBlogs)
       .then((result) => {
         setDataTable(result);
       })

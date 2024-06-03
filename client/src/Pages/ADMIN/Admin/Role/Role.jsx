@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
-import GetRole from '~/api/Role/GetRole';
+import { GetData } from '~/api/General/HandleData';
 import { FormSearch } from '~/layout/Component/FormSearch';
 
 const Role = forwardRef(function Role(
@@ -29,7 +29,7 @@ const Role = forwardRef(function Role(
 
   /* get data */
   useEffect(() => {
-    GetRole(searchValue)
+    GetData('admin', 'role', { name: searchValue })
       .then((result) => {
         setData(result);
       })

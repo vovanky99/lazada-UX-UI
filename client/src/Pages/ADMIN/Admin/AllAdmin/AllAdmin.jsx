@@ -8,14 +8,11 @@ import WrapperMain from '~/layout/Component/WrapperMain';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
-import GetLocation from '~/api/Location/GetLocation';
-import GetRole from '~/api/Role/GetRole';
-import GetDepartment from '~/api/Department/GetDepartment';
-import getAdmin from '~/api/Admin/GetAdmin';
 import ListAdmin from './ListAdmin';
 import Department from '../Department';
 import Role from '../Role';
 import Location from '~/layout/Component/Location';
+import { GetData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -53,7 +50,7 @@ export default function AllAdmin() {
 
   /* handle get data for table */
   useEffect(() => {
-    getAdmin({
+    GetData('admin', 'admin', {
       name,
       birthday,
       role,

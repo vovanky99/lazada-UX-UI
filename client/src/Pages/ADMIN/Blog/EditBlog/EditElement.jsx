@@ -11,7 +11,6 @@ import { FormText } from '~/layout/Component/FormGroup/FormText';
 import FormImage from '~/layout/Component/FormGroup/FormImage';
 import MessageDanger from '~/layout/Component/Message/MessageDanger';
 import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
-import CreateBlog from '~/api/Blog/CreateBlog';
 import TinyMCE from '~/components/TinyMCE';
 import UploadTinyMCE, { ImagesUpload } from '~/services/UploadTinyMCE';
 

@@ -6,14 +6,13 @@ import { useEffect, useRef, useState } from 'react';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import TodoList from '~/components/TodoList';
-import { TodoListData } from '~/api/General/HandleData';
+import { CreateData, TodoListData } from '~/api/General/HandleData';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import FormImage from '~/layout/Component/FormGroup/FormImage';
 import MessageDanger from '~/layout/Component/Message/MessageDanger';
 import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
-import CreateBlog from '~/api/Blog/CreateBlog';
 import TinyMCE from '~/components/TinyMCE';
-import UploadTinyMCE, { ImagesUpload } from '~/services/UploadTinyMCE';
+import UploadTinyMCE from '~/services/UploadTinyMCE';
 
 const cx = classNames.bind(styles);
 
@@ -53,9 +52,14 @@ export default function AddBlog() {
     }
   };
 
-  /*handle submit create blog */
-  const handleCreateBlog = (e) => {
-    e.preventDefault();
+  const handleEditorChange = (e) => {
+    setAddBlog({
+      ...addBlog,
+      content: e.target.getContent(),
+    });
+  };
+
+  const validated = () => {
     if (addBlog.content.length < 300) {
       contentRef.current.editor.container.classList.add('border_danger');
     } else {
@@ -71,9 +75,15 @@ export default function AddBlog() {
     } else {
       titleRef.current.classList.remove('border_danger');
     }
+  };
+
+  /*handle submit create blog */
+  const handleCreateBlog = (e) => {
+    e.preventDefault();
+    validated();
     if (addBlog.content.length > 300 && addBlog.descriptions.length > 100 && addBlog.title.length > 20 && addBlog.img) {
       setCreateMessageError('');
-      CreateBlog(addBlog)
+      CreateData('admin', 'blogs', addBlog)
         .then((result) => {
           if (result.success) {
             setCreateMessageSuccess(result.success);
@@ -95,13 +105,6 @@ export default function AddBlog() {
       })
       .catch((e) => console.log(e));
   }, [addBlog.category_id, searchValue]);
-
-  const handleEditorChange = (e) => {
-    setAddBlog({
-      ...addBlog,
-      content: e.target.getContent(),
-    });
-  };
 
   return (
     <>

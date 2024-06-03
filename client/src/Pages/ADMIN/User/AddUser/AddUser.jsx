@@ -3,7 +3,7 @@ import styles from '../User.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 
-import { EditData } from '~/api/General/HandleData';
+import { CreateData, EditData } from '~/api/General/HandleData';
 import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
 import CldUploadImg from '~/services/cloudinary/CldUploadImg';
@@ -17,7 +17,6 @@ import MessageDanger from '~/layout/Component/Message/MessageDanger';
 import CheckEmail from '~/api/Check/CheckEmail';
 import CheckPhone from '~/api/Check/CheckPhone';
 import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
-import CreateUser from '~/api/User/CreateUser';
 
 const cx = classNames.bind(styles);
 
@@ -81,11 +80,7 @@ export default function EditDetail() {
     }
   };
 
-  const handleSubmitForm = (e) => {
-    e.preventDefault();
-    const validEmail = email.match(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-    );
+  const validated = (valid) => {
     // valid Name
     if (name === '' || name.length < 6) {
       nameRef.current.classList.add('border_danger');
@@ -100,7 +95,7 @@ export default function EditDetail() {
     }
 
     // valid email
-    if (email === '' || !validEmail) {
+    if (email === '' || !valid) {
       emailRef.current.classList.add('border_danger');
     } else {
       emailRef.current.classList.remove('border_danger');
@@ -140,6 +135,14 @@ export default function EditDetail() {
     } else {
       addressRef.current.classList.remove('border_danger');
     }
+  };
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    const validEmail = email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
+    );
+    validated(validEmail);
 
     const CreateUsers = () => {
       const data = new FormData();
@@ -153,7 +156,7 @@ export default function EditDetail() {
       data.append('ward_id', wardID);
       data.append('address', address);
 
-      CreateUser(data)
+      CreateData('admin', 'user', data)
         .then((result) => {
           if (result.success) {
             setSubmitSuccess(result.success);

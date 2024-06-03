@@ -5,7 +5,7 @@ import styles from '~/pages/ADMIN/Department/Department.module.scss';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import Button from '~/components/Button';
-import { EditData } from '~/api/General/HandleData';
+import { DeleteData, EditData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -28,11 +28,12 @@ export default function ListDepartment({ handleDelete = () => {}, index, P_id, P
       [name]: value,
     });
   };
-  console.log(department);
-  const handleDeleteCat = (e) => {};
+  const handleDeleteDepartment = (e) => {
+    DeleteData('admin', 'department', e.target.dataset.id);
+  };
 
   const handleEditCat = (e) => {
-    EditData('admin', 'department', e.target.dataset.id);
+    EditData('admin', 'department', e.target.dataset.id, department);
   };
 
   /* handle render width tippy */
@@ -107,7 +108,7 @@ export default function ListDepartment({ handleDelete = () => {}, index, P_id, P
               <Button gradient_primary type="button" onClick={handleToggleEdit}>
                 Edit
               </Button>
-              <Button data-id={P_id} gradient_danger type="button" onClick={handleDeleteCat}>
+              <Button data-id={P_id} gradient_danger type="button" onClick={handleDeleteDepartment}>
                 Delete
               </Button>
             </div>

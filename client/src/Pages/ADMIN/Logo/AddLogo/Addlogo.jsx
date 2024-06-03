@@ -3,12 +3,11 @@ import { useRef, useState } from 'react';
 import WrapperMain from '~/layout/Component/WrapperMain';
 import styles from '~/pages/ADMIN/Logo/logo.module.scss';
 import Button from '~/components/Button';
-import config from '~/config';
 import FormImage from '~/layout/Component/FormGroup/FormImage';
 import { FormSearch } from '~/layout/Component/FormSearch';
-import CreateLogo from '~/api/Logo/CreateLogo';
 import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
 import MessageDanger from '~/layout/Component/Message/MessageDanger';
+import { CreateData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -34,16 +33,19 @@ export default function AddLogo() {
       image: value,
     });
   };
-  const handleCreateLogo = (e) => {
-    e.preventDefault();
+  const validated = () => {
     if (Logo.name === '') {
       nameRef.current.classList.add('border_danger');
     } else {
       nameRef.current.classList.remove('border_danger');
     }
+  };
+  const handleCreateLogo = (e) => {
+    e.preventDefault();
+    validated();
     if (Logo.image && Logo.name) {
       setMessageError('');
-      CreateLogo(Logo)
+      CreateData('admin', 'logo', Logo)
         .then((result) => {
           if (result.success) {
             setMessageSuccess(result.success);

@@ -6,11 +6,11 @@ import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
 import config from '~/config';
 import { FormSearch } from '~/layout/Component/FormSearch';
-import GetUser from '~/api/User/GetUser';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
 import ListUser from './ListUser';
 import Location from '~/layout/Component/Location';
+import { GetData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -36,7 +36,7 @@ export default function AllUser() {
 
   /* get data table  */
   useEffect(() => {
-    GetUser({
+    GetData('admin', 'user', {
       country: countryID,
       city: cityID,
       district: districtID,

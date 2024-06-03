@@ -12,7 +12,7 @@ class Role extends Model
     protected $fillable = [
         'name',
         'status',
-        'description',
+        'descriptions',
     ];
     public function admins(){
         return $this->hasMany(Admin::class,'role_id','id');

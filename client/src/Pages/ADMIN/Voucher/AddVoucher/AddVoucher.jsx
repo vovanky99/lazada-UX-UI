@@ -8,8 +8,8 @@ import { FormDate } from '~/layout/Component/FormGroup/FormDate';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import Button from '~/components/Button';
 import MessageDanger from '~/layout/Component/Message/MessageDanger';
-import CreateVoucher from '~/api/Voucher/CreateVoucher';
 import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
+import { CreateData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -50,53 +50,51 @@ export default function AddVoucher() {
       });
     }
   };
+  const validated = () => {
+    if (voucher.name === '') {
+      nameRef.current.classList.add('border_danger');
+    } else {
+      nameRef.current.classList.remove('border_danger');
+    }
+    // if (voucher.category_id === '') {
+    //   catRef.current.classList.add('border_danger');
+    // } else {
+    //   catRef.current.classList.remove('border_danger');
+    // }
+    if (voucher.code === '') {
+      codeRef.current.classList.add('border_danger');
+    } else {
+      codeRef.current.classList.remove('border_danger');
+    }
+    if (voucher.descriptions === '') {
+      descriptionsRef.current.classList.add('border_danger');
+    } else {
+      descriptionsRef.current.classList.remove('border_danger');
+    }
+    if (voucher.end_day === '') {
+      EndDayRef.current.classList.add('border_danger');
+    } else {
+      EndDayRef.current.classList.remove('border_danger');
+    }
+    // if (voucher.quantity === '') {
+    //   quantityRef.current.classList.add('border_danger');
+    // } else {
+    //   quantityRef.current.classList.remove('border_danger');
+    // }
+    if (voucher.start_day === '') {
+      startDayRef.current.classList.add('border_danger');
+    } else {
+      startDayRef.current.classList.remove('border_danger');
+    }
+    if (voucher.percents === '') {
+      percentsRef.current.classList.add('border_danger');
+    } else {
+      percentsRef.current.classList.remove('border_danger');
+    }
+  };
   const handleSubmitCreateVoucher = (e) => {
     e.preventDefault();
-
-    /* valid voucher */
-    const validVoucher = () => {
-      if (voucher.name === '') {
-        nameRef.current.classList.add('border_danger');
-      } else {
-        nameRef.current.classList.remove('border_danger');
-      }
-      // if (voucher.category_id === '') {
-      //   catRef.current.classList.add('border_danger');
-      // } else {
-      //   catRef.current.classList.remove('border_danger');
-      // }
-      if (voucher.code === '') {
-        codeRef.current.classList.add('border_danger');
-      } else {
-        codeRef.current.classList.remove('border_danger');
-      }
-      if (voucher.descriptions === '') {
-        descriptionsRef.current.classList.add('border_danger');
-      } else {
-        descriptionsRef.current.classList.remove('border_danger');
-      }
-      if (voucher.end_day === '') {
-        EndDayRef.current.classList.add('border_danger');
-      } else {
-        EndDayRef.current.classList.remove('border_danger');
-      }
-      // if (voucher.quantity === '') {
-      //   quantityRef.current.classList.add('border_danger');
-      // } else {
-      //   quantityRef.current.classList.remove('border_danger');
-      // }
-      if (voucher.start_day === '') {
-        startDayRef.current.classList.add('border_danger');
-      } else {
-        startDayRef.current.classList.remove('border_danger');
-      }
-      if (voucher.percents === '') {
-        percentsRef.current.classList.add('border_danger');
-      } else {
-        percentsRef.current.classList.remove('border_danger');
-      }
-    };
-    validVoucher();
+    validated();
     if (
       voucher.name &&
       voucher.code &&
@@ -105,7 +103,7 @@ export default function AddVoucher() {
       voucher.start_day &&
       voucher.percents
     ) {
-      CreateVoucher(voucher)
+      CreateData('admin', 'voucher', voucher)
         .then((result) => {
           if (result.success) {
             setMessageSuccess(result.success);

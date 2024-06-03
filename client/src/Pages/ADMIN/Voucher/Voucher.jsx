@@ -6,12 +6,11 @@ import { useEffect, useRef, useState } from 'react';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import ListVoucher from './ListVoucher';
-import AddVoucher from './AddVoucher';
 import Category from '~/layout/Component/Category';
-import GetVoucher from '~/api/Voucher/GetVoucher';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
 import config from '~/config';
 import Button from '~/components/Button';
+import { GetData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -49,7 +48,7 @@ export default function Voucher() {
 
   /* get all for Data tbale */
   useEffect(() => {
-    GetVoucher({
+    GetData('admin', 'voucher', {
       name: filterVoucher.name,
       status: filterVoucher.status,
       category_id: filterVoucher.category_id,
@@ -68,7 +67,7 @@ export default function Voucher() {
         title="All Voucher"
         BtnAddRender={
           <>
-            <Button className={cx('btn_add_cat')} to={`${config.adminRoutes.AddVoucher}`} gradient_primary>
+            <Button className={cx('btn_add_voucher')} to={`${config.adminRoutes.AddVoucher}`} gradient_primary>
               Add Voucher
             </Button>
           </>

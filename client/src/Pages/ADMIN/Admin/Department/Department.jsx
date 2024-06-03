@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
-import GetDepartment from '~/api/Department/GetDepartment';
+import { GetData } from '~/api/General/HandleData';
 import { FormSearch } from '~/layout/Component/FormSearch';
 
 const Department = forwardRef(function Department(
@@ -29,7 +29,7 @@ const Department = forwardRef(function Department(
 
   /* get data */
   useEffect(() => {
-    GetDepartment(searchValue)
+    GetData('admin', 'department', { name: searchValue })
       .then((result) => {
         setData(result);
       })

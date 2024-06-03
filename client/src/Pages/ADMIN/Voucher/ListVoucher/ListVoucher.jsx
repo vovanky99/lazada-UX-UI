@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from '../Voucher.module.scss';
 import Button from '~/components/Button';
-import DeleteVoucher from '~/api/Voucher/DeleteVoucher';
+import { DeleteData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -21,7 +21,7 @@ export default function ListVoucher({
 }) {
   //delete cat
   const handleDeleteVoucher = (e) => {
-    DeleteVoucher(e.target.dataset.id)
+    DeleteData('admin', 'voucher', e.target.dataset.id)
       .then((result) => {
         handleDelete(1);
       })

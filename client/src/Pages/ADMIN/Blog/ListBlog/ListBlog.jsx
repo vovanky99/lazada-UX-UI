@@ -2,14 +2,14 @@ import classNames from 'classnames/bind';
 import styles from '../Blog.module.scss';
 import Button from '~/components/Button';
 import Images from '~/components/Images';
-import DeleteBlog from '~/api/Blog/DeleteBlog';
+import { DeleteData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
 export default function ListBlog({ handleDelete = () => {}, P_id, P_title, P_cat, P_img, P_descriptions, P_status }) {
   //delete cat
   const handleDeleteBlogs = (e) => {
-    DeleteBlog(e.target.dataset.id)
+    DeleteData('admin', 'blogs', e.target.dataset.id)
       .then((result) => {
         handleDelete(1);
       })

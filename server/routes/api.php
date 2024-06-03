@@ -93,7 +93,11 @@ Route::prefix('/admin')->group(function(){
         });
         // Role Controller
         Route::controller(RoleController::class)->group(function(){
-            Route::get('/get-role','getRole');
+            Route::get('/get-role','index');
+            Route::post('/create-role','store');
+            Route::get('/show-role/{id}','show');
+            Route::patch('/edit-role/{id}','update');
+            Route::delete('/delete-role/{id}','delete');
         });
         // Department Controller
         Route::controller(DepartmentController::class)->group(function(){
@@ -103,6 +107,7 @@ Route::prefix('/admin')->group(function(){
         });
         /* Category public */
         Route::controller(CategoriesController::class)->group(function(){
+            Route::get('/get-category','getCategory');
             Route::post('/create-category','store');
             Route::patch('/edit-category/{id}','update');
             Route::delete('/delete-category/{id}','delete');
@@ -129,9 +134,10 @@ Route::prefix('/admin')->group(function(){
             Route::post('/create-user','store');
             Route::get('/show-user/{id}','show');
             Route::patch('/edit-user/{id}','update');
-            Route::get('/delete-user','delete');
+            Route::delete('/delete-user/{id}','delete');
         });
         Route::controller(VoucherController::class)->group(function(){
+            Route::get('/get-voucher','index');
             Route::post('/create-voucher','store');
             Route::get('/show-voucher/{id}','show');
             Route::patch('/edit-voucher/{id}','update');
@@ -177,17 +183,9 @@ Route::controller(LocationController::class)->group(function(){
     Route::get('/get-ward','getWard');
     Route::get('/get-search-location','getSearchLocation');
 });
-
-/* Category public */
 Route::controller(CategoriesController::class)->group(function(){
-    Route::get('/get-category','getCategory');
+    
 });
-
-/* voucher public */
-Route::controller(VoucherController::class)->group(function(){
-    Route::get('/get-voucher','index');
-});
-
 
 /* check */
 Route::controller(CheckController::class)->group(function(){
@@ -196,6 +194,7 @@ Route::controller(CheckController::class)->group(function(){
     Route::get('/check-phone','Checkphone');
 });
 
+/* get logo */
 Route::controller(LogoController::class)->group(function(){
     Route::get('/get-web-logo','getLogo');
 });

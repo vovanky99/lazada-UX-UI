@@ -43,6 +43,8 @@ import Logo from '~/pages/ADMIN/Logo';
 import AddLogo from '~/pages/ADMIN/Logo/AddLogo';
 import AddManu from '~/pages/ADMIN/Manufacturer/AddManu';
 import EditManu from '~/pages/ADMIN/Manufacturer/Editmanu/EditManu';
+import AllProduct from '~/pages/ADMIN/Product/AllProduct';
+import EditProduct from '~/pages/ADMIN/Product/EditProduct';
 
 const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages },
@@ -195,6 +197,16 @@ const AdminRoutes = [
     path: config.adminRoutes.AddLogo,
     components: AddLogo,
     breadcrumbName: 'Add Logo',
+  },
+  {
+    path: config.adminRoutes.AllProduct,
+    components: AllProduct,
+    breadcrumbName: 'All Product',
+  },
+  {
+    path: config.adminRoutes.EditProduct,
+    components: EditProduct,
+    breadcrumbName: 'Edit Product',
   },
 ];
 

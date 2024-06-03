@@ -3,12 +3,12 @@ import classNames from 'classnames/bind';
 import styles from '../User.module.scss';
 import Images from '~/components/Images';
 import Button from '~/components/Button';
-import DeleteUser from '~/api/User/DeleteUser';
+import { DeleteData } from '~/api/General/HandleData';
 const cx = classNames.bind(styles);
 
 export default function ListUser({ data }, handleDeleteSuccess = () => {}) {
   const handleDeleteUser = (e) => {
-    DeleteUser(e.target.dataset.id)
+    DeleteData('admin', 'user', e.target.dataset.id)
       .then((result) => {
         if (result.success) {
           handleDeleteSuccess(1);

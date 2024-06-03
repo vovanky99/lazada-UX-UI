@@ -8,8 +8,7 @@ import config from '~/config';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import Images from '~/components/Images';
-import getManu from '~/api/Manufacturer/GetManu';
-import DeleteManu from '~/api/Manufacturer/DeleteManu';
+import { DeleteData, GetData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -36,7 +35,7 @@ export default function Manufacturer() {
   };
 
   useEffect(() => {
-    getManu(filterManu)
+    GetData('admin', 'manu', filterManu)
       .then((result) => {
         setDataTable(result);
       })
@@ -44,7 +43,7 @@ export default function Manufacturer() {
   }, [filterManu]);
 
   const handleDeleteManu = (e) => {
-    DeleteManu(e.target.dataset.id)
+    DeleteData('admin', 'manu', e.target.dataset.id)
       .then((result) => {})
       .catch((e) => console.log(e));
   };
@@ -53,7 +52,7 @@ export default function Manufacturer() {
       <WrapperMain
         title="Manufacturer"
         BtnAddRender={
-          <Button type="button" to={config.adminRoutes.AddManufacturer} gradient_primary>
+          <Button className={cx('btn_add_manu')} type="button" to={config.adminRoutes.AddManufacturer} gradient_primary>
             Add Manufacturer
           </Button>
         }

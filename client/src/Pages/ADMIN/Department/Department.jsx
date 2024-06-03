@@ -1,12 +1,11 @@
 import classNames from 'classnames/bind';
-import Tippy from '@tippyjs/react/headless';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from '~/pages/ADMIN/Department/Department.module.scss';
 import ListDepartment from '~/pages/ADMIN/Department/ListDepartment';
 import WrapperMain from '~/layout/Component/WrapperMain';
-import GetDepartment from '~/api/Department/GetDepartment';
 import { FormSearch } from '~/layout/Component/FormSearch';
+import { GetData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -15,7 +14,7 @@ export default function Department() {
   const [name, setName] = useState(null);
 
   useEffect(() => {
-    GetDepartment(name)
+    GetData('admin', 'department', name)
       .then((result) => setDataTable(result))
       .catch((e) => console.log(e));
   }, [name]);

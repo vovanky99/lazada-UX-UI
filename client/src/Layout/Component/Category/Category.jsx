@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { FormSearch } from '../FormSearch';
-import GetCategory from '~/api/Category/GetCategory';
+import { GetData } from '~/api/General/HandleData';
 
 const Category = forwardRef(function Category(
   {
@@ -31,7 +31,7 @@ const Category = forwardRef(function Category(
 
   /* get data */
   useEffect(() => {
-    GetCategory({ value: searchValue })
+    GetData('admin', 'category', { value: searchValue })
       .then((result) => {
         setData(result);
       })

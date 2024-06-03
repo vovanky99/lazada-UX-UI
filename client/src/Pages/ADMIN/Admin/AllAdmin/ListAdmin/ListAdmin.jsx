@@ -1,15 +1,14 @@
 import classNames from 'classnames/bind';
 import styles from '../../Admin.module.scss';
 import Images from '~/components/Images';
-import config from '~/config';
 import Button from '~/components/Button';
-import DeleteAdmin from '~/api/Admin/DeleteAdmin';
+import { DeleteData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
 export default function ListAdmin({ data }) {
   const handleDeleteAdmin = (e) => {
-    DeleteAdmin(e.target.datatset.id)
+    DeleteData('admin', 'admin', e.target.datatset.id)
       .then()
       .catch((e) => console.log(e));
   };

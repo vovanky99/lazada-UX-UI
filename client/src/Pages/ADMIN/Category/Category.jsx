@@ -5,10 +5,9 @@ import Button from '~/components/Button';
 import Tippy from '@tippyjs/react/headless';
 import { useEffect, useRef, useState } from 'react';
 import { FormSearch } from '~/layout/Component/FormSearch';
-import GetCategory from '~/api/Category/GetCategory';
-import CreateCategory from '~/api/Category/CreateCategory';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import ListCat from './ListCat';
+import { CreateData, GetData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
@@ -57,7 +56,7 @@ export default function AllCategory() {
       data.append('name', title);
       data.append('parent_id', catParentID);
       setCreateSuccess('');
-      CreateCategory(data)
+      CreateData('admin', 'category', data)
         .then((result) => {
           if (result.success) {
             setCreateSuccess(result.success);
@@ -75,7 +74,7 @@ export default function AllCategory() {
 
   /* get cat for add Cat */
   useEffect(() => {
-    GetCategory({ value: searchTitle })
+    GetData('admin', 'category', { value: searchTitle })
       .then((result) => {
         setCatData(result);
       })
@@ -84,16 +83,16 @@ export default function AllCategory() {
 
   /* get cat for filter data */
   useEffect(() => {
-    GetCategory({ value: searchParent })
+    GetData('admin', 'category', { value: searchParent })
       .then((result) => {
         setParentData(result);
       })
       .catch((e) => console.log(e));
   }, [searchParent]);
 
-  /* get all for Data tbale */
+  /* get all for Data table */
   useEffect(() => {
-    GetCategory({ value: nameFilter, status: status, parent_id: parentID })
+    GetData('admin', 'category', { value: nameFilter, status: status, parent_id: parentID })
       .then((result) => {
         setDataTable(result);
       })

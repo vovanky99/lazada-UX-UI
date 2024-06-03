@@ -3,7 +3,7 @@ import styles from '../Product.module.scss';
 
 const cx = classNames.bind(styles);
 
-export default function AllShop() {
+export default function AllProduct() {
   return (
     <>
       <section>All Shop</section>
