@@ -4,20 +4,10 @@ import styles from '../User.module.scss';
 import Images from '~/components/Images';
 import Button from '~/components/Button';
 import { DeleteData } from '~/api/General/HandleData';
+import TollsEdit from '~/layout/Component/TollsEdit';
 const cx = classNames.bind(styles);
 
-export default function ListUser({ data }, handleDeleteSuccess = () => {}) {
-  const handleDeleteUser = (e) => {
-    DeleteData('admin', 'user', e.target.dataset.id)
-      .then((result) => {
-        if (result.success) {
-          handleDeleteSuccess(1);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+export default function ListUser({ data }, handleDelete = () => {}) {
   return (
     <>
       {data
@@ -36,14 +26,7 @@ export default function ListUser({ data }, handleDeleteSuccess = () => {}) {
               <td>{d.phone_number}</td>
               <td>{d.birthday}</td>
               <td>
-                <div className={cx('toll-edit', 'd-flex flex-row justify-content-center flex-wrap')}>
-                  <Button gradient_primary type="button" to={`/admin/edit-user/${d.id}`}>
-                    Edit
-                  </Button>
-                  <Button data-id={d.id} gradient_danger type="button" onClick={handleDeleteUser}>
-                    Delete
-                  </Button>
-                </div>
+                <TollsEdit type="user" namePath="user" data={d} handleDelete={handleDelete} />
               </td>
             </tr>
           ))

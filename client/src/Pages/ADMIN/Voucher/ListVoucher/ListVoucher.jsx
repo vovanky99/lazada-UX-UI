@@ -1,13 +1,13 @@
 import classNames from 'classnames/bind';
 import styles from '../Voucher.module.scss';
-import Button from '~/components/Button';
-import { DeleteData } from '~/api/General/HandleData';
+import TollsEdit from '~/layout/Component/TollsEdit';
 
 const cx = classNames.bind(styles);
 
 export default function ListVoucher({
   handleDelete = () => {},
   P_id,
+  data,
   P_name,
   P_percents,
   P_status,
@@ -19,15 +19,6 @@ export default function ListVoucher({
   P_cat_name,
   P_quantity,
 }) {
-  //delete cat
-  const handleDeleteVoucher = (e) => {
-    DeleteData('admin', 'voucher', e.target.dataset.id)
-      .then((result) => {
-        handleDelete(1);
-      })
-      .catch((e) => console.log(e));
-  };
-
   return (
     <>
       <tr className={cx(`tbody-element`)}>
@@ -40,14 +31,7 @@ export default function ListVoucher({
         <td>{P_start_day}</td>
         <td>{P_end_day}</td>
         <td>
-          <div className={cx('toll-edit', 'd-flex flex-row justify-content-center flex-wrap')}>
-            <Button gradient_primary type="button" to={`/admin/edit-voucher/${P_id}`}>
-              Edit
-            </Button>
-            <Button data-id={P_id} gradient_danger type="button" onClick={handleDeleteVoucher}>
-              Delete
-            </Button>
-          </div>
+          <TollsEdit type="voucher" namePath="voucher" data={data} />
         </td>
       </tr>
     </>

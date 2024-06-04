@@ -10,15 +10,9 @@
     > div {
       gap: 10px;
     }
-  }
-}
-
-.add-city,
-.add-country,
-.add-district,
-.add-ward {
-  > button {
-    padding: 5px 20px;
+    button {
+      margin-top: 10px;
+    }
   }
 }
 .message {

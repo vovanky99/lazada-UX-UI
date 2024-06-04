@@ -19,7 +19,7 @@ export const FormDate = forwardRef(function Form(
 
   useEffect(() => {
     handleSetValue(value);
-  });
+  }, [value]);
   return (
     <div className={cx('form-date', containerClass || 'form-group flex-grow-1')}>
       <label className={cx('form-label text-capitalize')}>{title}</label>

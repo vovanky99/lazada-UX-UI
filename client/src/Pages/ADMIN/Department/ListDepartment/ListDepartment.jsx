@@ -6,11 +6,15 @@ import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import Button from '~/components/Button';
 import { DeleteData, EditData } from '~/api/General/HandleData';
+import MessageSuccess from '~/layout/Component/Message/MessageSuccess';
+import MessageDanger from '~/layout/Component/Message/MessageDanger';
 
 const cx = classNames.bind(styles);
 
 export default function ListDepartment({ handleDelete = () => {}, index, P_id, P_name, P_status }) {
   const [showEdit, setShowEdit] = useState(false);
+  const [editSuccess, setEditSuccess] = useState('');
+  const [editError, setEditError] = useState('');
   const [department, setDeparment] = useState({
     status: P_status || '',
     name: P_name || '',
@@ -25,15 +29,32 @@ export default function ListDepartment({ handleDelete = () => {}, index, P_id, P
   const handleOnchange = (e) => {
     const { name, value } = e.target;
     setDeparment({
+      ...department,
       [name]: value,
     });
   };
   const handleDeleteDepartment = (e) => {
-    DeleteData('admin', 'department', e.target.dataset.id);
+    DeleteData('admin', 'department', e.target.dataset.id)
+      .then((result) => {
+        if (result.success) {
+          handleDelete(1);
+        }
+      })
+      .catch((e) => console.log(e));
   };
 
   const handleEditCat = (e) => {
-    EditData('admin', 'department', e.target.dataset.id, department);
+    EditData('admin', 'department', e.target.dataset.id, department)
+      .then((result) => {
+        if (result.success) {
+          setEditError('');
+          setEditSuccess(result.success);
+        } else {
+          setEditSuccess('');
+          setEditError('Update failed!');
+        }
+      })
+      .catch((e) => console.log(e));
   };
 
   /* handle render width tippy */
@@ -91,7 +112,9 @@ export default function ListDepartment({ handleDelete = () => {}, index, P_id, P
                 />
               </div>
               <div className="d-flex flex-row justify-content-center">
-                <Button gradient_primary type="submit">
+                <MessageSuccess message={editSuccess} />
+                <MessageDanger message={editError} />
+                <Button gradient_primary small type="submit">
                   Edit
                 </Button>
               </div>

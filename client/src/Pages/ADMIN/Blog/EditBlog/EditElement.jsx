@@ -63,9 +63,8 @@ export default function EditElement({ data }) {
     };
     setCategoryID();
   }, [data]);
-  /*handle submit edit blog */
-  const handleEditBlog = (e) => {
-    e.preventDefault();
+
+  const validate = () => {
     if (editBlog.content.length < 300) {
       contentRef.current.editor.container.classList.add('border_danger');
     } else {
@@ -81,6 +80,11 @@ export default function EditElement({ data }) {
     } else {
       titleRef.current.classList.remove('border_danger');
     }
+  };
+  /*handle submit edit blog */
+  const handleEditBlog = (e) => {
+    e.preventDefault();
+    validate();
     if (
       editBlog.content.length > 300 &&
       editBlog.descriptions.length > 100 &&
@@ -155,18 +159,8 @@ export default function EditElement({ data }) {
                   'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
                   'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
                   'forecolor backcolor emoticons | help',
-                // menu: {
-                //   favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' },
-                // },
+
                 menubar: 'favs file edit view insert format tools table help',
-                // tinycomments_mode: 'embedded',
-                // tinycomments_author: 'Life Circle',
-                // mergetags_list: [
-                //   { value: 'First.Name', title: 'First Name' },
-                //   { value: 'Email', title: 'Email' },
-                // ],
-                // ai_request: (request, respondWith) =>
-                //   respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
                 automatic_uploads: true,
                 images_reuse_filename: true,
                 file_picker_callback: UploadTinyMCE,

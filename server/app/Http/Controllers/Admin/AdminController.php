@@ -18,8 +18,8 @@ class AdminController extends Controller{
     //update profile
     public function UpdateProfile(Request $request){
         $name = $request->name;
-        $address = $request->address;
-        $phone = $request->phone;
+        $address = $request->address_live;
+        $phone = $request->phone_number;
         $avatar = $request->avatar;
         $ward_id = $request->ward_id;
         try{
@@ -52,12 +52,12 @@ class AdminController extends Controller{
         $username = $request->username;
         $password = $request->password;
         $avatar = $request->avatar;
-        $phone = $request->phone;
+        $phone = $request->phone_number;
         $gender = $request->gender;
         $birthday = $request->birthday;
-        $citizen_card = $request->citizen_card;
+        $citizen_card = $request->citizen_identification_card;
         $born_ward_id = $request->born_ward_id;
-        $live_ward_id = $request->live_ward_id;
+        $live_ward_id = $request->live_at_ward_id;
         $address_born = $request->address_born;
         $address_live = $request->address_live;
         $role_id = $request->role_id;
@@ -128,20 +128,20 @@ class AdminController extends Controller{
     public function getAllAdmin(Request $request){
         $name = $request->get('name');
         $birthday = $request->get('birthday');
-        $role = $request->get('role');
-        $department = $request->get('department');
+        $role = $request->get('role_id');
+        $department = $request->get('department_id');
         $gender = $request->get('gender');
         $status = $request->get('status');
-        $workAt = $request->get('work_at');
+        $workAt = $request->get('work_start_date');
         $leaveOffWork = $request->get('leave_off_work');
         $bornCountry = $request->get('born_country');
         $bornCity = $request->get('born_city');
         $bornDistrict = $request->get('born_district');
         $bornWard = $request->get('born_ward');
-        $LiveAtCountry = $request->get('live_at_country');
-        $LiveAtCity = $request->get('live_at_city');
-        $LiveAtDistrict = $request->get('live_at_district');
-        $LiveAtWard = $request->get('live_at_ward');
+        $LiveAtCountry = $request->get('live_country');
+        $LiveAtCity = $request->get('live_city');
+        $LiveAtDistrict = $request->get('live_district');
+        $LiveAtWard = $request->get('live_ward');
 
         $admins = DB::table('admin')->select('admin.*','role.name as role_name','city_born.name as city_born_name','country_born.name as country_born_name','city_live.name as city_live_name','country_live.name as country_live_name','department.name as department_name')->join('role','admin.role_id','=','role.id')->join('address as address_born','address_born.id','=','admin.permanent_residennce_registration')->join('ward as ward_born','ward_born.id','address_born.ward_id')->join('district as district_born','district_born.id','ward_born.district_id')->join('city as city_born','city_born.id','district_born.city_id')->join('country as country_born','country_born.id','city_born.country_id')->join('address as address_live','address_live.id','=','admin.temporary_registration')->join('ward as ward_live','ward_live.id','address_live.ward_id')->join('district as district_live','district_live.id','ward_live.district_id')->join('city as city_live','city_live.id','district_live.city_id')->join('country as country_live','country_live.id','city_live.country_id')->leftJoin('department','department.id','=','admin.department_id')->where('admin.name','like','%'.$name.'%');
         if($birthday ){
@@ -214,19 +214,16 @@ class AdminController extends Controller{
         $password = $request->password;
         $status = $request->status;
         $avatar = $request->avatar;
-        $phone = $request->phone;
+        $phone = $request->phone_number;
         $gender = $request->gender;
         $birthday = $request->birthday;
-        $citizen_card = $request->citizen_card;
+        $citizen_card = $request->citizen_identification_card;
         $born_ward_id = $request->born_ward_id;
         $live_ward_id = $request->live_ward_id;
         $address_born = $request->address_born;
         $address_live = $request->address_live;
         $role_id = $request->role_id;
         $department_id = $request->department_id;
-        $validator = $request->validate([
-            'password'=>['required','min:8','max:16'],
-        ]);
         $adminUp = Admin::findOrFail($id);              
         $admin = DB::table('admin')->select('admin.*','address_born.street_address as address_born_street','address_live.street_address as address_live_street','address_born.ward_id as address_born_ward','address_live.ward_id as address_live_ward')->join('address as address_born','admin.permanent_residennce_registration','=','address_born.id')->join('address as address_live','admin.temporary_registration','=','address_live.id')->where('admin.id',$id)->first();
         

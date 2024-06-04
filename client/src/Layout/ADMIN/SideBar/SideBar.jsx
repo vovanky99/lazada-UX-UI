@@ -8,6 +8,7 @@ import {
   faBuilding,
   faCartShopping,
   faFlag,
+  faGauge,
   faGlobe,
   faHeart,
   faIndustry,
@@ -18,7 +19,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import config from '~/config';
-import Icon from '~/components/Icon';
 import { faCriticalRole, faProductHunt } from '@fortawesome/free-brands-svg-icons';
 
 const cx = classNames.bind(styles);
@@ -28,6 +28,14 @@ export default function SideBar() {
   return (
     <>
       <aside id="sidebar" className={cx('sidebar', 'd-flex flex-column ')}>
+        <NavLink
+          to={`/admin`}
+          className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between')}
+          end
+        >
+          <p className="text-capitalize">DashBoard</p>
+          <FontAwesomeIcon icon={faGauge} />
+        </NavLink>
         <NavLink
           to={config.adminRoutes.Logo}
           className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between ')}

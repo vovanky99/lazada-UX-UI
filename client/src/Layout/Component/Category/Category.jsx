@@ -13,6 +13,7 @@ const Category = forwardRef(function Category(
     handleSetID = () => {},
     handleOnchange = () => {},
     handleSetName = () => {},
+    handleOnclick = () => {},
     name,
   },
   ref,
@@ -24,10 +25,10 @@ const Category = forwardRef(function Category(
   // pass data for parent
   useEffect(() => {
     handleSetID(value);
-  });
+  }, [value]);
   useEffect(() => {
     handleSetName(searchValue);
-  });
+  }, [searchValue]);
 
   /* get data */
   useEffect(() => {
@@ -51,6 +52,7 @@ const Category = forwardRef(function Category(
         classTitle={classTitle}
         useNull={true}
         data={Data}
+        handleOnclick={handleOnclick}
         handleOnchange={handleOnchange}
         searchValue={setSearchValue}
         handleSetID={setValue}

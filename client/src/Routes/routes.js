@@ -26,7 +26,6 @@ import LocationAdmin from '~/pages/ADMIN/Location';
 import AddAdmin from '~/pages/ADMIN/Admin/AddAdmin';
 import Category from '~/pages/ADMIN/Category';
 import AllUser from '~/pages/ADMIN/User/AllUser';
-import AddUser from '~/pages/ADMIN/User/AddUser';
 import EditUser from '~/pages/ADMIN/User/EditUser';
 import Voucher from '~/pages/ADMIN/Voucher';
 import Role from '~/pages/ADMIN/Role';
@@ -112,11 +111,6 @@ const AdminRoutes = [
     path: config.adminRoutes.AllUser,
     components: AllUser,
     breadcrumbName: 'All User',
-  },
-  {
-    path: config.adminRoutes.AddUser,
-    components: AddUser,
-    breadcrumbName: 'Add User',
   },
   {
     path: config.adminRoutes.EditUser,

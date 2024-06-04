@@ -31,7 +31,7 @@ export const FormSelect = forwardRef(function Form(
   const [value, setValue] = useState(defaultValue || '');
   useEffect(() => {
     handleSetValue(value);
-  });
+  }, [value]);
   return (
     <div className={cx('form-select', containerClass || ' form-group flex-grow-1')}>
       <label className={cx('form-label text-capitalize')}>{title}</label>

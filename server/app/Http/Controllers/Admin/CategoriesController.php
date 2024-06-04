@@ -11,26 +11,6 @@ use Exception;
 
 class CategoriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
-        $name = $request->name;
-        $parent_id = $request->parent_id;
-        $status = $request->status;
-        $cat = DB::table('categories')->where('name','like',$name.'%');
-        if($parent_id){
-            $cat->where('parent_id',$parent_id);
-        }
-        if($status){
-            $cat->where('status',$status);
-        }
-
-       $cat->get();
-
-       return response()->json($cat);
-    }
 
     /* create category */
     public function store(Request $request){
@@ -218,7 +198,7 @@ class CategoriesController extends Controller
     }
 
     /* get category */
-    public function getCategory(Request $request){
+    public function index(Request $request){
         $name = $request->get('name');
         $parent_id = $request->get('parent_id');
         $status = $request->get('status');

@@ -86,7 +86,7 @@ Route::prefix('/admin')->group(function(){
         Route::controller(AdminController::class)->group(function(){ 
             Route::post('/update-profile','UpdateProfile');
             Route::post('/create-admin','create');
-            Route::get('/get-all-admin','getAllAdmin');
+            Route::get('/get-admin','getAllAdmin');
             Route::get('/show-admin/{id}','showAdmin');
             Route::patch('/edit-admin/{id}','editAdmin');
             Route::delete('/delete-admin','deleteAdmin');
@@ -107,7 +107,7 @@ Route::prefix('/admin')->group(function(){
         });
         /* Category public */
         Route::controller(CategoriesController::class)->group(function(){
-            Route::get('/get-category','getCategory');
+            Route::get('/get-category','index');
             Route::post('/create-category','store');
             Route::patch('/edit-category/{id}','update');
             Route::delete('/delete-category/{id}','delete');

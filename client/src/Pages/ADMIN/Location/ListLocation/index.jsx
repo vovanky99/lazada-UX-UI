@@ -2,10 +2,9 @@ import classNames from 'classnames/bind';
 import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 
-import styles from '../Location.module.scss';
-import { FormSearch } from '~/layout/Component/FormSearch';
-import EditLocation from './EditLocation';
-import GetLocation, { GetAllLocation } from '~/api/Location/GetLocation';
+import styles from '~/pages/ADMIN/Location/Location.module.scss';
+import EditLocation from '~/pages/ADMIN/Location/ListLocation/EditLocation/index';
+import { GetAllLocation } from '~/api/Location/GetLocation';
 import Location from '~/layout/Component/Location';
 
 const cx = classNames.bind(styles);
@@ -89,7 +88,7 @@ export default function ListLocation({ reloadData }) {
             <th>Tolls</th>
           </tr>
         </thead>
-        <tbody>{dataTable ? renderDataTable(dataTable) : ''}</tbody>
+        <tbody>{dataTable ? renderDataTable(dataTable) : <></>}</tbody>
       </table>
     </>
   );

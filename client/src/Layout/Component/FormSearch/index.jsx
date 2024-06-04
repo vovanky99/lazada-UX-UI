@@ -29,6 +29,7 @@ export const FormSearch = forwardRef(function FormSearch(
     searchValue = () => {},
     handleOnchange = () => {},
     handleOnclick = () => {},
+    disabled = false,
   },
   ref,
 ) {
@@ -160,6 +161,7 @@ export const FormSearch = forwardRef(function FormSearch(
                 setSearch(e.target.value);
               }}
               data-id={ID}
+              disabled={disabled}
             />
           </Tippy>
         ) : (
@@ -169,6 +171,7 @@ export const FormSearch = forwardRef(function FormSearch(
             name={name}
             min={min}
             max={max}
+            disabled={disabled}
             className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
             placeholder={`Enter Select ${title}`}
             value={search}

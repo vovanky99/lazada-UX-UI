@@ -32,7 +32,6 @@ export const adminRoutes = {
   AddAdmin: '/admin/add-admin',
   AllUser: '/admin/user',
   EditUser: '/admin/edit-user/:id',
-  AddUser: '/admin/add-user',
   AllShop: '/admin/shop',
   EditShop: '/admin/edit-shop/:id',
   Location: '/admin/location',

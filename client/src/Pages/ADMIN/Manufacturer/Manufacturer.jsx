@@ -9,15 +9,21 @@ import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import Images from '~/components/Images';
 import { DeleteData, GetData } from '~/api/General/HandleData';
+import TollsEdit from '~/layout/Component/TollsEdit';
 
 const cx = classNames.bind(styles);
 
 export default function Manufacturer() {
   const [dataTable, setDataTable] = useState(null);
+  const [reloadData, setReloadData] = useState(1);
   const [filterManu, setFilterManu] = useState({
     name: '',
     status: '',
   });
+
+  const handleSetReload = (value) => {
+    setReloadData(reloadData + value);
+  };
 
   const handleSetname = (value) => {
     setFilterManu({
@@ -41,12 +47,6 @@ export default function Manufacturer() {
       })
       .catch((e) => console.log(e));
   }, [filterManu]);
-
-  const handleDeleteManu = (e) => {
-    DeleteData('admin', 'manu', e.target.dataset.id)
-      .then((result) => {})
-      .catch((e) => console.log(e));
-  };
   return (
     <>
       <WrapperMain
@@ -80,7 +80,7 @@ export default function Manufacturer() {
             <tbody>
               {dataTable ? (
                 dataTable.map((dt, index) => (
-                  <tr>
+                  <tr key={index}>
                     <td>{dt.name}</td>
                     <td>
                       <div className={cx('avatar')}>
@@ -90,14 +90,7 @@ export default function Manufacturer() {
                     <td>{dt.status === 1 ? 'Show' : 'Hide'}</td>
                     <td>{dt.descriptions}</td>
                     <td>
-                      <div className={cx('toll-edit', 'd-flex flex-row justify-content-center flex-wrap')}>
-                        <Button gradient_primary type="button" to={`/admin/edit-manufacturer/${dt.id}`}>
-                          Edit
-                        </Button>
-                        <Button data-id={dt.id} gradient_danger type="button" onClick={handleDeleteManu}>
-                          Delete
-                        </Button>
-                      </div>
+                      <TollsEdit data={dt} type="manu" namePath="manufacturer" handleDelete={handleSetReload} />
                     </td>
                   </tr>
                 ))

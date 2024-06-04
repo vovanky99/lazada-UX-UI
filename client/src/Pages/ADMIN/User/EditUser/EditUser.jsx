@@ -1,4 +1,4 @@
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { ShowData } from '~/api/General/HandleData';
@@ -6,7 +6,6 @@ import EditDetail from './EditDetail';
 
 export default function EditAdmin() {
   const param = useParams();
-  const location = useLocation();
 
   const [data, setData] = useState(null);
 

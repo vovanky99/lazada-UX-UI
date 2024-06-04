@@ -6,14 +6,15 @@ import { useEffect, useRef, useState } from 'react';
 import { EditData } from '~/api/General/HandleData';
 import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
-import CldUploadImg from '~/services/cloudinary/CldUploadImg';
-import Images from '~/components/Images';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import Location from '~/layout/Component/Location';
 import MessageDanger from '~/layout/Component/Message/MessageDanger';
+import FormImage from '~/layout/Component/FormGroup/FormImage';
+import CheckPhone from '~/api/Check/CheckPhone';
+import CheckEmail from '~/api/Check/CheckEmail';
 
 const cx = classNames.bind(styles);
 
@@ -30,143 +31,141 @@ export default function EditDetail({ data }) {
   const addressRef = useRef();
   const wardRef = useRef();
 
-  const [name, setName] = useState(data.name || '');
-  const [email, setEmail] = useState(data.email || '');
+  const [user, setUser] = useState({
+    name: data.name || '',
+    email: data.email || '',
+    password: '',
+    phone_number: data.phone_number || '',
+    avatar: data.avatar || '',
+    status: data.status || '',
+    gender: data.gender || '',
+    birthday: data?.birthday || '',
+    address_live: data.address?.street_address || '',
+    ward_id: data.address?.ward_id || '',
+  });
   const [checkEmail, setCheckEmail] = useState('');
   const [checkPhone, setCheckPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [avatar, setAvatar] = useState(data.avatar || '');
-  const [phone, setPhone] = useState(data.phone_number || '');
-  const [gender, setGender] = useState(data.gender || '');
-  const [status, setStatus] = useState(data.status || '');
-  const [birthday, setBirthDay] = useState(data?.birthday || '');
   const [countryID, setCountryID] = useState(data.address?.ward?.district?.city?.country?.id || '');
   const [cityID, setCityID] = useState(data.address?.ward?.district?.city?.id || '');
   const [districtID, setDistrictID] = useState(data.address?.ward?.district?.id || '');
-  const [wardID, setWardID] = useState(data.address?.ward_id || '');
-  const [address, setAddress] = useState(data.address?.street_address || '');
   const [submitError, setSubmitError] = useState('');
 
-  /* set data value */
-  const NameCountry = data.address?.ward?.district?.city?.country?.name || '';
-  const NameCity = data.address?.ward?.district?.city?.name || '';
-  const NameDistrict = data.address?.ward?.district?.name || '';
-  const NameWard = data.address?.ward?.name || '';
-  // handle click avatar
-  const handleSelectAvatar = (e) => {
-    const a = avatarRef.current;
-    a.click();
+  const handleSetAvatar = (value) => {
+    setUser({
+      ...user,
+      avatar: value,
+    });
+  };
+  const handleSetWardID = (value) => {
+    setUser({
+      ...user,
+      ward_id: value,
+    });
+  };
+  const handleSetGender = (value) => {
+    setUser({
+      ...user,
+      gender: value,
+    });
+  };
+  const handleSetStatus = (value) => {
+    setUser({
+      ...user,
+      status: value,
+    });
+  };
+  const handleSetBirthday = (value) => {
+    setUser({
+      ...user,
+      birthday: value,
+    });
   };
 
-  // handle upload file avatar
-  const uploadAvatar = (img) => {
-    let image = new FormData();
-    image.append('file', img);
-    CldUploadImg(image)
-      .then((result) => {
-        setAvatar(result.url);
-      })
-      .catch((e) => console.log(e));
+  const handleOnchange = (e) => {
+    const { name, value } = e.target;
+    setUser({
+      ...user,
+      [name]: value,
+    });
   };
-
-  // handle change avatar
-  const handleChangeAvatar = (e) => {
-    const files = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      uploadAvatar(files);
-    };
-    if (reader) {
-      reader.readAsDataURL(files);
-    }
-  };
-
-  const handleSubmitForm = (e) => {
-    e.preventDefault();
+  const validate = (valid) => {
     // valid Name
-    if (name === '' || name.length < 6) {
+    if (user.name.length < 6) {
       nameRef.current.classList.add('border_danger');
     } else {
       nameRef.current.classList.remove('border_danger');
     }
 
-    // valid email
-    const validEmail = email.match(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-    );
-    if (email === '' || !validEmail) {
+    if (user.email === '' || !valid) {
       emailRef.current.classList.add('border_danger');
     } else {
       emailRef.current.classList.remove('border_danger');
     }
 
     // valid Phone
-    if (phone === '') {
+    if (user.phone_number === '') {
       phoneRef.current.classList.add('border_danger');
     } else {
       phoneRef.current.classList.remove('border_danger');
     }
 
     // valid status
-    if (status === '') {
+    if (user.status === '') {
       statusRef.current.classList.add('border_danger');
     } else {
       statusRef.current.classList.remove('border_danger');
     }
 
     // valid gender
-    if (gender === '') {
+    if (user.gender === '') {
       genderRef.current.classList.add('border_danger');
     } else {
       genderRef.current.classList.remove('border_danger');
     }
 
     // valid Birthday
-    if (birthday === '') {
+    if (user.birthday === '') {
       birthdayRef.current.classList.add('border_danger');
     } else {
       birthdayRef.current.classList.remove('border_danger');
     }
 
     // valid  Ward
-    if (wardID === '') {
+    if (user.ward_id === '') {
       wardRef.current.classList.add('border_danger');
     } else {
       wardRef.current.classList.remove('border_danger');
     }
 
     // valid Address live
-    if (address === '') {
+    if (user.address_live === '') {
       addressRef.current.classList.add('border_danger');
     } else {
       addressRef.current.classList.remove('border_danger');
     }
-
+  };
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    // valid email
+    const validEmail = user.email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
+    );
+    validate(validEmail);
     if (
-      name.length >= 6 &&
-      phone.length === 10 &&
+      user.name.length >= 6 &&
+      user.phone_number.length === 10 &&
       checkPhone === '' &&
-      email &&
-      birthday &&
+      checkEmail === '' &&
+      user.email &&
+      user.birthday &&
       validEmail &&
-      status &&
-      gender &&
-      wardID &&
-      address
+      user.status &&
+      user.gender &&
+      user.ward_id &&
+      user.address_live
     ) {
       setSubmitError('');
-      EditData('admin', 'user', data.id, {
-        name: name,
-        email: email,
-        password: password,
-        status: status,
-        avatar: avatar,
-        phone: phone,
-        birthday: birthday,
-        ward_id: wardID,
-        address: address,
-        gender: gender,
-      })
+      EditData('admin', 'user', data.id, user)
         .then((result) => {
           if (result.success) {
             navigate(-1);
@@ -181,6 +180,30 @@ export default function EditDetail({ data }) {
     }
   };
 
+  useEffect(() => {
+    CheckPhone('admin', user.phone_number)
+      .then((result) => {
+        if (result.error) {
+          setCheckPhone(result.error);
+        } else {
+          setCheckPhone('');
+        }
+      })
+      .catch((e) => console.log(e));
+  }, [user.phone_number]);
+
+  useEffect(() => {
+    CheckEmail('admin', user.email)
+      .then((result) => {
+        if (result.error) {
+          setCheckEmail(result.error);
+        } else {
+          setCheckEmail('');
+        }
+      })
+      .catch((e) => console.log(e));
+  }, [user.email]);
+
   return (
     <>
       <WrapperMain title="Edit USer">
@@ -189,54 +212,64 @@ export default function EditDetail({ data }) {
           onSubmit={handleSubmitForm}
           noValidate
         >
-          <div className={cx('avatar', 'd-flex form-group  flex-column align-items-center')}>
-            <Button className={cx('select-avatar')} type="button" onClick={handleSelectAvatar} transparent>
-              <Images src={avatar} alt={avatar} />
-            </Button>
-            <input ref={avatarRef} type="file" onChange={handleChangeAvatar} accept="image/*" />
-            <label className="text-capitalize form-label">avatar</label>
-          </div>
+          <FormImage title="avatar" name="avatar" data={user.avatar} handleSetValue={handleSetAvatar} />
           <div className={cx('form-content', 'd-flex flex-row flex-wrap')}>
             <div className={cx('form-content_name')}>
-              <FormSearch ref={nameRef} title="full name" Value={name} useTippy={false} searchValue={setName} />
+              <FormSearch
+                ref={nameRef}
+                title="full name"
+                name="name"
+                Value={user.name}
+                useTippy={false}
+                handleOnchange={handleOnchange}
+              />
             </div>
             <div className={cx('form-content_email')}>
-              <FormSearch ref={emailRef} title="email" Value={email} useTippy={false} searchValue={setEmail} />
+              <FormSearch
+                ref={emailRef}
+                title="email"
+                name="email"
+                Value={user.email}
+                useTippy={false}
+                handleOnchange={handleOnchange}
+              />
             </div>
             <div className={cx('form-content_password')}>
               <FormSearch
                 ref={passwordRef}
-                Value={password}
+                Value={user.password}
+                name="password"
                 inputType="password"
                 title="password"
                 useTippy={false}
-                searchValue={setPassword}
+                handleOnchange={handleOnchange}
               />
             </div>
             <div className={cx('form-content_phone')}>
               <FormSearch
                 ref={phoneRef}
                 title="phone"
+                name="phone_number"
                 inputType="number"
-                Value={phone}
+                Value={user.phone_number}
                 useTippy={false}
-                searchValue={setPhone}
+                handleOnchange={handleOnchange}
               />
             </div>
             <div className={cx('form-content_gender')}>
-              <FormSelect ref={genderRef} title="gender" defaultValue={gender} handleSetValue={setGender} />
+              <FormSelect ref={genderRef} title="gender" defaultValue={user.gender} handleSetValue={handleSetGender} />
             </div>
             <div className={cx('form-content_status')}>
               <FormSelect
                 ref={statusRef}
                 title="status"
                 useStatus={true}
-                defaultValue={status}
-                handleSetValue={setStatus}
+                defaultValue={user.status}
+                handleSetValue={handleSetStatus}
               />
             </div>
             <div className={cx('form-content_birthday')}>
-              <FormDate ref={birthdayRef} title="birthday" data={birthday} handleSetValue={setBirthDay} />
+              <FormDate ref={birthdayRef} title="birthday" data={user.birthday} handleSetValue={handleSetBirthday} />
             </div>
           </div>
           <div className={cx('location', 'd-flex flex-row')}>
@@ -245,14 +278,16 @@ export default function EditDetail({ data }) {
               <div className={cx('born', 'form-group d-flex flex-row flex-wrap')}>
                 <Location
                   title="country"
+                  name="country_id"
                   ValueID={countryID}
-                  SearchValue={NameCountry}
+                  SearchValue={data.address?.ward?.district?.city?.country?.name || ''}
                   useLabel={false}
                   handleSetID={setCountryID}
                 />
                 <Location
                   title="city"
-                  SearchValue={NameCity}
+                  name="city_id"
+                  SearchValue={data.address?.ward?.district?.city?.name || ''}
                   foreignID={countryID}
                   ValueID={cityID}
                   useLabel={false}
@@ -260,7 +295,8 @@ export default function EditDetail({ data }) {
                 />
                 <Location
                   title="district"
-                  SearchValue={NameDistrict}
+                  name="district_id"
+                  SearchValue={data.address?.ward?.district?.name || ''}
                   foreignID={cityID}
                   ValueID={districtID}
                   useLabel={false}
@@ -268,20 +304,22 @@ export default function EditDetail({ data }) {
                 />
                 <Location
                   title="ward"
+                  name="ward_id"
                   ref={wardRef}
-                  ValueID={wardID}
-                  SearchValue={NameWard}
+                  ValueID={user.ward_id}
+                  SearchValue={data.address?.ward?.name || ''}
                   foreignID={districtID}
                   useLabel={false}
-                  handleSetID={setWardID}
+                  handleSetID={handleSetWardID}
                 />
                 <FormText
                   ref={addressRef}
-                  data={address}
+                  data={user.address_live}
                   title="address"
+                  name="address_live"
                   rows={3}
                   useLabel={false}
-                  handleSetValue={setAddress}
+                  handleOnchange={handleOnchange}
                 />
               </div>
             </div>

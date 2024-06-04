@@ -12,6 +12,7 @@ const Role = forwardRef(function Role(
     useNull = true,
     handleSetID = () => {},
     handleSetName = () => {},
+    handleOnclick = () => {},
   },
   ref,
 ) {
@@ -22,10 +23,10 @@ const Role = forwardRef(function Role(
   // pass data for parent
   useEffect(() => {
     handleSetID(value);
-  });
+  }, [value]);
   useEffect(() => {
     handleSetName(searchValue);
-  });
+  }, [searchValue]);
 
   /* get data */
   useEffect(() => {
@@ -42,6 +43,7 @@ const Role = forwardRef(function Role(
     <>
       <FormSearch
         ref={ref}
+        handleOnclick={handleOnclick}
         valueID={value}
         useLabel={useLabel}
         Value={searchValue}

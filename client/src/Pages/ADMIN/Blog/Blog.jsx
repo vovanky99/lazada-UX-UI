@@ -6,10 +6,11 @@ import WrapperMain from '~/layout/Component/WrapperMain';
 import Button from '~/components/Button';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
-import ListBlog from '~/pages/ADMIN/Blog/ListBlog';
 import config from '~/config';
 import TodoList from '~/components/TodoList';
 import { GetData, TodoListData } from '~/api/General/HandleData';
+import Images from '~/components/Images';
+import TollsEdit from '~/layout/Component/TollsEdit';
 
 const cx = classNames.bind(styles);
 
@@ -114,17 +115,25 @@ export default function Blog() {
             </thead>
             <tbody>
               {dataTable?.map((d, index) => (
-                <ListBlog
-                  handleDelete={AddDeleteSuccess}
-                  key={index}
-                  P_id={d.id}
-                  P_title={d.title}
-                  P_cat={d.categories}
-                  P_img={d.img}
-                  P_descriptions={d.descriptions}
-                  P_status={d.status}
-                  // P_content={d.content}
-                />
+                <tr className={cx(`tbody-element`)} key={index}>
+                  <td>{d.title}</td>
+                  <td>
+                    <div className={cx('avatar')}>
+                      <Images src={d.img} alt={d.img} />
+                    </div>
+                  </td>
+                  <td>{d.status == 1 ? 'Show' : 'Hide'}</td>
+                  <td>
+                    {d.categories.map((c) => (
+                      <p key={c.id}>{c.name}</p>
+                    ))}
+                  </td>
+                  <td>{d.descriptions}</td>
+                  {/* <td dangerouslySetInnerHTML={{ __html: P_content }}></td> */}
+                  <td>
+                    <TollsEdit data={d} type="blogs" namePath="blogs" />
+                  </td>
+                </tr>
               ))}
             </tbody>
           </table>

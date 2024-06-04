@@ -12,18 +12,18 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
-   
     public function index(Request $request)
     {
+     
         $name = $request->name;
-        $phone = $request->phone;
+        $phone = $request->phone_number;
         $email = $request->email;
         $status = $request->status;
         $gender = $request->gender;
-        $country = $request->country;
-        $city = $request->city;
-        $district = $request->district;
-        $ward = $request->ward;
+        $country = $request->country_id;
+        $city = $request->city_id;
+        $district = $request->district_id;
+        $ward = $request->ward_id;
         $birthday = $request->birthday;
         $birthday_to = $request->birthday_to;
         $birthday_from = $request->birthday_from;
@@ -65,50 +65,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $name = $request->name;
-        $email = $request->email;
-        $phone_number = $request->phone;
-        $password = $request->password;
-        $avatar = $request->avatar;
-        $gender = $request->gender;
-        $birthday = $request->birthday;
-        $address = $request->address;
-        $ward_id = $request->ward_id;
-
-        // create address for user 
-        if($address && $ward_id){
-            $addressC = Address::create([
-                'street_address'=>$address,
-                'ward_id'=>$ward_id,
-            ]);
-        }
-
-        // create user
-        $user = User::create([
-            'name'=>$name,
-            'email'=>$email,
-            'phone_number'=>$phone_number,
-            'password'=>Hash::make($password),
-            'avatar'=>$avatar,
-            'gender'=>$gender,
-            'birthday'=>$birthday,
-            'address_id'=>$addressC->id,
-        ]);
-
-        // update address for user
-        Address::find($addressC->id)->update([
-            'addressable_id'=>$user->id,
-            'addressable_type'=>User::class,
-        ]);
-        return response()->json(['success'=>'Created Success!']);
-
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(string $id)
@@ -127,59 +83,65 @@ class UsersController extends Controller
         $password = $request->password;
         $status = $request->status;
         $avatar = $request->avatar;
-        $phone = $request->phone;
+        $phone = $request->phone_number;
         $birthday = $request->birthday;
         $ward_id = $request->ward_id;
-        $address = $request->address;
+        $address = $request->address_live;
         $gender = $request->gender;
-        $users = User::find($id);
-        if($address !== $users->address?->street_address || $ward_id !== $users->address?->id){
-            if($users->address_id){
-                Address::find($users->address_id)->update([
-                    'street_address'=>$address,
-                    'ward_id'=>$ward_id,
-                ]);
-                $address_id = $users->address_id;
+        try{
+            $users = User::find($id);
+            if($address !== $users->address?->street_address || $ward_id !== $users->address?->id){
+                if($users->address_id){
+                    Address::find($users->address_id)->update([
+                        'street_address'=>$address,
+                        'ward_id'=>$ward_id,
+                    ]);
+                    $address_id = $users->address_id;
+                }
+                else{
+                    $address_id =Address::create([
+                        'addressable_id'=>$users->id,
+                        'addressable_type'=>User::class,
+                        'street_address'=>$address,
+                        'ward_id'=>$ward_id,
+                    ])->id;
+                }
+               
             }
             else{
-                $address_id =Address::create([
-                    'addressable_id'=>$users->id,
-                    'addressable_type'=>User::class,
-                    'street_address'=>$address,
-                    'ward_id'=>$ward_id,
-                ])->id;
+                $address_id = $users->address_id;
             }
-           
+            if($password){
+                $users->update([
+                    'name'=>$name,
+                    'email'=>$email,
+                    'status'=>$status,
+                    'phone_number'=>$phone,
+                    'password'=>Hash::make($password),
+                    'avatar'=>$avatar,
+                    'gender'=>$gender,
+                    'birthday'=>$birthday,
+                    'address_id'=>$address_id,
+                ]);
+            }
+            else{
+                $users->update([
+                    'name'=>$name,
+                    'email'=>$email,
+                    'status'=>$status,
+                    'phone_number'=>$phone,
+                    'avatar'=>$avatar,
+                    'gender'=>$gender,
+                    'birthday'=>$birthday,
+                    'address_id'=>$address_id,
+                ]);
+            }
+            return response()->json(['success'=>'updated success!']);
         }
-        else{
-            $address_id = $users->address_id;
+        catch(Exception $e){
+            return response()->json($e);
         }
-        if($password){
-            $users->update([
-                'name'=>$name,
-                'email'=>$email,
-                'status'=>$status,
-                'phone_number'=>$phone,
-                'password'=>Hash::make($password),
-                'avatar'=>$avatar,
-                'gender'=>$gender,
-                'birthday'=>$birthday,
-                'address_id'=>$address_id,
-            ]);
-        }
-        else{
-            $users->update([
-                'name'=>$name,
-                'email'=>$email,
-                'status'=>$status,
-                'phone_number'=>$phone,
-                'avatar'=>$avatar,
-                'gender'=>$gender,
-                'birthday'=>$birthday,
-                'address_id'=>$address_id,
-            ]);
-        }
-        return response()->json(['success'=>'updated success!']);
+        
         
     }
 
@@ -188,10 +150,15 @@ class UsersController extends Controller
      */
     public function delete(string $id)
     {
+        try{
+            $users = User::findOrFail($id);
+            Address::where([['addressable_id',$users->id],['addressable_type',User::class]])->delete();
+            $users->delete();
+            return response()->json(['success'=>'deleted success!']);
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
 
-        $users = User::findOrFail($id);
-        Address::where([['addressable_id',$users->id],['addressable_type',User::class]])->delete();
-        $users->delete();
-        return response()->json(['success'=>'deleted success!']);
     }
 }

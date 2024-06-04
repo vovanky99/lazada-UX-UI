@@ -1,16 +1,16 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 
-import styles from '../Admin.module.scss';
+import styles from '~/pages/ADMIN/Admin/Admin.module.scss';
 import Button from '~/components/Button';
 import config from '~/config';
 import WrapperMain from '~/layout/Component/WrapperMain';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FormDate } from '~/layout/Component/FormGroup/FormDate';
-import ListAdmin from './ListAdmin';
-import Department from '../Department';
-import Role from '../Role';
+import ListAdmin from '~/pages/ADMIN/Admin/AllAdmin/ListAdmin';
+import Department from '~/pages/ADMIN/Admin/Department';
+import Role from '~/pages/ADMIN/Admin/Role';
 import Location from '~/layout/Component/Location';
 import { GetData } from '~/api/General/HandleData';
 
@@ -18,23 +18,66 @@ const cx = classNames.bind(styles);
 
 export default function AllAdmin() {
   const [dataTable, setDataTable] = useState([]);
-  const [name, setName] = useState(null);
-  const [status, setStatus] = useState('');
-  const [gender, setGender] = useState('');
-  // const [phone, setPhone] = useState(null);
-  const [role, setRole] = useState('');
-  const [department, setDepartment] = useState('');
-  const [workStartDate, setWorkStartDate] = useState('');
-  const [leaveOffWork, setLeaveOffWork] = useState('');
-  const [birthday, setBirthDay] = useState('');
-  const [bornCountryID, setBornCountryID] = useState('');
-  const [bornCityID, setBornCityID] = useState('');
-  const [bornDistrictID, setBornDistrictID] = useState('');
-  const [bornWardID, setBornWardID] = useState('');
-  const [liveAtCountryID, setLiveAtCountryID] = useState('');
-  const [liveAtCityID, setLiveAtCityID] = useState('');
-  const [liveAtDistrictID, setLiveAtDistrictID] = useState('');
-  const [liveAtWardID, setLiveAtWardID] = useState('');
+  const [admin, setAdmin] = useState({
+    name: '',
+    status: '',
+    gender: '',
+    role_id: '',
+    department_id: '',
+    work_start_date: '',
+    leave_off_work: '',
+    birthday: '',
+    born_country: '',
+    born_city: '',
+    born_district: '',
+    born_ward: '',
+    live_country: '',
+    live_city: '',
+    live_district: '',
+    live_ward: '',
+  });
+
+  const handleSetName = (value) => {
+    setAdmin({
+      ...admin,
+      name: value,
+    });
+  };
+
+  const handleSetBirthday = (value) => {
+    setAdmin({
+      ...admin,
+      birthday: value,
+    });
+  };
+
+  const handleOnclick = (e) => {
+    const { name, value } = e.target.dataset;
+    setAdmin({
+      ...admin,
+      [name]: value,
+    });
+  };
+
+  const handleSetGender = (value) => {
+    setAdmin({
+      ...admin,
+      gender: value,
+    });
+  };
+  const handleSetStatus = (value) => {
+    setAdmin({
+      ...admin,
+      status: value,
+    });
+  };
+  const handleOnchange = (e) => {
+    const { value, name } = e.target;
+    setAdmin({
+      ...admin,
+      [name]: value,
+    });
+  };
 
   // create data for select status
   const statusWork = [
@@ -50,46 +93,12 @@ export default function AllAdmin() {
 
   /* handle get data for table */
   useEffect(() => {
-    GetData('admin', 'admin', {
-      name,
-      birthday,
-      role,
-      department,
-      gender,
-      status,
-      work_at: workStartDate,
-      leave_off_work: leaveOffWork,
-      born_country: bornCountryID,
-      born_city: bornCityID,
-      born_district: bornDistrictID,
-      born_ward: bornWardID,
-      live_at_country: liveAtCountryID,
-      live_at_city: liveAtCityID,
-      live_at_district: liveAtDistrictID,
-      live_at_ward: liveAtWardID,
-    })
+    GetData('admin', 'admin', admin)
       .then((result) => {
         setDataTable(result);
       })
       .catch((e) => console.log(e));
-  }, [
-    liveAtCityID,
-    liveAtCountryID,
-    liveAtDistrictID,
-    liveAtWardID,
-    bornCityID,
-    bornCountryID,
-    bornDistrictID,
-    bornWardID,
-    name,
-    birthday,
-    role,
-    gender,
-    status,
-    workStartDate,
-    leaveOffWork,
-    department,
-  ]);
+  }, [admin]);
 
   return (
     <>
@@ -97,7 +106,7 @@ export default function AllAdmin() {
         title="Admin"
         BtnAddRender={
           <div className={cx('btn-add')}>
-            <Button to={`${config.adminRoutes.AddAdmin}`} className={cx('py-2')} gradient_primary>
+            <Button to={`${config.adminRoutes.AddAdmin}`} className={cx('py-2')} small gradient_primary>
               Add Admin
             </Button>
           </div>
@@ -108,39 +117,48 @@ export default function AllAdmin() {
             <b>Filter Admin</b>
           </h4>
           <form className={cx('filter-content', 'd-flex flex-row flex-wrap')}>
-            <FormSearch title="name" useTippy={false} searchValue={setName} />
-            <FormDate title="birthday" handleSetValue={setBirthDay} />
-            <Role title="role" handleSetID={setRole} />
-            <Department title="department" handleSetID={setDepartment} />
-            <FormSelect title="gender" handleSetValue={setGender} />
-            <FormSelect title="status" data={statusWork} handleSetValue={setStatus} />
-            <FormDate title="work at" handleSetValue={setWorkStartDate} />
-            <FormDate title="leave off work" handleSetValue={setLeaveOffWork} />
+            <FormSearch title="name" useTippy={false} searchValue={handleSetName} />
+            <FormDate title="birthday" handleSetValue={handleSetBirthday} />
+            <Role title="role" name="role_id" handleOnclick={handleOnclick} />
+            <Department title="department" name="department_id" handleOnclick={handleOnclick} />
+            <FormSelect title="gender" handleSetValue={handleSetGender} />
+            <FormSelect title="status" data={statusWork} handleSetValue={handleSetStatus} />
+            <FormDate title="work at" name="work_start_date" handleOnchange={handleOnchange} />
+            <FormDate title="leave off work" name="leave_off_work" handleOnchange={handleOnchange} />
             <div className={cx('', 'd-flex flex-row flex-grow-1')}>
               <div className={cx('filter-element', 'form-group d-flex flex-column')}>
                 <label className="form-label">Born</label>
                 <div className={cx('born-at', 'form-group d-flex flex-row flex-wrap')}>
-                  <Location title="country" classTitle="country_born" useLabel={false} handleSetID={setBornCountryID} />
+                  <Location
+                    title="country"
+                    name="born_country"
+                    classTitle="country_born"
+                    useLabel={false}
+                    handleOnclick={handleOnclick}
+                  />
                   <Location
                     title="city"
                     classTitle="city_born"
-                    foreignID={bornCountryID}
+                    name="born_city"
+                    foreignID={admin.born_country}
                     useLabel={false}
-                    handleSetID={setBornCityID}
+                    handleOnclick={handleOnclick}
                   />
                   <Location
                     title="district"
-                    foreignID={bornCityID}
                     classTitle="district_born"
+                    name="born_district"
+                    foreignID={admin.born_city}
                     useLabel={false}
-                    handleSetID={setBornDistrictID}
+                    handleOnclick={handleOnclick}
                   />
                   <Location
                     title="ward"
-                    foreignID={bornDistrictID}
                     classTitle="ward_born"
+                    name="born_ward"
+                    foreignID={admin.born_district}
                     useLabel={false}
-                    handleSetID={setBornWardID}
+                    handleOnclick={handleOnclick}
                   />
                 </div>
               </div>
@@ -149,30 +167,34 @@ export default function AllAdmin() {
                 <div className={cx('live-at', 'form-group d-flex flex-row flex-wrap')}>
                   <Location
                     title="country"
+                    name="live_country"
                     classTitle="country_live"
                     useLabel={false}
-                    handleSetID={setLiveAtCountryID}
+                    handleOnclick={handleOnclick}
                   />
                   <Location
                     title="city"
+                    name="live_city"
                     classTitle="city_live"
-                    foreignID={liveAtCountryID}
+                    foreignID={admin.live_country}
                     useLabel={false}
-                    handleSetID={setLiveAtCityID}
+                    handleOnclick={handleOnclick}
                   />
                   <Location
                     title="district"
-                    foreignID={liveAtCityID}
+                    name="live_district"
+                    foreignID={admin.live_city}
                     classTitle="district_live"
                     useLabel={false}
-                    handleSetID={setLiveAtDistrictID}
+                    handleOnclick={handleOnclick}
                   />
                   <Location
                     title="ward"
-                    foreignID={liveAtDistrictID}
+                    name="live_ward"
                     classTitle="ward_live"
+                    foreignID={admin.live_district}
                     useLabel={false}
-                    handleSetID={setLiveAtWardID}
+                    handleOnclick={handleOnclick}
                   />
                 </div>
               </div>

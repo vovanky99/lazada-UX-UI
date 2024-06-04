@@ -6,29 +6,53 @@ import { FormSearch } from '~/layout/Component/FormSearch';
 import { useEffect, useState } from 'react';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { DeleteData, EditData, GetData } from '~/api/General/HandleData';
+import Category from '~/layout/Component/Category';
+import TollsEdit from '~/layout/Component/TollsEdit';
 
 const cx = classNames.bind(styles);
 
-export default function ListCat({ handleDelete = () => {}, index, P_id, P_name, P_status, P_parent_id, P_cat_name }) {
-  const [parentData, setParentData] = useState(null);
-  const [name, setName] = useState(P_name || '');
-  const [parentID, setParentID] = useState(P_parent_id || '');
-  const [status, setStatus] = useState(P_status || '');
-  const [searchParent, setSearchParent] = useState(P_cat_name || '');
+export default function ListCat({ handleDelete = () => {}, data }) {
+  const [editCat, setEditCat] = useState({
+    name: data.name || '',
+    parent_id: data.parent_id || '',
+    status: data.status || '',
+  });
   const [showEdit, setShowEdit] = useState(false);
-  // show edit cat
+
   const handleToggleEdit = (e) => {
     setShowEdit(true);
   };
 
-  // hide edit cat
   const handleClickOutside = () => {
     setShowEdit(false);
   };
 
+  const handleOnchange = (e) => {
+    const { name, value } = e.target;
+    setEditCat({
+      ...editCat,
+      [name]: value,
+    });
+  };
+
+  const HandleSetParent = (e) => {
+    const { name, id } = e.target.dataset;
+    setEditCat({
+      ...editCat,
+      [name]: id,
+    });
+  };
+
+  const handleSetStatus = (value) => {
+    setEditCat({
+      ...editCat,
+      status: value,
+    });
+  };
+
   const handleEditCat = (e) => {
     e.preventDefault();
-    EditData('admin', 'category', P_id, { name: name, parent_id: parentID, status: status })
+    EditData('admin', 'category', data.id, editCat)
       .then((result) => {})
       .catch((e) => console.log(e));
   };
@@ -55,16 +79,6 @@ export default function ListCat({ handleDelete = () => {}, index, P_id, P_name, 
     }
   });
 
-  /* get cat for edit Cat */
-  useEffect(() => {
-    /* use show edit to avoid  premature api calls */
-    if (showEdit) {
-      GetData('admin', 'category', searchParent).then((result) => {
-        setParentData(result);
-      });
-    }
-  }, [searchParent, showEdit]);
-
   //delete cat
   const handleDeleteCat = (e) => {
     DeleteData('admin', 'category', e.target.dataset.id)
@@ -88,16 +102,26 @@ export default function ListCat({ handleDelete = () => {}, index, P_id, P_name, 
             </h5>
             <form className={cx('list_cat_tippy_content', 'd-flex flex-column')} noValidate onSubmit={handleEditCat}>
               <div className="d-flex flex-row flex-wrap">
-                <FormSearch
+                <Category
                   title="parent"
-                  valueID={parentID}
-                  Value={searchParent}
-                  data={parentData}
-                  searchValue={setSearchParent}
-                  handleSetID={setParentID}
+                  name="parent_id"
+                  ValueID={editCat.parent_id}
+                  SearchValue={data.cat_name}
+                  handleOnclick={HandleSetParent}
                 />
-                <FormSelect title="status" useStatus={true} defaultValue={status} handleSetValue={setStatus} />
-                <FormSearch title="name" Value={name} useTippy={false} searchValue={setName} />
+                <FormSelect
+                  title="status"
+                  useStatus={true}
+                  defaultValue={data.status}
+                  handleSetValue={handleSetStatus}
+                />
+                <FormSearch
+                  title="name"
+                  name="name"
+                  Value={data.name}
+                  useTippy={false}
+                  handleOnchange={handleOnchange}
+                />
               </div>
               <div className="d-flex flex-row justify-content-center">
                 <Button gradient_primary type="submit">
@@ -109,16 +133,16 @@ export default function ListCat({ handleDelete = () => {}, index, P_id, P_name, 
         )}
         onClickOutside={handleClickOutside}
       >
-        <tr key={index} className={cx(`tbody-element`)}>
-          <td>{P_name}</td>
-          <td>{P_cat_name}</td>
-          <td>{P_status == 1 ? 'Show' : 'Hide'}</td>
+        <tr className={cx(`tbody-element`)}>
+          <td>{data.name}</td>
+          <td>{data.cat_name}</td>
+          <td>{data.status === 1 ? 'Show' : 'Hide'}</td>
           <td>
             <div className={cx('toll-edit', 'd-flex flex-row justify-content-center flex-wrap')}>
               <Button gradient_primary type="button" onClick={handleToggleEdit}>
                 Edit
               </Button>
-              <Button data-id={P_id} gradient_danger type="button" onClick={handleDeleteCat}>
+              <Button data-id={data.id} gradient_danger type="button" onClick={handleDeleteCat}>
                 Delete
               </Button>
             </div>

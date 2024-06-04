@@ -1,26 +1,26 @@
 import axios from '~/api/axios';
 
-export async function ShowData(prefixServer = '', type, id) {
+export async function ShowData(prefixServer = '', name, id) {
   try {
-    const res = await axios.get(`/api${prefixServer ? '/' + prefixServer : ''}/show-${type}/${id}`);
+    const res = await axios.get(`/api${prefixServer ? '/' + prefixServer : ''}/show-${name}/${id}`);
     return res.data;
   } catch (e) {
     console.log(e);
   }
 }
 
-export async function CreateData(prefixServer = '', type, data) {
+export async function CreateData(prefixServer = '', name, data) {
   try {
-    const res = await axios.post(`/api${prefixServer ? '/' + prefixServer : ''}/create-${type}`, data);
+    const res = await axios.post(`/api${prefixServer ? '/' + prefixServer : ''}/create-${name}`, data);
     return res.data;
   } catch (e) {
     console.log(e);
   }
 }
 
-export async function GetData(prefixServer = '', type, data) {
+export async function GetData(prefixServer = '', name, data) {
   try {
-    const res = await axios.get(`/api${prefixServer ? '/' + prefixServer : ''}/get-${type}`, {
+    const res = await axios.get(`/api${prefixServer ? '/' + prefixServer : ''}/get-${name}`, {
       params: {
         ...data,
       },
@@ -31,18 +31,18 @@ export async function GetData(prefixServer = '', type, data) {
   }
 }
 
-export async function DeleteData(prefixServer = '', type, id) {
+export async function DeleteData(prefixServer = '', name, id) {
   try {
-    const res = await axios.delete(`/api${prefixServer ? '/' + prefixServer : ''}/delete-${type}/${id}`);
+    const res = await axios.delete(`/api${prefixServer ? '/' + prefixServer : ''}/delete-${name}/${id}`);
     return res.data;
   } catch (e) {
     console.log(e);
   }
 }
 
-export async function EditData(prefixServer = '', type, id, { ...data }) {
+export async function EditData(prefixServer = '', name, id, { ...data }) {
   try {
-    const res = await axios.patch(`/api${prefixServer ? '/' + prefixServer : ''}/edit-${type}/${id}`, {
+    const res = await axios.patch(`/api${prefixServer ? '/' + prefixServer : ''}/edit-${name}/${id}`, {
       ...data,
     });
     return res.data;

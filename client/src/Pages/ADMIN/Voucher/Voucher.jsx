@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './Voucher.module.scss';
 import WrapperMain from '~/layout/Component/WrapperMain';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import ListVoucher from './ListVoucher';
@@ -117,6 +117,7 @@ export default function Voucher() {
                   P_start_day={d.start_day}
                   P_end_day={d.end_day}
                   P_percents={d.percents}
+                  data={d}
                 />
               ))}
             </tbody>

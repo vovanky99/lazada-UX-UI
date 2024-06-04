@@ -12,6 +12,7 @@ const Department = forwardRef(function Department(
     useLabel = true,
     handleSetID = () => {},
     handleSetName = () => {},
+    handleOnclick = () => {},
   },
   ref,
 ) {
@@ -22,10 +23,10 @@ const Department = forwardRef(function Department(
   // pass data for parent
   useEffect(() => {
     handleSetID(value);
-  });
+  }, [value]);
   useEffect(() => {
     handleSetName(searchValue);
-  });
+  }, [searchValue]);
 
   /* get data */
   useEffect(() => {
@@ -41,6 +42,7 @@ const Department = forwardRef(function Department(
   return (
     <>
       <FormSearch
+        handleOnclick={handleOnclick}
         ref={ref}
         valueID={value}
         useLabel={useLabel}

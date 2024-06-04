@@ -10,6 +10,8 @@ import { FormSearch } from '~/layout/Component/FormSearch';
 import Location from '~/layout/Component/Location';
 import { UpdateProfile } from '~/api/General/HandleData';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
+import FormImage from '~/layout/Component/FormGroup/FormImage';
+import MessageDanger from '~/layout/Component/Message/MessageDanger';
 
 const cx = classNames.bind(styles);
 
@@ -19,29 +21,39 @@ export default function Profile() {
   const avatarRef = useRef();
   const addressRef = useRef();
   const Admin = useSelector((state) => state.Auth.admin);
-  const [name, setName] = useState(Admin.name);
-  const [avatar, setAvatar] = useState(Admin.avatar);
-  const [upload, setUpload] = useState('');
-  const [phone, setPhone] = useState(Admin.phone_number);
-  const [address, setAddress] = useState(Admin.address_t.street_address || '');
+  const [admin, setAdmin] = useState({
+    name: Admin.name || '',
+    avatar: Admin.avatar || '',
+    phone_number: Admin.phone_number || '',
+    address_live: Admin.address_t.street_address || '',
+    ward_id: Admin.address_t.ward_id || '',
+  });
   const [nameValid, setNameValid] = useState('');
   const [phoneValid, setPhoneValid] = useState('');
   const [addressValid, setAddressValid] = useState('');
   const [countryID, setCountryID] = useState(Admin.address_t.ward.district.city.country_id || '');
   const [cityID, setCityID] = useState(Admin.address_t.ward.district.city_id || '');
   const [districtID, setDistrictID] = useState(Admin.address_t.ward.district_id || '');
-  const [wardID, setWardID] = useState(Admin.address_t.ward_id || '');
+
+  //set name for location
   const CountryName = Admin.address_t.ward.district.city.country.name || '';
   const CityName = Admin.address_t.ward.district.city.name || '';
   const DistrictName = Admin.address_t.ward.district.name || '';
   const WardName = Admin.address_t.ward.name || '';
 
-  /* handle upload image */
-  const uploadImages = (img) => {
-    let image = new FormData();
-    image.append('file', img);
-    // handle upload file up cloudinary
-    CldUploadImg(image).then((result) => setAvatar(result.url));
+  const handleOnchange = (e) => {
+    const { value, name } = e.target;
+    setAdmin({
+      ...admin,
+      [name]: value,
+    });
+  };
+
+  const handleSetWardID = (value) => {
+    setAdmin({
+      ...admin,
+      ward_id: value,
+    });
   };
 
   /* handle onsubmit form */
@@ -49,14 +61,8 @@ export default function Profile() {
     e.preventDefault();
     // handle upadte admin
     const updateAdmin = async () => {
-      let data = new FormData();
-      data.append('avatar', avatar);
-      data.append('name', name);
-      data.append('phone', phone);
-      data.append('address', address);
-      data.append('ward_id', wardID);
       try {
-        UpdateProfile('admin', { data: data })
+        UpdateProfile('admin', { data: admin })
           .then((result) => {
             if (result.success) {
               window.location.reload();
@@ -69,36 +75,24 @@ export default function Profile() {
     };
     // submit update profile when value haven't empty
     if (
-      name !== '' &&
-      phone !== '' &&
-      address !== '' &&
+      admin.name !== '' &&
+      admin.phone_number !== '' &&
+      admin.address_live !== '' &&
       nameValid === '' &&
       phoneValid === '' &&
       addressValid === '' &&
-      wardID !== ''
+      admin.ward_id !== ''
     ) {
       // submit update profile when admin have change value
       if (
-        wardID !== Admin.address_t.ward_id ||
-        name !== Admin.name ||
-        phone !== Admin.phone_number ||
-        upload !== '' ||
-        address !== Admin.address_t.street_address
+        admin.ward_id !== Admin.address_t.ward_id ||
+        admin.name !== Admin.name ||
+        admin.phone_number !== Admin.phone_number ||
+        admin.avatar !== Admin.avatar ||
+        admin.address_live !== Admin.address_t.street_address
       ) {
         updateAdmin();
       }
-    }
-  };
-
-  /* handle avatar change value */
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    const render = new FileReader();
-    render.onload = (e) => {
-      uploadImages(file);
-    };
-    if (file) {
-      render.readAsDataURL(file);
     }
   };
 
@@ -123,7 +117,7 @@ export default function Profile() {
         n.removeEventListener('keyup', handleKeyUp);
       }
     };
-  }, [name]);
+  }, [admin.name]);
 
   /* handle phone value */
   useEffect(() => {
@@ -145,7 +139,7 @@ export default function Profile() {
         p.removeEventListener('keyup', handleKeyUp);
       }
     };
-  }, [phone]);
+  }, [admin.phone_number]);
 
   /* handle address value */
   useEffect(() => {
@@ -167,62 +161,35 @@ export default function Profile() {
         a.removeEventListener('keyup', handleKeyUp);
       }
     };
-  }, [address]);
-
-  /* handle click select avatar */
-  const handleBTNChangeAvatar = (e) => {
-    const inputFile = avatarRef.current;
-    inputFile.click();
-  };
+  }, [admin.address_live]);
 
   return (
     <>
       <div className={cx('main_profile')}>
         <form onSubmit={handleSubmitProfile} noValidate className={cx('form-profile', 'd-flex flex-row flex-wrap')}>
-          <div
-            className={cx(
-              'avatar',
-              'form-group col-12 d-flex justify-content-center align-items-center mb-5 flex-column',
-            )}
-          >
-            <Button onClick={handleBTNChangeAvatar} className={cx('avatar_container')} type="button" transparent>
-              <Images src={`${avatar}`} alt={avatar} />
-            </Button>
-            <input
-              ref={avatarRef}
-              type="file"
-              name="avatar"
-              value={''}
-              onChange={handleAvatarChange}
-              style={{ display: 'none' }}
-              accept="image/*"
-            />
-            <Button onClick={handleBTNChangeAvatar} type="button" className={cx('avatar_btn-change')} gradient_primary>
-              Change Avatar
-            </Button>
-          </div>
+          <FormImage title="avatar" data={admin.avatar} />
           <div className={cx('form-group col-6 px-3 mb-3')}>
-            <FormSearch title="name" ref={nameRef} useTippy={false} Value={name} searchValue={setName} />
-            {nameValid ? (
-              <div className={cx('message-valid', 'text-danger text-capitalize ps-3')}>{nameValid}</div>
-            ) : (
-              ''
-            )}
+            <FormSearch
+              title="name"
+              name="name"
+              ref={nameRef}
+              useTippy={false}
+              Value={admin.name}
+              handleOnchange={handleOnchange}
+            />
+            <MessageDanger message={nameValid} />
           </div>
           <div className={cx('form-group col-6 px-3 mb-3')}>
             <FormSearch
               ref={phoneRef}
               title="phone"
+              name="phone_number"
               inputType="number"
               useTippy={false}
-              Value={phone}
-              searchValue={setPhone}
+              Value={admin.phone_number}
+              handleOnchange={handleOnchange}
             />
-            {phoneValid ? (
-              <div className={cx('message-valid', 'text-danger text-capitalize ps-3')}>{phoneValid}</div>
-            ) : (
-              ''
-            )}
+            <MessageDanger message={phoneValid} />
           </div>
           <div className={cx('profile_location', 'form-group col-6 px-3 mb-3')}>
             <label className={cx('input_title', 'form-label')}>Select Location</label>
@@ -253,20 +220,23 @@ export default function Profile() {
               <Location
                 title="ward"
                 useLabel={false}
-                ValueID={wardID}
+                ValueID={admin.ward_id}
                 foreignID={districtID}
-                handleSetID={setWardID}
+                handleSetID={handleSetWardID}
                 SearchValue={WardName}
               />
             </div>
           </div>
           <div className={cx('profile_address', 'form-group col-6 px-3 mb-3')}>
-            <FormText title="Address" rows={5} handleSetValue={setAddress} data={address} ref={addressRef} />
-            {addressValid ? (
-              <div className={cx('message-valid', 'text-danger ps-3 text-capitalize')}>{addressValid}</div>
-            ) : (
-              ''
-            )}
+            <FormText
+              title="Address"
+              name="address_live"
+              rows={5}
+              handleOnchange={handleOnchange}
+              data={admin.address_live}
+              ref={addressRef}
+            />
+            <MessageDanger message={addressValid} />
           </div>
           <div className={cx('form-group col-12 d-flex justify-content-end')}>
             <Button type="submit" gradient_primary>

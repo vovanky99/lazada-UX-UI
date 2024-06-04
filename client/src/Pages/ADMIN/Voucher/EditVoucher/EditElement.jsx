@@ -51,42 +51,41 @@ export default function EditElement({ data }) {
       });
     }
   };
+  /* valid voucher */
+  const validVoucher = () => {
+    if (voucher.name === '') {
+      nameRef.current.classList.add('border_danger');
+    } else {
+      nameRef.current.classList.remove('border_danger');
+    }
+    if (voucher.code === '') {
+      codeRef.current.classList.add('border_danger');
+    } else {
+      codeRef.current.classList.remove('border_danger');
+    }
+    if (voucher.descriptions === '' && voucher.descriptions.length <= 14) {
+      descriptionsRef.current.classList.add('border_danger');
+    } else {
+      descriptionsRef.current.classList.remove('border_danger');
+    }
+    if (voucher.end_day === '') {
+      EndDayRef.current.classList.add('border_danger');
+    } else {
+      EndDayRef.current.classList.remove('border_danger');
+    }
+    if (voucher.start_day === '') {
+      startDayRef.current.classList.add('border_danger');
+    } else {
+      startDayRef.current.classList.remove('border_danger');
+    }
+    if (voucher.percents === '') {
+      percentsRef.current.classList.add('border_danger');
+    } else {
+      percentsRef.current.classList.remove('border_danger');
+    }
+  };
   const handleSubmitCreateVoucher = (e) => {
     e.preventDefault();
-
-    /* valid voucher */
-    const validVoucher = () => {
-      if (voucher.name === '') {
-        nameRef.current.classList.add('border_danger');
-      } else {
-        nameRef.current.classList.remove('border_danger');
-      }
-      if (voucher.code === '') {
-        codeRef.current.classList.add('border_danger');
-      } else {
-        codeRef.current.classList.remove('border_danger');
-      }
-      if (voucher.descriptions === '' && voucher.descriptions.length <= 14) {
-        descriptionsRef.current.classList.add('border_danger');
-      } else {
-        descriptionsRef.current.classList.remove('border_danger');
-      }
-      if (voucher.end_day === '') {
-        EndDayRef.current.classList.add('border_danger');
-      } else {
-        EndDayRef.current.classList.remove('border_danger');
-      }
-      if (voucher.start_day === '') {
-        startDayRef.current.classList.add('border_danger');
-      } else {
-        startDayRef.current.classList.remove('border_danger');
-      }
-      if (voucher.percents === '') {
-        percentsRef.current.classList.add('border_danger');
-      } else {
-        percentsRef.current.classList.remove('border_danger');
-      }
-    };
     validVoucher();
     if (
       voucher.name &&
@@ -182,10 +181,11 @@ export default function EditElement({ data }) {
             rows="4"
             handleOnchange={handleOnchange}
           />
-          <MessageDanger classNames={cx('message')} message={voucherValid} />
-          <MessageSuccess classNames={cx('message')} message={messageSuccess} />
+
           <div className={cx('btn_create', 'text-center')}>
-            <Button type="submit" gradient_primary>
+            <MessageDanger classNames={cx('message')} message={voucherValid} />
+            <MessageSuccess classNames={cx('message')} message={messageSuccess} />
+            <Button type="submit" small gradient_primary>
               Save
             </Button>
           </div>

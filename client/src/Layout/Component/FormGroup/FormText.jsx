@@ -23,7 +23,7 @@ export const FormText = forwardRef(function Form(
 
   useEffect(() => {
     handleSetValue(value);
-  });
+  }, [value]);
   return (
     <div className={cx('form-text', containerClass || 'form-group flex-grow-1')}>
       {useLabel ? <label className={cx('form-label text-capitalize')}>{title}</label> : ''}

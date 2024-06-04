@@ -3,11 +3,9 @@ import React from 'react';
 import Tippy from '@tippyjs/react/headless';
 import { useState, useEffect } from 'react';
 
-import styles from '../../Location.module.scss';
-import axios from '~/api/axios';
+import styles from '~/pages/ADMIN/Location/Location.module.scss';
 import Button from '~/components/Button';
-import EditElement from './EditElement';
-import { Link } from 'react-router-dom';
+import EditElement from '~/pages/ADMIN/Location/ListLocation/EditLocation/EditElement';
 import DeleteLocation, { DeleteSingleLocation } from '~/api/Location/DeleteLocation';
 import EditLocation from '~/api/Location/EditLocation';
 
@@ -15,14 +13,6 @@ const cx = classNames.bind(styles);
 
 export default function Element({ country, city, district, ward, handleOnchangeDelete = () => {} }) {
   const [toggleEdit, setToggleEdit] = useState(false);
-  const [messageCountryError, setMessageCountryError] = useState('');
-  const [messageCountrySuccess, setMessageCountrySuccess] = useState('');
-  const [messageCityError, setMessageCityError] = useState('');
-  const [messageCitySuccess, setMessageCitySuccess] = useState('');
-  const [messageDistrictError, setMessageDistrictError] = useState('');
-  const [messageDistrictSuccess, setMessageDistrictSuccess] = useState('');
-  const [messageWardError, setMessageWardError] = useState('');
-  const [messageWardSuccess, setMessageWardSuccess] = useState('');
   const [countryID, setCountryID] = useState(country?.id || '');
   const [cityID, setCityID] = useState(city?.id || '');
   const [districtID, setDistrictID] = useState(district?.id || '');
@@ -66,162 +56,6 @@ export default function Element({ country, city, district, ward, handleOnchangeD
       })
       .catch((e) => console.log(e));
   };
-
-  /* handle delete Country */
-  const handleDeleteCountry = async (e) => {
-    if (e.target.dataset.id) {
-      DeleteLocation('country', e.target.dataset.id)
-        .then((result) => {
-          handleOnchangeDelete(1);
-          setMessageCountrySuccess('delete country success!');
-          if (messageCountryError) {
-            setMessageCountryError('');
-          }
-        })
-        .catch((e) => console.log(e));
-    } else {
-      if (messageCountrySuccess) {
-        setMessageCountrySuccess('');
-      }
-      setMessageCountryError('country is value empty!');
-    }
-  };
-
-  /* handle delete City */
-  const handleDeleteCity = async (e) => {
-    if (e.target.dataset.id) {
-      DeleteLocation('city', e.target.dataset.id)
-        .then((result) => {
-          handleOnchangeDelete(1);
-          setMessageCitySuccess('delete city success!');
-          if (messageCityError) {
-            setMessageCityError('');
-          }
-        })
-        .catch((e) => console.log(e));
-    } else {
-      if (messageCitySuccess) {
-        setMessageCitySuccess('');
-      }
-      setMessageCityError('city is value empty!');
-    }
-  };
-
-  /* handle delete District */
-  const handleDeleteDistrict = async (e) => {
-    if (e.target.dataset.id) {
-      DeleteLocation('district', e.target.dataset.id)
-        .then((result) => {
-          handleOnchangeDelete(1);
-          setMessageDistrictSuccess('delete district success!');
-          if (messageDistrictError) {
-            setMessageDistrictError('');
-          }
-        })
-        .catch((e) => console.log(e));
-    } else {
-      if (messageDistrictSuccess) {
-        setMessageDistrictSuccess('');
-      }
-      setMessageDistrictError('district is value empty!');
-    }
-  };
-
-  /* handle delete Ward */
-  const handleDeleteWard = async (e) => {
-    if (e.target.dataset.id) {
-      DeleteLocation('ward', e.target.dataset.id)
-        .then((e) => {
-          handleOnchangeDelete(1);
-          setMessageWardSuccess('delete ward Success');
-          if (messageWardError) {
-            setMessageWardError('');
-          }
-        })
-        .catch((e) => console.log(e));
-    } else {
-      if (messageWardSuccess) {
-        setMessageWardSuccess('');
-      }
-      setMessageWardError('ward is value empty!');
-    }
-  };
-
-  /* handle edit Country */
-  const handleEditCountry = async (e) => {
-    if (e.target.dataset.id && e.target.dataset.name) {
-      EditLocation('country', e.target.dataset.id, { name: e.target.dataset.name })
-        .then((e) => {
-          handleOnchangeDelete(1);
-          setMessageCountrySuccess('edit country Success');
-          if (messageCountryError) {
-            setMessageCountryError('');
-          }
-        })
-        .catch((e) => console.log(e));
-    } else {
-      setMessageCountrySuccess('');
-      setMessageCountryError('country is value empty!');
-    }
-  };
-
-  /* handle edit City */
-  const handleEditCity = async (e) => {
-    if (e.target.dataset.id && e.target.dataset.name) {
-      EditLocation('city', e.target.dataset.id, { name: e.target.dataset.name, foreign_id: e.target.dataset.foreign })
-        .then((e) => {
-          handleOnchangeDelete(1);
-          setMessageCitySuccess('edit city Success');
-          if (messageCityError) {
-            setMessageCityError('');
-          }
-        })
-        .catch((e) => console.log(e));
-    } else {
-      setMessageCitySuccess('');
-      setMessageCityError('city is value empty!');
-    }
-  };
-
-  /* handle edit District */
-  const handleEditDistrict = async (e) => {
-    if (e.target.dataset.id && e.target.dataset.name) {
-      EditLocation('district', e.target.dataset.id, {
-        name: e.target.dataset.name,
-        foreign_id: e.target.dataset.foreign,
-      })
-        .then((e) => {
-          handleOnchangeDelete(1);
-          setMessageDistrictSuccess('edit ditrict Success');
-          if (messageDistrictError) {
-            setMessageDistrictError('');
-          }
-        })
-        .catch((e) => console.log(e));
-    } else {
-      setMessageDistrictSuccess('');
-      setMessageDistrictError('ditrict is value empty!');
-    }
-  };
-
-  /* handle edit ward */
-  const handleEditWard = async (e) => {
-    if (e.target.dataset.id && e.target.dataset.name) {
-      EditLocation('ward', e.target.dataset.id, { name: e.target.dataset.name, foreign_id: e.target.dataset.foreign })
-        .then((e) => {
-          handleOnchangeDelete(1);
-          setMessageWardSuccess('edit ward Success');
-          if (messageWardError) {
-            setMessageWardError('');
-          }
-        })
-        .catch((e) => console.log(e));
-    } else {
-      setMessageWardSuccess('');
-      setMessageWardError('ward is value empty!');
-    }
-  };
-
   return (
     <>
       <Tippy
@@ -242,10 +76,8 @@ export default function Element({ country, city, district, ward, handleOnchangeD
                     title="country"
                     data={country}
                     handleSetID={setCountryID}
-                    messageError={messageCountryError}
-                    messageSuccess={messageCountrySuccess}
-                    handleDelete={handleDeleteCountry}
-                    handleEdit={handleEditCountry}
+                    handleOnchangeDelete={handleOnchangeDelete}
+                    useTippy={city ? true : false}
                   />
                 </div>
                 <div className={cx('edit-city', 'flex-grow-1')}>
@@ -254,10 +86,8 @@ export default function Element({ country, city, district, ward, handleOnchangeD
                     data={city}
                     handleSetID={setCityID}
                     foreignID={countryID}
-                    messageError={messageCityError}
-                    messageSuccess={messageCitySuccess}
-                    handleDelete={handleDeleteCity}
-                    handleEdit={handleEditCity}
+                    handleOnchangeDelete={handleOnchangeDelete}
+                    useTippy={district ? true : false}
                   />
                 </div>
                 <div className={cx('edit-district', 'flex-grow-1')}>
@@ -266,10 +96,8 @@ export default function Element({ country, city, district, ward, handleOnchangeD
                     handleSetID={setDistrictID}
                     foreignID={cityID}
                     data={district}
-                    messageError={messageDistrictError}
-                    messageSuccess={messageDistrictSuccess}
-                    handleDelete={handleDeleteDistrict}
-                    handleEdit={handleEditDistrict}
+                    handleOnchangeDelete={handleOnchangeDelete}
+                    useTippy={ward ? true : false}
                   />
                 </div>
                 <div className={cx('edit-ward', 'flex-grow-1')}>
@@ -277,10 +105,7 @@ export default function Element({ country, city, district, ward, handleOnchangeD
                     title="ward"
                     data={ward}
                     foreignID={districtID}
-                    messageError={messageWardError}
-                    messageSuccess={messageWardSuccess}
-                    handleDelete={handleDeleteWard}
-                    handleEdit={handleEditWard}
+                    handleOnchangeDelete={handleOnchangeDelete}
                   />
                 </div>
               </div>
@@ -291,10 +116,7 @@ export default function Element({ country, city, district, ward, handleOnchangeD
         )}
         onClickOutside={handleToggleEditOutside}
       >
-        <tr
-          className={cx(`tbody-element`)}
-          key={`${country.name}_${city?.name || ''}_${district?.name || ''}_${ward?.name || ''}`}
-        >
+        <tr className={cx(`tbody-element`)}>
           <td>{country?.name}</td>
           <td>{city?.name || ''}</td>
           <td>{district?.name || ''}</td>

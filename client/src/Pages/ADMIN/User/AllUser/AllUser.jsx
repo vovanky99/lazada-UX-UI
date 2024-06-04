@@ -15,20 +15,58 @@ import { GetData } from '~/api/General/HandleData';
 const cx = classNames.bind(styles);
 
 export default function AllUser() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [status, setStatus] = useState('');
-  const [gender, setGender] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [birthdayTo, setBirthdayTo] = useState('');
-  const [birthdayFrom, setBirthdayFrom] = useState('');
-  const [countryID, setCountryID] = useState('');
-  const [cityID, setCityID] = useState('');
-  const [districtID, setDistrictID] = useState('');
-  const [wardID, setWardID] = useState('');
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    phone_number: '',
+    status: '',
+    gender: '',
+    birthday: '',
+    birthday_to: '',
+    birthday_from: '',
+    country_id: '',
+    city_id: '',
+    district_id: '',
+    ward_id: '',
+  });
+
   const [deleteSuccess, setDeleteSuccess] = useState(1);
   const [dataTable, setDataTable] = useState(null);
+
+  const handleSetName = (value) => {
+    setUser({
+      ...user,
+      name: value,
+    });
+  };
+  const handleOnchange = (e) => {
+    const { value, name } = e.target;
+    setUser({
+      ...user,
+      [name]: value,
+    });
+  };
+
+  const handleSetStatus = (value) => {
+    setUser({
+      ...user,
+      status: value,
+    });
+  };
+  const handleSetGender = (value) => {
+    setUser({
+      ...user,
+      gender: value,
+    });
+  };
+
+  const handleSetLocation = (e) => {
+    const { name, id } = e.target.dataset;
+    setUser({
+      ...user,
+      [name]: id,
+    });
+  };
 
   const handleDeleteSuccess = (value) => {
     setDeleteSuccess(deleteSuccess + value);
@@ -36,41 +74,14 @@ export default function AllUser() {
 
   /* get data table  */
   useEffect(() => {
-    GetData('admin', 'user', {
-      country: countryID,
-      city: cityID,
-      district: districtID,
-      ward: wardID,
-      birthday_to: birthdayTo,
-      birthday_from: birthdayFrom,
-      name,
-      phone,
-      email,
-      status,
-      gender,
-      birthday,
-    })
+    GetData('admin', 'user', user)
       .then((result) => {
         setDataTable(result);
       })
       .catch((e) => {
         console.log(e);
       });
-  }, [
-    countryID,
-    cityID,
-    districtID,
-    wardID,
-    name,
-    phone,
-    email,
-    status,
-    gender,
-    birthday,
-    birthdayTo,
-    birthdayFrom,
-    deleteSuccess,
-  ]);
+  }, [user, deleteSuccess]);
 
   return (
     <>
@@ -91,19 +102,25 @@ export default function AllUser() {
             <b>Filter User</b>
           </h4>
           <div className={cx('filter_content', 'd-flex flex-row flex-wrap')}>
-            <FormSearch title="name" useTippy={false} searchValue={setName} />
-            <FormSearch title="email" useTippy={false} searchValue={setEmail} />
-            <FormSearch title="Phone" inputType="number" useTippy={false} searchValue={setPhone} />
-            <FormSelect title="gender" handleSetValue={setGender} />
-            <FormSelect title="status" useStatus={true} handleSetValue={setStatus} />
-            <FormDate title="birthday" handleSetValue={setBirthday} />
-            <FormDate title="birthday to" handleSetValue={setBirthdayTo} />
-            <FormDate title="birthday from" handleSetValue={setBirthdayFrom} />
+            <FormSearch title="name" name="name" useTippy={false} searchValue={handleSetName} />
+            <FormSearch title="email" name="email" useTippy={false} handleOnchange={handleOnchange} />
+            <FormSearch
+              title="Phone"
+              name="phone_number"
+              inputType="number"
+              useTippy={false}
+              handleOnchange={handleOnchange}
+            />
+            <FormSelect title="gender" name="gender" handleSetValue={handleSetGender} />
+            <FormSelect title="status" name="status" useStatus={true} handleSetValue={handleSetStatus} />
+            <FormDate title="birthday" name="birthday" handleOnchange={handleOnchange} />
+            <FormDate title="birthday to" name="birthday_to" handleOnchange={handleOnchange} />
+            <FormDate title="birthday from" name="birthday_from" handleOnchange={handleOnchange} />
             <div className={cx('filter_address', 'd-flex flex-row flex-wrap')}>
-              <Location title="country" handleSetID={setCountryID} />
-              <Location title="city" ValueID={countryID} handleSetID={setCityID} />
-              <Location title="district" ValueID={cityID} handleSetID={setDistrictID} />
-              <Location title="ward" ValueID={districtID} handleSetID={setWardID} />
+              <Location title="country" name="country_id" handleOnclick={handleSetLocation} />
+              <Location title="city" name="city_id" ValueID={user.country_id} handleOnclick={handleSetLocation} />
+              <Location title="district" name="district_id" ValueID={user.city_id} handleOnclick={handleSetLocation} />
+              <Location title="ward" name="ward_id" ValueID={user.district_id} handleOnclick={handleSetLocation} />
             </div>
           </div>
         </div>
@@ -123,7 +140,7 @@ export default function AllUser() {
               </tr>
             </thead>
             <tbody>
-              <ListUser data={dataTable} handleDeleteSuccess={handleDeleteSuccess} />
+              <ListUser data={dataTable} handleDelete={handleDeleteSuccess} />
             </tbody>
           </table>
         </div>
