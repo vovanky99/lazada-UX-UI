@@ -73,3 +73,30 @@ export async function TodoListData({ prefixServer, type, name, id }) {
     console.log(e);
   }
 }
+
+export async function ChangePass(prefixServer, data) {
+  try {
+    const res = await axios.post(`/api${prefixServer ? '/' + prefixServer : ''}/change-password`, data);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function RequestPhone(data) {
+  try {
+    const res = await axios.post(`/api/admin/password/phone-number`, data);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function ResetPassword(prefixServer, data) {
+  try {
+    const res = await axios.post(`/api${prefixServer ? '/' + prefixServer : ''}/password/reset-password`, data);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}

@@ -46,6 +46,26 @@ class AdminController extends Controller{
         }  
     }
 
+    public function ChangePassword(){
+        $new_pass = request()->new_password;
+        $old_pass = request()->old_password;
+        try{
+            $user = Admin::find(Auth::user()->id);
+            if(hash::check($old_pass,$user->password)){
+                $user->update([
+                    'password'=>Hash::make($new_pass),
+                ]);
+                return response()->json(['success'=>'change password success!']);
+            }
+            else{
+                return response()->json(['error'=>"old password don't correct!"]);
+            }
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
+    }
+
     // Store a newly created resource in storage.
     public function create(Request $request){
         $name = $request->name;

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\ManufacturerController;
+use App\Http\Controllers\Admin\PhoneResetController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Admin\UsersController;
@@ -80,11 +81,14 @@ Route::prefix('')->group(function(){
 Route::prefix('/admin')->group(function(){
     // auth
     Route::post('/admin-login', [AdminAuthController::class,'login']);
+    Route::post('/password/phone-number', [PhoneResetController::class, 'requestReset']);
+    Route::post('/password/reset-password', [PhoneResetController::class, 'resetPassword']);
 
     Route::middleware('auth:sanctum')->group(function(){
         //admin controller
         Route::controller(AdminController::class)->group(function(){ 
             Route::post('/update-profile','UpdateProfile');
+            Route::post('/change-password','ChangePassword');
             Route::post('/create-admin','create');
             Route::get('/get-admin','getAllAdmin');
             Route::get('/show-admin/{id}','showAdmin');

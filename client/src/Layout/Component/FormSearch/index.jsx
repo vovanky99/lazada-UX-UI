@@ -52,7 +52,7 @@ export const FormSearch = forwardRef(function FormSearch(
     setSelect(true);
   };
 
-  /* set search select Country ID */
+  /* set search value ID */
   useEffect(() => {
     handleSetID(ID);
   });
@@ -62,9 +62,9 @@ export const FormSearch = forwardRef(function FormSearch(
     searchValue(searchDebounce);
   }, [searchDebounce]);
 
-  /* handle select country  */
+  /* handle select item value  */
   useEffect(() => {
-    const c = document.querySelectorAll(`.select-option-${classTitle || title}`);
+    const c = document.querySelectorAll(`.option-item-${classTitle || title}`);
     const s = document.querySelector('.search');
 
     const handleClick = (e) => {
@@ -87,7 +87,7 @@ export const FormSearch = forwardRef(function FormSearch(
     };
   });
 
-  /* handle resize tippy search Country */
+  /* handle resize tippy search value */
   useEffect(() => {
     const sl = selectRef.current;
     const op = optionRef.current;
@@ -118,10 +118,10 @@ export const FormSearch = forwardRef(function FormSearch(
             offset={[0, 0]}
             placement="bottom"
             render={(attrs) => (
-              <ul ref={optionRef} className={cx('option')} {...attrs} tabIndex="-1">
+              <ul ref={optionRef} className={cx('option_container')} {...attrs} tabIndex="-1">
                 {data?.length > 0 && useNull ? (
                   <li
-                    className={cx('option-single', `select-option-${classTitle || title}`)}
+                    className={cx('option-single', `option-item-${classTitle || title}`)}
                     data-name={name}
                     data-value=""
                     data-id=""
@@ -134,7 +134,7 @@ export const FormSearch = forwardRef(function FormSearch(
                 {data
                   ? data.map((d) => (
                       <li
-                        className={cx('option-single', `select-option-${classTitle || title}`)}
+                        className={cx('option-single', `option-item-${classTitle || title}`)}
                         data-value={d.name}
                         data-name={name}
                         data-id={d.id}
@@ -154,7 +154,7 @@ export const FormSearch = forwardRef(function FormSearch(
               name={name}
               className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
               onClick={handleClickSelect}
-              placeholder={`Enter Select ${title}`}
+              placeholder={`Please Enter ${title}`}
               value={search}
               onChange={(e) => {
                 handleOnchange(e);
@@ -173,9 +173,9 @@ export const FormSearch = forwardRef(function FormSearch(
             max={max}
             disabled={disabled}
             className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
-            placeholder={`Enter Select ${title}`}
+            placeholder={`Please Enter ${title}`}
             value={search}
-            autoComplete={inputType === 'password' ? `current-password` : ''}
+            autoComplete={inputType === 'password' ? `on` : ''}
             onKeyUp={(e) => {
               if (min && e.target.value < min) {
                 setSearch(min);

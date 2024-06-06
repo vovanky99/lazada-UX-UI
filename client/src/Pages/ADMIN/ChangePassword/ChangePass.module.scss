@@ -1,0 +1,15 @@
+.change_password {
+  margin: auto 0;
+  gap: 10px;
+  &_container {
+    gap: 10px;
+    > div {
+      width: 50%;
+    }
+    .btn_change {
+      button {
+        margin-top: 10px;
+      }
+    }
+  }
+}

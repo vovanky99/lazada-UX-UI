@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use PhpParser\Node\Stmt\Return_;
 
-class ShopOwner extends Model
+class Seller extends Model
 {
     use HasFactory;
-    protected $table = 'shop_owner';
+    protected $table = 'seller';
     protected $filable =[
         'name',
         'email',

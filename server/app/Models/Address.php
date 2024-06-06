@@ -33,7 +33,7 @@ class Address extends Model
     public function admin_t(){
         return $this->hasOne(Admin::class,'temporary_registration','id');
     }
-    public function shop_owner(){
+    public function seller(){
         return $this->hasOne(Address::class,'address_id','id');
     }
 }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shop_owner', function (Blueprint $table) {
+        Schema::create('seller', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email');
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->timestamps();
         });
         Schema::table('shop',function(Blueprint $table){
-            $table->foreignId('shop_owner_id')->nullable()->references('id')->on('address')->onDelete('cascade');;
+            $table->foreignId('seller_id')->nullable()->references('id')->on('seller')->onDelete('cascade');
         });
     }
 
@@ -40,8 +40,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('shop', function (Blueprint $table) {
-            $table->dropForeign(['shop_owner_id']);
+            $table->dropForeign(['seller_id']);
         });
-        Schema::dropIfExists('shop_owner');
+        Schema::dropIfExists('seller');
     }
 };

@@ -174,6 +174,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
         \Laravel\Sanctum\SanctumServiceProvider::class,
+        App\Providers\VonageServiceProvider::class,
         ])->toArray(),
 
     /*

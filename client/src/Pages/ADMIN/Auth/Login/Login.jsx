@@ -1,8 +1,8 @@
 import classNames from 'classnames/bind';
-import styles from './Login.module.scss';
-import Images from '~/components/Images';
+import styles from '~/pages/ADMIN/Auth/Auth.module.scss';
 import Button from '~/components/Button';
 import config from '~/config';
+import AdminLogo from '~/layout/Component/Logo/AdminLogo';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import axios from '~/api/axios';
@@ -19,9 +19,6 @@ export default function Login() {
   const passwordRef = useRef();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [Auth, setAuth] = useState(false);
-  const [usernameMessage, setUsernameMessage] = useState('');
-  const [passwordMessage, setPasswordMessage] = useState('');
   const [messageSubmitError, setMessageSubmitError] = useState('');
 
   /* redirect when admin had login  */
@@ -38,33 +35,29 @@ export default function Login() {
     //validate username
     const handleKeyupUsername = (e) => {
       if (e.target.value === '') {
-        setUsernameMessage(`Username don't empty`);
         e.target.classList.add('border_danger');
       } else {
-        setUsernameMessage('');
         e.target.classList.remove('border_danger');
       }
     };
     //validate password
     const handleKeyupPass = (e) => {
       if (e.target.value === '') {
-        setPasswordMessage(`Password don't empty`);
         e.target.classList.add('border_danger');
       } else {
-        setPasswordMessage('');
         e.target.classList.remove('border_danger');
       }
     };
 
     if (p) {
-      p.addEventListener('keyup', handleKeyupPass);
+      p.addEventListener('change', handleKeyupPass);
     }
     if (u) {
       u.addEventListener('keyup', handleKeyupUsername);
     }
     return () => {
       if (p) {
-        p.removeEventListener('keyup', handleKeyupPass);
+        p.removeEventListener('change', handleKeyupPass);
       }
       if (u) {
         u.removeEventListener('keyup', handleKeyupUsername);
@@ -75,7 +68,7 @@ export default function Login() {
   /* login admin */
   const handleSubmitLogin = (e) => {
     e.preventDefault();
-    if (username !== '' && password !== '' && usernameMessage === '' && passwordMessage === '') {
+    if (username !== '' && password !== '') {
       const LoginAdmin = async () => {
         try {
           axios.get('/sanctum/csrf-cookie');
@@ -100,7 +93,7 @@ export default function Login() {
       <div className={cx('login_content', ' d-flex justify-content-center align-items-center')}>
         <div className={cx('login_content_contain', 'd-flex justify-content-center flex-column')}>
           <h1 className={cx('logo')}>
-            <Images src={require('~/assets/Admin/logoAdmin/lifecircle.png')} />
+            <AdminLogo data />
           </h1>
           <h4 className={cx('hello', 'fw-bold')}>Hello! let's get started</h4>
           <h6>Sign in to continue.</h6>
@@ -117,9 +110,8 @@ export default function Login() {
                 autoComplete="username"
                 placeholder="username"
               />
-              <MessageDanger message={usernameMessage} classNames={cx('message')} />
             </div>
-            <div className={cx('forget-pass', 'form-group d-flex flex-row justify-content-end')}>
+            <div className={cx('forget-pass', 'form-group d-flex flex-row justify-content-end')} tabIndex={-1}>
               <Link to={config.adminRoutes.ResetPassword}>Forgot password?</Link>
             </div>
             <div className={cx('password', 'form-group')}>
@@ -134,12 +126,13 @@ export default function Login() {
                 type="password"
                 placeholder="password"
               />
-              <MessageDanger message={passwordMessage} classNames={cx('message')} />
             </div>
-            <MessageDanger message={messageSubmitError} classNames={cx('message_submit-error')} />
-            <Button className={cx('btn-login', 'text-capitolize')} gradient_primary>
-              Sign In
-            </Button>
+            <div className={cx('form_footer')}>
+              <MessageDanger message={messageSubmitError} classNames={cx('message_submit-error')} />
+              <Button className={cx('btn-login', 'text-capitolize')} gradient_primary>
+                Sign In
+              </Button>
+            </div>
           </form>
         </div>
       </div>

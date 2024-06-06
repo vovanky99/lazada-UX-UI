@@ -52,9 +52,9 @@ export default function MainLayout({ children }) {
           <Header />
           <div className={cx('main_admin', 'd-flex flex-row')}>
             <SideBar />
-            <main className={cx('main-content', 'd-flex flex-column flex-grow-1')}>
+            <main className={cx('main_content', 'd-flex flex-column flex-grow-1')}>
               {breadCrumb ? <BreadCrumb path={path} isAdmin /> : ''}
-              <section className={cx('content')}>{children}</section>
+              <section className={cx('content', 'd-flex flex-column')}>{children}</section>
             </main>
           </div>
         </>

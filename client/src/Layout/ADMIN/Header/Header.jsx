@@ -14,7 +14,7 @@ import config from '~/config';
 import Store from '~/redux/Store';
 import { AdminLogout, setSession } from '~/redux/Actions/Auth';
 import { Logo } from '~/api/Logo/GetLogo';
-import AdminLogo from './Logo/AdminLogo';
+import AdminLogo from '~/layout/Component/Logo/AdminLogo';
 
 const cx = classNames.bind(styles);
 
@@ -27,7 +27,6 @@ export default function Header() {
   const admin = useSelector((state) => state.Auth.admin);
   const [showAccount, setShowAccount] = useState(false);
   const [showMessageNTF, setShowMessageNTF] = useState(false);
-  const [logo, setLogo] = useState(null);
 
   /* handle account tippy click outside */
   const ClickOutsideTippyAccount = () => {
@@ -47,15 +46,6 @@ export default function Header() {
       dispatch(setSession('', 'adminToken'));
     }
   };
-
-  /* get logo */
-  useEffect(() => {
-    Logo()
-      .then((result) => {
-        setLogo(result[0]);
-      })
-      .catch((e) => console.log(e));
-  }, [logo]);
 
   /* account toggle */
   useEffect(() => {
@@ -100,7 +90,7 @@ export default function Header() {
     <header className={cx('header', 'd-flex flex-row')}>
       <Link ref={logoRef} className={cx('header_logo', 'd-flex justify-content-center')} to={'/admin'}>
         <div className={cx('img-contain', 'd-flex align-items-center')}>
-          <AdminLogo data={logo} />
+          <AdminLogo />
         </div>
       </Link>
       <div className={cx('header_navbar-menu', 'd-flex justify-content-between flex-grow-1')}>
@@ -146,6 +136,9 @@ export default function Header() {
                 <div className={cx('account_toggle', 'd-flex flex-column')} {...attrs}>
                   <Button className={cx('btn-profile')} to={config.adminRoutes.ProfileAdmin} transparent>
                     My Profile
+                  </Button>
+                  <Button className={cx('btn-profile')} to={config.adminRoutes.ChangePassword} transparent>
+                    Change Password
                   </Button>
                   <Button className={cx('logout')} transparent onClick={handleClickLogout}>
                     Logout

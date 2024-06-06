@@ -22,8 +22,8 @@ class Shop extends Model
     public function messages(){
         return $this->hasMany(MessagesShop::class,'shop_id');
     }
-    public function shop_owners(){
-        return $this->hasMany(ShopOwner::class,'shop_id');
+    public function sellers(){
+        return $this->hasMany(Seller::class,'shop_id');
     }
     public function products(){
         return $this->hasMany(Products::class,'shop_id');

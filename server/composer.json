@@ -18,7 +18,8 @@
     "laravel/socialite": "^5.12",
     "laravel/tinker": "^2.8",
     "laravel/ui": "^4.4",
-    "laravelcollective/html": "^6.4"
+    "laravelcollective/html": "^6.4",
+    "vonage/client-core": "^4.3"
   },
   "require-dev": {
     "fakerphp/faker": "^1.9.1",

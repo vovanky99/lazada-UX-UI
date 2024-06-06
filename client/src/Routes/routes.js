@@ -44,6 +44,8 @@ import AddManu from '~/pages/ADMIN/Manufacturer/AddManu';
 import EditManu from '~/pages/ADMIN/Manufacturer/Editmanu/EditManu';
 import AllProduct from '~/pages/ADMIN/Product/AllProduct';
 import EditProduct from '~/pages/ADMIN/Product/EditProduct';
+import ChangePassword from '~/pages/ADMIN/ChangePassword';
+import ResetPass from '~/pages/ADMIN/Auth/ResetPass';
 
 const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages },
@@ -201,6 +203,16 @@ const AdminRoutes = [
     path: config.adminRoutes.EditProduct,
     components: EditProduct,
     breadcrumbName: 'Edit Product',
+  },
+  {
+    path: config.adminRoutes.ChangePassword,
+    components: ChangePassword,
+    breadcrumbName: 'Change Password',
+  },
+  {
+    path: config.adminRoutes.ResetPassword,
+    components: ResetPass,
+    breadcrumbName: 'Reset Password',
   },
 ];
 
