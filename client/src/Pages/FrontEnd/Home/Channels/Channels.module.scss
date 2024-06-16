@@ -1,18 +1,18 @@
-@use '../../../../assets/Styles/mixin.scss' as mixin;
+@use '../../../../assets/Styles/Mixin.scss' as Mixin;
 
-@include mixin.breakpoint(lg) {
+@include Mixin.breakpoint(lg) {
 }
 
-@include mixin.breakpoint(md) {
+@include Mixin.breakpoint(md) {
 }
-@include mixin.breakpoint(sm) {
+@include Mixin.breakpoint(sm) {
   .wrapper {
     > div {
       height: 50px !important;
     }
   }
 }
-@include mixin.breakpoint(xs) {
+@include Mixin.breakpoint(xs) {
   .wrapper {
     margin-bottom: 5px !important;
     > div {

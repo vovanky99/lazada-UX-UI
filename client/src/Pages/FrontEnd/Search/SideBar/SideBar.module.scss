@@ -1,6 +1,6 @@
-@use '../../../../assets/Styles/mixin.scss' as mixin;
+@use '../../../../assets/Styles/Mixin.scss' as Mixin;
 
-@include mixin.breakpoint(lg) {
+@include Mixin.breakpoint(lg) {
   div .search-products-container {
     gap: 10px !important;
   }
@@ -8,12 +8,12 @@
     gap: 10px !important;
   }
 }
-@include mixin.breakpoint(md) {
+@include Mixin.breakpoint(md) {
   .search-products-content {
     gap: 10px !important;
   }
 }
-@include mixin.breakpoint(sm) {
+@include Mixin.breakpoint(sm) {
   .wrapper {
     padding-bottom: 20px !important;
     border-bottom: 1px solid #07060608;
@@ -65,7 +65,7 @@
     height: 40px;
   }
 }
-@include mixin.breakpoint(xs) {
+@include Mixin.breakpoint(xs) {
   .wrapper {
     padding-bottom: 10px !important;
     border-bottom: 1px solid #07060608;

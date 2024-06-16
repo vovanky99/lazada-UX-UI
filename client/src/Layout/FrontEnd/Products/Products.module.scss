@@ -1,5 +1,5 @@
-@use '../../../assets/Styles/mixin.scss' as mixin;
-@include mixin.breakpoint(lg) {
+@use '../../../assets/Styles/Mixin.scss' as Mixin;
+@include Mixin.breakpoint(lg) {
   .wrapper {
     gap: 5px !important;
   }
@@ -12,7 +12,7 @@
     align-items: flex-start !important;
   }
 }
-@include mixin.breakpoint(md) {
+@include Mixin.breakpoint(md) {
   .wrapper {
     gap: 5px !important;
   }
@@ -38,12 +38,12 @@
     }
   }
 }
-@include mixin.breakpoint(sm) {
+@include Mixin.breakpoint(sm) {
   .wrapper {
     gap: 5px !important;
   }
 }
-@include mixin.breakpoint(xs) {
+@include Mixin.breakpoint(xs) {
   .wrapper {
     gap: 10px !important;
   }

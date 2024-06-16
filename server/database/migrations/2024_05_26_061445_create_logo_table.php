@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('logo', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->double('type')->comment('1:Admin 2:Life Shop');
+            $table->string('type')->nullable();
             $table->boolean('status')->default(1);
             $table->string('image');
             $table->timestamps();

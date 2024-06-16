@@ -5,17 +5,18 @@
   z-index: 99999;
   background-color: white;
   &_logo {
-    width: 260px;
+    transition: all 500ms ease-in;
+    width: var(--admin_sidebar_width);
     outline: none;
     .img-contain {
-      width: 125px;
+      width: 70%;
       img {
         width: 100%;
       }
     }
   }
   &_navbar-menu {
-    padding: 0 30px;
+    padding: 0 20px;
     .navbar-menu_left {
       .navbar-toggler {
         color: #9c9fa6;

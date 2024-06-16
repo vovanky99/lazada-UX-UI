@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use PhpParser\Node\Stmt\Return_;
+use App\Notifications\SellerVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Seller extends Model
+class Seller extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory;
+    use HasApiTokens, Notifiable;
     protected $table = 'seller';
-    protected $filable =[
+    protected $fillable =[
         'name',
         'email',
-        'username',
         'password',
         'phone_number',
         'avatar',
@@ -29,11 +30,19 @@ class Seller extends Model
         'password',
         'remember_token',
     ];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 
     public function address(){
         return $this->belongsTo(Address::class,'address_id','id');
     }
     public function shop(){
         return $this->belongsTo(Shop::class,'shop_id','id');
+    }
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new SellerVerifyEmail);
     }
 }

@@ -1,20 +1,20 @@
-@use '../../../../assets/Styles/mixin.scss' as mixin;
+@use '../../../../assets/Styles/Mixin.scss' as Mixin;
 
-@include mixin.breakpoint(xxl) {
+@include Mixin.breakpoint(xxl) {
 }
-@include mixin.breakpoint(xxx) {
+@include Mixin.breakpoint(xxx) {
 }
-@include mixin.breakpoint(lg) {
+@include Mixin.breakpoint(lg) {
   .wrapper {
     padding: 0 10px;
   }
 }
-@include mixin.breakpoint(md) {
+@include Mixin.breakpoint(md) {
   .wrapper {
     padding: 0 10px;
   }
 }
-@include mixin.breakpoint(sm) {
+@include Mixin.breakpoint(sm) {
   .wrapper {
     padding: 0 10px;
   }
@@ -24,7 +24,7 @@
     }
   }
 }
-@include mixin.breakpoint(xs) {
+@include Mixin.breakpoint(xs) {
   .cat-content-container {
     width: calc(100% / 4) !important;
     height: 110px !important;

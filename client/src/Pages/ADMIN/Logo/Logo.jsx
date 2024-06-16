@@ -35,7 +35,7 @@ export default function Logo() {
         title="Logo"
         BtnAddRender={
           <>
-            <Button className={cx('btn_add_logo')} type="button" gradient_primary to={config.adminRoutes.AddLogo}>
+            <Button type="button" small gradient_primary to={config.adminRoutes.AddLogo}>
               Add Logo
             </Button>
           </>

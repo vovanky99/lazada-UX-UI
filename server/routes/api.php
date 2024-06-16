@@ -15,11 +15,12 @@ use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\Auth\Client\AuthController as LifeShopController;
 use App\Http\Controllers\Auth\Admin\AdminAuthController;
 use App\Http\Controllers\Auth\Client\SocialAuthController;
+use App\Http\Controllers\Auth\Seller\SellerAuthController;
+use App\Http\Controllers\Auth\Seller\EmailVerifyController as SellerEmailVerifyController;
 use App\Http\Controllers\CheckController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -34,12 +35,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function(){
+Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/logout', [LifeShopController::class,'logout']);
     // get user client shop
     Route::get('/user',[LifeShopController::class,'getUser']);
     //get admin 
     Route::get('/admin',[AdminAuthController::class,'getAmin']);
+    Route::get('/seller',[SellerAuthController::class,'getSeller']);
+    
 });
 
 /* life shop */
@@ -77,14 +80,13 @@ Route::prefix('')->group(function(){
     });
 });
 
-/* admin life circe */
+/* admin life circle */
 Route::prefix('/admin')->group(function(){
     // auth
     Route::post('/admin-login', [AdminAuthController::class,'login']);
     Route::post('/password/phone-number', [PhoneResetController::class, 'requestReset']);
     Route::post('/password/reset-password', [PhoneResetController::class, 'resetPassword']);
-
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         //admin controller
         Route::controller(AdminController::class)->group(function(){ 
             Route::post('/update-profile','UpdateProfile');
@@ -176,6 +178,23 @@ Route::prefix('/admin')->group(function(){
             Route::delete('delete-manu/{id}','delete');
         });
     });
+});
+
+
+/* admin seller */
+Route::prefix('/seller')->group(function () {
+     /* seller verified email */
+
+     Route::controller( SellerAuthController::class)->group(function(){
+        Route::post('/login','login');
+        Route::post('/register','register');
+        Route::post('/rest-password','resetPassword');
+    });
+    Route::get('/email/verify/{id}/{hash}',[SellerEmailVerifyController::class,'verify'])->name('seller.verification.verify');
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::post('/email/verification-notification',[SellerEmailVerifyController::class,'sendVerificationEmail']);   
+    });
+
 });
 
 /* location public*/

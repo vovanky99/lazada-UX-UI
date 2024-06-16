@@ -47,6 +47,12 @@ import EditProduct from '~/pages/ADMIN/Product/EditProduct';
 import ChangePassword from '~/pages/ADMIN/ChangePassword';
 import ResetPass from '~/pages/ADMIN/Auth/ResetPass';
 
+// route Seller
+import SignUpSeller from '~/pages/Seller/Auth/Register';
+import SignInSeller from '~/pages/Seller/Auth/SignIn';
+import VerifiedEmail from '~/pages/Seller/Auth/VerifiedEmail';
+import SellerHome from '~/pages/Seller/Home';
+
 const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages },
   { path: config.routes.signIn, components: SignIn },
@@ -207,15 +213,20 @@ const AdminRoutes = [
   {
     path: config.adminRoutes.ChangePassword,
     components: ChangePassword,
-    breadcrumbName: 'Change Password',
+    breadcrumbName: '',
   },
   {
     path: config.adminRoutes.ResetPassword,
     components: ResetPass,
-    breadcrumbName: 'Reset Password',
+    breadcrumbName: '',
   },
 ];
 
-const ManageShopRoutes = [{}];
+const ShopSellerRoutes = [
+  { path: config.ShopSeller.SignUp, components: SignUpSeller, breadcrumbName: '' },
+  { path: config.ShopSeller.SignIn, components: SignInSeller, breadcrumbName: '' },
+  { path: config.ShopSeller.VerifiedEmail, components: VerifiedEmail, breadcrumbName: '' },
+  { path: config.ShopSeller.Home, components: SellerHome, breadcrumbName: '' },
+];
 
-export { LifeShopRoutes, AdminRoutes, ManageShopRoutes };
+export { LifeShopRoutes, AdminRoutes, ShopSellerRoutes };

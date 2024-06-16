@@ -35,12 +35,20 @@
     }
   }
 }
-.btn_add_logo {
-  padding: 5px 20px;
-}
 .add_logo {
   form {
     gap: 20px;
+    > div {
+      &:first-child {
+        flex-basis: 100%;
+      }
+      &:not(:first-child, :last-child) {
+        flex-basis: calc((100% - 20px) / 2);
+      }
+    }
+    .btn_add_logo {
+      flex-basis: 100%;
+    }
   }
   .image {
     button {

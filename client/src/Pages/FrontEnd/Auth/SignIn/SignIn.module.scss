@@ -1,14 +1,14 @@
-@use '../../../../assets/Styles/mixin.scss' as mixin;
+@use '../../../../assets/Styles/Mixin.scss' as Mixin;
 
-@include mixin.breakpoint(lg) {
+@include Mixin.breakpoint(lg) {
 }
 
-@include mixin.breakpoint(md) {
+@include Mixin.breakpoint(md) {
   .form-container {
     padding: 12px 8rem 24px !important;
   }
 }
-@include mixin.breakpoint(sm) {
+@include Mixin.breakpoint(sm) {
   .header {
     margin-top: 30px !important;
     margin-bottom: 0 !important;
@@ -26,7 +26,7 @@
     }
   }
 }
-@include mixin.breakpoint(xs) {
+@include Mixin.breakpoint(xs) {
   .header {
     margin-top: 30px !important;
     flex-direction: column !important;

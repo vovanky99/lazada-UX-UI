@@ -1,5 +1,5 @@
 import Button from '~/components/Button';
-import { AdminRoutes, LifeShopRoutes, ManageShopRoutes } from '~/routes';
+import { AdminRoutes, LifeShopRoutes, ShopSellerRoutes } from '~/routes';
 import { useEffect, useState } from 'react';
 
 export default function Bread({ path, rolePath, disabled = false, className, children }) {
@@ -21,7 +21,7 @@ export default function Bread({ path, rolePath, disabled = false, className, chi
     } else if (rolePath === 'client') {
       setRoutes(LifeShopRoutes);
     } else {
-      setRoutes(ManageShopRoutes);
+      setRoutes(ShopSellerRoutes);
     }
   }, [path]);
   return (

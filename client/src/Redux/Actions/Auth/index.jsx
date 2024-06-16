@@ -1,4 +1,13 @@
-import { GET_USER, LOGOUT, LOG_ERROR, SOCIAL_AUTH, GET_ADMIN, LOGOUT_ADMIN } from '../Types/index';
+import {
+  GET_USER,
+  LOGOUT,
+  LOG_ERROR,
+  SOCIAL_AUTH,
+  GET_ADMIN,
+  LOGOUT_ADMIN,
+  GET_SELLER,
+  LOGOUT_SELLER,
+} from '../Types/index';
 import axios from '~/api/axios';
 
 //login action
@@ -47,6 +56,21 @@ export const getAdmin = () => {
   };
 };
 
+export const getSeller = () => {
+  return async (dispatch) => {
+    try {
+      csrf();
+      const res = await axios.get('/api/seller');
+      dispatch({
+        type: GET_SELLER,
+        payload: res.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
 export const AuthSocial = (provider) => {
   return async (dispatch) => {
     try {
@@ -87,6 +111,19 @@ export const AdminLogout = () => {
       await axios.post('/api/logout');
       dispatch({
         type: LOGOUT_ADMIN,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export const SellerLogout = () => {
+  return async (dispatch) => {
+    try {
+      await axios.post('/api/logout');
+      dispatch({
+        type: LOGOUT_SELLER,
       });
     } catch (e) {
       console.log(e);

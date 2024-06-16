@@ -18,6 +18,7 @@ export default function AddLogo() {
   const [Logo, setLogo] = useState({
     name: '',
     image: '',
+    type: '',
   });
 
   const handleOnchange = (e) => {
@@ -62,7 +63,7 @@ export default function AddLogo() {
     <>
       <WrapperMain title="add Logo">
         <div className={cx('add_logo', 'd-flex flex-wrap flex-row')}>
-          <form onSubmit={handleCreateLogo} className={cx('d-flex flex-column flex-grow-1')} noValidate>
+          <form onSubmit={handleCreateLogo} className={cx('d-flex flex-row flex-wrap flex-grow-1')} noValidate>
             <FormImage
               className={cx(
                 'image',
@@ -73,11 +74,14 @@ export default function AddLogo() {
               handleSetValue={handleSetValue}
             />
             <FormSearch ref={nameRef} title="name" name="name" useTippy={false} handleOnchange={handleOnchange} />
+            <FormSearch ref={nameRef} title="type" name="type" useTippy={false} handleOnchange={handleOnchange} />
             <MessageSuccess message={messageSuccess} />
             <MessageDanger message={messageError} />
-            <Button type="submit" gradient_primary>
-              Create
-            </Button>
+            <div className={cx('btn_add_logo', 'text-center')}>
+              <Button type="submit" small gradient_primary>
+                Create
+              </Button>
+            </div>
           </form>
         </div>
       </WrapperMain>

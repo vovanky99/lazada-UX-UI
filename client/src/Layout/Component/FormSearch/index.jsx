@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 
 import styles from './FormSearch.module.scss';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { Fragment, forwardRef, useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import Debounce from '~/hooks/Debounce';
 
@@ -12,8 +12,6 @@ export const FormSearch = forwardRef(function FormSearch(
     useTippy = true,
     name,
     valueID,
-    useTodoList = false,
-    todoListGetID = false,
     inputType = 'text',
     inputClass,
     containerClass,
@@ -25,11 +23,13 @@ export const FormSearch = forwardRef(function FormSearch(
     classTitle,
     useLabel = true,
     useNull = false,
+    areaCode,
     handleSetID = () => {},
     searchValue = () => {},
     handleOnchange = () => {},
     handleOnclick = () => {},
     disabled = false,
+    children,
   },
   ref,
 ) {
@@ -42,27 +42,39 @@ export const FormSearch = forwardRef(function FormSearch(
   /* set search value use debounce */
   const searchDebounce = Debounce(search, 500);
 
-  /* handle hide tippy select */
+  /* handle hide tippy */
   const handleClickOutsideSelect = () => {
     setSelect(false);
   };
 
-  /* handle click select */
+  /* handle show tippy */
   const handleClickSelect = () => {
     setSelect(true);
+  };
+
+  /* handle blur when use phone number */
+  const handleBlur = (e) => {
+    let regex = new RegExp(`\\+${areaCode}\\d+`, 'g');
+    if (areaCode) {
+      if (!e.target.value.match(regex) && e.target.value.length === 9 && !e.target.value.match(/[a-zA-Z$]/g)) {
+        setSearch(`+${areaCode}` + e.target.value);
+      } else if (e.target.value.match(/^0/g) && e.target.value.length === 10 && !e.target.value.match(/[a-zA-Z$]/g)) {
+        setSearch(`+${areaCode}` + e.target.value.slice(1, 10));
+      }
+    }
   };
 
   /* set search value ID */
   useEffect(() => {
     handleSetID(ID);
-  });
+  }, [ID]);
 
-  /* set search select value */
+  /* set search value */
   useEffect(() => {
     searchValue(searchDebounce);
   }, [searchDebounce]);
 
-  /* handle select item value  */
+  /* handle item value  */
   useEffect(() => {
     const c = document.querySelectorAll(`.option-item-${classTitle || title}`);
     const s = document.querySelector('.search');
@@ -71,7 +83,6 @@ export const FormSearch = forwardRef(function FormSearch(
       setSearch(e.target.dataset.value);
       setSelect(false);
       handleOnclick(e);
-
       setID(e.target.dataset.id);
       if (s) {
         s.dataset.id = e.target.dataset.id;
@@ -85,7 +96,7 @@ export const FormSearch = forwardRef(function FormSearch(
         c.forEach((e) => e.removeEventListener('click', handleClick));
       }
     };
-  });
+  }, []);
 
   /* handle resize tippy search value */
   useEffect(() => {
@@ -105,7 +116,7 @@ export const FormSearch = forwardRef(function FormSearch(
         window.removeEventListener('resize', handleResize);
       }
     };
-  }, [select]);
+  }, []);
 
   return (
     <>
@@ -165,30 +176,34 @@ export const FormSearch = forwardRef(function FormSearch(
             />
           </Tippy>
         ) : (
-          <input
-            ref={ref}
-            type={inputType}
-            name={name}
-            min={min}
-            max={max}
-            disabled={disabled}
-            className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
-            placeholder={`Please Enter ${title}`}
-            value={search}
-            autoComplete={inputType === 'password' ? `on` : ''}
-            onKeyUp={(e) => {
-              if (min && e.target.value < min) {
-                setSearch(min);
-              }
-              if (max && parseInt(e.target.value) > max) {
-                setSearch(max);
-              }
-            }}
-            onChange={(e) => {
-              handleOnchange(e);
-              setSearch(e.target.value);
-            }}
-          />
+          <Fragment>
+            <input
+              ref={ref}
+              type={inputType}
+              name={name}
+              min={min}
+              max={max}
+              disabled={disabled}
+              className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
+              placeholder={`Please Enter ${title}`}
+              value={search}
+              autoComplete={inputType === 'password' ? `on` : ''}
+              onBlur={handleBlur}
+              onKeyUp={(e) => {
+                if (min && e.target.value < min) {
+                  setSearch(min);
+                }
+                if (max && parseInt(e.target.value) > max) {
+                  setSearch(max);
+                }
+              }}
+              onChange={(e) => {
+                handleOnchange(e);
+                setSearch(e.target.value);
+              }}
+            />
+            {children ? <Fragment>{children}</Fragment> : <></>}
+          </Fragment>
         )}
       </div>
     </>

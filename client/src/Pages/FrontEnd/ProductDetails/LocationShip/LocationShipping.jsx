@@ -20,6 +20,7 @@ import Button from '~/components/Button';
 import axios from '~/api/axios';
 import Checkbox from '~/components/Checkbox';
 import useDebounce from '~/hooks/Debounce';
+import Nominatim from '~/services/Nominatim';
 
 const cx = classNames.bind(styles);
 
@@ -146,22 +147,17 @@ export default function LocationShipping({ changeLocationValue, onClick }) {
     };
   }, [searchAddressValue, searchAddressTippy]);
 
-  /* handle get current location  */
-  const getAddress = async (lat, long) => {
-    try {
-      const res = await axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${long}&format=json`);
-      setAddress(res.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
   useEffect(() => {
     const location = locationRef.current;
     const getLocation = (e) => {
       e.stopPropagation();
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(function (position) {
-          getAddress(position.coords.latitude, position.coords.longitude);
+          Nominatim(position.coords.latitude, position.coords.longitude)
+            .then((result) => {
+              setAddress(result);
+            })
+            .catch((e) => console.log(e));
         });
       } else {
         console.log('Geolocation is not available in your browser.');

@@ -1,1 +1,1 @@
-export { LifeShopRoutes, AdminRoutes, ManageShopRoutes } from './routes';
+export { LifeShopRoutes, AdminRoutes, ShopSellerRoutes } from './routes';

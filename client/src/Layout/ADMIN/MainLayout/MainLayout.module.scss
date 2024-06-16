@@ -32,7 +32,6 @@
           border: 1px solid var(--border_color_admin);
         }
         thead {
-          // width: calc(100% - 5px) !important;
           text-transform: capitalize;
           th {
             font-size: 1.5rem;
@@ -71,16 +70,6 @@
           &::-webkit-scrollbar {
             width: 0;
           }
-          // &::-webkit-scrollbar-thumb {
-          //   background-color: var(--scroll_bar_color);
-          //   border-radius: 10px;
-          //   &:hover {
-          //     background-color: var(--scroll_bar_hover_color);
-          //   }
-          // }
-          // &::-webkit-scrollbar-track {
-          //   background-color: var(--scroll_bar_background);
-          // }
         }
       }
     }

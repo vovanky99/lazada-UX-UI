@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Repositories\PasswordResetphoneRepository;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -21,12 +22,18 @@ class PhoneResetController extends Controller{
         $this->PasswordResetRepo = $PasswordResetRepo;
     }
     public function requestReset(Request $request){
-        $request->validate(['phone_number'=>'required|exists:admin,phone_number']);
-        $user = Admin::where('phone_number',$request->phone_number)->first();
-        $token = $this->PasswordResetRepo->createToken($user->phone_number);
-        $message = "Your password reset code is: $token";
-        $this->vonageClient->sms()->send(new SMS($user->phone_number,env('NEXMO_FROM_NUMBER'),$message));
-        return response()->json(['token'=>$token]);
+        try{
+            $request->validate(['phone_number'=>'required|exists:admin,phone_number']);
+            $user = Admin::where('phone_number',$request->phone_number)->first();
+            $token = $this->PasswordResetRepo->createToken($user->phone_number);
+            $message = "Your password reset code is: $token";
+            $this->vonageClient->sms()->send(new SMS($user->phone_number,env('NEXMO_FROM_NUMBER'),$message));
+            return response()->json(['token'=>$token]);
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
+
     }
     public function resetPassword(Request $request){
         $request->validate([

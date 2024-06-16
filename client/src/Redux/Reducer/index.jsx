@@ -1,9 +1,11 @@
-import { GET_ADMIN, GET_USER, LOGOUT, LOG_ERROR, REGISTER_ERROR, LOGOUT_ADMIN } from '../Actions/Types';
+import { GET_ADMIN, GET_USER, LOGOUT, LOG_ERROR, LOGOUT_ADMIN, GET_SELLER, LOGOUT_SELLER } from '../Actions/Types';
 
 export const initialState = {
   isAuthenticated: false,
   user: null,
   adminAuthenticated: false,
+  sellerAuthenticated: false,
+  seller: null,
   admin: null,
   message: null,
 };
@@ -14,6 +16,12 @@ export default function AuthReducer(state = initialState, action) {
         ...state,
         user: action.payload,
         isAuthenticated: true,
+      };
+    case GET_SELLER:
+      return {
+        ...state,
+        seller: action.payload,
+        sellerAuthenticated: true,
       };
     case GET_ADMIN:
       return {
@@ -29,12 +37,13 @@ export default function AuthReducer(state = initialState, action) {
         admin: null,
         adminAuthenticated: false,
       };
-    case LOG_ERROR:
+    case LOGOUT_SELLER:
       return {
         ...state,
-        message: action.payload,
+        seller: null,
+        sellerAuthenticated: false,
       };
-    case REGISTER_ERROR:
+    case LOG_ERROR:
       return {
         ...state,
         message: action.payload,

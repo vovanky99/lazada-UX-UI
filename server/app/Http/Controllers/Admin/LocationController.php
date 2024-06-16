@@ -44,9 +44,7 @@ class LocationController extends Controller {
             return response()->json(['error'=>'Country Existed!']);
         }
         else{
-            Country::create([
-                'name'=>$name,
-            ]);
+            Country::create($request->all());
             return response()->json(['success'=>'Create Success!']);
         }
     }
@@ -58,10 +56,7 @@ class LocationController extends Controller {
             return response()->json(['error'=>'City of Country Existed!']);
         }
         else{
-            City::create([
-                'name'=>$name,
-                'country_id'=>$country_id,
-            ]);
+            City::create($request->all());
             return response()->json(['success'=>'Create Success!']);
         }
         
@@ -75,11 +70,7 @@ class LocationController extends Controller {
             return response()->json(['error'=>'District of City Existed!']);
         }
         else{
-            District::create([
-                'name'=>$name,
-                'fee_ship'=>$fee_ship,
-                'city_id'=>$city_id,
-            ]);
+            District::create($request->all());
             return response()->json(['success'=>'Create Success!']);
         }
         
@@ -92,15 +83,9 @@ class LocationController extends Controller {
             return response()->json(['error'=>'District of City Existed!']);
         }
         else{
-            Ward::create([
-                'name'=>$name,
-                'district_id'=>$district_id,
-            ]);
+            Ward::create($request->all());
             return response()->json(['success'=>'Create Success!']);
         }
-        
-    }
-    public function createAddress(Request $request){
         
     }
     public function getCountry(Request $request){
@@ -126,11 +111,6 @@ class LocationController extends Controller {
         $ward = Ward::where('name','like',$name.'%')->where('district_id',$district_id)->orderBy('name','ASC')->get();
         return response()->json($ward);
     }
-    public function getAddress(Request $request){
-        
-    }
-
-   
 
     public function deleteLocation($type,$id){
         if($type=='ward'){

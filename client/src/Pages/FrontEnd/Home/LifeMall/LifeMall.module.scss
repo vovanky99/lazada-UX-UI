@@ -1,15 +1,15 @@
-@use '../../../../assets/Styles/mixin.scss' as mixin;
+@use '../../../../assets/Styles/Mixin.scss' as Mixin;
 
-@include mixin.breakpoint(xxl) {
+@include Mixin.breakpoint(xxl) {
 }
-@include mixin.breakpoint(xxx) {
+@include Mixin.breakpoint(xxx) {
 }
-@include mixin.breakpoint(lg) {
+@include Mixin.breakpoint(lg) {
   .lfc-container {
     padding: 30px 10px 0px !important;
   }
 }
-@include mixin.breakpoint(md) {
+@include Mixin.breakpoint(md) {
   .lfc-container {
     padding: 30px 10px 0px !important;
   }
@@ -20,7 +20,7 @@
     }
   }
 }
-@include mixin.breakpoint(sm) {
+@include Mixin.breakpoint(sm) {
   .lfc-container {
     padding: 30px 10px 0px !important;
   }
@@ -31,7 +31,7 @@
     }
   }
 }
-@include mixin.breakpoint(xs) {
+@include Mixin.breakpoint(xs) {
   .lfc-container {
     padding: 20px 10px 0px !important;
   }

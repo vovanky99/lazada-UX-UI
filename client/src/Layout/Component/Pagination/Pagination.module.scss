@@ -1,6 +1,6 @@
-@use '../../../assets/Styles/mixin.scss' as mixin;
+@use '../../../assets/Styles/Mixin.scss' as Mixin;
 
-@include mixin.breakpoint(xs) {
+@include Mixin.breakpoint(xs) {
   .pagination-item {
     padding: 0 6px !important;
     min-width: auto !important;

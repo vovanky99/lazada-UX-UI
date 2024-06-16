@@ -54,4 +54,13 @@ export const adminRoutes = {
   Role: '/admin/role',
 };
 
+export const ShopSeller = {
+  SignUp: '/seller/register',
+  SignIn: '/seller/login',
+  ResetPass: '/seller/reset-password',
+  ChangePassword: '/seller/change-password',
+  Home: '/seller',
+  VerifiedEmail: '/seller/verify-email',
+};
+
 export default routes;

@@ -10,7 +10,7 @@ export default function MessageSuccess({ message, classNames }) {
       {message ? (
         <div className={cx('message', classNames + ' text-center text-success text-capitalize')}>{message}</div>
       ) : (
-        ''
+        <></>
       )}
     </>
   );

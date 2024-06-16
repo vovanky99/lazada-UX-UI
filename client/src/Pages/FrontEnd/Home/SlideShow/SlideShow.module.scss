@@ -1,24 +1,24 @@
-@use '../../../../assets/Styles/mixin.scss' as mixin;
+@use '../../../../assets/Styles/Mixin.scss' as Mixin;
 
-@include mixin.breakpoint(xxx) {
+@include Mixin.breakpoint(xxx) {
   .banner-container-inner {
     width: var(--media_width) !important;
     margin: 0 auto;
   }
 }
-@include mixin.breakpoint(xxl) {
+@include Mixin.breakpoint(xxl) {
   .banner-container-inner {
     width: var(--media_width) !important;
     margin: 0 auto;
   }
 }
-@include mixin.breakpoint(xl) {
+@include Mixin.breakpoint(xl) {
   .banner-container-inner {
     width: var(--media_width) !important;
     margin: 0 auto;
   }
 }
-@include mixin.breakpoint(lg) {
+@include Mixin.breakpoint(lg) {
   .wrapper {
     margin-bottom: 10px !important;
   }
@@ -35,7 +35,7 @@
     }
   }
 }
-@include mixin.breakpoint(md) {
+@include Mixin.breakpoint(md) {
   .wrapper {
     margin-bottom: 10px !important;
   }
@@ -55,7 +55,7 @@
     padding: 0 10px;
   }
 }
-@include mixin.breakpoint(sm) {
+@include Mixin.breakpoint(sm) {
   .wrapper {
     margin-bottom: 5px !important;
   }
@@ -72,7 +72,7 @@
     }
   }
 }
-@include mixin.breakpoint(xs) {
+@include Mixin.breakpoint(xs) {
   .wrapper {
     margin-bottom: 5px !important;
   }

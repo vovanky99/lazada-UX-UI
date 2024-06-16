@@ -24,7 +24,6 @@ export default function TollEdit({ data, type, namePath, handleDelete = () => {}
           Delete
         </Button>
       </div>
-      ;
     </>
   );
 }

@@ -13,18 +13,17 @@ return new class extends Migration
     {
         Schema::create('seller', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('email');
-            $table->string('username');
-            $table->string('password');
-            $table->string('phone_number');
+            $table->string('password')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('avatar')->nullable();
             $table->boolean('status')->default(1);
             $table->dateTime('birthday')->nullable();
             $table->string('descriptions')->nullable();
-            $table->boolean('is_owner')->default(1)->comment('0:is owner 1:is manager 2:is member');
-            $table->foreignId('address_id')->references('id')->on('address')->onDelete('cascade');
-            $table->foreignId('shop_id')->references('id')->on('shop')->onDelete('cascade');
+            $table->boolean('is_owner')->default(1);
+            $table->foreignId('address_id')->nullable()->references('id')->on('address')->onDelete('cascade');
+            $table->foreignId('shop_id')->nullable()->references('id')->on('shop')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

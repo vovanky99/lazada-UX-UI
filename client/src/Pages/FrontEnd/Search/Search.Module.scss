@@ -1,6 +1,6 @@
-@use '../../../assets/Styles/mixin.scss' as mixin;
+@use '../../../assets/Styles/Mixin.scss' as Mixin;
 
-@include mixin.breakpoint(lg) {
+@include Mixin.breakpoint(lg) {
   .search-wrapper {
     padding: 0 10px;
   }
@@ -14,7 +14,7 @@
     width: calc(78% - 25px);
   }
 }
-@include mixin.breakpoint(md) {
+@include Mixin.breakpoint(md) {
   .search-wrapper {
     padding: 0 10px;
   }
@@ -29,7 +29,7 @@
     width: calc(75% - 10px);
   }
 }
-@include mixin.breakpoint(sm) {
+@include Mixin.breakpoint(sm) {
   .search-wrapper {
     padding: 0 10px;
   }
@@ -45,7 +45,7 @@
     width: 100% !important;
   }
 }
-@include mixin.breakpoint(xs) {
+@include Mixin.breakpoint(xs) {
   .search-wrapper {
     padding: 0 10px;
   }

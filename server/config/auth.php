@@ -50,7 +50,12 @@ return [
             'driver'=> 'session',
             'provider'=>'admin',
             'hash' => false,
-        ]
+        ],
+        'seller'=>[
+            'driver'=>'session',
+            'provider'=>'seller',
+            'hash'=>false,
+        ],
     ],
 
     /*
@@ -79,10 +84,10 @@ return [
             'driver'=>'eloquent',
             'model'=> App\Models\Admin::class,
         ],
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'seller' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Seller::class,
+        ],
     ],
 
     /*
@@ -113,6 +118,12 @@ return [
         ],
         'admin' => [
             'provider' => 'admin',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'seller' => [
+            'provider' => 'seller',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+
 use App\Http\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;

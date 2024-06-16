@@ -12,7 +12,6 @@ import style from './register.module.scss';
 import routes from '~/config/routes';
 import DateOption from '~/layout/Component/DateOption';
 import Button from '~/components/Button';
-import { REGISTER_ERROR } from '~/redux/Actions/Types';
 
 const cx = classNames.bind(style);
 const csrf = () => axios.get('/sanctum/csrf-cookie');
@@ -91,7 +90,7 @@ export default function Register() {
   useEffect(() => {
     let pass = passRef.current;
     const handleKeyUpPass = (e) => {
-      if (e.target.value == '') {
+      if (e.target.value === '') {
         setPasswordValidate(`You can't leave this empty`);
         pass.classList.add('danger_validated');
       } else if (e.target.value.length < 6 || e.target.value.length > 20) {
@@ -116,7 +115,7 @@ export default function Register() {
   useEffect(() => {
     let name = nameRef.current;
     const handleKeyUpName = (e) => {
-      if (e.target.value == '') {
+      if (e.target.value === '') {
         setNameValidate(`You can't leave this empty`);
         name.classList.add('danger_validated');
       } else if (e.target.value.length < 6 || e.target.value.length > 20) {
@@ -146,7 +145,7 @@ export default function Register() {
     let g = genderRef.current;
     const handleSubmitForm = (e) => {
       e.preventDefault();
-      if (gender == '') {
+      if (gender === '') {
         setGenderValidate('Please select gender');
         g.classList.add('danger_validated');
       } else if (m < 14) {
@@ -158,32 +157,32 @@ export default function Register() {
         g.classList.remove('danger_validated');
         setGenderValidate('');
       }
-      if (email == '') {
+      if (email === '') {
         setEmailValidate('please check email!');
       } else {
         setEmailValidate('');
       }
-      if (password == '') {
+      if (password === '') {
         setPasswordValidate('please check password!');
       } else {
         setPasswordValidate('');
       }
-      if (name == '') {
+      if (name === '') {
         setNameValidate('please check password!');
       } else {
         setNameValidate('');
       }
       if (
-        email != '' &&
-        password != '' &&
-        gender != '' &&
-        birthday != '' &&
-        name != '' &&
-        emailValid == '' &&
-        passwordValid == '' &&
-        genderValid == '' &&
-        birthdayValid == '' &&
-        nameValid == ''
+        email !== '' &&
+        password !== '' &&
+        gender !== '' &&
+        birthday !== '' &&
+        name !== '' &&
+        emailValid === '' &&
+        passwordValid === '' &&
+        genderValid === '' &&
+        birthdayValid === '' &&
+        nameValid === ''
       ) {
         const register = async (dispatch) => {
           try {
@@ -193,12 +192,7 @@ export default function Register() {
               localStorage.setItem('token', result.data.token);
               navigate(-1);
             }
-          } catch (e) {
-            dispatch({
-              type: REGISTER_ERROR,
-              payload: e.message,
-            });
-          }
+          } catch (e) {}
         };
         register();
       }
@@ -238,7 +232,7 @@ export default function Register() {
         gg.removeEventListener('click', handleGoogleAuth);
       }
     };
-  }, [fbRef, ggRef]);
+  });
 
   return (
     <div className={cx('wrapper')}>
@@ -268,7 +262,7 @@ export default function Register() {
                 type="email"
                 placeholder="Email..."
               />
-              <span className="text-danger fs-5">{emailValid != '' ? emailValid : ''}</span>
+              <span className="text-danger fs-5">{emailValid !== '' ? emailValid : ''}</span>
             </div>
             <div className={cx('password', 'mb-4 form-group')}>
               <label className="fs-5 form-label">Password*</label>
@@ -286,7 +280,7 @@ export default function Register() {
               <div onClick={handleShowHidePass} className={cx('show-hide-pass')}>
                 {showPass ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}
               </div>
-              <span className="text-danger fs-5">{passwordValid != '' ? passwordValid : ''}</span>
+              <span className="text-danger fs-5">{passwordValid !== '' ? passwordValid : ''}</span>
             </div>
             <div className={cx('birthday_gender', 'mb-4 d-flex justify-content-between gap-3 form-group')}>
               <div className={cx('birthday', 'col-9 form-group')}>
@@ -299,7 +293,7 @@ export default function Register() {
                   selectClassName={cx('select_date', 'py-3')}
                   className={cx('container_select_date', 'mb-1')}
                 />
-                <span className="text-danger fs-5">{birthdayValid != '' ? birthdayValid : ''}</span>
+                <span className="text-danger fs-5">{birthdayValid !== '' ? birthdayValid : ''}</span>
               </div>
               <div className={cx('gender', 'form-group')}>
                 <label className="fs-5 form-label">Gender</label>
@@ -314,7 +308,7 @@ export default function Register() {
                   <option value="0">Female</option>
                   <option value="1">Male</option>
                 </select>
-                <span className="text-danger fs-5">{genderValid != '' ? genderValid : ''}</span>
+                <span className="text-danger fs-5">{genderValid !== '' ? genderValid : ''}</span>
               </div>
             </div>
           </div>
@@ -332,7 +326,7 @@ export default function Register() {
                 type="text"
                 placeholder="First Last"
               />
-              <span className="text-danger fs-5">{nameValid != '' ? nameValid : ''}</span>
+              <span className="text-danger fs-5">{nameValid !== '' ? nameValid : ''}</span>
             </div>
             <Button className={cx('btn_submit', 'form-control text-white py-3 fs-4 mb-2')} type="submit">
               Register

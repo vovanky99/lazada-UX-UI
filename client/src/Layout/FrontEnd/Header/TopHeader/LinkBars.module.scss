@@ -1,19 +1,11 @@
-@use '../../../../assets/Styles/mixin.scss' as mixin;
+@use '../../../../assets/Styles/Mixin.scss' as Mixin;
 
-@include mixin.breakpoint(lg) {
+@include Mixin.breakpoint(lg) {
   .link-list {
     padding-right: 10px;
   }
 }
-@include mixin.breakpoint(md) {
-  .link-list {
-    padding-right: 10px;
-  }
-  .cursor {
-    font-size: 1.2rem !important;
-  }
-}
-@include mixin.breakpoint(sm) {
+@include Mixin.breakpoint(md) {
   .link-list {
     padding-right: 10px;
   }
@@ -21,7 +13,15 @@
     font-size: 1.2rem !important;
   }
 }
-@include mixin.breakpoint(xs) {
+@include Mixin.breakpoint(sm) {
+  .link-list {
+    padding-right: 10px;
+  }
+  .cursor {
+    font-size: 1.2rem !important;
+  }
+}
+@include Mixin.breakpoint(xs) {
   .link-list {
     padding-right: 10px;
   }

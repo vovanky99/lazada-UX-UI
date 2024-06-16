@@ -1,14 +1,16 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import ThemeProvider from 'react-bootstrap/ThemeProvider';
 
-import '~/assets/Styles/GlobalStyles.module.scss';
-import '~/assets/Styles//AddStyles.scss';
+import '~/assets/Styles/Reset.scss';
+import '~/assets/Styles/Variable.scss';
+import '~/assets/Styles/Styles.scss';
 import '~/assets/Styles/LazyLoad.scss';
 
-import { LifeShopRoutes, AdminRoutes } from '~/routes';
+import { LifeShopRoutes, AdminRoutes, ShopSellerRoutes } from '~/routes';
 import React from 'react';
 import LifeShopLayout from '~/layout/FrontEnd/MainLayout';
 import AdminLayout from '~/layout/ADMIN/MainLayout';
+import SellerLayout from '~/layout/ShopSeller/MainLayout';
 import config from './config';
 
 function App() {
@@ -36,7 +38,11 @@ function App() {
       })}
       {AdminRoutes.map((route, index) => {
         const Pages = route.components;
-        if (route.path === `${config.adminRoutes.SignIn}` || route.path === `${config.adminRoutes.ResetPassword}`) {
+        if (
+          route.path === `${config.adminRoutes.SignIn}` ||
+          route.path === `${config.adminRoutes.ResetPassword}` ||
+          route.path === `${config.ShopSeller.VerifiedEmail}`
+        ) {
           return <Route key={index} path={route.path} element={<Pages />} />;
         }
         return (
@@ -47,6 +53,28 @@ function App() {
               <AdminLayout>
                 <Pages />
               </AdminLayout>
+            }
+          />
+        );
+      })}
+      {ShopSellerRoutes.map((route, index) => {
+        const Pages = route.components;
+        if (
+          route.path === `${config.ShopSeller.SignIn}` ||
+          route.path === `${config.ShopSeller.SignUp}` ||
+          route.path === `${config.ShopSeller.ResetPass}` ||
+          route.path === `${config.ShopSeller.VerifiedEmail}`
+        ) {
+          return <Route key={index} path={route.path} element={<Pages />} />;
+        }
+        return (
+          <Route
+            key={index}
+            path={route.path}
+            element={
+              <SellerLayout>
+                <Pages />
+              </SellerLayout>
             }
           />
         );

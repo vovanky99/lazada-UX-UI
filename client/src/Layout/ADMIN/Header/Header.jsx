@@ -47,6 +47,9 @@ export default function Header() {
     }
   };
 
+  /* handle tonggle menu side bar and logo */
+  const handleToggleMenu = (e) => {};
+
   /* account toggle */
   useEffect(() => {
     const b = btnAccountRef.current;
@@ -95,7 +98,7 @@ export default function Header() {
       </Link>
       <div className={cx('header_navbar-menu', 'd-flex justify-content-between flex-grow-1')}>
         <div className={cx('navbar-menu_left', 'd-flex')}>
-          <Button className={cx('navbar-toggler')} ref={navMenuRef} transparent>
+          <Button className={cx('navbar-toggler')} ref={navMenuRef} onClick={handleToggleMenu} transparent>
             <FontAwesomeIcon icon={faBars} />
           </Button>
         </div>

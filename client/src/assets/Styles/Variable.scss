@@ -1,0 +1,33 @@
+* {
+  // use general
+  --scroll_bar_color: #a3a3a3;
+  --scroll_bar_hover_color: #969595;
+  --scroll_bar_background: #f5f5f5;
+  --scroll_bar_width: 5px;
+  --background_color: #f5f5f5;
+  --primary: var(--default_color);
+  --black: #000;
+  --grey: #9e9e9e;
+  --white: #fff;
+  --orange: #ffa500;
+  --red: #ff0000;
+  --yellow: #ffff00;
+  --green: #008000;
+  --blue: #0000ff;
+  --background_home_grey: #f5f5f5;
+  --default_color: #ee4d2d;
+  --media_width: 1188px;
+  --media_width_signin: 810px;
+
+  //life shop
+  --border_danger_client: #f44336;
+
+  //shop seller
+
+  // admin
+  --admin_sidebar_width: 240px;
+  --border_color_admin: #e2e2e2;
+  --box_shadow_admin: #c0bebecc;
+  --input_focus_admin: #80bdff;
+  --border_danger: #ff0000;
+}

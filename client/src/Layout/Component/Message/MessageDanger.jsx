@@ -10,7 +10,7 @@ export default function MessageDanger({ message, classNames }) {
       {message ? (
         <div className={cx('message', classNames + ' text-center text-danger text-capitalize')}>{message}</div>
       ) : (
-        ''
+        <></>
       )}
     </>
   );

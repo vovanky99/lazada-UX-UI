@@ -27,12 +27,13 @@ class LogoController extends Controller{
          return response()->json(['success'=>'deleted success!']);
     }
     public function getLogo(){
-        if(request()->get('type') == 'lifeshop'){
-            $logo = Logo::where('type',2)->first();
-        return response()->json($logo);
+        $type =request()->get('type');
+        if( $type){
+            $logo = Logo::where('type',$type)->first();
+            return response()->json($logo);
         }
         else{
-            $logo = Logo::where('type',1)->first();
+            $logo = Logo::where('type','=','admin')->first();
             return response()->json($logo);
         }
 
