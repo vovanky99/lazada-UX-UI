@@ -57,7 +57,8 @@ export const adminRoutes = {
 export const ShopSeller = {
   SignUp: '/seller/register',
   SignIn: '/seller/login',
-  ResetPass: '/seller/reset-password',
+  LinkResetPass: '/seller/password/reset-password',
+  ResetPass: '/seller/password/reset',
   ChangePassword: '/seller/change-password',
   Home: '/seller',
   VerifiedEmail: '/seller/verify-email',

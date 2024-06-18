@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\EmailResetPassword;
 use App\Notifications\SellerVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Seller extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable ;
     protected $table = 'seller';
     protected $fillable =[
         'name',
@@ -44,5 +45,8 @@ class Seller extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new SellerVerifyEmail);
+    }
+    public function sendEmailResetPassword($token,$email){
+        $this->notify(new EmailResetPassword($token,$email));
     }
 }

@@ -63,7 +63,8 @@ function App() {
           route.path === `${config.ShopSeller.SignIn}` ||
           route.path === `${config.ShopSeller.SignUp}` ||
           route.path === `${config.ShopSeller.ResetPass}` ||
-          route.path === `${config.ShopSeller.VerifiedEmail}`
+          route.path === `${config.ShopSeller.VerifiedEmail}` ||
+          route.path === `${config.ShopSeller.LinkResetPass}`
         ) {
           return <Route key={index} path={route.path} element={<Pages />} />;
         }

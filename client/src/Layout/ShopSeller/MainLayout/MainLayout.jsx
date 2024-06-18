@@ -23,13 +23,15 @@ export default function MainLayout({ children }) {
     if (token) {
       Store.dispatch(setSession(token, 'sellerToken'));
       dispatch(getSeller());
+    } else {
+      navigate(config.ShopSeller.SignIn);
     }
   }, []);
-  // useEffect(() => {
-  //   if (!seller.email_verified_at) {
-  //     navigate(config.ShopSeller.VerifiedEmail);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!seller?.email_verified_at) {
+      navigate(config.ShopSeller.VerifiedEmail);
+    }
+  }, []);
   return (
     <>
       <Header />

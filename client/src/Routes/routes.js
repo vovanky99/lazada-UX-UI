@@ -50,8 +50,10 @@ import ResetPass from '~/pages/ADMIN/Auth/ResetPass';
 // route Seller
 import SignUpSeller from '~/pages/Seller/Auth/Register';
 import SignInSeller from '~/pages/Seller/Auth/SignIn';
-import VerifiedEmail from '~/pages/Seller/Auth/VerifiedEmail';
-import SellerHome from '~/pages/Seller/Home';
+import VerifiedEmailSeller from '~/pages/Seller/Auth/VerifiedEmail';
+import HomeSeller from '~/pages/Seller/Home';
+import LinkResetPassSeller from '~/pages/Seller/Auth/LinkResetPassword';
+import ResetPassSeller from '~/pages/Seller/Auth/ResetPassword';
 
 const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages },
@@ -225,8 +227,10 @@ const AdminRoutes = [
 const ShopSellerRoutes = [
   { path: config.ShopSeller.SignUp, components: SignUpSeller, breadcrumbName: '' },
   { path: config.ShopSeller.SignIn, components: SignInSeller, breadcrumbName: '' },
-  { path: config.ShopSeller.VerifiedEmail, components: VerifiedEmail, breadcrumbName: '' },
-  { path: config.ShopSeller.Home, components: SellerHome, breadcrumbName: '' },
+  { path: config.ShopSeller.VerifiedEmail, components: VerifiedEmailSeller, breadcrumbName: '' },
+  { path: config.ShopSeller.Home, components: HomeSeller, breadcrumbName: '' },
+  { path: config.ShopSeller.LinkResetPass, components: LinkResetPassSeller, breadcrumbName: '' },
+  { path: config.ShopSeller.ResetPass, components: ResetPassSeller, breadcrumbName: '' },
 ];
 
 export { LifeShopRoutes, AdminRoutes, ShopSellerRoutes };

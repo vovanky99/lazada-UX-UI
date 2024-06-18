@@ -31,8 +31,10 @@ export const getUser = () => {
 /* set session for auth */
 export const setSession = (accessToken, name) => {
   return async (dispatch) => {
-    if (accessToken) {
+    if (!localStorage.getItem(`${name}`)) {
       localStorage.setItem(`${name}`, accessToken);
+    }
+    if (accessToken) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     } else {
       localStorage.removeItem(`${name}`);

@@ -188,7 +188,8 @@ Route::prefix('/seller')->group(function () {
      Route::controller( SellerAuthController::class)->group(function(){
         Route::post('/login','login');
         Route::post('/register','register');
-        Route::post('/rest-password','resetPassword');
+        Route::post('/password/email','sendResetLinkEmail');
+        Route::post('/password/reset','reset')->name('password.reset');
     });
     Route::get('/email/verify/{id}/{hash}',[SellerEmailVerifyController::class,'verify'])->name('seller.verification.verify');
     Route::middleware(['auth:sanctum'])->group(function () {

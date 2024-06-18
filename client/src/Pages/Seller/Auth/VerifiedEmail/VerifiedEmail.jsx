@@ -37,6 +37,9 @@ export default function VerifiedEmail() {
     if (seller?.email_verified_at) {
       navigate(`${config.ShopSeller.Home}`);
     }
+    if (!seller) {
+      navigate(config.ShopSeller.SignIn);
+    }
   };
   checkEmailVerified();
 

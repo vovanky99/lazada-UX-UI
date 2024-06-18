@@ -83,4 +83,92 @@
       line-height: 20px;
     }
   }
+  .seller_reset_form {
+    gap: 10px;
+  }
+}
+
+.seller_reset_email {
+  width: 100vw;
+  height: 100vh;
+  &_content {
+    width: 600px;
+    height: auto;
+    padding: 25px;
+    box-shadow: 0px 0px 3px var(--box_shadow_admin);
+    gap: 20px;
+    border-radius: 10px;
+    h3 {
+      font-size: 2.1rem;
+      font-weight: 600;
+      color: var(--black);
+    }
+    .seller_notification {
+      font-size: 1.5rem;
+      line-height: 20px;
+    }
+    .seller_input_group {
+      gap: 10px;
+      input {
+        padding-top: 7px !important;
+        padding-bottom: 7px !important;
+      }
+      .show-hide-password {
+        position: absolute;
+        font-size: 1.3rem;
+        color: #bababa;
+        right: 10px;
+        top: 50%;
+        transform: translateY(25%);
+        svg {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .seller_reset_form {
+    gap: 10px;
+  }
+}
+
+.seller_Link_reset_password {
+  width: 100vw;
+  height: 100vh;
+  &_content {
+    width: 400px;
+    height: 300px;
+    padding: 25px;
+    box-shadow: 0px 0px 3px var(--box_shadow_admin);
+    gap: 20px;
+    border-radius: 10px;
+    gap: 10px;
+
+    h3 {
+      font-size: 2.1rem;
+      font-weight: 600;
+      color: var(--black);
+    }
+    input {
+      padding-top: 7px !important;
+      padding-bottom: 7px !important;
+    }
+  }
+  .seller_reset_form {
+    gap: 20px;
+  }
+  .seller_back_login {
+    font-size: 1.3rem;
+    a {
+      padding: 0;
+      margin-left: 5px;
+      font-size: 1.4rem;
+      color: var(--primary);
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
+  }
+}
+.message {
+  height: 15px;
 }

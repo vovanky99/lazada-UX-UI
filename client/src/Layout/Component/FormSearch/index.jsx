@@ -4,6 +4,7 @@ import styles from './FormSearch.module.scss';
 import { Fragment, forwardRef, useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import Debounce from '~/hooks/Debounce';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
@@ -14,6 +15,8 @@ export const FormSearch = forwardRef(function FormSearch(
     valueID,
     inputType = 'text',
     inputClass,
+    useForgetPassword = false,
+    forgetLink,
     containerClass,
     Value,
     min,
@@ -121,7 +124,20 @@ export const FormSearch = forwardRef(function FormSearch(
   return (
     <>
       <div ref={selectRef} className={cx('select-container', containerClass || 'form-group flex-grow-1')}>
-        {useLabel ? <label className="form-label text-capitalize">{title}</label> : ''}
+        {useLabel ? (
+          <label className="form-label text-capitalize">
+            {title}
+            {useForgetPassword ? (
+              <Button to={forgetLink} className={cx('p-0')} transparent>
+                <strong>Forgot Password?</strong>
+              </Button>
+            ) : (
+              ''
+            )}
+          </label>
+        ) : (
+          ''
+        )}
         {useTippy ? (
           <Tippy
             interactive

@@ -8,11 +8,9 @@ import { FormSearch } from '~/layout/Component/FormSearch';
 import Button from '~/components/Button';
 import config from '~/config';
 import MessageText from '~/layout/Component/Message/MessageText';
-import { RegisterSeller, VeryfiedEmail } from '~/api/Auth/AuthSeller';
+import { LoginSeller } from '~/api/Auth/AuthSeller';
 import { setSession } from '~/redux/Actions/Auth';
 import { useNavigate } from 'react-router-dom';
-import Nominatim from '~/services/Nominatim';
-import GetLocation from '~/api/Location/GetLocation';
 import Store from '~/redux/Store';
 
 const cx = classNames.bind(styles);
@@ -23,7 +21,6 @@ export default function SignIn() {
   const passwordRef = useRef();
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
-  const [areaCode, setAreaCode] = useState(84);
   const [disabled, setDisabled] = useState(true);
   const [valid, setValid] = useState(null);
   const [seller, setSeller] = useState({
@@ -81,20 +78,15 @@ export default function SignIn() {
       [name]: value,
     });
   };
-  const handleSetPhone = (value) => {
-    setSeller({
-      ...seller,
-      phone_number: value,
-    });
-  };
   const handleLogin = (e) => {
     e.preventDefault();
     validate();
     if (seller.email && seller.password && !valid?.email && !valid?.password) {
-      RegisterSeller(seller)
+      LoginSeller(seller)
         .then((result) => {
           if (result.token) {
             Store.dispatch(setSession(result.token, 'sellerToken'));
+            navigate(config.ShopSeller.Home);
           } else {
           }
         })
@@ -102,20 +94,27 @@ export default function SignIn() {
     }
   };
   useEffect(() => {
-    if (seller.email && seller.password && seller.phone_number) {
+    if (seller.email && seller.password) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
   }, [seller]);
+  /*check login */
+  useEffect(() => {
+    const token = localStorage.getItem('sellerToken');
+    if (token) {
+      navigate(config.ShopSeller.Home);
+    }
+  }, []);
   return (
     <div id="main" className={cx('seller_register', 'd-flex justify-content-center align-items-center')}>
       <div className={cx('seller_register_container', 'd-flex flex-column')}>
-        <h3 className="text-capitalize text-center">LogIn</h3>
+        <h3 className="text-capitalize text-center">Sign In</h3>
         <form className={cx('form_register', 'd-flex flex-column')} onSubmit={handleLogin} noValidate>
           <div className={cx('email')}>
             <FormSearch ref={emailRef} title="email" name="email" useTippy={false} handleOnchange={handleOnchange} />
-            <MessageText className={cx('text-capitalize text-danger')} message={valid?.email} />
+            <MessageText className={cx('message', 'text-capitalize text-danger')} message={valid?.email} />
           </div>
           <div className={cx('password')}>
             <FormSearch
@@ -125,6 +124,8 @@ export default function SignIn() {
               inputType="password"
               useTippy={false}
               handleOnchange={handleOnchange}
+              useForgetPassword={true}
+              forgetLink={config.ShopSeller.LinkResetPass}
             >
               <div className={cx('show-hide-password')}>
                 {showPass ? (
@@ -134,29 +135,17 @@ export default function SignIn() {
                 )}
               </div>
             </FormSearch>
-            <MessageText className={cx('text-capitalize text-danger')} message={valid?.password} />
-          </div>
-          <div className={cx('phone_number')}>
-            <FormSearch
-              ref={phoneRef}
-              title="phone number"
-              name="phone_number"
-              areaCode={areaCode}
-              value={seller.phone_number}
-              useTippy={false}
-              searchValue={handleSetPhone}
-            />
-            <MessageText className={cx('text-capitalize text-danger')} message={valid?.phone_number} />
+            <MessageText className={cx('message', 'text-capitalize text-danger')} message={valid?.password} />
           </div>
           <div className={cx('btn_register')}>
             <Button type="submit" disabled={disabled}>
-              Register
+              Sign In
             </Button>
           </div>
           <div className={cx('text-center')}>
             New to Shopee?
-            <Button transparent to={config.ShopSeller.SignIn}>
-              Sign In
+            <Button transparent to={config.ShopSeller.SignUp}>
+              Sign Up
             </Button>
           </div>
         </form>

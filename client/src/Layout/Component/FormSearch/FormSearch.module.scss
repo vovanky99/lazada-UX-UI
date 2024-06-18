@@ -18,6 +18,17 @@
   position: relative;
   label {
     font-size: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    a {
+      color: var(--black);
+      font-size: 1.4rem;
+      strong {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
   input {
     font-size: 1.5rem;

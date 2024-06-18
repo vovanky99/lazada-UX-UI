@@ -9,6 +9,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class SellerAuthController extends Controller{
 
@@ -55,5 +57,41 @@ class SellerAuthController extends Controller{
     public function getSeller(){
         $seller = Auth::user();
         return response()->json($seller);
+    }
+    public function sendResetLinkEmail(Request $request){
+        $request->validate(['email'=>'required|email']);
+        try{
+            $seller = Seller::where('email',$request->email)->first();
+            $status = Password::broker('seller')->createToken($seller);
+            if(!$seller){
+                return response()->json(['email'=>'email not found!']);
+            }
+            if($status){
+                $seller->sendEmailResetPassword($status,$seller->email);
+                return response()->json(['status' => 'Reset link sent to your email.'], 200);
+            }
+            return response()->json(['email' => 'Failed to send reset link'], 500);
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
+    }
+    public function reset(Request $request){
+        $request->validate([
+            'token'=>'required',
+            'email'=>'required|email',
+            'password'=>'required|string|confirmed|min:8',
+        ]);
+        $status  = Password::broker('seller')->reset(
+            $request->only('email','password','password_confirmation','token'),function(Seller $seller, string $password){
+                $seller->forceFill([
+                    'password'=>Hash::make($password),
+                    'remember_token'=>Str::random(60),
+                ])->save();
+            }
+        );
+        return $status == Password::PASSWORD_RESET
+                    ? response()->json(['status' => __($status)], 200)
+                    : response()->json(['email' => [__($status)]], 400);
     }
 }

@@ -110,9 +110,9 @@ export default function Register() {
       seller.email &&
       seller.password &&
       seller.phone_number &&
-      !valid?.email  &&
+      !valid?.email &&
       !valid?.password &&
-      !valid?.phone_number 
+      !valid?.phone_number
     ) {
       RegisterSeller(seller)
         .then((result) => {
@@ -152,6 +152,14 @@ export default function Register() {
       setDisabled(true);
     }
   }, [seller]);
+
+  /*check login */
+  useEffect(() => {
+    const token = localStorage.getItem('sellerToken');
+    if (token) {
+      navigate(config.ShopSeller.Home);
+    }
+  }, []);
   return (
     <div id="main" className={cx('seller_register', 'd-flex justify-content-center align-items-center')}>
       <div className={cx('seller_register_container', 'd-flex flex-column')}>

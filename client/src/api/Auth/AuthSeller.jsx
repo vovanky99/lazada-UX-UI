@@ -27,9 +27,18 @@ export async function LoginSeller(data) {
   }
 }
 
-export async function resetPasswordSeller(data) {
+export async function SendEmailResetPasswordSeller(data) {
   try {
-    const res = await axios.post('/api/seller/login', data);
+    const res = await axios.post('/api/seller/password/email', data);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function ResetPasswordSeller(data) {
+  try {
+    const res = await axios.post('/api/seller/password/reset', data);
     return res.data;
   } catch (e) {
     console.log(e);
