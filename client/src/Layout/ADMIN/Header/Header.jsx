@@ -14,7 +14,7 @@ import config from '~/config';
 import Store from '~/redux/Store';
 import { AdminLogout, setSession } from '~/redux/Actions/Auth';
 import { Logo } from '~/api/Logo/GetLogo';
-import AdminLogo from '~/layout/Component/Logo/AdminLogo';
+import AdminLogo from '~/layout/Component/Logo';
 
 const cx = classNames.bind(styles);
 
@@ -93,7 +93,7 @@ export default function Header() {
     <header className={cx('header', 'd-flex flex-row')}>
       <Link ref={logoRef} className={cx('header_logo', 'd-flex justify-content-center')} to={'/admin'}>
         <div className={cx('img-contain', 'd-flex align-items-center')}>
-          <AdminLogo />
+          <AdminLogo type="admin" />
         </div>
       </Link>
       <div className={cx('header_navbar-menu', 'd-flex justify-content-between flex-grow-1')}>

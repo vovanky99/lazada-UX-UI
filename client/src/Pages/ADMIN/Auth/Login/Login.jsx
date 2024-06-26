@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from '~/pages/ADMIN/Auth/Auth.module.scss';
 import Button from '~/components/Button';
 import config from '~/config';
-import AdminLogo from '~/layout/Component/Logo/AdminLogo';
+import AdminLogo from '~/layout/Component/Logo';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import axios from '~/api/axios';

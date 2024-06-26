@@ -23,6 +23,6 @@ class EmailVerifyController extends Controller{
         $seller->markEmailAsVerified();
         event(new Verified($seller));
         }
-        return redirect(env('FRONTEND_URL').'seller/home?verified=1');
+        return redirect(env('FRONTEND_URL').'seller/home');
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\ManufacturerController;
 use App\Http\Controllers\Admin\PhoneResetController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ShippingMethodController;
 use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\VoucherController;
@@ -221,4 +222,8 @@ Route::controller(CheckController::class)->group(function(){
 /* get logo */
 Route::controller(LogoController::class)->group(function(){
     Route::get('/get-web-logo','getLogo');
+});
+
+Route::controller(ShippingMethodController::class)->group(function(){
+    Route::get('/get-shipping-method','index');
 });

@@ -1,6 +1,7 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import ThemeProvider from 'react-bootstrap/ThemeProvider';
 
+import '~/assets/Styles/animation.scss';
 import '~/assets/Styles/Reset.scss';
 import '~/assets/Styles/Variable.scss';
 import '~/assets/Styles/Styles.scss';
@@ -64,6 +65,7 @@ function App() {
           route.path === `${config.ShopSeller.SignUp}` ||
           route.path === `${config.ShopSeller.ResetPass}` ||
           route.path === `${config.ShopSeller.VerifiedEmail}` ||
+          route.path === `${config.ShopSeller.RegisterShop}` ||
           route.path === `${config.ShopSeller.LinkResetPass}`
         ) {
           return <Route key={index} path={route.path} element={<Pages />} />;

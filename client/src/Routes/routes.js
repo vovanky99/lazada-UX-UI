@@ -54,6 +54,7 @@ import VerifiedEmailSeller from '~/pages/Seller/Auth/VerifiedEmail';
 import HomeSeller from '~/pages/Seller/Home';
 import LinkResetPassSeller from '~/pages/Seller/Auth/LinkResetPassword';
 import ResetPassSeller from '~/pages/Seller/Auth/ResetPassword';
+import RegisterShopSeller from '~/pages/Seller/RegisterShop';
 
 const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages },
@@ -231,6 +232,7 @@ const ShopSellerRoutes = [
   { path: config.ShopSeller.Home, components: HomeSeller, breadcrumbName: '' },
   { path: config.ShopSeller.LinkResetPass, components: LinkResetPassSeller, breadcrumbName: '' },
   { path: config.ShopSeller.ResetPass, components: ResetPassSeller, breadcrumbName: '' },
+  { path: config.ShopSeller.RegisterShop, components: RegisterShopSeller, breadcrumbName: '' },
 ];
 
 export { LifeShopRoutes, AdminRoutes, ShopSellerRoutes };

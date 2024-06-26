@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('admin', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->index();
             $table->string('username');
             $table->string('password');
             $table->boolean('status')->default(1)->comment('1:work. 0:has retired');

@@ -4,17 +4,15 @@ import classNames from 'classnames/bind';
 import styles from '../Auth.module.scss';
 import Button from '~/components/Button';
 import { ResendEmailSeller } from '~/api/Auth/AuthSeller';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import config from '~/config';
-import { getSeller, setSession } from '~/redux/Actions/Auth';
-import Store from '~/redux/Store';
+import Seller from '~/layout/Component/Seller';
 
 const cx = classNames.bind(styles);
 
 export default function VerifiedEmail() {
   let navigate = useNavigate();
-  const dispatch = useDispatch();
   const seller = useSelector((state) => state.Auth.seller);
 
   /* handle resend email */
@@ -25,26 +23,17 @@ export default function VerifiedEmail() {
       .catch((e) => console.log(e));
   };
 
-  /* handle redirect home if email verified */
   useEffect(() => {
-    const token = localStorage.getItem('sellerToken');
-    if (token) {
-      Store.dispatch(setSession(token, 'sellerToken'));
-      dispatch(getSeller());
-    }
-  }, []);
-  const checkEmailVerified = () => {
-    if (seller?.email_verified_at) {
-      navigate(`${config.ShopSeller.Home}`);
-    }
-    if (!seller) {
-      navigate(config.ShopSeller.SignIn);
-    }
-  };
-  checkEmailVerified();
+    const checkEmailVerified = () => {
+      if (seller?.email_verified_at) {
+        navigate(`${config.ShopSeller.Home}`);
+      }
+    };
+    checkEmailVerified();
+  }, [seller]);
 
   return (
-    <Fragment>
+    <Seller>
       <div
         id="main"
         className={cx('seller_verified_email', 'd-flex flex-row align-items-center justify-content-center')}
@@ -66,6 +55,6 @@ export default function VerifiedEmail() {
           </div>
         </div>
       </div>
-    </Fragment>
+    </Seller>
   );
 }

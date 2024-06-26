@@ -9,7 +9,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
+  background-color: #f6f6f6;
   // + .wrapper {
   //   margin-left: 16px;
   // }
@@ -41,13 +41,16 @@
   border: none;
   outline: none;
   &:hover {
-    text-decoration: underline;
+    // text-decoration: underline;
+    background-color: #edf9f7;
+    color: #00bfa5;
   }
 }
 
 .outline {
   color: var(--primary);
   border: 1px solid var(--primary);
+  background-color: var(--white);
 }
 
 .text {

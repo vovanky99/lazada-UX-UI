@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->morphs('addressable');
             $table->boolean('home')->nullable();
+            $table->string('name')->nullable();
             $table->string('phone')->nullable();
             $table->string('street_address');
             $table->foreignId('ward_id')->references('id')->on('ward')->onDelete('cascade');

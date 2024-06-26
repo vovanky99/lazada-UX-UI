@@ -23,4 +23,7 @@ class OrderCart extends Model
     public function orders_product(){
         return $this->hasMany(OrderProduct::class,'order_id','id');
     }
+    public function product_shipping_methods(){
+        return $this->hasMany(ProductShippingMethod::class,'order_id');
+    }
 }

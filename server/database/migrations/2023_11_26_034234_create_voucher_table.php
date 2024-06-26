@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('voucher', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name',20);
+            $table->string('name',20)->index();
             $table->string('descriptions',200);
             $table->string('code',20);
             $table->boolean('status')->default(1);

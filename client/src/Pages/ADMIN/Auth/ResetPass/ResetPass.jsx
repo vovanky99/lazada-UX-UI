@@ -5,7 +5,7 @@ import { RequestPhone, ResetPassword } from '~/api/General/HandleData';
 import Button from '~/components/Button';
 import config from '~/config';
 import { FormSearch } from '~/layout/Component/FormSearch';
-import AdminLogo from '~/layout/Component/Logo/AdminLogo';
+import AdminLogo from '~/layout/Component/Logo';
 import styles from '~/pages/ADMIN/Auth/Auth.module.scss';
 
 const cx = classNames.bind(styles);

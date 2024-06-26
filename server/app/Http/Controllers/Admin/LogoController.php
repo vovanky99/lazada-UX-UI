@@ -28,7 +28,7 @@ class LogoController extends Controller{
     }
     public function getLogo(){
         $type =request()->get('type');
-        if( $type){
+        if($type){
             $logo = Logo::where('type',$type)->first();
             return response()->json($logo);
         }

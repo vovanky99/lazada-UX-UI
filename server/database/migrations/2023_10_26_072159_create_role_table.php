@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('role', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->index();
             $table->boolean('status')->default(1);
             $table->string('descriptions',100)->nullable();
             $table->timestamps();

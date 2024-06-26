@@ -1,0 +1,14 @@
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+div {
+  .input {
+    &:focus {
+      border-color: var(--input_focus_admin) !important;
+    }
+    &:hover {
+      border-color: var(--input_focus_admin) !important;
+    }
+  }
+}

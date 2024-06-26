@@ -62,6 +62,7 @@ export const ShopSeller = {
   ChangePassword: '/seller/change-password',
   Home: '/seller',
   VerifiedEmail: '/seller/verify-email',
+  RegisterShop: '/seller/portal',
 };
 
 export default routes;

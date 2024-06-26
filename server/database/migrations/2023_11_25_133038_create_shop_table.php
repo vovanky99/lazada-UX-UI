@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('shop', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name',50);
+            $table->string('name',50)->index();
             $table->string('logo');
             $table->string('img_cover')->nullable();
             $table->boolean('status')->default(1);

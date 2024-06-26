@@ -28,11 +28,13 @@ class Shop extends Model
     public function products(){
         return $this->hasMany(Products::class,'shop_id');
     }
-    public function followShops(){
+    public function follow_shops(){
         return $this->hasMany(FollowShop::class,'shop_id');
     }
-    public function Address(){
+    public function address(){
         return $this->belongsTo(Address::class,'address_id');
     }
-    
+    public function shop_shipping_method(){
+        return $this->hasOne(ShopShippingMethod::class,'shop_id');
+    }
 }
