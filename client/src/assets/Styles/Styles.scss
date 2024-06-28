@@ -234,3 +234,16 @@ button.reviews_score.score_active {
   + .setting_shipping_item {
   display: none;
 }
+
+/* componnet*/
+#radio.radio_active {
+  div {
+    &:first-child {
+      background-color: var(--primary) !important;
+      border-color: var(--primary) !important;
+      &::before {
+        background-color: var(--white) !important;
+      }
+    }
+  }
+}

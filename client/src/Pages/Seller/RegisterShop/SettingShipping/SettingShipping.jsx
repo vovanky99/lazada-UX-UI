@@ -365,7 +365,7 @@ export default function SettingShipping() {
                   </Button>
                   <div
                     className={cx('lifeshop_switch_normal', 'lifeshop_switch lifeshop_switch_open')}
-                    data-name="heaving_things"
+                    data-name="heavy_things"
                   />
                 </div>
                 <div className={cx('heavy_things_content_hide', 'setting_shipping_item flex-row justify-content-end')}>
@@ -382,7 +382,7 @@ export default function SettingShipping() {
                       <div
                         className={cx('lifeshop_switch_normal', 'lifeshop_switch lifeshop_switch_open')}
                         data-type="cod"
-                        data-name="heaving_things"
+                        data-name="heavy_things"
                       />
                     </div>
                   </div>

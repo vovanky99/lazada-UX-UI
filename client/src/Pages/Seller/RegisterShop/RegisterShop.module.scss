@@ -275,6 +275,19 @@
           padding-top: 25px;
         }
       }
+      .tax_info {
+        .tax_info_form {
+          .form_header {
+            padding: 30px 0;
+            width: 950px;
+            margin: 0 auto;
+          }
+          .form_btn {
+            padding: 20px 0;
+            border-top: 1px solid var(--border_color_admin);
+          }
+        }
+      }
     }
   }
 }
@@ -282,13 +295,6 @@
   position: relative;
 }
 .seller_details_address {
-  position: fixed;
-  z-index: 1;
-  width: 100vw;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  background-color: var(--background_color_shadow);
   &_wrapper {
     width: 600px;
     min-height: 200px;
@@ -329,58 +335,6 @@
           h5 {
             font-size: 2rem;
           }
-          .location {
-            &_container {
-              label {
-                font-size: 1.6rem;
-              }
-            }
-            &_value {
-              cursor: pointer;
-              min-height: 35px;
-              font-size: 1.6rem;
-              svg {
-                color: var(--border_color_admin);
-                font-size: 1.4rem;
-              }
-            }
-            &_wrapper {
-              background-color: var(--white);
-              box-shadow: 1px 1px 3px 3px var(--box_shadow_admin);
-              .location_header {
-                padding: 10px;
-                button {
-                  flex-grow: 1;
-                  cursor: no-drop;
-                  pointer-events: none;
-                  padding: 3px;
-                  &:first-child {
-                    cursor: pointer;
-                    pointer-events: auto;
-                  }
-                }
-              }
-              .location_content {
-                overflow-y: scroll;
-                height: 200px;
-                > ul {
-                  flex-direction: row;
-                  flex-wrap: wrap;
-                  display: none;
-                }
-                &::-webkit-scrollbar {
-                  width: 7px;
-                }
-                &::-webkit-scrollbar-thumb {
-                  background-color: var(--scroll_bar_color);
-                  border-radius: 10px;
-                }
-                &::-webkit-scrollbar-track {
-                  background-color: var(--scroll_bar_background);
-                }
-              }
-            }
-          }
         }
         &::-webkit-scrollbar {
           width: 7px;
@@ -396,6 +350,58 @@
       &_btn {
         box-shadow: 0px -3px 3px 1px var(--box_shadow_admin);
         padding: 20px;
+      }
+    }
+  }
+  .location {
+    &_container {
+      label {
+        font-size: 1.6rem;
+      }
+    }
+    &_value {
+      cursor: pointer;
+      min-height: 35px;
+      font-size: 1.6rem;
+      svg {
+        color: var(--border_color_admin);
+        font-size: 1.4rem;
+      }
+    }
+    &_wrapper {
+      background-color: var(--white);
+      box-shadow: 1px 1px 3px 3px var(--box_shadow_admin);
+      .location_header {
+        padding: 10px;
+        button {
+          flex-grow: 1;
+          cursor: no-drop;
+          pointer-events: none;
+          padding: 3px;
+          &:first-child {
+            cursor: pointer;
+            pointer-events: auto;
+          }
+        }
+      }
+      .location_content {
+        overflow-y: scroll;
+        height: 200px;
+        > ul {
+          flex-direction: row;
+          flex-wrap: wrap;
+          display: none;
+        }
+        &::-webkit-scrollbar {
+          width: 7px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: var(--scroll_bar_color);
+          border-radius: 10px;
+        }
+        &::-webkit-scrollbar-track {
+          background-color: var(--scroll_bar_background);
+        }
       }
     }
   }

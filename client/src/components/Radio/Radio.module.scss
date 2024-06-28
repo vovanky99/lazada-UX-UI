@@ -1,0 +1,30 @@
+.wrapper {
+  gap: var(--gap);
+  cursor: pointer;
+  .node {
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid;
+    background-color: var(--white);
+    border-color: var(--border_color_admin);
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 7px;
+      width: 7px;
+      border-radius: 50%;
+    }
+  }
+}
+
+.primary {
+  &:hover > .node {
+    border-color: var(--primary);
+  }
+}

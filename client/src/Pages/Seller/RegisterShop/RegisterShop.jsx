@@ -13,6 +13,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import FormText from '~/layout/Component/FormGroupRow/FormText';
 import DetailAddress from './DetailAddress';
 import SettingShipping from './SettingShipping';
+import TaxInfo from './TaxInfo';
 
 const cx = classNames.bind(styles);
 
@@ -108,6 +109,16 @@ export default function RegisterShop() {
       name.addEventListener('blur', handleBlur);
     }
   }, [shopName]);
+
+  useEffect(() => {
+    setAddressDetail(() => {
+      if (JSON.parse(localStorage.getItem('addressDetails'))) {
+        return JSON.parse(localStorage.getItem('addressDetails'));
+      } else {
+        return '';
+      }
+    });
+  }, [editAddress]);
 
   useEffect(() => {}, []);
   return (
@@ -263,7 +274,9 @@ export default function RegisterShop() {
                 <div id="setting_shipping_content" className={cx('setting_shipping', 'content_register')}>
                   <SettingShipping />
                 </div>
-                <div id="tax_info_content" className={cx('tax_info', 'content_register')}></div>
+                <div id="tax_info_content" className={cx('tax_info', 'content_register')}>
+                  <TaxInfo />
+                </div>
               </div>
             </div>
           </main>
