@@ -4,17 +4,11 @@ import classNames from 'classnames/bind';
 import styles from '../Auth.module.scss';
 import Button from '~/components/Button';
 import { ResendEmailSeller } from '~/api/Auth/AuthSeller';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import config from '~/config';
 import Seller from '~/layout/Component/Seller';
 
 const cx = classNames.bind(styles);
 
 export default function VerifiedEmail() {
-  let navigate = useNavigate();
-  const seller = useSelector((state) => state.Auth.seller);
-
   /* handle resend email */
   const handleResendEmail = (e) => {
     e.preventDefault();
@@ -22,15 +16,6 @@ export default function VerifiedEmail() {
       .then((result) => {})
       .catch((e) => console.log(e));
   };
-
-  useEffect(() => {
-    const checkEmailVerified = () => {
-      if (seller?.email_verified_at) {
-        navigate(`${config.ShopSeller.Home}`);
-      }
-    };
-    checkEmailVerified();
-  }, [seller]);
 
   return (
     <Seller>

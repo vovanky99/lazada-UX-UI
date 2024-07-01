@@ -14,6 +14,7 @@ import FormText from '~/layout/Component/FormGroupRow/FormText';
 import DetailAddress from './DetailAddress';
 import SettingShipping from './SettingShipping';
 import TaxInfo from './TaxInfo';
+import LocalStorageService from '~/services/LocalStorageService';
 
 const cx = classNames.bind(styles);
 
@@ -23,15 +24,15 @@ export default function RegisterShop() {
   const [dropdown, setDropdown] = useState(false);
   const [editAddress, setEditAddress] = useState(false);
   const [shopName, setShopName] = useState(() => {
-    if (localStorage.getItem('shopName')) {
-      return localStorage.getItem('shopName');
+    if (LocalStorageService.getItem('shopName')) {
+      return LocalStorageService.getItem('shopName');
     } else {
       return '';
     }
   });
-  const [AddressDetail, setAddressDetail] = useState(() => {
-    if (JSON.parse(localStorage.getItem('addressDetails'))) {
-      return JSON.parse(localStorage.getItem('addressDetails'));
+  const [addressDetail, setAddressDetail] = useState(() => {
+    if (LocalStorageService.getItem('addressDetails')) {
+      return LocalStorageService.getItem('addressDetails');
     } else {
       return '';
     }
@@ -59,14 +60,14 @@ export default function RegisterShop() {
     const shopInfoContent = document.getElementById('shop_info_content');
     const settingContent = document.getElementById('setting_shipping_content');
     if (shopName !== '') {
-      localStorage.setItem('shopName', shopName);
+      LocalStorageService.setItem('shopName', shopName);
       if (e.target.dataset.type === 'next') {
         shopIF.classList.remove('active');
         shopIF.classList.add('finished');
         settingShip.classList.add('active');
         shopInfoContent.classList.remove('active');
         settingContent.classList.add('active');
-        localStorage.setItem('settingShipping', true);
+        LocalStorageService.setItem('settingShipping', true);
       }
     }
   };
@@ -78,7 +79,14 @@ export default function RegisterShop() {
     const settingContent = document.getElementById('setting_shipping_content');
     const taxInfo = document.getElementById('tax_info');
     const taxInfoContent = document.getElementById('tax_info_content');
-    if (localStorage.getItem('taxInfo') && shopIF && settingShip && shopInfoContent && taxInfo && taxInfoContent) {
+    if (
+      LocalStorageService.getItem('taxInfo') &&
+      shopIF &&
+      settingShip &&
+      shopInfoContent &&
+      taxInfo &&
+      taxInfoContent
+    ) {
       shopIF.classList.remove('active');
       shopIF.classList.add('finished');
       settingShip.classList.add('finished');
@@ -86,7 +94,7 @@ export default function RegisterShop() {
       taxInfo.classList.add('active');
       taxInfoContent.classList.add('active');
     }
-    if (localStorage.getItem('settingShipping') && shopIF && settingShip && shopInfoContent && settingContent) {
+    if (LocalStorageService.getItem('settingShipping') && shopIF && settingShip && shopInfoContent && settingContent) {
       shopIF.classList.remove('active');
       shopIF.classList.add('finished');
       settingShip.classList.add('active');
@@ -112,8 +120,8 @@ export default function RegisterShop() {
 
   useEffect(() => {
     setAddressDetail(() => {
-      if (JSON.parse(localStorage.getItem('addressDetails'))) {
-        return JSON.parse(localStorage.getItem('addressDetails'));
+      if (LocalStorageService.getItem('addressDetails')) {
+        return LocalStorageService.getItem('addressDetails');
       } else {
         return '';
       }
@@ -219,18 +227,18 @@ export default function RegisterShop() {
                         <div className={cx('pickup_address', 'form-group d-flex flex-row')}>
                           <label className="text-capitalize col-3  text-end">pickup address</label>
                           <div className={cx('pickup_address_content', 'col flex-start')}>
-                            {AddressDetail ? (
+                            {addressDetail ? (
                               <Fragment>
                                 <div className={cx('name_phone')}>
-                                  {AddressDetail?.fullname + ' |'} {AddressDetail?.phone_number}
+                                  {addressDetail?.fullname + ' |'} {addressDetail?.phone_number}
                                 </div>
-                                <div className={cx('address')}>{AddressDetail?.address}</div>
+                                <div className={cx('address')}>{addressDetail?.address}</div>
                                 <div className={cx('location')}>
-                                  {AddressDetail?.ward_name}
+                                  {addressDetail?.ward_name}
                                   <br />
-                                  {AddressDetail?.district_name}
+                                  {addressDetail?.district_name}
                                   <br />
-                                  {AddressDetail?.city_name}
+                                  {addressDetail?.city_name}
                                 </div>
                               </Fragment>
                             ) : (
@@ -275,8 +283,9 @@ export default function RegisterShop() {
                   <SettingShipping />
                 </div>
                 <div id="tax_info_content" className={cx('tax_info', 'content_register')}>
-                  <TaxInfo />
+                  <TaxInfo location={addressDetail} email={seller.email} />
                 </div>
+                <div id="identification_info_content" className={cx('identification_info', 'content_register')}></div>
               </div>
             </div>
           </main>

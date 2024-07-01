@@ -41,9 +41,7 @@
   border: none;
   outline: none;
   &:hover {
-    // text-decoration: underline;
-    background-color: #edf9f7;
-    color: #00bfa5;
+    text-decoration: underline;
   }
 }
 
@@ -86,4 +84,9 @@
 .large {
   min-width: 148px;
   padding: 14px 16px;
+}
+
+.none_size {
+  padding: 0;
+  min-width: 20px;
 }

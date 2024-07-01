@@ -22,7 +22,7 @@ class SellerAuthController extends Controller{
                 return response()->json(['token'=>$s->createToken('seller-token')->plainTextToken]);
             }
             else{
-                return response()->json(['message'=>'Invalid credentials',401]);
+                return response()->json(['error'=>"password or email don't correct!"]);
             }
         }
         catch(Exception $e){

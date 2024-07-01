@@ -6,12 +6,6 @@ const cx = classNames.bind(styles);
 
 export default function MessageDanger({ message, classNames }) {
   return (
-    <>
-      {message ? (
-        <div className={cx('message', classNames + ' text-center text-danger text-capitalize')}>{message}</div>
-      ) : (
-        <></>
-      )}
-    </>
+    <>{message ? <div className={cx('message', classNames + ' text-danger text-capitalize')}>{message}</div> : <></>}</>
   );
 }

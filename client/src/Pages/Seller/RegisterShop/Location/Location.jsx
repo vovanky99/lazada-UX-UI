@@ -14,7 +14,7 @@ import MessageText from '~/layout/Component/Message/MessageText';
 const cx = classNames.bind(styles);
 
 const Location = forwardRef(function Location(
-  { data, useLabel = true, handlePassLocationValue = () => {}, valid },
+  { data, name, useLabel = true, handlePassLocationValue = () => {}, valid },
   ref,
 ) {
   const locationTippyRef = useRef();
@@ -296,7 +296,7 @@ const Location = forwardRef(function Location(
         interactive
         visible={selectLocation}
         placement="bottom"
-        offset={[0, -15]}
+        offset={[0, 0]}
         render={(attrs) => (
           <div
             ref={locationTippyRef}
@@ -363,7 +363,7 @@ const Location = forwardRef(function Location(
         )}
         onClickOutside={handleSelectLocationOutside}
       >
-        <div ref={locationWrapperRef} className={cx('location_container', 'form-group')}>
+        <div ref={locationWrapperRef} name={name} className={cx('location_container', 'form-group')}>
           {useLabel === true ?? <label className="text-capitalize form-label">city/district/ward</label>}
           <div
             ref={ref}

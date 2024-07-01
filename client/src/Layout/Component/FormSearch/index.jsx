@@ -16,6 +16,7 @@ export const FormSearch = forwardRef(function FormSearch(
     inputType = 'text',
     inputClass,
     useForgetPassword = false,
+    MaxLength,
     forgetLink,
     containerClass,
     Value,
@@ -184,9 +185,14 @@ export const FormSearch = forwardRef(function FormSearch(
               placeholder={`Please Enter ${title}`}
               value={search}
               onChange={(e) => {
+                const { value, maxLength } = e.target;
                 handleOnchange(e);
-                setSearch(e.target.value);
+                setSearch(value);
+                if (MaxLength) {
+                  setSearch(value.slice(0, maxLength - 1));
+                }
               }}
+              maxLength={MaxLength}
               data-id={ID}
               disabled={disabled}
             />
@@ -214,9 +220,14 @@ export const FormSearch = forwardRef(function FormSearch(
                 }
               }}
               onChange={(e) => {
+                const { value, maxLength } = e.target;
                 handleOnchange(e);
-                setSearch(e.target.value);
+                setSearch(value);
+                if (MaxLength) {
+                  setSearch(value.slice(0, maxLength - 1));
+                }
               }}
+              maxLength={MaxLength}
             />
             {children ? <Fragment>{children}</Fragment> : <></>}
           </Fragment>

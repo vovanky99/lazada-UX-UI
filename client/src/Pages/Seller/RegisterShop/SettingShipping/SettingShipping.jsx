@@ -6,6 +6,7 @@ import classNames from 'classnames/bind';
 
 import Button from '~/components/Button';
 import styles from '../RegisterShop.module.scss';
+import LocalStorageService from '~/services/LocalStorageService';
 
 const cx = classNames.bind(styles);
 
@@ -49,7 +50,7 @@ export default function SettingShipping() {
       settingShip.classList.remove('active');
       shopInfoContent.classList.add('active');
       settingContent.classList.remove('active');
-      localStorage.removeItem('settingShipping');
+      LocalStorageService.removeItem('settingShipping');
     }
   };
 
@@ -59,15 +60,14 @@ export default function SettingShipping() {
     const taxInfo = document.getElementById('tax_info');
     const taxInfoContent = document.getElementById('tax_info_content');
     if (settingShip && settingContent) {
-      let settingShippingValue = JSON.stringify(radioSetting);
-      localStorage.setItem('taxInfo', true);
-      localStorage.setItem('settingShipValue', settingShippingValue);
+      LocalStorageService.setItem('taxInfo', true);
+      LocalStorageService.setItem('settingShipValue', radioSetting);
       settingShip.classList.remove('active');
       settingShip.classList.add('finished');
       taxInfo.classList.add('active');
       settingContent.classList.remove('active');
       taxInfoContent.classList.add('active');
-      localStorage.removeItem('settingShipping');
+      LocalStorageService.removeItem('settingShipping');
     }
   };
 

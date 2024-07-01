@@ -161,26 +161,26 @@ button.reviews_score.score_active {
   display: block;
 }
 
-#seller_details_address .btn_active {
+#seller_register_shop_main #seller_main_content .btn_active {
   background-color: #edf9f7;
   color: #00bfa5;
   cursor: pointer;
 }
-#seller_details_address .btn_selected {
+#seller_register_shop_main #seller_main_content .btn_selected {
   cursor: pointer;
 }
 
-#seller_details_address #seller_location_wrapper .btn_item_active {
+#seller_register_shop_main #seller_main_content .btn_item_active {
   color: var(--white);
   background-color: #00bfa5;
 }
 
-#seller_details_address #seller_location_wrapper .btn_location_active {
-  cursor: pointer;
-  pointer-events: auto;
+#seller_register_shop_main #seller_main_content .btn_location_active {
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
-#seller_details_address #seller_location_wrapper .location_active {
+#seller_register_shop_main #seller_main_content .location_active {
   display: flex !important;
 }
 

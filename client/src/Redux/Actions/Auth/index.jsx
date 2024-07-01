@@ -1,3 +1,4 @@
+import LocalStorageService from '~/services/LocalStorageService';
 import {
   GET_USER,
   LOGOUT,
@@ -31,13 +32,13 @@ export const getUser = () => {
 /* set session for auth */
 export const setSession = (accessToken, name) => {
   return async (dispatch) => {
-    if (!localStorage.getItem(`${name}`)) {
-      localStorage.setItem(`${name}`, accessToken);
+    if (!LocalStorageService.getItem(`${name}`)) {
+      LocalStorageService.setItem(`${name}`, accessToken);
     }
     if (accessToken) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     } else {
-      localStorage.removeItem(`${name}`);
+      LocalStorageService.removeItem(`${name}`);
       delete axios.defaults.headers.common['Authorization'];
     }
   };

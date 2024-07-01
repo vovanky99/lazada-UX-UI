@@ -13,6 +13,7 @@ import MessageText from '~/layout/Component/Message/MessageText';
 import Modal from '~/layout/Component/Modal';
 import Location from '../Location';
 import CurrentCountry from '~/api/CurrentCountry';
+import LocalStorageService from '~/services/LocalStorageService';
 
 const cx = classNames.bind(styles);
 
@@ -25,8 +26,8 @@ export default function DetailAddress({ handleCloseAddress = () => {} }) {
   const [data, setData] = useState(false);
   // const [country, setCountry] = useState(false);
   const [addressDetail, setAddressDetail] = useImmer(() => {
-    if (localStorage.getItem('addressDetails')) {
-      return JSON.parse(localStorage.getItem('addressDetails'));
+    if (LocalStorageService.getItem('addressDetails')) {
+      return LocalStorageService.getItem('addressDetails');
     } else {
       return {
         ward_id: '',
@@ -46,9 +47,8 @@ export default function DetailAddress({ handleCloseAddress = () => {} }) {
 
   const handleOnchange = (e) => {
     const { name, value } = e.target;
-    setAddressDetail({
-      ...addressDetail,
-      [name]: value,
+    setAddressDetail((draft) => {
+      draft[name] = value;
     });
   };
   const handleSetPhoneNumber = (value) => {
@@ -104,9 +104,17 @@ export default function DetailAddress({ handleCloseAddress = () => {} }) {
   const handleSaveAddressDetail = (e) => {
     e.preventDefault();
     validate();
-    if (!valid?.fullname && !valid?.phone_number && !valid?.ward_name && !valid?.address) {
-      let AddressDetails = JSON.stringify(addressDetail);
-      localStorage.setItem('addressDetails', AddressDetails);
+    if (
+      addressDetail.fullname &&
+      addressDetail.phone_number &&
+      addressDetail.address &&
+      addressDetail.ward_id &&
+      !valid?.fullname &&
+      !valid?.phone_number &&
+      !valid?.ward_name &&
+      !valid?.address
+    ) {
+      LocalStorageService.setItem('addressDetails', addressDetail);
       handleCloseAddress();
     }
   };
@@ -152,7 +160,7 @@ export default function DetailAddress({ handleCloseAddress = () => {} }) {
                       ref={fullNameRef}
                       title="full name"
                       name="fullname"
-                      Value={addressDetail?.fullname}
+                      // Value={addressDetail?.fullname}
                       handleOnchange={handleOnchange}
                       useTippy={false}
                     />

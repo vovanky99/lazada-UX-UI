@@ -21,6 +21,7 @@ const Button = forwardRef(function Button(
     outline = false,
     disabled = false,
     text = false,
+    none_size = false,
     small = false,
     large = false,
     ...passProps
@@ -54,6 +55,7 @@ const Button = forwardRef(function Button(
     gradient_danger,
     large,
     small,
+    none_size,
     outline,
     text,
     disabled,
