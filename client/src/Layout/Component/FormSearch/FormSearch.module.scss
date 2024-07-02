@@ -16,6 +16,8 @@
 }
 .select-container {
   position: relative;
+  display: flex;
+  flex-direction: row;
   label {
     font-size: 1.5rem;
     display: flex;

@@ -11,7 +11,6 @@ import Location from '../Location';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import EmailItem from './EmailItem';
-import MessageText from '~/layout/Component/Message/MessageText';
 import MessageDanger from '~/layout/Component/Message/MessageDanger';
 import LocalStorageService from '~/services/LocalStorageService';
 
@@ -90,38 +89,44 @@ export default function TaxInfo({ email, location }) {
   };
 
   const handleBackSettingShipping = (e) => {
-    const settingShip = document.getElementById('setting_ship');
+    const stepsRegister = document.querySelectorAll('.steps_register');
     const settingContent = document.getElementById('setting_shipping_content');
-    const taxInfo = document.getElementById('tax_info');
     const taxInfoContent = document.getElementById('tax_info_content');
-    if (settingShip && settingContent) {
-      localStorage.removeItem('taxInfo', true);
-      settingShip.classList.add('active');
-      settingShip.classList.remove('finished');
-      taxInfo.classList.remove('active');
-      settingContent.classList.add('active');
-      taxInfoContent.classList.remove('active');
-      localStorage.setItem('settingShipping', true);
+    if (stepsRegister && settingContent) {
+      for (let i = 0; i < stepsRegister.length; i++) {
+        if (stepsRegister[i].getAttribute('id') === 'setting_ship') {
+          stepsRegister[i].classList.add('active');
+          stepsRegister[i].classList.remove('finished');
+          stepsRegister[i + 1].classList.remove('active');
+          settingContent.classList.add('active');
+          taxInfoContent.classList.remove('active');
+          LocalStorageService.removeItem('taxInfo', true);
+          LocalStorageService.setItem('settingShipping', true);
+        }
+      }
     }
   };
 
   const handleNextIdentificationInfo = (e) => {
-    const tax = document.getElementById('tax_info');
+    const stepsRegister = document.querySelectorAll('.steps_register');
     const taxContent = document.getElementById('tax_info_content');
-    const identificationInfo = document.getElementById('identification_info');
     const identificationInfoContent = document.getElementById('identification_info_content');
     if (
       Object.entries(valid).length === 0 &&
       Object.values(taxInfo.email_receive_electronic_invoice).filter((dt) => dt.error !== '').length === 0
     ) {
-      LocalStorageService.setItem('taxInfo', true);
-      LocalStorageService.setItem('taxInfoValue', taxInfo);
-      tax.classList.remove('active');
-      tax.classList.add('finished');
-      identificationInfo.classList.add('active');
-      taxContent.classList.remove('active');
-      identificationInfoContent.classList.add('active');
-      LocalStorageService.removeItem('taxInfo');
+      for (let i = 0; i < stepsRegister.length; i++) {
+        if (stepsRegister[i].getAttribute('id') === 'identification_info') {
+          stepsRegister[i].classList.add('active');
+          stepsRegister[i - 1].classList.remove('active');
+          stepsRegister[i - 1].classList.add('finished');
+          taxContent.classList.remove('active');
+          identificationInfoContent.classList.add('active');
+          LocalStorageService.setItem('IdentificationInfo', true);
+          LocalStorageService.setItem('taxInfoValue', taxInfo);
+          LocalStorageService.removeItem('taxInfo');
+        }
+      }
     }
   };
 

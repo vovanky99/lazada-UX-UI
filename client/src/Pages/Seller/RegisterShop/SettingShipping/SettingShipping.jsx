@@ -40,34 +40,40 @@ export default function SettingShipping() {
   };
 
   const handleBackSettingShipping = (e) => {
-    const shopIF = document.getElementById('shop_info');
-    const settingShip = document.getElementById('setting_ship');
-    const shopInfoContent = document.getElementById('shop_info_content');
+    const stepsRegister = document.querySelectorAll('.steps_register');
     const settingContent = document.getElementById('setting_shipping_content');
-    if (shopIF && settingShip && shopInfoContent && settingContent) {
-      shopIF.classList.add('active');
-      shopIF.classList.remove('finished');
-      settingShip.classList.remove('active');
-      shopInfoContent.classList.add('active');
-      settingContent.classList.remove('active');
-      LocalStorageService.removeItem('settingShipping');
+    const shopInfoContent = document.getElementById('shop_info_content');
+    if (stepsRegister && settingContent) {
+      for (let i = 0; i < stepsRegister.length; i++) {
+        if (stepsRegister[i].getAttribute('id') === 'shop_info') {
+          stepsRegister[i].classList.add('active');
+          stepsRegister[i].classList.remove('finished');
+          stepsRegister[i + 1].classList.remove('active');
+          shopInfoContent.classList.add('active');
+          settingContent.classList.remove('active');
+          LocalStorageService.removeItem('settingShipping');
+        }
+      }
     }
   };
 
   const handleNextSettingShipping = (e) => {
-    const settingShip = document.getElementById('setting_ship');
+    const stepsRegister = document.querySelectorAll('.steps_register');
     const settingContent = document.getElementById('setting_shipping_content');
-    const taxInfo = document.getElementById('tax_info');
     const taxInfoContent = document.getElementById('tax_info_content');
-    if (settingShip && settingContent) {
-      LocalStorageService.setItem('taxInfo', true);
-      LocalStorageService.setItem('settingShipValue', radioSetting);
-      settingShip.classList.remove('active');
-      settingShip.classList.add('finished');
-      taxInfo.classList.add('active');
-      settingContent.classList.remove('active');
-      taxInfoContent.classList.add('active');
-      LocalStorageService.removeItem('settingShipping');
+    if (stepsRegister && taxInfoContent && settingContent) {
+      for (let i = 0; i < stepsRegister.length; i++) {
+        if (stepsRegister[i].getAttribute('id') === 'tax_info') {
+          stepsRegister[i].classList.add('active');
+          stepsRegister[i - 1].classList.remove('active');
+          stepsRegister[i - 1].classList.add('finished');
+          settingContent.classList.remove('active');
+          taxInfoContent.classList.add('active');
+          LocalStorageService.setItem('taxInfo', true);
+          LocalStorageService.setItem('settingShipValue', radioSetting);
+          LocalStorageService.removeItem('settingShipping');
+        }
+      }
     }
   };
 
@@ -392,7 +398,7 @@ export default function SettingShipping() {
           </div>
         </div>
       </div>
-      <div className={cx('btn_setting_shipping', 'd-flex flex-row justify-content-between')}>
+      <div className={cx('form_btn', 'd-flex flex-row justify-content-between')}>
         <Button type="button" outline small onClick={handleBackSettingShipping}>
           Back
         </Button>

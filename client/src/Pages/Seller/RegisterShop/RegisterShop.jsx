@@ -15,21 +15,15 @@ import DetailAddress from './DetailAddress';
 import SettingShipping from './SettingShipping';
 import TaxInfo from './TaxInfo';
 import LocalStorageService from '~/services/LocalStorageService';
+import IdentityInfo from './IdentityInfo';
+import ShopInfo from './ShopInfo';
 
 const cx = classNames.bind(styles);
 
 export default function RegisterShop() {
-  const nameRef = useRef();
   const seller = useSelector((state) => state.Auth.seller);
   const [dropdown, setDropdown] = useState(false);
-  const [editAddress, setEditAddress] = useState(false);
-  const [shopName, setShopName] = useState(() => {
-    if (LocalStorageService.getItem('shopName')) {
-      return LocalStorageService.getItem('shopName');
-    } else {
-      return '';
-    }
-  });
+
   const [addressDetail, setAddressDetail] = useState(() => {
     if (LocalStorageService.getItem('addressDetails')) {
       return LocalStorageService.getItem('addressDetails');
@@ -40,83 +34,53 @@ export default function RegisterShop() {
   const handleAccountMouseOver = () => {
     setDropdown(true);
   };
-  const handleCloseEditAddress = () => {
-    setEditAddress(false);
-  };
-  const handlSetShopName = (e) => {
-    const { value } = e.target;
-    setShopName(value);
-  };
-  const handleEditAddress = (e) => {
-    setEditAddress(true);
-  };
-  const handleSubmitInfo = (e) => {
-    e.preventDefault();
-  };
-  /* handle save shop info in localstorage */
-  const handleSaveShopInfo = (e) => {
-    const shopIF = document.getElementById('shop_info');
-    const settingShip = document.getElementById('setting_ship');
-    const shopInfoContent = document.getElementById('shop_info_content');
-    const settingContent = document.getElementById('setting_shipping_content');
-    if (shopName !== '') {
-      LocalStorageService.setItem('shopName', shopName);
-      if (e.target.dataset.type === 'next') {
-        shopIF.classList.remove('active');
-        shopIF.classList.add('finished');
-        settingShip.classList.add('active');
-        shopInfoContent.classList.remove('active');
-        settingContent.classList.add('active');
-        LocalStorageService.setItem('settingShipping', true);
-      }
-    }
-  };
 
   useEffect(() => {
-    const shopIF = document.getElementById('shop_info');
-    const settingShip = document.getElementById('setting_ship');
+    const stepsRegister = document.querySelectorAll('.steps_register');
     const shopInfoContent = document.getElementById('shop_info_content');
     const settingContent = document.getElementById('setting_shipping_content');
-    const taxInfo = document.getElementById('tax_info');
     const taxInfoContent = document.getElementById('tax_info_content');
+    const IdentificationInfoContent = document.getElementById('identification_info_content');
     if (
-      LocalStorageService.getItem('taxInfo') &&
-      shopIF &&
-      settingShip &&
+      LocalStorageService.getItem('IdentificationInfo') &&
+      stepsRegister &&
       shopInfoContent &&
-      taxInfo &&
-      taxInfoContent
+      IdentificationInfoContent
     ) {
-      shopIF.classList.remove('active');
-      shopIF.classList.add('finished');
-      settingShip.classList.add('finished');
-      shopInfoContent.classList.remove('active');
-      taxInfo.classList.add('active');
-      taxInfoContent.classList.add('active');
-    }
-    if (LocalStorageService.getItem('settingShipping') && shopIF && settingShip && shopInfoContent && settingContent) {
-      shopIF.classList.remove('active');
-      shopIF.classList.add('finished');
-      settingShip.classList.add('active');
-      shopInfoContent.classList.remove('active');
-      settingContent.classList.add('active');
+      for (let i = 0; i < stepsRegister.length; i++) {
+        if (stepsRegister[i].getAttribute('id') === 'identification_info') {
+          stepsRegister[i].classList.add('active');
+          shopInfoContent.classList.remove('active');
+          IdentificationInfoContent.classList.add('active');
+          break;
+        }
+        stepsRegister[i].classList.add('finished');
+        stepsRegister[i].classList.remove('active');
+      }
+    } else if (LocalStorageService.getItem('taxInfo') && stepsRegister && shopInfoContent && taxInfoContent) {
+      for (let i = 0; i < stepsRegister.length; i++) {
+        if (stepsRegister[i].getAttribute('id') === 'tax_info') {
+          stepsRegister[i].classList.add('active');
+          shopInfoContent.classList.remove('active');
+          taxInfoContent.classList.add('active');
+          break;
+        }
+        stepsRegister[i].classList.add('finished');
+        stepsRegister[i].classList.remove('active');
+      }
+    } else if (LocalStorageService.getItem('settingShipping') && stepsRegister && shopInfoContent && settingContent) {
+      for (let i = 0; i < stepsRegister.length; i++) {
+        if (stepsRegister[i].getAttribute('id') === 'setting_ship') {
+          stepsRegister[i].classList.add('active');
+          shopInfoContent.classList.remove('active');
+          settingContent.classList.add('active');
+          break;
+        }
+        stepsRegister[i].classList.add('finished');
+        stepsRegister[i].classList.remove('active');
+      }
     }
   }, [seller]);
-
-  /* handle validate for shop name when blur input name */
-  useEffect(() => {
-    const name = nameRef.current;
-    const handleBlur = (e) => {
-      if (e.target.value === '') {
-        name.classList.add('border_danger');
-      } else {
-        name.classList.remove('border_danger');
-      }
-    };
-    if (name) {
-      name.addEventListener('blur', handleBlur);
-    }
-  }, [shopName]);
 
   useEffect(() => {
     setAddressDetail(() => {
@@ -126,7 +90,7 @@ export default function RegisterShop() {
         return '';
       }
     });
-  }, [editAddress]);
+  }, []);
 
   useEffect(() => {}, []);
   return (
@@ -212,72 +176,7 @@ export default function RegisterShop() {
               </div>
               <div id="seller_main_content" className={cx('seller_main_content')}>
                 <div id="shop_info_content" className={cx('shop_info', 'content_register active')}>
-                  <form className={cx('shop_info_form')} onSubmit={handleSubmitInfo} noValidate>
-                    <div className={cx('form_content')}>
-                      <div className={cx('form_content_container', 'd-flex flex-column')}>
-                        <FormText
-                          ref={nameRef}
-                          containerClass={cx('name_shop')}
-                          labelClass={cx('col-3')}
-                          data={shopName}
-                          title="name shop"
-                          name="shop_name"
-                          handleOnchange={handlSetShopName}
-                        />
-                        <div className={cx('pickup_address', 'form-group d-flex flex-row')}>
-                          <label className="text-capitalize col-3  text-end">pickup address</label>
-                          <div className={cx('pickup_address_content', 'col flex-start')}>
-                            {addressDetail ? (
-                              <Fragment>
-                                <div className={cx('name_phone')}>
-                                  {addressDetail?.fullname + ' |'} {addressDetail?.phone_number}
-                                </div>
-                                <div className={cx('address')}>{addressDetail?.address}</div>
-                                <div className={cx('location')}>
-                                  {addressDetail?.ward_name}
-                                  <br />
-                                  {addressDetail?.district_name}
-                                  <br />
-                                  {addressDetail?.city_name}
-                                </div>
-                              </Fragment>
-                            ) : (
-                              <Fragment></Fragment>
-                            )}
-                            <Button
-                              className={cx('pickup_address_edit')}
-                              type="button"
-                              onClick={handleEditAddress}
-                              transparent
-                            >
-                              Edit Address
-                            </Button>
-                          </div>
-                        </div>
-                        <FormText
-                          containerClass={cx('email')}
-                          labelClass={cx('col-3')}
-                          title="email"
-                          name="email"
-                          data={seller.email}
-                          disabled
-                        />
-                        <div className={cx('phone_number', 'd-flex flex-row')}>
-                          <label className="text-capitalize col-3 text-end">Phone Number</label>
-                          <div>{seller.phone_number}</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className={cx('form_btn', 'd-flex flex-row justify-content-end')}>
-                      <Button type="button" outline onClick={handleSaveShopInfo}>
-                        Save
-                      </Button>
-                      <Button type="button" primary onClick={handleSaveShopInfo} data-type="next">
-                        Next
-                      </Button>
-                    </div>
-                  </form>
-                  {editAddress ? <DetailAddress handleCloseAddress={handleCloseEditAddress} /> : <></>}
+                  <ShopInfo seller={seller} addressDetail={addressDetail} />
                 </div>
                 <div id="setting_shipping_content" className={cx('setting_shipping', 'content_register')}>
                   <SettingShipping />
@@ -285,7 +184,10 @@ export default function RegisterShop() {
                 <div id="tax_info_content" className={cx('tax_info', 'content_register')}>
                   <TaxInfo location={addressDetail} email={seller.email} />
                 </div>
-                <div id="identification_info_content" className={cx('identification_info', 'content_register')}></div>
+                <div id="identification_info_content" className={cx('identification_info', 'content_register')}>
+                  <IdentityInfo />
+                </div>
+                <div id="completed_content" className={cx('completed', 'content_register')}></div>
               </div>
             </div>
           </main>

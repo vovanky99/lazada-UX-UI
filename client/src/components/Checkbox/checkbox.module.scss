@@ -1,15 +1,15 @@
 .container {
-  position: relative;
-  padding-left: 20px;
+  gap: 5px;
 }
-.container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
+.checkbox_container {
+  position: relative;
   height: 15px;
   width: 15px;
-  z-index: 9999;
-  left: 0;
+}
+.container input {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
 }
 .container input:checked ~ .input-helper {
   background-image: #da6520;
@@ -22,10 +22,12 @@ input:checked ~ .input-helper:after {
   position: absolute;
   left: 0;
   top: 0;
-  height: 15px;
-  width: 15px;
+  width: 100%;
+  height: 100%;
   border: 1px solid;
+  border-radius: 1px;
   background-color: transparent;
+  pointer-events: none;
 }
 .input-helper::after {
   position: absolute;

@@ -1,0 +1,12 @@
+.process {
+  .bar {
+    height: 5px;
+    width: 50%;
+    border-radius: 5px;
+    border: 1px solid var(--border_color_admin);
+    background-color: var(--background_color_shadow);
+  }
+  progress {
+    content: '0%';
+  }
+}
