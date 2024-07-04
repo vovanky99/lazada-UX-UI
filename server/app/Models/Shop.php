@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens;
 
 class Shop extends Model
 {
     use HasFactory;
-    public $table = 'shop';
+    protected $table = 'shop';
     protected $fillable = [
         'name',
         'logo',
@@ -17,7 +16,7 @@ class Shop extends Model
         'img_cover',
         'descriptions',
         'address_id',
-        'user_id',
+        'seller_id',
     ];
     public function messages(){
         return $this->hasMany(MessagesShop::class,'shop_id');
@@ -34,7 +33,10 @@ class Shop extends Model
     public function address(){
         return $this->belongsTo(Address::class,'address_id');
     }
-    public function shop_shipping_method(){
-        return $this->hasOne(ShopShippingMethod::class,'shop_id');
+    public function shop_shipping_methods(){
+        return $this->hasMany(ShopShippingMethod::class,'shop_id');
+    }
+    public function tax_shop(){
+        return $this->hasOne(TaxShop::class,'shop_id');
     }
 }

@@ -1,12 +1,34 @@
 .process {
+  width: 100%;
+  position: absolute;
+  margin: 0 auto;
+  pointer-events: none;
+  top: 50%;
   .bar {
     height: 5px;
-    width: 50%;
-    border-radius: 5px;
-    border: 1px solid var(--border_color_admin);
-    background-color: var(--background_color_shadow);
+    width: 100%;
   }
   progress {
-    content: '0%';
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+  }
+  progress[value='100'],
+  progress[value='0'] {
+    display: none;
+  }
+  progress::-webkit-progress-bar {
+    border: 1px solid var(--border_color_admin);
+    background-color: var(--background_color_shadow);
+    border-radius: 5px;
+  }
+  progress::-webkit-progress-value {
+    border-radius: 5px;
+    background-color: #55cc77;
+  }
+  progress::-moz-progress-bar {
+  }
+  .progress {
+    width: 20px;
   }
 }

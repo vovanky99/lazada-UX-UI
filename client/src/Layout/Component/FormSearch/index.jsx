@@ -13,6 +13,7 @@ export const FormSearch = forwardRef(function FormSearch(
     useTippy = true,
     name,
     valueID,
+    useColumn = false,
     inputType = 'text',
     inputClass,
     useForgetPassword = false,
@@ -124,7 +125,14 @@ export const FormSearch = forwardRef(function FormSearch(
 
   return (
     <>
-      <div ref={selectRef} className={cx('select-container', containerClass || 'form-group flex-grow-1')}>
+      <div
+        ref={selectRef}
+        className={cx(
+          'select-container',
+          containerClass || 'form-group d-flex flex-grow-1',
+          useColumn ? 'flex-column' : 'flex-row',
+        )}
+      >
         {useLabel ? (
           <label className="form-label text-capitalize">
             {title}

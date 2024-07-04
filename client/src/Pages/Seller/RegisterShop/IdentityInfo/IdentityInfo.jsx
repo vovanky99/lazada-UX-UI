@@ -13,6 +13,8 @@ import Images from '~/components/Images';
 import Checkbox from '~/components/Checkbox';
 import CldUploadImg from '~/services/cloudinary/CldUploadImg';
 import MessageText from '~/layout/Component/Message/MessageText';
+import Progress from '~/components/Progress';
+import { RegisterShop } from '~/api/Seller/Profile';
 
 const cx = classNames.bind(styles);
 
@@ -21,13 +23,23 @@ export default function IdentityInfo() {
   const identityNumberRef = useRef();
   const fullnameRef = useRef();
   const [valid, setValid] = useImmer({});
-  const [identityInfo, setIdentityInfo] = useImmer({
-    form_of_identity: 1,
-    identity_number: '',
-    fullname: '',
-    upload_identity_images: '',
-    upload_identity_hold_images: '',
-    check_policies: 0,
+  const [identityInfo, setIdentityInfo] = useImmer(() => {
+    if (LocalStorageService.getItem('identityInfoValue')) {
+      return LocalStorageService.getItem('identityInfoValue');
+    } else {
+      return {
+        form_of_identity: 1,
+        identity_number: '',
+        fullname: '',
+        upload_identity_images: '',
+        upload_identity_hold_images: '',
+        check_policies: 0,
+      };
+    }
+  });
+  const [uploadProgress, setUploadProgress] = useImmer({
+    upload_identity_images: 0,
+    upload_identity_hold_images: 0,
   });
   const handleOnchange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +49,7 @@ export default function IdentityInfo() {
   };
 
   const validate = (field = identityInfo) => {
-    const { messageError } = { ...valid };
+    const messageError = { ...valid };
     if ('identity_number' in field) {
       messageError.identity_number = !field.identity_number ? 'Please enter your identity!' : '';
     }
@@ -87,20 +99,52 @@ export default function IdentityInfo() {
       Object.values(identityInfo).filter((d) => d === '').length === 0 &&
       identityInfo.check_policies === 1
     ) {
-      for (let i = 0; i < stepsRegister.length; i++) {
-        if (stepsRegister[i].getAttribute('id') === 'completed') {
-          stepsRegister[i].classList.add('active');
-          stepsRegister[i - 1].classList.remove('active');
-          stepsRegister[i - 1].classList.add('finished');
-          identityInfoContent.classList.remove('active');
-          completedContent.classList.add('active');
-          LocalStorageService.removeItem('IdentificationInfo');
-          LocalStorageService.setItem('identityInfoValue', identityInfo);
-          LocalStorageService.setItem('completed', true);
-        }
-      }
+      const taxinfo = LocalStorageService.getItem('taxInfoValue');
+      const formTax = new FormData();
+      const formIdentity = new FormData();
+      formTax.append('business_name', taxinfo.business_name);
+      formTax.append('business_type', taxinfo.business_type);
+      formTax.append('ward_id', taxinfo.register_bussiness_address.ward_id);
+      formTax.append('address', taxinfo.register_bussiness_address.address);
+      formTax.append('tax_code', taxinfo.tax_code);
+      formTax.append('email', taxinfo.email_receive_electronic_invoice);
+      formIdentity.append('form_of_identity', identityInfo.form_of_identity);
+      formIdentity.append('identity_number', identityInfo.identity_number);
+      formIdentity.append('fullname', identityInfo.fullname);
+      formIdentity.append('upload_images', identityInfo.upload_identity_images);
+      formIdentity.append('upload_hold_images', identityInfo.upload_identity_hold_images);
+
+      RegisterShop(formTax, 'tax_info')
+        .then((result) => {})
+        .catch((e) => console.log(e));
+      RegisterShop(formIdentity, 'identity_info')
+        .then((result) => {
+          if (result.sucess) {
+            for (let i = 0; i < stepsRegister.length; i++) {
+              if (stepsRegister[i].getAttribute('id') === 'completed') {
+                stepsRegister[i].classList.add('active');
+                stepsRegister[i - 1].classList.remove('active');
+                stepsRegister[i - 1].classList.add('finished');
+                identityInfoContent.classList.remove('active');
+                completedContent.classList.add('active');
+                LocalStorageService.setItem('identityInfoValue', identityInfo);
+              }
+            }
+          }
+        })
+        .catch((e) => console.log(e));
     }
   };
+
+  /*set default value for radio identity form of identification */
+  useEffect(() => {
+    const radioItem = document.querySelectorAll('.form_of_identity_content_item');
+    for (let i = 0; i < radioItem.length; i++) {
+      if (parseInt(radioItem[i].dataset.type) === identityInfo.form_of_identity) {
+        radioItem[i].classList.add(`radio_${radioItem[i].dataset.color}_active`);
+      }
+    }
+  }, []);
 
   /* handle remove active for Form of identification radio when select other radio */
   useEffect(() => {
@@ -112,9 +156,14 @@ export default function IdentityInfo() {
           radioItem[i].classList.remove(`radio_${color}_active`);
         }
       }
+
       setIdentityInfo((draft) => {
         draft.form_of_identity = parseInt(type);
       });
+      setValid((draft) => {
+        delete draft.identity_number;
+      });
+      identityNumberRef.current.classList.remove('border_danger');
     };
     if (radioItem) {
       radioItem.forEach((d) => d.addEventListener('click', handleRemoveActive));
@@ -134,14 +183,19 @@ export default function IdentityInfo() {
       const form = new FormData();
       form.append('file', e.target.files[0]);
       const reader = new FileReader();
+      const handleUploadProgress = (e) => {
+        const progress = Math.round((e.loaded * 100) / e.total);
+        setUploadProgress((draft) => {
+          draft[name] = progress;
+        });
+      };
       if (e.target.files[0]) {
         reader.onload = (e) => {
           setIdentityInfo((draft) => {
             draft[name] = e.target.result;
           });
-          CldUploadImg(form)
+          CldUploadImg(form, handleUploadProgress)
             .then((result) => {
-              console.log(result);
               setIdentityInfo((draft) => {
                 draft[name] = result.url;
               });
@@ -241,16 +295,13 @@ export default function IdentityInfo() {
     const deleteImage = document.querySelectorAll('.delete_image');
     const handleClick = (e) => {
       e.stopPropagation();
-      const { type } = e.currentTarget.dataset;
-      if (type === 'hold_image') {
-        setIdentityInfo((draft) => {
-          draft.upload_identity_hold_images = '';
-        });
-      } else {
-        setIdentityInfo((draft) => {
-          draft.upload_identity_images = '';
-        });
-      }
+      const { name } = e.currentTarget.dataset;
+      setIdentityInfo((draft) => {
+        draft[name] = '';
+      });
+      setUploadProgress((draft) => {
+        draft[name] = 0;
+      });
     };
     if (deleteImage) {
       deleteImage.forEach((d) => d.addEventListener('click', handleClick));
@@ -312,7 +363,6 @@ export default function IdentityInfo() {
                   type="1"
                   className={cx('form_of_identity_content_item')}
                   primary
-                  DF
                 />
                 <Radio title="ID card" type="2" className={cx('form_of_identity_content_item')} primary />
                 <Radio title="Passport" type="3" className={cx('form_of_identity_content_item')} primary />
@@ -330,14 +380,16 @@ export default function IdentityInfo() {
                 <FormSearch
                   ref={identityNumberRef}
                   title=""
+                  Value={identityInfo.identity_number}
                   name="identity_number"
-                  inputType="number"
+                  inputType={identityInfo.form_of_identity === 3 ? 'text' : 'number'}
                   useLabel={false}
                   useTippy={false}
                   handleOnchange={handleOnchange}
                 >
                   <div className={cx('identity_item_length')}>
-                    {Object.values(identityInfo.identity_number).length}/12
+                    {Object.values(identityInfo.identity_number).length}/
+                    {identityInfo.form_of_identity !== 3 ? '12' : '20'}
                   </div>
                 </FormSearch>
                 <MessageText message={valid?.identity_number} className={cx('message', 'text-danger')} />
@@ -351,6 +403,7 @@ export default function IdentityInfo() {
                     ref={fullnameRef}
                     title=""
                     name="fullname"
+                    Value={identityInfo.fullname}
                     useLabel={false}
                     useTippy={false}
                     handleOnchange={handleOnchange}
@@ -375,11 +428,16 @@ export default function IdentityInfo() {
                     >
                       <FontAwesomeIcon icon={faPlus} />
                     </div>
-                    <div className={cx('images', 'upload_item')}>
+                    <div className={cx('images')}>
                       <Images src={identityInfo.upload_identity_images} alt={identityInfo.upload_identity_images} />
-                      <div className={cx('trash_can')} data-type="image">
-                        <FontAwesomeIcon className="delete_image" icon={faTrashCan} />
+                      <div className={cx('trash_can')}>
+                        <FontAwesomeIcon
+                          className="delete_image"
+                          icon={faTrashCan}
+                          data-name="upload_identity_images"
+                        />
                       </div>
+                      <Progress data={uploadProgress.upload_identity_images} />
                     </div>
                     <input
                       type="file"
@@ -416,14 +474,19 @@ export default function IdentityInfo() {
                     >
                       <FontAwesomeIcon icon={faPlus} />
                     </div>
-                    <div className={cx('images', 'upload_item')}>
+                    <div className={cx('images')}>
                       <Images
                         src={identityInfo.upload_identity_hold_images}
                         alt={identityInfo.upload_identity_hold_images}
                       />
-                      <div className={cx('trash_can')} data-type="hold_image">
-                        <FontAwesomeIcon className="delete_image" icon={faTrashCan} />
+                      <div className={cx('trash_can')}>
+                        <FontAwesomeIcon
+                          className="delete_image"
+                          icon={faTrashCan}
+                          data-name="upload_identity_hold_images"
+                        />
                       </div>
+                      <Progress data={uploadProgress.upload_identity_hold_images} />
                     </div>
                     <input
                       type="file"
@@ -435,8 +498,8 @@ export default function IdentityInfo() {
                   </div>
                   <div>
                     <Images
-                      src={require('~/assets/images/Seller/RegisterShop/photo_of_identity.png')}
-                      alt={require('~/assets/images/Seller/RegisterShop/photo_of_identity.png')}
+                      src={require('~/assets/images/Seller/RegisterShop/photo_hold_your_identity.png')}
+                      alt={require('~/assets/images/Seller/RegisterShop/photo_hold_your_identity.png')}
                     />
                   </div>
                 </div>

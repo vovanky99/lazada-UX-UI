@@ -13,6 +13,7 @@ import { FormSearch } from '~/layout/Component/FormSearch';
 import EmailItem from './EmailItem';
 import MessageDanger from '~/layout/Component/Message/MessageDanger';
 import LocalStorageService from '~/services/LocalStorageService';
+import { RegisterShop } from '~/api/Seller/Profile';
 
 const cx = classNames.bind(styles);
 
@@ -88,6 +89,39 @@ export default function TaxInfo({ email, location }) {
     });
   };
 
+  const validate = (field = taxInfo) => {
+    const messageError = { valid };
+    if ('business_name' in field) {
+      messageError.business_name =
+        !field.business_name && field.business_type !== 1 ? 'Please enter business name!' : '';
+      if (businessNameRef.current && !field.business_name && field.business_type !== 1) {
+        businessNameRef.current.classList.add('border_danger');
+      }
+    }
+    if ('ward_id' in field.register_bussiness_address) {
+      messageError.location = !field.register_bussiness_address.ward_id ? 'Please select location!' : '';
+      if (locationRef.current && !field.register_bussiness_address.ward_id) {
+        locationRef.current.classList.add('border_danger');
+      }
+    }
+    if ('address' in field.register_bussiness_address) {
+      messageError.address = !field.register_bussiness_address.address ? 'Please enter address!' : '';
+      if (addressRef.current && !field.register_bussiness_address.address) {
+        addressRef.current.classList.add('border_danger');
+      }
+    }
+    Object.values(taxInfo.email_receive_electronic_invoice).map((d) => {
+      if (`${d.name}` in field.email_receive_electronic_invoice) {
+        setTaxInfo((draft) => {
+          draft.email_receive_electronic_invoice[d.name].error = !field.email_receive_electronic_invoice[d.name].value
+            ? 'Please enter email!'
+            : !field.email_receive_electronic_invoice[d.name].value.match(/@gmail.com/g)
+            ? "email don't valid!"
+            : '';
+        });
+      }
+    });
+  };
   const handleBackSettingShipping = (e) => {
     const stepsRegister = document.querySelectorAll('.steps_register');
     const settingContent = document.getElementById('setting_shipping_content');
@@ -111,6 +145,7 @@ export default function TaxInfo({ email, location }) {
     const stepsRegister = document.querySelectorAll('.steps_register');
     const taxContent = document.getElementById('tax_info_content');
     const identificationInfoContent = document.getElementById('identification_info_content');
+    validate();
     if (
       Object.entries(valid).length === 0 &&
       Object.values(taxInfo.email_receive_electronic_invoice).filter((dt) => dt.error !== '').length === 0
@@ -130,27 +165,36 @@ export default function TaxInfo({ email, location }) {
     }
   };
 
+  /*set default value for radio identity form of identification */
+  useEffect(() => {
+    const radioItem = document.querySelectorAll('.business_type_item');
+    for (let i = 0; i < radioItem.length; i++) {
+      if (parseInt(radioItem[i].dataset.type) === taxInfo.business_type) {
+        radioItem[i].classList.add(`radio_${radioItem[i].dataset.color}_active`);
+      }
+    }
+  }, []);
+
   /* handle remove active for radio when select other radio */
   useEffect(() => {
     const radioItem = document.querySelectorAll('.business_type_item');
     const handleRemoveActive = (e) => {
-      const { type } = e.currentTarget.dataset;
+      const { type, color } = e.currentTarget.dataset;
       for (let i = 0; i < radioItem.length; i++) {
-        if (radioItem[i].classList.contains('radio_active')) {
-          radioItem[i].classList.remove('radio_active');
+        if (radioItem[i].classList.contains(`radio_${color}_active`)) {
+          radioItem[i].classList.remove(`radio_${color}_active`);
         }
       }
       setTaxInfo((draft) => {
         draft.business_type = parseInt(type);
       });
-      // e.target.classList.add('radio_active');
     };
     if (radioItem) {
       radioItem.forEach((d) => d.addEventListener('click', handleRemoveActive));
     }
     return () => {
       if (radioItem) {
-        radioItem.forEach((d) => d.addEventListener('click', handleRemoveActive));
+        radioItem.forEach((d) => d.removeEventListener('click', handleRemoveActive));
       }
     };
   }, []);
@@ -160,7 +204,7 @@ export default function TaxInfo({ email, location }) {
     const location = locationRef.current;
     const handleBlur = (e) => {
       const { name, classList } = e.target;
-      if (taxInfo.register_bussiness_address.ward_id) {
+      if (!taxInfo.register_bussiness_address.ward_id) {
         setValid((draft) => {
           draft[name] = 'please select location before enter address!';
         });
@@ -290,7 +334,7 @@ export default function TaxInfo({ email, location }) {
               business type
             </label>
             <div id="business_type_option" className={cx('business_type_option', 'd-flex flex-row')}>
-              <Radio title="Individual" type={1} className={cx('business_type_item')} DF primary />
+              <Radio title="Individual" type={1} className={cx('business_type_item')} primary />
               <Radio title="Household business" type={2} className={cx('business_type_item')} primary />
               <Radio title="Company" type={3} className={cx('business_type_item')} primary />
             </div>

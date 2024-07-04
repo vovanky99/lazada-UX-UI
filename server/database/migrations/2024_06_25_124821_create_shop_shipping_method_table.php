@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('shop_shipping_method', function (Blueprint $table) {
             $table->id();
             $table->boolean('cod')->default(1);
+            $table->boolean('status')->default(1);
             $table->foreignId('shop_id')->references('id')->on('shop')->onDelete('cascade');
             $table->foreignId('shipping_method_id')->references('id')->on('shipping_method')->onDelete('cascade');
             $table->timestamps();

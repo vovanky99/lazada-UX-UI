@@ -499,7 +499,6 @@
                 height: 100px;
                 position: absolute;
                 border: 1px solid white;
-                cursor: pointer;
                 img {
                   width: 100%;
                   height: 100%;
@@ -519,7 +518,7 @@
                   cursor: default;
                   svg {
                     cursor: pointer;
-                    font-size: 1.5rem;
+                    font-size: 1.4rem;
                     color: #80caf5;
                   }
                 }
@@ -563,6 +562,24 @@
           }
         }
       }
+      .completed_result {
+        height: 425px;
+        svg {
+          font-size: 8rem;
+          color: #55cc77;
+          margin-bottom: 20px;
+        }
+        h3 {
+          font-size: 2.2rem;
+          margin-bottom: 0;
+          margin-bottom: 10px;
+        }
+        p {
+          font-size: 1.7rem;
+          display: inline-block;
+          margin-bottom: 20px !important;
+        }
+      }
       .note {
         color: var(--alert_word_color);
         font-size: 1.3rem;
@@ -591,6 +608,7 @@
       &_value {
         cursor: pointer;
         min-height: 30px;
+        max-height: 32px;
         font-size: 1.6rem;
         svg {
           color: var(--border_color_admin);

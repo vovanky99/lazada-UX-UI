@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
-use App\Models\ShopOwner;
+use App\Models\Seller;
 use App\Models\User;
 
 class CheckController extends Controller
@@ -26,7 +26,7 @@ class CheckController extends Controller
             }
         }
         if($type == 'shop_owner'){
-            $shopOwner = ShopOwner::where('username',$username)->first();
+            $shopOwner = Seller::where('username',$username)->first();
             if($shopOwner){
                 return response()->json(['error'=>'Username already exists']);
             }
@@ -43,7 +43,7 @@ class CheckController extends Controller
             }
         }
         if($type == 'shop_owner'){
-            $shopOwner = ShopOwner::where('email',$email)->first();
+            $shopOwner = Seller::where('email',$email)->first();
             if($shopOwner){
                 return response()->json(['error'=>'Username already exists']);
             }
@@ -66,7 +66,7 @@ class CheckController extends Controller
             }
         }
         if($type == 'shop_owner'){
-            $shopOwner = ShopOwner::where('phone_number',$phone)->first();
+            $shopOwner = Seller::where('phone_number',$phone)->first();
             if($shopOwner){
                 return response()->json(['error'=>'Phone already exists']);
             }

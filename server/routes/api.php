@@ -22,6 +22,7 @@ use App\Http\Controllers\CheckController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;
+use App\Http\Controllers\Seller\ProfileController as SellerProfileController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -195,6 +196,12 @@ Route::prefix('/seller')->group(function () {
     Route::get('/email/verify/{id}/{hash}',[SellerEmailVerifyController::class,'verify'])->name('seller.verification.verify');
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/email/verification-notification',[SellerEmailVerifyController::class,'sendVerificationEmail']);   
+        
+    });
+    Route::middleware(['auth:sanctum','verified'])->group(function () {  
+        Route::controller(SellerProfileController::class)->group(function(){
+            Route::post('/register-shop/{type}','RegisterShop');
+        });
     });
 
 });

@@ -32,6 +32,9 @@
       .password,
       .email,
       .phone_number {
+        > div {
+          flex-direction: column !important;
+        }
         input {
           padding-top: 7px !important;
           padding-bottom: 7px !important;
@@ -172,3 +175,6 @@
 .message {
   height: 15px;
 }
+// .message_login {
+//   height: 10px;
+// }

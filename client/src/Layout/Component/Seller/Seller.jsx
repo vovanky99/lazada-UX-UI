@@ -9,7 +9,7 @@ import LocalStorageService from '~/services/LocalStorageService/index';
 export default function Seller({ children }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const seller = useSelector((state) => state.Auth.seller);
+  const { seller, sellerAuthenticated } = useSelector((state) => state.Auth);
 
   /* handle get seller */
   useEffect(() => {
@@ -25,11 +25,11 @@ export default function Seller({ children }) {
     if (seller) {
       if (!seller?.email_verified_at) {
         navigate(config.ShopSeller.VerifiedEmail);
-      } else if (!seller?.shop_id) {
+      } else if (!seller?.shop_id || !seller?.shop?.status === 0) {
         navigate(config.ShopSeller.RegisterShop);
       }
     }
   }, [seller]);
 
-  return <Fragment>{children}</Fragment>;
+  return <Fragment>{sellerAuthenticated && <Fragment>{children}</Fragment>}</Fragment>;
 }

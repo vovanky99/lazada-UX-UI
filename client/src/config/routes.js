@@ -62,7 +62,15 @@ export const ShopSeller = {
   ChangePassword: '/seller/change-password',
   Home: '/seller',
   VerifiedEmail: '/seller/verify-email',
-  RegisterShop: '/seller/portal',
+  RegisterShop: '/seller/register-shop',
+
+  //profile
+  IdentityInfo: '/seller/shop/profile/identity-infomation',
+  TaxInfo: '/seller/shop/profile/tax-info',
+  BasicInfo: 'seller/shop/profile/basic-info',
+  ShopInfo: 'seller/shop/profile/shop-info',
+  Profile: 'seller/shop/profile/personal-info',
+  SettingShop: 'seller/shop/profile/setting-shop',
 };
 
 export default routes;

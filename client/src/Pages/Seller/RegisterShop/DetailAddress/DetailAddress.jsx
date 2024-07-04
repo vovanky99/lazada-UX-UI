@@ -17,7 +17,7 @@ import LocalStorageService from '~/services/LocalStorageService';
 
 const cx = classNames.bind(styles);
 
-export default function DetailAddress({ handleCloseAddress = () => {} }) {
+export default function DetailAddress({ seller, handleCloseAddress = () => {} }) {
   const locationValueRef = useRef();
   const addressRef = useRef();
   const fullNameRef = useRef();
@@ -160,7 +160,8 @@ export default function DetailAddress({ handleCloseAddress = () => {} }) {
                       ref={fullNameRef}
                       title="full name"
                       name="fullname"
-                      // Value={addressDetail?.fullname}
+                      Value={addressDetail?.fullname}
+                      useColumn
                       handleOnchange={handleOnchange}
                       useTippy={false}
                     />
@@ -168,6 +169,7 @@ export default function DetailAddress({ handleCloseAddress = () => {} }) {
                   </div>
                   <div className={cx('phone_number', 'd-flex flex-column')}>
                     <FormSearch
+                      useColumn
                       ref={phoneNumberRef}
                       title="phone"
                       name="phone_number"

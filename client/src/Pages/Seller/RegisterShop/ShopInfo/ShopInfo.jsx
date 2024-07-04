@@ -6,19 +6,14 @@ import Button from '~/components/Button';
 import FormText from '~/layout/Component/FormGroupRow/FormText';
 import DetailAddress from '../DetailAddress';
 import LocalStorageService from '~/services/LocalStorageService';
+import { RegisterShop } from '~/api/Seller/Profile';
 
 const cx = classNames.bind(styles);
 
 export default function ShopInfo({ seller, addressDetail }) {
   const nameRef = useRef();
   const [editAddress, setEditAddress] = useState(false);
-  const [shopName, setShopName] = useState(() => {
-    if (LocalStorageService.getItem('shopName')) {
-      return LocalStorageService.getItem('shopName');
-    } else {
-      return '';
-    }
-  });
+  const [shopName, setShopName] = useState(seller?.shop?.name || '');
   const handleCloseEditAddress = () => {
     setEditAddress(false);
   };
@@ -29,25 +24,34 @@ export default function ShopInfo({ seller, addressDetail }) {
   const handleEditAddress = (e) => {
     setEditAddress(true);
   };
-  /* handle save shop info in localstorage */
-  const handleSaveShopInfo = (e) => {
+
+  const handleNextSettingShipping = (e) => {
     const stepsRegister = document.querySelectorAll('.steps_register');
     const shopInfoContent = document.getElementById('shop_info_content');
     const settingContent = document.getElementById('setting_shipping_content');
     if (shopName !== '') {
-      if (e.target.dataset.type === 'next') {
-        for (let i = 0; i < stepsRegister.length; i++) {
-          if (stepsRegister[i].getAttribute('id') === 'setting_ship') {
-            stepsRegister[i].classList.add('active');
-            stepsRegister[i - 1].classList.remove('active');
-            stepsRegister[i - 1].classList.add('finished');
-            shopInfoContent.classList.remove('active');
-            settingContent.classList.add('active');
-            LocalStorageService.setItem('settingShipping', true);
+      const formData = new FormData();
+      formData.append('shop_name', shopName);
+      formData.append('address', addressDetail?.address);
+      formData.append('ward_id', addressDetail?.ward_id);
+      formData.append('phone', addressDetail?.phone_number);
+      formData.append('fullname', addressDetail?.fullname);
+      RegisterShop(formData, 'shop_info')
+        .then((result) => {
+          if (result.success) {
+            for (let i = 0; i < stepsRegister.length; i++) {
+              if (stepsRegister[i].getAttribute('id') === 'setting_ship') {
+                stepsRegister[i].classList.add('active');
+                stepsRegister[i - 1].classList.remove('active');
+                stepsRegister[i - 1].classList.add('finished');
+                shopInfoContent.classList.remove('active');
+                settingContent.classList.add('active');
+                LocalStorageService.setItem('settingShipping', true);
+              }
+            }
           }
-        }
-      }
-      LocalStorageService.setItem('shopName', shopName);
+        })
+        .catch((e) => console.log(e));
     }
   };
 
@@ -109,25 +113,22 @@ export default function ShopInfo({ seller, addressDetail }) {
               labelClass={cx('col-3')}
               title="email"
               name="email"
-              data={seller.email}
+              data={seller?.email}
               disabled
             />
             <div className={cx('phone_number', 'd-flex flex-row')}>
               <label className="text-capitalize col-3 text-end">Phone Number</label>
-              <div>{seller.phone_number}</div>
+              <div>{seller?.phone_number}</div>
             </div>
           </div>
         </div>
         <div className={cx('form_btn', 'd-flex flex-row justify-content-end')}>
-          <Button type="button" outline onClick={handleSaveShopInfo}>
-            Save
-          </Button>
-          <Button type="button" primary onClick={handleSaveShopInfo} data-type="next">
+          <Button type="button" primary onClick={handleNextSettingShipping} data-type="next">
             Next
           </Button>
         </div>
       </form>
-      {editAddress ? <DetailAddress handleCloseAddress={handleCloseEditAddress} /> : <></>}
+      {editAddress ? <DetailAddress seller={seller} handleCloseAddress={handleCloseEditAddress} /> : <></>}
     </Fragment>
   );
 }

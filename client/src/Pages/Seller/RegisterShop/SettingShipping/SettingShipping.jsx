@@ -1,35 +1,61 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useImmer } from 'use-immer';
 import classNames from 'classnames/bind';
 
 import Button from '~/components/Button';
 import styles from '../RegisterShop.module.scss';
 import LocalStorageService from '~/services/LocalStorageService';
+import { RegisterShop } from '~/api/Seller/Profile';
+import Dialog from '~/layout/Component/Dialog';
 
 const cx = classNames.bind(styles);
 
-export default function SettingShipping() {
-  const [btnSetting, setBtnSetting] = useImmer({
-    express: true,
-    fast: true,
-    saving: true,
-    heavy_things: true,
+export default function SettingShipping({ seller }) {
+  const [dialog, setDialog] = useState(false);
+  const [messageDialog, setMessageDialog] = useState('');
+  const [resolvePromise, setResolvePromise] = useState(null);
+  const setting = seller?.shop?.shop_shipping_methods;
+  const [btnSetting, setBtnSetting] = useImmer(() => {
+    if (setting) {
+      const object = {};
+      setting.map((dt) => {
+        object[dt?.shipping_method.name] = dt?.status ? true : false;
+      });
+      return object;
+    } else {
+      return {
+        express: true,
+        fast: true,
+        saving: true,
+        heavy_things: true,
+      };
+    }
   });
-  const [radioSetting, setRadioSetting] = useImmer({
-    express: true,
-    fast: true,
-    saving: true,
-    heavy_things: true,
-    cod: {
-      express: true,
-      fast: true,
-      saving: true,
-      heavy_things: true,
-    },
+  const [radioSetting, setRadioSetting] = useImmer(() => {
+    if (setting) {
+      const object = { cod: {} };
+      setting.map((dt) => {
+        object[dt?.shipping_method?.name] = dt?.status ? true : false;
+        object.cod[dt.shipping_method.name] = dt?.cod ? true : false;
+      });
+      return object;
+    } else {
+      return {
+        express: true,
+        fast: true,
+        saving: true,
+        heavy_things: true,
+        cod: {
+          express: true,
+          fast: true,
+          saving: true,
+          heavy_things: true,
+        },
+      };
+    }
   });
-  // const [codSetting, setCodSetting] = useImmer({});
 
   const handleToggleCODDetail = (e) => {
     if (e.currentTarget.classList.contains('toggle')) {
@@ -39,7 +65,7 @@ export default function SettingShipping() {
     }
   };
 
-  const handleBackSettingShipping = (e) => {
+  const handleBackShopInfo = (e) => {
     const stepsRegister = document.querySelectorAll('.steps_register');
     const settingContent = document.getElementById('setting_shipping_content');
     const shopInfoContent = document.getElementById('shop_info_content');
@@ -57,23 +83,48 @@ export default function SettingShipping() {
     }
   };
 
-  const handleNextSettingShipping = (e) => {
+  const handleNextTaxInfo = (e) => {
     const stepsRegister = document.querySelectorAll('.steps_register');
     const settingContent = document.getElementById('setting_shipping_content');
     const taxInfoContent = document.getElementById('tax_info_content');
-    if (stepsRegister && taxInfoContent && settingContent) {
-      for (let i = 0; i < stepsRegister.length; i++) {
-        if (stepsRegister[i].getAttribute('id') === 'tax_info') {
-          stepsRegister[i].classList.add('active');
-          stepsRegister[i - 1].classList.remove('active');
-          stepsRegister[i - 1].classList.add('finished');
-          settingContent.classList.remove('active');
-          taxInfoContent.classList.add('active');
-          LocalStorageService.setItem('taxInfo', true);
-          LocalStorageService.setItem('settingShipValue', radioSetting);
-          LocalStorageService.removeItem('settingShipping');
-        }
-      }
+    if (radioSetting) {
+      RegisterShop(radioSetting, 'setting_shipping')
+        .then((result) => {
+          if (result.success) {
+            for (let i = 0; i < stepsRegister.length; i++) {
+              if (stepsRegister[i].getAttribute('id') === 'tax_info') {
+                stepsRegister[i].classList.add('active');
+                stepsRegister[i - 1].classList.remove('active');
+                stepsRegister[i - 1].classList.add('finished');
+                settingContent.classList.remove('active');
+                taxInfoContent.classList.add('active');
+                LocalStorageService.setItem('taxInfo', true);
+                LocalStorageService.removeItem('settingShipping');
+              }
+            }
+          } else {
+          }
+        })
+        .catch((e) => console.log(e));
+    }
+  };
+
+  /* handle for confirm  */
+  const setShowConfirmBox = (message) => {
+    return new Promise((resolve) => {
+      setResolvePromise(() => resolve);
+      setMessageDialog(message);
+      setDialog(true);
+    });
+  };
+  const handleConfirmDialog = (e) => {
+    const { type } = e.currentTarget.dataset;
+    if (type === 'no') {
+      setDialog(false);
+      if (resolvePromise) resolvePromise(false);
+    } else {
+      setDialog(false);
+      if (resolvePromise) resolvePromise(true);
     }
   };
 
@@ -81,34 +132,58 @@ export default function SettingShipping() {
   useEffect(() => {
     const lifeSwitch = document.querySelectorAll('.lifeshop_switch');
 
-    const handleSwitch = (e) => {
-      const { name } = e.currentTarget.dataset;
-      if (e.currentTarget.classList.contains('lifeshop_switch_open')) {
-        e.currentTarget.classList.add('lifeshop_switch_close');
-        e.currentTarget.classList.remove('lifeshop_switch_open');
-      } else {
-        e.currentTarget.classList.remove('lifeshop_switch_close');
-        e.currentTarget.classList.add('lifeshop_switch_open');
-      }
-      if (e.currentTarget.dataset.type === 'cod') {
-        if (e.currentTarget.classList.contains('lifeshop_switch_open')) {
-          setRadioSetting((draft) => {
-            draft.cod[name] = true;
-          });
-        } else {
+    const handleSwitch = async (e) => {
+      const { name, type } = e.currentTarget.dataset;
+      const { classList } = e.currentTarget;
+      if (type === 'cod') {
+        if (classList.contains('lifeshop_switch_open')) {
           setRadioSetting((draft) => {
             draft.cod[name] = false;
           });
-        }
-      } else {
-        if (e.currentTarget.classList.contains('lifeshop_switch_open')) {
-          setRadioSetting((draft) => {
-            draft[name] = true;
-          });
+          classList.add('lifeshop_switch_close');
+          classList.remove('lifeshop_switch_open');
         } else {
           setRadioSetting((draft) => {
-            draft[name] = false;
+            draft.cod[name] = true;
           });
+          classList.remove('lifeshop_switch_close');
+          classList.add('lifeshop_switch_open');
+        }
+      } else {
+        if (classList.contains('lifeshop_switch_open')) {
+          const userConfirm = await setShowConfirmBox(
+            'This shipping channel will be turned off on all existing products of the shop. The buyer will not be able to complete the order or the product will not be visible to the buyer without any available shipping methods',
+          );
+          if (userConfirm) {
+            setRadioSetting((draft) => {
+              draft[name] = false;
+              draft.cod[name] = false;
+            });
+            lifeSwitch.forEach((d) => {
+              const codName = d.dataset.name;
+              if (codName === name) {
+                d.classList.add('lifeshop_switch_close');
+                d.classList.remove('lifeshop_switch_open');
+              }
+            });
+          }
+        } else {
+          const userConfirm = await setShowConfirmBox(
+            'To complete shipping method activation, please go to All Products, choose to edit each product or select Bulk Processing Tool to enable it for Shop products',
+          );
+          if (userConfirm) {
+            setRadioSetting((draft) => {
+              draft[name] = true;
+              draft.cod[name] = true;
+            });
+            lifeSwitch.forEach((d) => {
+              const codName = d.dataset.name;
+              if (codName === name) {
+                d.classList.remove('lifeshop_switch_close');
+                d.classList.add('lifeshop_switch_open');
+              }
+            });
+          }
         }
       }
     };
@@ -120,6 +195,30 @@ export default function SettingShipping() {
         lifeSwitch.forEach((d) => d.removeEventListener('click', handleSwitch));
       }
     };
+  }, []);
+
+  /* set switch node for first start */
+  useEffect(() => {
+    const lifeSwitch = document.querySelectorAll('.lifeshop_switch');
+    if (lifeSwitch) {
+      lifeSwitch.forEach((element) => {
+        const { name, type } = element.dataset;
+        Object.entries(radioSetting)
+          .filter((d) => d[0] !== 'cod')
+          .map((dt) => {
+            if (name === dt[0] && !dt[1]) {
+              element.classList.remove('lifeshop_switch_open');
+              element.classList.add('lifeshop_switch_close');
+            }
+          });
+        Object.entries(radioSetting.cod).map((dt) => {
+          if (name === dt[0] && !dt[1]) {
+            element.classList.remove('lifeshop_switch_open');
+            element.classList.add('lifeshop_switch_close');
+          }
+        });
+      });
+    }
   }, []);
 
   /* handle toggle setting shipping items  */
@@ -197,13 +296,6 @@ export default function SettingShipping() {
                 </div>
                 <div className={cx('express_content_hide', 'setting_shipping_item flex-row justify-content-end')}>
                   <div className={cx('express_content_hide_setting', 'd-flex flex-column')}>
-                    {/* <div className={cx('express_hide_setting_content', 'd-flex flex-row justify-content-between')}>
-                      <div className={cx('express_hide_setting_title')}>Activate this shipping unit</div>
-                      <div
-                        className={cx('lifeshop_switch_normal', 'lifeshop_switch lifeshop_switch_open')}
-                        data-name="express"
-                      />
-                    </div> */}
                     <div className={cx('express_hide_setting_content', 'd-flex flex-row justify-content-between')}>
                       <div className={cx('express_hide_setting_title')}>Activate COD</div>
                       <div
@@ -256,13 +348,6 @@ export default function SettingShipping() {
                 </div>
                 <div className={cx('fast_content_hide', 'setting_shipping_item flex-row justify-content-end')}>
                   <div className={cx('fast_content_hide_setting', 'd-flex flex-column')}>
-                    {/* <div className={cx('fast_hide_setting_content', 'd-flex flex-row justify-content-between')}>
-                      <div className={cx('fast_hide_setting_title')}>Activate this shipping unit</div>
-                      <div
-                        className={cx('lifeshop_switch_normal', 'lifeshop_switch lifeshop_switch_open')}
-                        data-name="fast"
-                      />
-                    </div> */}
                     <div className={cx('fast_hide_setting_content', 'd-flex flex-row justify-content-between')}>
                       <div className={cx('fast_hide_setting_title')}>Activate COD</div>
                       <div
@@ -315,13 +400,6 @@ export default function SettingShipping() {
                 </div>
                 <div className={cx('saving_content_hide', ' setting_shipping_item flex-row justify-content-end')}>
                   <div className={cx('saving_content_hide_setting', 'd-flex flex-column')}>
-                    {/* <div className={cx('saving_hide_setting_content', 'd-flex flex-row justify-content-between')}>
-                      <div className={cx('saving_hide_setting_title')}>Activate this shipping unit</div>
-                      <div
-                        className={cx('lifeshop_switch_normal', 'lifeshop_switch lifeshop_switch_open')}
-                        data-name="saving"
-                      />
-                    </div> */}
                     <div className={cx('saving_hide_setting_content', 'd-flex flex-row justify-content-between')}>
                       <div className={cx('saving_hide_setting_title')}>Activate COD</div>
                       <div
@@ -376,13 +454,6 @@ export default function SettingShipping() {
                 </div>
                 <div className={cx('heavy_things_content_hide', 'setting_shipping_item flex-row justify-content-end')}>
                   <div className={cx('heavy_things_content_hide_setting', 'd-flex flex-column')}>
-                    {/* <div className={cx('heavy_things_hide_setting_content', 'd-flex flex-row justify-content-between')}>
-                      <div className={cx('heavy_things_hide_setting_title')}>Activate this shipping unit</div>
-                      <div
-                        className={cx('lifeshop_switch_normal', 'lifeshop_switch lifeshop_switch_open')}
-                        data-name="heaving_things"
-                      />
-                    </div> */}
                     <div className={cx('heavy_things_hide_setting_content', 'd-flex flex-row justify-content-between')}>
                       <div className={cx('heavy_things_hide_setting_title')}>Activate COD</div>
                       <div
@@ -399,13 +470,14 @@ export default function SettingShipping() {
         </div>
       </div>
       <div className={cx('form_btn', 'd-flex flex-row justify-content-between')}>
-        <Button type="button" outline small onClick={handleBackSettingShipping}>
+        <Button type="button" outline small onClick={handleBackShopInfo}>
           Back
         </Button>
-        <Button type="button" primary small onClick={handleNextSettingShipping}>
+        <Button type="button" primary small onClick={handleNextTaxInfo}>
           Next
         </Button>
       </div>
+      {dialog && <Dialog message={messageDialog} onCancel={handleConfirmDialog} onConfirm={handleConfirmDialog} />}
     </form>
   );
 }

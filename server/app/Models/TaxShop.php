@@ -13,4 +13,7 @@ class TaxShop extends Model
         'tax_code',
         'registered_business_address_id',
     ];
+    public function shop(){
+        return $this->belongsTo(Shop::class,'shop_id');
+    }
 }

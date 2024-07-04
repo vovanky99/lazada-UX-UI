@@ -12,18 +12,19 @@ import { LoginSeller } from '~/api/Auth/AuthSeller';
 import { setSession } from '~/redux/Actions/Auth';
 import { useNavigate } from 'react-router-dom';
 import Store from '~/redux/Store';
+import { useImmer } from 'use-immer';
+import MessageDanger from '~/layout/Component/Message/MessageDanger';
 
 const cx = classNames.bind(styles);
 
 export default function SignIn() {
   const emailRef = useRef();
-  const phoneRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const [disabled, setDisabled] = useState(true);
-  const [valid, setValid] = useState(null);
-  const [seller, setSeller] = useState({
+  const [valid, setValid] = useImmer({});
+  const [seller, setSeller] = useImmer({
     email: '',
     password: '',
   });
@@ -45,7 +46,7 @@ export default function SignIn() {
     if ('email' in field) {
       errorMessage.email = !field.email
         ? 'please enter email!'
-        : !field.email.match(/@gmail.com/g)
+        : !field.email.match(/@gmail.com$/g)
         ? 'email must be @gmail.com!'
         : '';
       if (errorMessage.email !== '') {
@@ -57,7 +58,7 @@ export default function SignIn() {
     if ('password' in field) {
       errorMessage.password = !field.password
         ? 'please enter password!'
-        : field.password.length > 7
+        : field.password.length >= 7
         ? ''
         : `password can't short 7 character!`;
       if (errorMessage.password !== '') {
@@ -66,10 +67,14 @@ export default function SignIn() {
         passwordRef.current.classList.remove('border_danger');
       }
     }
-    setValid({ ...errorMessage });
-    if (field === valid) {
-      Object.values(errorMessage).every((x) => x === '');
+    if (field === seller) {
+      Object.entries(errorMessage).map((d) => {
+        if (d[1] === '') {
+          delete errorMessage[d[0]];
+        }
+      });
     }
+    setValid({ ...errorMessage });
   };
   const handleOnchange = (e) => {
     const { name, value } = e.target;
@@ -81,20 +86,27 @@ export default function SignIn() {
   const handleLogin = (e) => {
     e.preventDefault();
     validate();
-    if (seller.email && seller.password && !valid?.email && !valid?.password) {
+    setValid((draft) => {
+      delete draft['loginError'];
+    });
+    if (seller.email.match(/@gmail.com$/g) && seller.password.length >= 7) {
       LoginSeller(seller)
         .then((result) => {
           if (result.token) {
             Store.dispatch(setSession(result.token, 'sellerToken'));
             navigate(config.ShopSeller.Home);
           } else {
+            setValid((draft) => {
+              draft['loginError'] = "email or password don't correct";
+            });
           }
         })
         .catch((e) => console.log(e));
+    } else {
     }
   };
   useEffect(() => {
-    if (seller.email && seller.password) {
+    if (seller.email && seller.password.length >= 7) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -135,8 +147,12 @@ export default function SignIn() {
                 )}
               </div>
             </FormSearch>
-            <MessageText className={cx('message', 'text-capitalize text-danger')} message={valid?.password} />
+            <MessageText className={cx('message', 'text-capitalize  text-danger')} message={valid?.password} />
           </div>
+          <MessageText
+            message={valid?.loginError}
+            className={cx('message_login', 'text-capitalize text-danger text-center')}
+          />
           <div className={cx('btn_register')}>
             <Button type="submit" disabled={disabled}>
               Sign In

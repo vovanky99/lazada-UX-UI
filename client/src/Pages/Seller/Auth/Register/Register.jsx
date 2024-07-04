@@ -25,12 +25,14 @@ export default function Register() {
   const [showPass, setShowPass] = useState(false);
   const [areaCode, setAreaCode] = useState(84);
   const [disabled, setDisabled] = useState(true);
-  const [valid, setValid] = useState(null);
+  const [valid, setValid] = useState({});
   const [seller, setSeller] = useState({
     email: '',
     password: '',
     phone_number: '',
   });
+
+  const areaCodeRegex = new RegExp(`\\+${areaCode}\\d+`, 'g');
 
   /* handle show hide pass */
   const handleShowHidePass = () => {
@@ -49,7 +51,7 @@ export default function Register() {
     if ('email' in field) {
       errorMessage.email = !field.email
         ? 'please enter email!'
-        : !field.email.match(/@gmail.com/g)
+        : !field.email.match(/@gmail.com$/g)
         ? 'email must be @gmail.com!'
         : '';
       if (errorMessage.email !== '') {
@@ -61,7 +63,7 @@ export default function Register() {
     if ('password' in field) {
       errorMessage.password = !field.password
         ? 'please enter password!'
-        : field.password.length > 7
+        : field.password.length >= 7
         ? ''
         : `password can't short 7 character!`;
       if (errorMessage.password !== '') {
@@ -70,7 +72,6 @@ export default function Register() {
         passwordRef.current.classList.remove('border_danger');
       }
     }
-    let areaCodeRegex = new RegExp(`\\+${areaCode}\\d+`, 'g');
     if ('phone_number' in field) {
       errorMessage.phone_number = !field.phone_number
         ? 'please enter phone!'
@@ -85,10 +86,14 @@ export default function Register() {
         phoneRef.current.classList.remove('border_danger');
       }
     }
-    setValid({ ...errorMessage });
-    if (field === valid) {
-      Object.values(errorMessage).every((x) => x === '');
+    if (field === seller) {
+      Object.entries(errorMessage).map((x) => {
+        if (x[1] === '') {
+          delete errorMessage[x[0]];
+        }
+      });
     }
+    setValid({ ...errorMessage });
   };
   const handleOnchange = (e) => {
     const { name, value } = e.target;
@@ -107,12 +112,11 @@ export default function Register() {
     e.preventDefault();
     validate();
     if (
-      seller.email &&
-      seller.password &&
-      seller.phone_number &&
-      !valid?.email &&
-      !valid?.password &&
-      !valid?.phone_number
+      seller.email.match(/@gmail.com$/g) &&
+      seller.password.length >= 7 &&
+      seller.phone_number.match(areaCodeRegex) &&
+      !seller.phone_number.match(/[a-zA-Z$]/g) &&
+      seller.phone_number.length === 12
     ) {
       RegisterSeller(seller)
         .then((result) => {

@@ -49,4 +49,7 @@ class Seller extends Authenticatable implements MustVerifyEmail
     public function sendEmailResetPassword($token,$email){
         $this->notify(new EmailResetPassword($token,$email));
     }
+    public function identity_info(){
+        return $this->hasMany(IdentityInfo::class,'identitiesable_id');
+    }
 }

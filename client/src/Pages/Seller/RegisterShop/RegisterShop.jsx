@@ -8,7 +8,7 @@ import Button from '~/components/Button';
 import Images from '~/components/Images';
 import Seller from '~/layout/Component/Seller';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import FormText from '~/layout/Component/FormGroupRow/FormText';
 import DetailAddress from './DetailAddress';
@@ -17,6 +17,7 @@ import TaxInfo from './TaxInfo';
 import LocalStorageService from '~/services/LocalStorageService';
 import IdentityInfo from './IdentityInfo';
 import ShopInfo from './ShopInfo';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -179,7 +180,7 @@ export default function RegisterShop() {
                   <ShopInfo seller={seller} addressDetail={addressDetail} />
                 </div>
                 <div id="setting_shipping_content" className={cx('setting_shipping', 'content_register')}>
-                  <SettingShipping />
+                  <SettingShipping seller={seller} />
                 </div>
                 <div id="tax_info_content" className={cx('tax_info', 'content_register')}>
                   <TaxInfo location={addressDetail} email={seller.email} />
@@ -187,7 +188,18 @@ export default function RegisterShop() {
                 <div id="identification_info_content" className={cx('identification_info', 'content_register')}>
                   <IdentityInfo />
                 </div>
-                <div id="completed_content" className={cx('completed', 'content_register')}></div>
+                <div id="completed_content" className={cx('completed', 'content_register')}>
+                  <div
+                    className={cx('completed_result', 'd-flex flex-column align-items-center justify-content-center')}
+                  >
+                    <FontAwesomeIcon icon={faCircleCheck} />
+                    <h3 className="text-capitalize">Sign Up Success</h3>
+                    <p>Post your first product to start your sales journey with Shopee!</p>
+                    <Button to={config.ShopSeller.IdentityInfo} primary small>
+                      Complete
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </main>
