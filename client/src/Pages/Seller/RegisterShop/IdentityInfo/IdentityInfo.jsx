@@ -18,24 +18,19 @@ import { RegisterShop } from '~/api/Seller/Profile';
 
 const cx = classNames.bind(styles);
 
-export default function IdentityInfo() {
+export default function IdentityInfo({ seller }) {
   const checkPoliciesRef = useRef();
   const identityNumberRef = useRef();
   const fullnameRef = useRef();
+  const sellerIdentity = seller?.identity_info[0];
   const [valid, setValid] = useImmer({});
-  const [identityInfo, setIdentityInfo] = useImmer(() => {
-    if (LocalStorageService.getItem('identityInfoValue')) {
-      return LocalStorageService.getItem('identityInfoValue');
-    } else {
-      return {
-        form_of_identity: 1,
-        identity_number: '',
-        fullname: '',
-        upload_identity_images: '',
-        upload_identity_hold_images: '',
-        check_policies: 0,
-      };
-    }
+  const [identityInfo, setIdentityInfo] = useImmer({
+    form_of_identity: sellerIdentity?.type || 1,
+    identity_number: sellerIdentity?.identity_number || '',
+    fullname: sellerIdentity?.fullname || '',
+    upload_identity_images: sellerIdentity?.identity_image || '',
+    upload_identity_hold_images: sellerIdentity?.identity_hold_image || '',
+    check_policies: 0,
   });
   const [uploadProgress, setUploadProgress] = useImmer({
     upload_identity_images: 0,
@@ -57,25 +52,29 @@ export default function IdentityInfo() {
       messageError.fullname = !field.fullname ? 'Please enter your full name!' : '';
     }
     if ('upload_identity_images' in field) {
-      messageError.identity_images = !field.upload_identity_images ? 'please select image!' : '';
+      messageError.identity_images = !field.upload_identity_images ? 'Please select image!' : '';
     }
     if ('upload_identity_hold_images' in field) {
-      messageError.identity_hold_images = !field.upload_identity_hold_images ? 'please select image!' : '';
+      messageError.identity_hold_images = !field.upload_identity_hold_images ? 'Please select image!' : '';
     }
     if ('check_policies' in field) {
       messageError.checked = field.check_policies !== 1 ? 'Please tick the checkbox above to continue!' : '';
     }
-    setValid({ ...messageError });
-    if (field === valid) {
-      Object.values(messageError).every((d) => d === '');
+    if (field === identityInfo) {
+      Object.entries(messageError).map((d) => {
+        if (d[1] === '') {
+          delete messageError[d[0]];
+        }
+      });
     }
+    setValid({ ...messageError });
   };
 
   const handleBackTaxInfo = (e) => {
     const stepsRegister = document.querySelectorAll('.steps_register');
     const taxContent = document.getElementById('tax_info_content');
     const identificationInfoContent = document.getElementById('identification_info_content');
-    if (stepsRegister && taxContent && identificationInfoContent) {
+    if (sellerIdentity && stepsRegister && taxContent && identificationInfoContent) {
       for (let i = 0; i < stepsRegister.length; i++) {
         if (stepsRegister[i].getAttribute('id') === 'tax_info') {
           stepsRegister[i].classList.add('active');
@@ -99,27 +98,35 @@ export default function IdentityInfo() {
       Object.values(identityInfo).filter((d) => d === '').length === 0 &&
       identityInfo.check_policies === 1
     ) {
+      // handle submit tax info
       const taxinfo = LocalStorageService.getItem('taxInfoValue');
-      const formTax = new FormData();
+      if (taxinfo) {
+        let new_value = [];
+        Object.values(taxinfo.email_receive_electronic_invoice).map((d) => {
+          new_value.push(d.value);
+        });
+        const formTax = new FormData();
+        formTax.append('business_name', taxinfo.business_name);
+        formTax.append('business_type', taxinfo.business_type);
+        formTax.append('ward_id', taxinfo.register_bussiness_address.ward_id);
+        formTax.append('address', taxinfo.register_bussiness_address.address);
+        formTax.append('tax_code', taxinfo.tax_code);
+        formTax.append('email', new_value);
+        RegisterShop(formTax, 'tax_info')
+          .then((result) => {})
+          .catch((e) => console.log(e));
+      }
+
+      // handle submit identity info
       const formIdentity = new FormData();
-      formTax.append('business_name', taxinfo.business_name);
-      formTax.append('business_type', taxinfo.business_type);
-      formTax.append('ward_id', taxinfo.register_bussiness_address.ward_id);
-      formTax.append('address', taxinfo.register_bussiness_address.address);
-      formTax.append('tax_code', taxinfo.tax_code);
-      formTax.append('email', taxinfo.email_receive_electronic_invoice);
       formIdentity.append('form_of_identity', identityInfo.form_of_identity);
       formIdentity.append('identity_number', identityInfo.identity_number);
       formIdentity.append('fullname', identityInfo.fullname);
       formIdentity.append('upload_images', identityInfo.upload_identity_images);
       formIdentity.append('upload_hold_images', identityInfo.upload_identity_hold_images);
-
-      RegisterShop(formTax, 'tax_info')
-        .then((result) => {})
-        .catch((e) => console.log(e));
       RegisterShop(formIdentity, 'identity_info')
         .then((result) => {
-          if (result.sucess) {
+          if (result.success) {
             for (let i = 0; i < stepsRegister.length; i++) {
               if (stepsRegister[i].getAttribute('id') === 'completed') {
                 stepsRegister[i].classList.add('active');
@@ -127,7 +134,8 @@ export default function IdentityInfo() {
                 stepsRegister[i - 1].classList.add('finished');
                 identityInfoContent.classList.remove('active');
                 completedContent.classList.add('active');
-                LocalStorageService.setItem('identityInfoValue', identityInfo);
+                LocalStorageService.removeItem('taxInfoValue');
+                LocalStorageService.removeItem('settingShipValue');
               }
             }
           }
@@ -313,11 +321,15 @@ export default function IdentityInfo() {
     };
   }, []);
 
-  /* handle validate check policies when blur */
+  /* handle validate check policies */
   useEffect(() => {
     const checkItem = document.querySelector('.check_item');
+    if (checkItem) {
+      if (identityInfo.check_policies === 1) {
+        checkItem.checked = true;
+      }
+    }
     const handleClick = (e) => {
-      console.log();
       if (e.target.checked) {
         setValid((draft) => {
           delete draft.checked;
@@ -525,7 +537,7 @@ export default function IdentityInfo() {
           </div>
         </div>
         <div className={cx('form_btn', 'd-flex flex-row justify-content-between text-capitalize')}>
-          <Button type="button" small outline onClick={handleBackTaxInfo}>
+          <Button type="button" small outline onClick={handleBackTaxInfo} disabled={sellerIdentity ? true : false}>
             Back
           </Button>
           <Button type="button" small primary onClick={handleNextCompleted}>

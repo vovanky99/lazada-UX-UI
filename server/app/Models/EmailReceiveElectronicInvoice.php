@@ -13,4 +13,7 @@ class EmailReceiveElectronicInvoice extends Model
         'email',
         'tax_shop_id',
     ];
+    public function tax_shop(){
+        return $this->belongsTo(TaxShop::class,'tax_shop_id');
+    }
 }

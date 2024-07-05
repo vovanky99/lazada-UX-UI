@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 class ProfileController extends Controller {
     public function RegisterShop(Request $request,$type){
         $type = $request->type;
-        $shop= Shop::where('seller_id',Auth::user()->id)->first();
+        $shop= Shop::where('seller_id',Auth::user()->id)->firstOrFail();
         try{
             if($type === 'shop_info'){
                 $shopname = $request->shop_name;
@@ -129,9 +129,9 @@ class ProfileController extends Controller {
                 $tax_ward_id = $request->ward_id;
                 $tax_address = $request->address;
                 $tax_code = $request->tax_code;
-                $email = (array) $request->email;
-                if(!$shop->tax_shop){
-                    $taxShop = TaxShop::crate([
+                $email =  $request->email;
+                if(!$shop->tax_shop && !count(Auth::user()->identity_info)){
+                    $taxShop = TaxShop::create([
                         'business_name'=>$business_name,
                         'type'=>$business_type,
                         'tax_code'=>$tax_code,
@@ -146,21 +146,22 @@ class ProfileController extends Controller {
                     $taxShop->update([
                         'registered_business_address_id'=> $address->id,
                     ]);
-                    foreach($email as $e){
-                        $taxShop->email_receive_toElectronic()->createMany([
-                            'email'=>$e[1]->value,
+                    $new_email = explode(',',$email);
+                    foreach($new_email as $key =>$value){
+                        $taxShop->email_receive_electronic_invoice()->create([
+                            'email'=>$value,
                         ]);
                     }
                     return response()->json(['success'=>'created success!']);
                 }
             }
             else if($type === "identity_info"){
-                    if(!$shop->seller->identity_info){
-                        $form_type = $request->form_of_identity;
-                        $identity_number = $request->identity_number;
-                        $seller_fullname = $request->fullname;
-                        $uploadImages = $request->upload_images;
-                        $uploadHoldImages = $request->upload_hold_images;
+                    $form_type = $request->form_of_identity;
+                    $identity_number = $request->identity_number;
+                    $seller_fullname = $request->fullname;
+                    $uploadImages = $request->upload_images;
+                    $uploadHoldImages = $request->upload_hold_images;
+                    if(!count(Auth::user()->identity_info)){
                         IdentityInfo::create([
                             'type'=>$form_type,
                             'identity_number'=>$identity_number,
@@ -170,9 +171,18 @@ class ProfileController extends Controller {
                             'identitiesable_id'=>Auth::user()->id,
                             'identitiesable_type'=>Seller::class,
                         ]);
-                    return response()->json(['success'=>'created success!']);
+                        return response()->json(['success'=>'created success!']);
                     }
-
+                    else{
+                        IdentityInfo::where('identitiesable_id',Auth::user()->id)->firstOrFail()->update([
+                            'type'=>$form_type,
+                            'identity_number'=>$identity_number,
+                            'fullname'=>$seller_fullname,
+                            'identity_image'=>$uploadImages,
+                            'identity_hold_image'=>$uploadHoldImages,
+                        ]);
+                        return response()->json(['success'=>'updated success!']);
+                    }
             }
             else{
                 return response()->json(['error'=>["type doesn't exists"]]);
@@ -181,6 +191,5 @@ class ProfileController extends Controller {
         catch(Exception $e){
             return response()->json($e);
         }
-        return response()->json(['error'=>'create have issue!']);
     }
 }

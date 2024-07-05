@@ -137,7 +137,7 @@ export const FormSearch = forwardRef(function FormSearch(
           <label className="form-label text-capitalize">
             {title}
             {useForgetPassword ? (
-              <Button to={forgetLink} className={cx('p-0')} transparent>
+              <Button to={forgetLink} className={cx('p-0')} transparent tabIndex="-1">
                 <strong>Forgot Password?</strong>
               </Button>
             ) : (

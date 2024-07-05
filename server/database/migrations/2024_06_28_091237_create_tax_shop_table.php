@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('business_name')->nullable(); 
             $table->double('type')->comment('1:individual 2:household_business 3:business');
             $table->double('tax_code',14)->nullable();
-            $table->foreignId('registered_business_address_id')->references('id')->on('address')->onDelete('cascade');
+            $table->foreignId('registered_business_address_id')->nullable()->references('id')->on('address')->onDelete('cascade');
             $table->foreignId('shop_id')->references('id')->on('shop')->onDelete('cascade');
             $table->timestamps();
         });

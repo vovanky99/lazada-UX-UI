@@ -55,7 +55,7 @@ class SellerAuthController extends Controller{
         }
     }
     public function getSeller(){
-        $seller = Seller::where('id',Auth::user()->id)->select('seller.*')->with(['shop.shop_shipping_methods.shipping_method','address.ward.district.city.country','shop.address.ward.district.city.country'])->first();
+        $seller = Seller::where('id',Auth::user()->id)->select('seller.*')->with(['shop.shop_shipping_methods.shipping_method','address.ward.district.city.country','shop.address.ward.district.city.country','identity_info'])->first();
         return response()->json($seller);
     }
     public function sendResetLinkEmail(Request $request){

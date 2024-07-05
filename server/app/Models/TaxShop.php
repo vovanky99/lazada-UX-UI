@@ -16,4 +16,7 @@ class TaxShop extends Model
     public function shop(){
         return $this->belongsTo(Shop::class,'shop_id');
     }
+    public function email_receive_electronic_invoice(){
+        return $this->hasMany(EmailReceiveElectronicInvoice::class,'tax_shop_id');
+    }
 }
