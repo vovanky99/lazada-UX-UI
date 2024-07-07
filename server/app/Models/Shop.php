@@ -17,6 +17,7 @@ class Shop extends Model
         'descriptions',
         'address_id',
         'seller_id',
+        'pin_code',
     ];
     public function messages(){
         return $this->hasMany(MessagesShop::class,'shop_id');

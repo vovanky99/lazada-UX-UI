@@ -4,12 +4,12 @@ import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 
 import styles from '../RegisterShop.module.scss';
-import CurrentCountry from '~/api/CurrentCountry';
 import GetLocation from '~/api/Location/GetLocation';
 import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import MessageText from '~/layout/Component/Message/MessageText';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
@@ -25,6 +25,7 @@ const Location = forwardRef(function Location(
   const cityWrapperRef = useRef();
   const districtWrapperRef = useRef();
   const wardWrapperRef = useRef();
+  const { country } = useSelector((state) => state.Auth);
   const [selectLocation, setSelectLocation] = useState(false);
   // const [country, setCountry] = useState(null);
   const [city, setCity] = useState(null);
@@ -38,9 +39,6 @@ const Location = forwardRef(function Location(
     city_name: data?.city_name || '',
     city_id: data?.city_id || '',
   });
-
-  // set country value;
-  const country = CurrentCountry();
 
   const handleSelectLocation = (e) => {
     setSelectLocation(true);

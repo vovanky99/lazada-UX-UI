@@ -12,19 +12,17 @@ import LazyLoading from '~/layout/Component/LazyLoadind';
 import MessageText from '~/layout/Component/Message/MessageText';
 import Modal from '~/layout/Component/Modal';
 import Location from '../Location';
-import CurrentCountry from '~/api/CurrentCountry';
 import LocalStorageService from '~/services/LocalStorageService';
 
 const cx = classNames.bind(styles);
 
-export default function DetailAddress({ seller, handleCloseAddress = () => {} }) {
+export default function DetailAddress({ country, seller, handleCloseAddress = () => {} }) {
   const locationValueRef = useRef();
   const addressRef = useRef();
   const fullNameRef = useRef();
   const phoneNumberRef = useRef();
   const [valid, setValid] = useState(null);
   const [data, setData] = useState(false);
-  // const [country, setCountry] = useState(false);
   const [addressDetail, setAddressDetail] = useImmer(() => {
     if (LocalStorageService.getItem('addressDetails')) {
       return LocalStorageService.getItem('addressDetails');
@@ -42,8 +40,6 @@ export default function DetailAddress({ seller, handleCloseAddress = () => {} })
       };
     }
   });
-
-  const country = CurrentCountry();
 
   const handleOnchange = (e) => {
     const { name, value } = e.target;

@@ -11,7 +11,8 @@ class Country extends Model
     protected $table = 'country';
     protected $fillable = [
         'name',
-        'international_codes'
+        'international_codes',
+        'acronym'
     ];
     public function cities(){
         return $this->hasMany(City::class,'country_id','id');

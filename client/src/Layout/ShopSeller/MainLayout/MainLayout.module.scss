@@ -1,0 +1,7 @@
+.wrapper {
+  padding-top: 56px;
+  min-height: 100vh;
+  .seller_main {
+    width: calc(100% - var(--seller_sidebar_width));
+  }
+}

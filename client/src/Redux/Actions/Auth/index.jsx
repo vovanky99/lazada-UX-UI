@@ -95,13 +95,19 @@ export const AuthSocial = (provider) => {
   };
 };
 
-export const Logout = () => {
+export const Logout = (type) => {
   return async (dispatch) => {
     try {
       await axios.post('/api/logout');
-      dispatch({
-        type: LOGOUT,
-      });
+      if (type === 'seller') {
+        dispatch({
+          type: LOGOUT_SELLER,
+        });
+      } else {
+        dispatch({
+          type: LOGOUT,
+        });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -114,19 +120,6 @@ export const AdminLogout = () => {
       await axios.post('/api/logout');
       dispatch({
         type: LOGOUT_ADMIN,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-};
-
-export const SellerLogout = () => {
-  return async (dispatch) => {
-    try {
-      await axios.post('/api/logout');
-      dispatch({
-        type: LOGOUT_SELLER,
       });
     } catch (e) {
       console.log(e);

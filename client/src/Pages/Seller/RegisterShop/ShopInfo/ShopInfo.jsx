@@ -10,7 +10,7 @@ import { RegisterShop } from '~/api/Seller/Profile';
 
 const cx = classNames.bind(styles);
 
-export default function ShopInfo({ seller, addressDetail }) {
+export default function ShopInfo({ country, seller, addressDetail }) {
   const nameRef = useRef();
   const [editAddress, setEditAddress] = useState(false);
   const [shopName, setShopName] = useState(seller?.shop?.name || '');
@@ -128,7 +128,11 @@ export default function ShopInfo({ seller, addressDetail }) {
           </Button>
         </div>
       </form>
-      {editAddress ? <DetailAddress seller={seller} handleCloseAddress={handleCloseEditAddress} /> : <></>}
+      {editAddress ? (
+        <DetailAddress country={country} seller={seller} handleCloseAddress={handleCloseEditAddress} />
+      ) : (
+        <></>
+      )}
     </Fragment>
   );
 }

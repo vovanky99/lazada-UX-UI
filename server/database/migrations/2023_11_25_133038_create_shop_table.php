@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name',50)->index();
             $table->string('logo');
+            $table->double('pin_code',5)->nullable();
             $table->string('img_cover')->nullable();
             $table->boolean('status')->default(1);
             $table->string('descriptions');

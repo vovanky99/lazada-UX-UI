@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->index();
             $table->double('international_codes');
+            $table->string('acronym',10);
             $table->timestamps();
         });
     }

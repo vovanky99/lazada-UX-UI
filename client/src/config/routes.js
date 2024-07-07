@@ -52,6 +52,7 @@ export const adminRoutes = {
   AddManufacturer: '/admin/add-manufacturer',
   EditManufacturer: '/admin/edit-manufacturer/:id',
   Role: '/admin/role',
+  [404]: '/admin/*',
 };
 
 export const ShopSeller = {
@@ -63,14 +64,94 @@ export const ShopSeller = {
   Home: '/seller',
   VerifiedEmail: '/seller/verify-email',
   RegisterShop: '/seller/register-shop',
+  [404]: '/seller/*',
 
-  //profile
-  IdentityInfo: '/seller/shop/profile/identity-infomation',
-  TaxInfo: '/seller/shop/profile/tax-info',
-  BasicInfo: 'seller/shop/profile/basic-info',
-  ShopInfo: 'seller/shop/profile/shop-info',
-  Profile: 'seller/shop/profile/personal-info',
-  SettingShop: 'seller/shop/profile/setting-shop',
+  /*setting shop */
+  SettingIdentityInfo: '/seller/shop/setting/identity-info',
+  SettingTaxInfo: '/seller/shop/setting/tax-info',
+  SettingSettingBasicInfo: 'seller/shop/setting/basic-info',
+  SettingShopInfo: '/seller/shop/setting/shop-info',
+  SettingNotification: '/seller/shop/all-settings/notification',
+  SettingAccount: '/seller/shop/all-settings/account',
+  SettingShippingAddress: '/seller/shop/all-settings/shipping/address-management',
+  SettingShippingChannel: '/seller/shop/all-settings/shipping/shipping-channel',
+  SettingShippingDocument: '/seller/shop/all-settings/shipping/shipping-document',
+  SettingPayment: '/seller/shop/all-settings/payment',
+  SettingChat: '/seller/shop/all-settings/chat',
+  SettingVacationMode: '/seller/shop/all-settings/vacation-mode',
+  SettingPartnerManagement: '/seller/shop/all-settings/partner-management',
+
+  /*notification*/
+  Notification: '/seller/shop/notification',
+  NotificationOrder: '/seller/shop/notification/order-updates',
+  NotificationRating: '/seller/shop/notification/rating-updates',
+  NotificationReturnRefund: '/seller/shop/notification/return-refund',
+  NotificationProduct: '/seller/shop/notification/listing-updates',
+  NotificationWallet: '/seller/shop/notification/wallet-updates',
+  NotificationLifeShop: '/seller/shop/notification/lifeshop-updates',
+
+  /* management order */
+  ManagementOrder: '/seller/shop/sale/order',
+  ManagementShipment: '/seller/shop/sale/shipment',
+  ManagementOrderMassShipment: '/seller/shop/sale/mass/ship',
+  ManagementReturnRefund: '/seller/shop/sale/return',
+
+  /* product */
+  Product: '/seller/shop/product/new',
+  AllProduct: '/seller/shop/product/all-product',
+
+  /* management chat */
+  CSKH: '/seller/shop/cskh',
+  CSKHManagementChat: '/seller/shop/cskh/management-chat',
+  CSKHRating: '/seller/shop/cskh/rating',
+
+  /* finance & data center */
+  Finance: '/seller/shop/finance',
+  FinanceIncome: '/seller/shop/finance/income',
+  FinanceWalletLifePay: '/seller/shop/finance/wallet/life-pay',
+  FinanceWalletCards: '/seller/shop/finance/wallet/cards',
+
+  DataCenter: '/seller/shop/data-center/overview',
+  DataCenterProduct: '/seller/shop/data-center/product/overview',
+  DataCenterProductPerfomance: '/seller/shop/data-center/product/perfomance',
+  DataCenterProductDiagnosis: '/seller/shop/data-center/product/diagnosis',
+  DataCenterSales: '/seller/shop/data-center/sales/overview',
+  DataCenterSalesComposition: '/seller/shop/data-center/sales/composition',
+  DataCenterServices: '/seller/shop/data-center/services/overview',
+  DataCenterServicesFAQ: '/seller/shop/data-center/services/faq',
+  DataCenterTraffic: '/seller/shop/data-center/traffic/overview',
+  DataCenterTrafficOffPlatform: '/seller/shop/data-center/traffic/off-platform',
+  DataCenterMarketingDiscount: '/seller/shop/data-center/marketing/discount',
+  DataCenterMarketingFlashSales: '/seller/shop/data-center/marketing/flash-sales',
+  DataCenterMarketingVoucher: '/seller/shop/data-center/marketing/voucher',
+  DataCenterMarketingLifeLive: '/seller/shop/data-center/marketing/livestream',
+  DataCenterMarketingPrize: '/seller/shop/data-center/marketing/game',
+  DataCenterSalesMasterTrending: '/seller/shop/data-center/selling/trending',
+  DataCenterSalesMasterCompete: '/seller/shop/data-center/selling/similar',
+  DataCenterSalesMasterTopKeyword: '/seller/shop/data-center/selling/top-keywords',
+
+  DataCenterAccountHealth: '/seller/shop/data-center/accounthealth/home',
+  DataCenterAccountHealthImprove: '/seller/shop/data-center/accounthealth/issues',
+  DataCenterAccountHealthProductLock: '/seller/shop/data-center/accounthealth/p-lock',
+  DataCenterAccountHealthOrderFails: '/seller/shop/data-center/accounthealth/metric-detail',
+  DataCenterAccountHealthTimePrepare: '/seller/shop/data-center/accounthealth/pt',
+  DataCenterAccountHealthPreOrder: '/seller/shop/data-center/accounthealth/pod',
+  DataCenterAccountHealthViolation: '/seller/shop/data-center/accounthealth/violation',
+  DataCenterAccountHealthRatioResponse: '/seller/shop/data-center/accounthealth/rr',
+  DataCenterAccountHealthTimeResponse: '/seller/shop/data-center/accounthealth/rt',
+  DataCenterAccountHealthRateShop: '/seller/shop/data-center/accounthealth/rs',
+  DataCenterAccountHealthPreferredSeller: '/seller/shop/data-center/accounthealth/preferred-seller',
+  DataCenterAccountHealthPenalty: '/seller/shop/data-center/accounthealth/penalty',
+
+  /*marketing */
+  Marketing: '/seller/shop/marketing',
+  MarketingShopDiscount: '/seller/shop/marketing/list/discount',
+  MarketingShopFLashSale: '/seller/shop/marketing/shop-flash-sale/list',
+  MarketingShopVoucher: '/seller/shop/marketing/voucher',
+  MarketingShopNewVoucher: '/seller/shop/marketing/voucher/new',
+  // MarketingAdvertising: '/seller/shop/marketing/advertising',
+  Marketing: '/seller/shop/marketing',
+  Marketing: '/seller/shop/marketing',
 };
 
 export default routes;

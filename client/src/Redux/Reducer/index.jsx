@@ -1,4 +1,14 @@
-import { GET_ADMIN, GET_USER, LOGOUT, LOG_ERROR, LOGOUT_ADMIN, GET_SELLER, LOGOUT_SELLER } from '../Actions/Types';
+import {
+  GET_ADMIN,
+  GET_USER,
+  LOGOUT,
+  LOG_ERROR,
+  LOGOUT_ADMIN,
+  GET_SELLER,
+  LOGOUT_SELLER,
+  CHANGE_LANGUAGE,
+  GET_COUNTRY,
+} from '../Actions/Types';
 
 export const initialState = {
   isAuthenticated: false,
@@ -7,7 +17,8 @@ export const initialState = {
   sellerAuthenticated: false,
   seller: null,
   admin: null,
-  message: null,
+  country: null,
+  language: 'en',
 };
 export default function AuthReducer(state = initialState, action) {
   switch (action.type) {
@@ -47,6 +58,16 @@ export default function AuthReducer(state = initialState, action) {
       return {
         ...state,
         message: action.payload,
+      };
+    case CHANGE_LANGUAGE:
+      return {
+        ...state,
+        language: action.payload,
+      };
+    case GET_COUNTRY:
+      return {
+        ...state,
+        country: action.payload,
       };
     default:
       return state;

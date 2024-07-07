@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('voucher', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name',20)->index();
-            $table->string('descriptions',200);
-            $table->string('code',20);
+            $table->string('name',100)->index();
+            $table->string('descriptions',200)->nullable();
+            $table->double('type',1);
+            $table->string('code',5)->index();
             $table->boolean('status')->default(1);
             $table->double('percents',2);
             $table->double('quantity')->nullable()->comment('null:unlimmited');
-            $table->foreignId('category_id')->nullable()->comment('null:unlimmited')->references('id')->on('categories')->onDelete('cascade')->nullable();
+            $table->morphs('voucherable');
             $table->dateTime('start_day');
             $table->dateTime('end_day');
             $table->timestamps();
