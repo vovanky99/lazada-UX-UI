@@ -13,6 +13,7 @@ import IdentityInfo from './IdentityInfo';
 import ShopInfo from './ShopInfo';
 import config from '~/config';
 import Header from '~/layout/ShopSeller/Header';
+import Translate from '~/layout/Component/Translate';
 
 const cx = classNames.bind(styles);
 
@@ -88,40 +89,50 @@ export default function RegisterShop() {
     <Seller>
       {seller ? (
         <section id="seller_register_shop" className={cx('seller_register_shop')}>
-          <Header title="registerShopTitle" isRegisterShop={true} />
+          <Header title="register_shop_title" isRegisterShop={true} />
           <main id="seller_register_shop_main" className={cx('seller_register_shop_main')}>
             <div className={cx('register_shop_main_container')}>
               <div className={cx('register_shop_main_header', 'd-flex flex-row justify-content-center')}>
                 <div id="shop_info" className={cx('shop_info', 'steps_register active')}>
                   <div className={cx('diot')}></div>
-                  <div className={cx('title')}>shop info</div>
+                  <div className={cx('title')}>
+                    <Translate>shop.shop_info</Translate>
+                  </div>
                   <div className={cx('process')}></div>
                 </div>
                 <div id="setting_ship" className={cx('setting_ship', 'steps_register')}>
                   <div className={cx('diot')}></div>
                   <div className={cx('title')}>
-                    <span>setting shipping</span>
+                    <span>
+                      <Translate>setting.setting_shipping</Translate>
+                    </span>
                   </div>
                   <div className={cx('process')}></div>
                 </div>
                 <div id="tax_info" className={cx('tax_info', 'steps_register')}>
                   <div className={cx('diot')}></div>
                   <div className={cx('title')}>
-                    <span>tax info</span>
+                    <span>
+                      <Translate>tax.tax_info</Translate>
+                    </span>
                   </div>
                   <div className={cx('process')}></div>
                 </div>
                 <div id="identification_info" className={cx('identification_info', 'steps_register')}>
                   <div className={cx('diot')}></div>
                   <div className={cx('title')}>
-                    <span>identification info</span>
+                    <span>
+                      <Translate>identity.identification_info</Translate>
+                    </span>
                   </div>
                   <div className={cx('process')}></div>
                 </div>
                 <div id="completed" className={cx('completed', 'steps_register')}>
                   <div className={cx('diot')}></div>
                   <div className={cx('title')}>
-                    <span>completed</span>
+                    <span>
+                      <Translate>completed</Translate>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -144,7 +155,7 @@ export default function RegisterShop() {
                   >
                     <FontAwesomeIcon icon={faCircleCheck} />
                     <h3 className="text-capitalize">Sign Up Success</h3>
-                    <p>Post your first product to start your sales journey with Shopee!</p>
+                    <p>Post your first product to start your sales journey with LifeShop!</p>
                     <Button to={config.ShopSeller.IdentityInfo} primary small>
                       Complete
                     </Button>

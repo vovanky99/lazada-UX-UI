@@ -69,7 +69,7 @@ export const ShopSeller = {
   /*setting shop */
   SettingIdentityInfo: '/seller/shop/setting/identity-info',
   SettingTaxInfo: '/seller/shop/setting/tax-info',
-  SettingSettingBasicInfo: 'seller/shop/setting/basic-info',
+  SettingBasicInfo: 'seller/shop/setting/basic-info',
   SettingShopInfo: '/seller/shop/setting/shop-info',
   SettingNotification: '/seller/shop/all-settings/notification',
   SettingAccount: '/seller/shop/all-settings/account',
@@ -97,13 +97,14 @@ export const ShopSeller = {
   ManagementReturnRefund: '/seller/shop/sale/return',
 
   /* product */
-  Product: '/seller/shop/product/new',
+  // Product: '/seller/shop/product/new',
+  NewProduct: '/seller/shop/product/new',
   AllProduct: '/seller/shop/product/all-product',
 
   /* management chat */
   CSKH: '/seller/shop/cskh',
   CSKHManagementChat: '/seller/shop/cskh/management-chat',
-  CSKHRating: '/seller/shop/cskh/rating',
+  CSKHManagementRating: '/seller/shop/cskh/management-rating',
 
   /* finance & data center */
   Finance: '/seller/shop/finance',
@@ -149,9 +150,7 @@ export const ShopSeller = {
   MarketingShopFLashSale: '/seller/shop/marketing/shop-flash-sale/list',
   MarketingShopVoucher: '/seller/shop/marketing/voucher',
   MarketingShopNewVoucher: '/seller/shop/marketing/voucher/new',
-  // MarketingAdvertising: '/seller/shop/marketing/advertising',
-  Marketing: '/seller/shop/marketing',
-  Marketing: '/seller/shop/marketing',
+  MarketingShopCampaign: '/seller/shop/marketing/campaign',
 };
 
 export default routes;

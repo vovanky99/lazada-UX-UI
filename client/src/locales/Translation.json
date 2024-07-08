@@ -2,46 +2,183 @@
   "vi": {
     "login": "đăng nhập",
     "logout": "đăng xuất",
-    "ShopSetting": "thiết lập Shop",
-    "shopInfo": "thông tin shop",
-    "sellerCentre": "Kênh Người Bán",
-    "registerShopTitle": "Đăng ký trở thành Người bán Life Shop",
-    "shopSetting": "thiết lập shop"
+    "shop_info": "thông tin shop",
+    "seller_centre": "Kênh Người Bán",
+    "register_shop_title": "Đăng ký để trở thành Người bán LifeShop",
+    "profile": "hồ sơ",
+    "completed": "hoàn thành",
+    "shop": {
+      "title": "cửa hàng",
+      "shop_info": "thông tin shop",
+      "shop_management": "quản lý shop",
+      "profile_shop": "hồ sơ shop"
+    },
+    "tax": {
+      "title": "thuế",
+      "tax_info": "thông tin thuế"
+    },
+    "identity": {
+      "title": "danh tính",
+      "identification_info": "thông tin cá nhân"
+    },
+    "order": {
+      "title": "đơn hàng",
+      "order_managemnet": "quản lý đơn hàng",
+      "mass_ship": "giao hàng loạt",
+      "return_refund": "trả hàng/hoàn tiền",
+      "cancellation": "Đơn hủy",
+      "my_order": "Tất Cả"
+    },
+    "setting": {
+      "setting_shop": "thiết lập Shop",
+      "setting_shipping": "cài đặt vận chuyển",
+      "title": "cài đặt"
+    },
+    "products": {
+      "title": "sản phẩm",
+      "product_management": "quản lý sản phẩm",
+      "my_products": "tất cả sản phẩm",
+      "add_new_products": "thêm sản phẩm"
+    },
+    "marketing": {
+      "title": "tiêu đề",
+      "marketing_centre": "kênh marketing",
+      "discount": "giảm giá của shop",
+      "voucher": "mã giảm giá của shop",
+      "campaign": "Chương Trình Khuyến Mãi"
+    },
+    "service": {
+      "title": "dịch vụ",
+      "chat_management": "Quản lý Chat",
+      "review_management": "Quản lý đánh giá",
+      "customer_service": "Chăm sóc khách hàng"
+    },
+    "todo_list": "Danh sách cần làm",
+    "finance": {
+      "title": "tài chính",
+      "banks_account": "tài khoản ngân hàng",
+      "my_income": "doanh thu",
+      "my_balance": "số dư TK life shop"
+    },
+    "data": {
+      "business_insights": "phân tích bán hàng",
+      "account_health": "hiệu quả hoạt động",
+      "title": "dữ liệu"
+    },
+    "message": {
+      "_message": "translation for message",
+      "sigup_success": "Đăng ký thành công"
+    },
+    "notofication": {
+      "title": "thông báo",
+      "notofication_recent": "Thông báo đã nhận gần đây",
+      "mark_all_read": "đánh dấu tất cả đã đọc",
+      "all_notification": "Xem tất cả thông báo"
+    },
+    "dialog": {
+      "_message": "translation for dialog",
+      "logout": "bạn muốn đăng xuât?",
+      "register_shop_logout": "Thông tin được cung cấp sẽ không được lưu. Bạn có chắc chắn vẫn muốn đăng xuất không?",
+      "setting_shipping": {
+        "close": "Kênh vận chuyển này sẽ bị tắt trên tất cả các sản phẩm hiện có của shop. Người mua sẽ không thể hoàn tất đơn đặt hàng hoặc sản phẩm sẽ không hiển thị với người mua nếu không có bất kỳ phương thức vận chuyển nào có sẵn",
+        "open": "Để hoàn tất việc kích hoạt phương thức vận chuyển, vui lòng đi tới Tất cả sản phẩm, chọn chỉnh sửa từng sản phẩm hoặc chọn Công cụ xử lý hàng loạt để kích hoạt tính năng này cho các sản phẩm của Shop"
+      }
+    },
+    "page": {
+      "register_shop": {
+        "completed_title": "Đăng sản phẩm đầu tiên của bạn để bắt đầu hành trình bán hàng với LifeShop!"
+      }
+    }
   },
   "en": {
     "login": "login",
     "logout": "logout",
     "register": "Register",
-    "resetPassowrd": "Reset Password",
-    "changePassword": "Change Password",
-    "Profile": "Profile",
-    "shopSetting": "Shop Setting",
-    "shopInfo": "Shop Infomation",
-    "order": "Order",
-    "myOrder": "My Order",
-    "massShip": "Mass Ship",
-    "cancellation": "Cancellation",
-    "return/Refund": "Return/Refund",
-    "shippingSetting": "Setting Shipping",
-    "myProducts": "My Products",
-    "addNewProducts": "Add New Products",
-    "product": "Product",
-    "marketingCentre": "Marketing Centre",
-    "priceBidding": "Price Bidding",
-    "discount": "Discount",
-    "voucher": "Voucher",
-    "todoList": "Todo List",
-    "customerService": "Customer Service",
-    "chatManagement": "Chat Management",
-    "reviewManagement": "Reviews Management",
-    "Finance": "Finance",
-    "myIncome": "My Income",
-    "myBalance": "My Balance",
-    "banksAccount": "Bank Accounts",
-    "data": "Data",
-    "businessInsights": "Business Insights",
-    "accountHealth": "Account Health",
-    "sellerCentre": "Seller Centre",
-    "registerShopTitle": "Register to become a LifeShop Seller"
+    "reset_passowrd": "Reset Password",
+    "change_password": "Change Password",
+    "seller_centre": "Seller Centre",
+    "register_shop_title": "Register to become a LifeShop Seller",
+    "profile": "Profile",
+    "completed": "completed",
+    "identity": {
+      "title": "identity",
+      "identification_info": "identification information"
+    },
+    "setting": {
+      "setting_shipping": "Setting Shipping",
+      "setting_shop": "Shop Setting"
+    },
+    "tax": {
+      "title": "tax",
+      "tax_info": "tax infomation"
+    },
+    "shop": {
+      "title": "shop",
+      "shop_info": "Shop Infomation",
+      "profile_shop": "profile shop",
+      "shop_management": "shop management"
+    },
+    "order": {
+      "title": "Order",
+      "order_managemnet": "order management",
+      "mass_ship": "Mass Ship",
+      "cancellation": "Cancellation",
+      "return_refund": "Return/Refund",
+      "my_order": "My Order"
+    },
+    "product": {
+      "add_new_products": "Add New Products",
+      "my_products": "My Products",
+      "title": "Product"
+    },
+    "marketing": {
+      "title": "marketing",
+      "marketing_centre": "Marketing Centre",
+      "discount": "Discount",
+      "voucher": "Voucher",
+      "campaign": "Chương Trình Khuyến Mãi"
+    },
+    "todo_list": "Todo List",
+    "service": {
+      "title": "service",
+      "customer_service": "Customer Service",
+      "chat_management": "Chat Management",
+      "review_management": "Reviews Management"
+    },
+    "finance": {
+      "my_income": "My Income",
+      "my_balance": "My Balance",
+      "banks_account": "Bank Accounts",
+      "title": "Finance"
+    },
+    "data": {
+      "title": "Data",
+      "business_insights": "Business Insights",
+      "account_health": "Account Health"
+    },
+    "message": {
+      "_message": "translation for message",
+      "sigup_success": "Sign Up Success"
+    },
+    "notofication": {
+      "title": "notificetion",
+      "notofication_recent": "Notification received recently",
+      "mark_all_read": "Mark everything you read",
+      "all_notification": "See all announcements"
+    },
+    "dialog": {
+      "_message": "translation for dialog",
+      "logout": "do you want logout?",
+      "register_shop_logout": "The information provided will not be saved. Are you sure you still want to sign out?",
+      "setting_shipping": {
+        "close": "This shipping channel will be turned off on all existing products of the shop. The buyer will not be able to complete the order or the product will not be visible to the buyer without any available shipping methods",
+        "open": "To complete shipping method activation, please go to All Products, choose to edit each product or select Bulk Processing Tool to enable it for Shop products"
+      }
+    },
+    "page": {
+      "register_shop": {
+        "completed_title": "Post your first product to start your sales journey with LifeShop!"
+      }
+    }
   }
 }

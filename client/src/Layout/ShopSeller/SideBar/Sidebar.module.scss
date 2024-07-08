@@ -1,4 +1,96 @@
 .seller_sidebar {
   width: var(--seller_sidebar_width);
   background-color: white;
+  height: 100vh;
+  .seller_sidebar_wrapper {
+    &::-webkit-scrollbar {
+      width: 8px !important;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--white);
+      border-radius: 10px;
+      width: 5px !important;
+      &:hover {
+        background-color: var(--scroll_bar_hover_color);
+      }
+    }
+    &::-webkit-scrollbar-track {
+      width: 5px;
+      background-color: var(--white);
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--scroll_bar_color);
+        // &:hover {
+        //   background-color: var(--scroll_bar_hover_color);
+        // }
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #f6f6f6;
+      }
+    }
+  }
+  &_container {
+    padding: 20px 0px 20px 20px;
+    gap: 25px;
+    > div {
+      gap: 10px;
+      .toggle {
+        gap: 5px;
+        color: #999;
+        padding: 0;
+        &:hover {
+          div.icon {
+            svg {
+              color: var(--primary);
+            }
+          }
+        }
+        span {
+          float: left;
+          line-height: 18px;
+          max-width: 140px;
+          font-size: 1.4rem;
+          font-weight: var(--font_weigth);
+          letter-spacing: 0.5px;
+        }
+        .icon_contain {
+          .chat {
+            height: 22px;
+            width: 22px;
+          }
+          svg {
+            fill: #999;
+            width: 18px;
+            height: 18px;
+          }
+        }
+        div.icon {
+          padding-top: 5px;
+          svg {
+            font-size: 1.2rem;
+            fill: currentColor;
+            &:first-child {
+              display: block;
+            }
+            &:last-child {
+              display: none;
+            }
+          }
+        }
+      }
+      nav {
+        padding-left: 28px;
+        gap: 5px;
+        a {
+          color: var(--black);
+          font-size: 1.3rem;
+          text-transform: capitalize;
+          &:hover {
+            color: var(--primary);
+          }
+        }
+      }
+    }
+  }
 }

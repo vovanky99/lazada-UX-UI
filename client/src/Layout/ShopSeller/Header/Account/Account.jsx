@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { useSelector } from 'react-redux';
@@ -20,19 +20,19 @@ import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { ChangeLanguage } from '~/redux/Actions/General';
-import Translates from '~/layout/Component/Translate/Translates';
+import Translate from '~/layout/Component/Translate';
 
 const cx = classNames.bind(styles);
 
 export default function Account({ isRegisterShop }) {
   const navigate = useNavigate();
+  const accountRef = useRef();
   const { seller, sellerAuthenticated, language } = useSelector((state) => state.Auth);
   const [account, setAccount] = useState(false);
   const [changeLanguage, setChangeLanguage] = useState(false);
   const [dialog, setDialog] = useState(false);
   const [messageDialog, setMessageDialog] = useState('');
   const [defaultLanguage, setDefaultLanguage] = useState('vietnamese');
-  const [resolvePromise, setResolvePromise] = useState(null);
 
   const accountTippy = useDebounce(account, 500);
   const handleAccountMouseOver = () => {
@@ -47,31 +47,34 @@ export default function Account({ isRegisterShop }) {
   const handleOnMouseLeaveChangeLanguage = (e) => {
     setChangeLanguage(false);
   };
-  /* handle for confirm  */
-  const setShowConfirmBox = (message) => {
-    return new Promise((resolve) => {
-      setResolvePromise(() => resolve);
-      setMessageDialog(message);
-      setDialog(true);
-    });
+
+  const handleHovered = () => {
+    const account = accountRef.current;
+    if (account) {
+      account.classList.add('account_hovered');
+    }
   };
-  const handleConfirmDialog = (e) => {
-    const { type } = e.currentTarget.dataset;
-    if (type === 'no') {
-      setDialog(false);
-      if (resolvePromise) resolvePromise(false);
+  const handleHover = () => {
+    const account = accountRef.current;
+    if (account) {
+      account.classList.remove('account_hovered');
+    }
+  };
+  const handleLogoutSeller = () => {
+    Store.dispatch(Logout());
+    Store.dispatch(setSession('', 'sellerToken'));
+    navigate(config.ShopSeller.SignIn);
+  };
+  const handleOpenDialog = () => {
+    setDialog(true);
+    if (isRegisterShop) {
+      setMessageDialog('dialog.register_shop_logout');
     } else {
-      setDialog(false);
-      if (resolvePromise) resolvePromise(true);
+      setMessageDialog('dialog.logout');
     }
   };
-  const handleLogoutSeller = async () => {
-    const log = await setShowConfirmBox('Thông tin đã cung cấp sẽ không được lưu. Bạn có chắc vẫn muốn đăng xuất?');
-    if (log) {
-      Store.dispatch(Logout());
-      Store.dispatch(setSession('', 'sellerToken'));
-      navigate(config.ShopSeller.SignIn);
-    }
+  const handleCloseDialog = () => {
+    setDialog(false);
   };
   useEffect(() => {
     const language = document.querySelectorAll('.language-item');
@@ -101,18 +104,20 @@ export default function Account({ isRegisterShop }) {
   }, [changeLanguage]);
   return (
     <Fragment>
-      <div
-        className={cx('seller_header_account')}
-        onMouseLeave={handleAccountMouseLeave}
-        onMouseOver={handleAccountMouseOver}
-      >
+      <div className={cx('header_account')} onMouseLeave={handleAccountMouseLeave} onMouseOver={handleAccountMouseOver}>
         <Tippy
           interactive
           visible={accountTippy}
-          offset={[-80, 5]}
+          offset={[-80, 0]}
           placement="bottom"
           render={(attrs) => (
-            <div className={cx('account_dropdown')} {...attrs} tabIndex={-1}>
+            <div
+              className={cx('account_dropdown')}
+              {...attrs}
+              tabIndex={-1}
+              onMouseLeave={handleHover}
+              onMouseOver={handleHovered}
+            >
               <div className={cx('account_container', 'd-flex flex-column align-items-center')}>
                 <div className={cx('account_header', 'd-flex  flex-column  align-items-center')}>
                   <div className={cx('seller_avatar')}>
@@ -127,11 +132,11 @@ export default function Account({ isRegisterShop }) {
                   <div className={cx('account_middle', 'd-flex flex-column alig-items-start text-capitalize')}>
                     <Button to={config.ShopSeller.SettingShopInfo} transparent>
                       <ShopIcon />
-                      <Translates>shopInfo</Translates>
+                      <Translate>shop_info</Translate>
                     </Button>
                     <Button to={config.ShopSeller.SettingNotification} transparent>
                       <SettingIcon />
-                      <Translates>shopSetting</Translates>
+                      <Translate>setting.setting_shop</Translate>
                     </Button>
                     <div
                       className={cx('language_container')}
@@ -170,17 +175,18 @@ export default function Account({ isRegisterShop }) {
                 <Button
                   className={cx('seller_logout', 'd-flex flex-row justify-content-start')}
                   type="button"
-                  onClick={handleLogoutSeller}
+                  onClick={handleOpenDialog}
                   transparent
                 >
                   <LogoutIcon />
-                  <Translates>logout</Translates>
+                  <Translate>logout</Translate>
                 </Button>
               </div>
             </div>
           )}
         >
           <Button
+            ref={accountRef}
             type="button"
             className={cx('header_right_account', 'd-flex flex-row align-items-center')}
             transparent
@@ -199,7 +205,7 @@ export default function Account({ isRegisterShop }) {
           </Button>
         </Tippy>
       </div>
-      {dialog && <Dialog message={messageDialog} onCancel={handleConfirmDialog} onConfirm={handleConfirmDialog} />}
+      <Dialog message={messageDialog} open={dialog} onClose={handleCloseDialog} handleFunction={handleLogoutSeller} />
     </Fragment>
   );
 }

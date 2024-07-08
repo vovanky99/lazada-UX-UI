@@ -10,7 +10,7 @@ import LocalStorageService from '~/services/LocalStorageService/index';
 export default function Seller({ children }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { seller, sellerAuthenticated } = useSelector((state) => state.Auth);
+  const { seller, sellerAuthenticated, country } = useSelector((state) => state.Auth);
 
   /* handle get seller */
   useEffect(() => {
@@ -33,5 +33,5 @@ export default function Seller({ children }) {
     }
   }, [seller]);
 
-  return <Fragment>{sellerAuthenticated && <Fragment>{children}</Fragment>}</Fragment>;
+  return <Fragment>{sellerAuthenticated && country && <Fragment>{children}</Fragment>}</Fragment>;
 }

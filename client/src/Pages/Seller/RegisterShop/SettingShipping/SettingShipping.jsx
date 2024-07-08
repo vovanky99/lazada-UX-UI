@@ -109,24 +109,14 @@ export default function SettingShipping({ seller }) {
     }
   };
 
-  /* handle for confirm  */
-  const setShowConfirmBox = (message) => {
-    return new Promise((resolve) => {
-      setResolvePromise(() => resolve);
-      setMessageDialog(message);
-      setDialog(true);
-    });
+  const handleOpenDialog = (message) => {
+    setDialog(true);
+    setMessageDialog(message);
   };
-  const handleConfirmDialog = (e) => {
-    const { type } = e.currentTarget.dataset;
-    if (type === 'no') {
-      setDialog(false);
-      if (resolvePromise) resolvePromise(false);
-    } else {
-      setDialog(false);
-      if (resolvePromise) resolvePromise(true);
-    }
+  const handleCloseDialog = () => {
+    setDialog(false);
   };
+  const handleDialogFunction = () => {};
 
   /* handle set cod or setting shipping items */
   useEffect(() => {
@@ -135,6 +125,7 @@ export default function SettingShipping({ seller }) {
     const handleSwitch = async (e) => {
       const { name, type } = e.currentTarget.dataset;
       const { classList } = e.currentTarget;
+
       if (type === 'cod') {
         if (classList.contains('lifeshop_switch_open')) {
           setRadioSetting((draft) => {
@@ -151,39 +142,31 @@ export default function SettingShipping({ seller }) {
         }
       } else {
         if (classList.contains('lifeshop_switch_open')) {
-          const userConfirm = await setShowConfirmBox(
-            'This shipping channel will be turned off on all existing products of the shop. The buyer will not be able to complete the order or the product will not be visible to the buyer without any available shipping methods',
-          );
-          if (userConfirm) {
-            setRadioSetting((draft) => {
-              draft[name] = false;
-              draft.cod[name] = false;
-            });
-            lifeSwitch.forEach((d) => {
-              const codName = d.dataset.name;
-              if (codName === name) {
-                d.classList.add('lifeshop_switch_close');
-                d.classList.remove('lifeshop_switch_open');
-              }
-            });
-          }
+          handleOpenDialog('dialog.setting_shipping.close');
+          setRadioSetting((draft) => {
+            draft[name] = false;
+            draft.cod[name] = false;
+          });
+          lifeSwitch.forEach((d) => {
+            const codName = d.dataset.name;
+            if (codName === name) {
+              d.classList.add('lifeshop_switch_close');
+              d.classList.remove('lifeshop_switch_open');
+            }
+          });
         } else {
-          const userConfirm = await setShowConfirmBox(
-            'To complete shipping method activation, please go to All Products, choose to edit each product or select Bulk Processing Tool to enable it for Shop products',
-          );
-          if (userConfirm) {
-            setRadioSetting((draft) => {
-              draft[name] = true;
-              draft.cod[name] = true;
-            });
-            lifeSwitch.forEach((d) => {
-              const codName = d.dataset.name;
-              if (codName === name) {
-                d.classList.remove('lifeshop_switch_close');
-                d.classList.add('lifeshop_switch_open');
-              }
-            });
-          }
+          handleOpenDialog('dialog.setting_shipping.open');
+          setRadioSetting((draft) => {
+            draft[name] = true;
+            draft.cod[name] = true;
+          });
+          lifeSwitch.forEach((d) => {
+            const codName = d.dataset.name;
+            if (codName === name) {
+              d.classList.remove('lifeshop_switch_close');
+              d.classList.add('lifeshop_switch_open');
+            }
+          });
         }
       }
     };
@@ -477,7 +460,7 @@ export default function SettingShipping({ seller }) {
           Next
         </Button>
       </div>
-      {dialog && <Dialog message={messageDialog} onCancel={handleConfirmDialog} onConfirm={handleConfirmDialog} />}
+      <Dialog message={messageDialog} onClose={handleCloseDialog} open={dialog} />
     </form>
   );
 }

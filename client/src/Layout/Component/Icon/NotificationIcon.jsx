@@ -4,9 +4,13 @@ import styles from './Icon.module.scss';
 
 const cx = classNames.bind(styles);
 
-const NotificationIcon = forwardRef(function NotificationIcon({ className }, ref) {
+const NotificationIcon = forwardRef(function NotificationIcon({ className, onClick, ...passProps }, ref) {
+  const props = {
+    onClick,
+    ...passProps,
+  };
   return (
-    <svg ref={ref} className={cx('icon', className)} viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <svg ref={ref} className={cx('icon', className)} {...props} viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
         clipRule="evenodd"

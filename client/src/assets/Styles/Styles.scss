@@ -143,6 +143,37 @@ button.reviews_score.score_active {
 }
 
 /* seller */
+#seller_sidebar .active {
+  color: var(--primary) !important;
+}
+
+#seller_sidebar .toggle_active {
+  div {
+    &:last-child {
+      svg {
+        &:first-child {
+          display: none !important;
+        }
+        &:last-child {
+          display: block !important;
+        }
+      }
+    }
+  }
+}
+
+#seller_sidebar .toggle-item.toggle_active + nav.content-item {
+  display: none !important;
+}
+
+.account_hovered {
+  svg {
+    display: none !important;
+    &:last-child {
+      display: block !important;
+    }
+  }
+}
 #seller_register_shop_main .steps_register.active {
   > div {
     &:first-child {
