@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders_product', function (Blueprint $table) {
+            
             $table->foreignId('order_id')->unsigned()->references('id')->on('order_cart')->onDelete('cascade');
             $table->foreignId('product_id')->unsigned()->references('id')->on('products')->onDelete('cascade');
-            $table->double('quantity');
             $table->timestamps();
         });
     }

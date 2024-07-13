@@ -154,10 +154,14 @@ export default function RegisterShop() {
                     className={cx('completed_result', 'd-flex flex-column align-items-center justify-content-center')}
                   >
                     <FontAwesomeIcon icon={faCircleCheck} />
-                    <h3 className="text-capitalize">Sign Up Success</h3>
-                    <p>Post your first product to start your sales journey with LifeShop!</p>
-                    <Button to={config.ShopSeller.IdentityInfo} primary small>
-                      Complete
+                    <h3 className="text-capitalize">
+                      <Translate>completed</Translate>
+                    </h3>
+                    <p>
+                      <Translate>pages.register_shop.completed_title</Translate>
+                    </p>
+                    <Button className="text-capitalize" to={config.ShopSeller.IdentityInfo} primary small>
+                      <Translate>completed</Translate>
                     </Button>
                   </div>
                 </div>

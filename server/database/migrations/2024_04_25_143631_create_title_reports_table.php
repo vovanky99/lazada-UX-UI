@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('title_reports', function (Blueprint $table) {
             $table->id();
             $table->string('title')->index();
-            $table->string('descriptions');
+            $table->string('descriptions',200);
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

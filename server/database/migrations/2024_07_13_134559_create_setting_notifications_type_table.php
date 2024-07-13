@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attribute_product', function (Blueprint $table) {
+        Schema::create('setting_notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->boolean('status');
-            $table->string('descriptions');
-            $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreignId('notification_type_id')->references('id')->on('notification')->onDelete('cascade');
+            $table->boolean('status')->comment('1:enabled 0:disabled')->default(1);
+            $table->morphs('setting_notificationable');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attribute_product');
+        Schema::dropIfExists('setting_notifications_type');
     }
 };

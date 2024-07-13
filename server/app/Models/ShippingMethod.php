@@ -11,12 +11,17 @@ class ShippingMethod extends Model
     protected $table = 'shipping_method';
     protected $fillable = [
         'name',
-        'price'
+        'price',
+        'maximum_of_1_side',
+        'weight_limit',
     ];
     public function product_shipping_methods(){
         return $this->hasMany(ProductShippingMethod::class,'shipping_method_id');
     }
     public function shop_shipping_methods(){
         return $this->hasMany(ShopShippingMethod::class,'shipping_method_id');
+    }
+    public function order_shipping(){
+        return $this->hasMany(OrderShipping::class,'shipping_method_id');
     }
 }

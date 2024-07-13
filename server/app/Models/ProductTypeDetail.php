@@ -13,6 +13,8 @@ class ProductTypeDetail extends Model
         'name',
         'image',
         'status',
+        'price',
+        'quantity_in_stock',
         'product_type_id'
     ];
 

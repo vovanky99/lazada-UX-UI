@@ -171,6 +171,9 @@ class ProfileController extends Controller {
                             'identitiesable_id'=>Auth::user()->id,
                             'identitiesable_type'=>Seller::class,
                         ]);
+                        $shop->update([
+                            'status'=>1,
+                        ]);
                         return response()->json(['success'=>'created success!']);
                     }
                     else{

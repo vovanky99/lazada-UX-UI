@@ -22,6 +22,9 @@ const cx = classNames.bind(styles);
 export default function SideBar() {
   useEffect(() => {
     const item = document.querySelectorAll('.toggle-item');
+    const wrapper = document.getElementById('seller_sidebar_wrapper');
+    const container = document.getElementById('seller_sidebar_container');
+
     const handleClick = (e) => {
       const { classList } = e.currentTarget;
       if (classList.contains('toggle_active')) {
@@ -29,7 +32,14 @@ export default function SideBar() {
       } else {
         classList.add('toggle_active');
       }
+      /*disabled scroll when sidebar wrapper height more than container height */
+      if (container.offsetHeight < wrapper.offsetHeight + 10) {
+        wrapper.classList.add('hide-scrollbar');
+      } else {
+        wrapper.classList.remove('hide-scrollbar');
+      }
     };
+
     if (item) {
       item.forEach((d) => d.addEventListener('click', handleClick));
     }
@@ -41,9 +51,9 @@ export default function SideBar() {
   }, []);
   return (
     <aside id="seller_sidebar" className={cx('seller_sidebar')}>
-      <ScrollY className={cx('seller_sidebar_wrapper')}>
-        <div className={cx('seller_sidebar_container', 'd-flex flex-column')}>
-          <div className={cx('sidebar_order', 'd-flex flex-column')}>
+      <ScrollY id="seller_sidebar_wrapper" className={cx('seller_sidebar_wrapper')}>
+        <ul id="seller_sidebar_container" className={cx('seller_sidebar_container', 'd-flex flex-column')}>
+          <li className={cx('sidebar_order', 'd-flex flex-column')}>
             <Button
               className={cx('toggle', 'toggle-item d-flex flex-row justify-content-between align-items-center')}
               transparent
@@ -76,8 +86,8 @@ export default function SideBar() {
                 <Translate>setting.setting_shipping</Translate>
               </NavLink>
             </nav>
-          </div>
-          <div className={cx('sidebar_order', 'd-flex flex-column')}>
+          </li>
+          <li className={cx('sidebar_products', 'd-flex flex-column')}>
             <Button
               className={cx('toggle', 'toggle-item d-flex flex-row justify-content-between align-items-center')}
               transparent
@@ -101,8 +111,8 @@ export default function SideBar() {
                 <Translate>products.add_new_products</Translate>
               </NavLink>
             </nav>
-          </div>
-          <div className={cx('sidebar_order', 'd-flex flex-column')}>
+          </li>
+          <li className={cx('sidebar_marketing', 'd-flex flex-column')}>
             <Button
               className={cx('toggle', 'toggle-item d-flex flex-row justify-content-between align-items-center')}
               transparent
@@ -125,6 +135,9 @@ export default function SideBar() {
               <NavLink className={cx('nav_link_container')} to={config.ShopSeller.MarketingShopDiscount}>
                 <Translate>marketing.discount</Translate>
               </NavLink>
+              <NavLink className={cx('nav_link_container')} to={config.ShopSeller.MarketingShopAdvertising}>
+                <Translate>marketing.advertising_lifeshop</Translate>
+              </NavLink>
               <NavLink className={cx('nav_link_container')} to={config.ShopSeller.MarketingShopVoucher}>
                 <Translate>marketing.voucher</Translate>
               </NavLink>
@@ -132,8 +145,8 @@ export default function SideBar() {
                 <Translate>marketing.campaign</Translate>
               </NavLink>
             </nav>
-          </div>
-          <div className={cx('sidebar_order', 'd-flex flex-column')}>
+          </li>
+          <li className={cx('sidebar_service', 'd-flex flex-column')}>
             <Button
               className={cx('toggle', 'toggle-item d-flex flex-row justify-content-between align-items-center')}
               transparent
@@ -157,8 +170,8 @@ export default function SideBar() {
                 <Translate>service.review_management</Translate>
               </NavLink>
             </nav>
-          </div>
-          <div className={cx('sidebar_order', 'd-flex flex-column')}>
+          </li>
+          <li className={cx('sidebar_finance', 'd-flex flex-column')}>
             <Button
               className={cx('toggle', 'toggle-item d-flex flex-row justify-content-between align-items-center')}
               transparent
@@ -185,8 +198,8 @@ export default function SideBar() {
                 <Translate>finance.banks_account</Translate>
               </NavLink>
             </nav>
-          </div>
-          <div className={cx('sidebar_order', 'd-flex flex-column')}>
+          </li>
+          <li className={cx('sidebar_data', 'd-flex flex-column')}>
             <Button
               className={cx('toggle', 'toggle-item d-flex flex-row justify-content-between align-items-center')}
               transparent
@@ -210,8 +223,8 @@ export default function SideBar() {
                 <Translate>data.account_health</Translate>
               </NavLink>
             </nav>
-          </div>
-          <div className={cx('sidebar_order', 'd-flex flex-column')}>
+          </li>
+          <li className={cx('sidebar_shop', 'd-flex flex-column')}>
             <Button
               className={cx('toggle', 'toggle-item d-flex flex-row justify-content-between align-items-center')}
               transparent
@@ -235,8 +248,8 @@ export default function SideBar() {
                 <Translate>setting.setting_shop</Translate>
               </NavLink>
             </nav>
-          </div>
-        </div>
+          </li>
+        </ul>
       </ScrollY>
     </aside>
   );

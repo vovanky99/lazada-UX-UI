@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderCart extends Model
 {
-    use HasFactory;
     public $table = 'order_cart';
     protected $fillable = [
+        'quantity',
         'status',
         'payment_id',
         'user_id',
@@ -25,5 +25,8 @@ class OrderCart extends Model
     }
     public function product_shipping_methods(){
         return $this->hasMany(ProductShippingMethod::class,'order_id');
+    }
+    public function order_shipping(){
+        return $this->hasMany(OrderShipping::class,'order_id');
     }
 }

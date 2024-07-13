@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('email_receive_electronic_invoice', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
+            $table->string('email',100)->unique();
             $table->foreignId('tax_shop_id')->references('id')->on('tax_shop')->onDelete('cascade');
             $table->timestamps();
         });

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('shipping_method', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
+            $table->double('maximum_of_1_side')->unsigned()->nullable()->comment('Maximum limit of 1 side (cm)');
+            $table->double('weight_limit')->unsigned()->nullable()->comment('Weight limit (kg)');
             $table->double('price');
             $table->timestamps();
         });

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Shop extends Model
+class Shop extends Model implements Viewable
 {
-    use HasFactory;
+    use InteractsWithViews;
     protected $table = 'shop';
     protected $fillable = [
         'name',

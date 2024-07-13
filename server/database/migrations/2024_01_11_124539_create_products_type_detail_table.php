@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('product_type_detail', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->index();
             $table->boolean('status')->default(1);
-            $table->string('image');
+            $table->double('price')->nullable();
+            $table->double('quantity_in_stock')->nullable();
+            $table->string('image')->nullable();
             $table->foreignId('product_type_id')->references('id')->on('product_type')->onDelete('cascade');
             $table->timestamps();
         });

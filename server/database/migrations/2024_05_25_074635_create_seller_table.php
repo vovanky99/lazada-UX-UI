@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('email');
+            $table->string('identity_number',15)->unique()->nullable();
             $table->string('password')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('avatar')->nullable();
-            $table->boolean('status')->default(1);
+            $table->double('status',1)->comment('0:hide 1:show 2:locked')->unsigned()->default(1);
             $table->dateTime('birthday')->nullable();
             $table->string('descriptions')->nullable();
             $table->boolean('is_owner')->default(1);

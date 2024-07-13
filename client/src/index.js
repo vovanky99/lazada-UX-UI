@@ -19,7 +19,6 @@ root.render(
         </Provider>
       </Routers>
     </SSRProvider>
-    ,
   </React.StrictMode>,
 );
 

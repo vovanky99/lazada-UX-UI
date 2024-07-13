@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->index();
             $table->boolean('status')->default(1);
-            $table->string('descriptions')->nullable();
+            $table->string('descriptions',100)->nullable();
             $table->timestamps();
         });
         Schema::table('admin',function(Blueprint $table){

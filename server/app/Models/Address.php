@@ -24,6 +24,9 @@ class Address extends Model
     public function shop(){
         return $this->hasOne(Address::class,'address_id');
     }
+    public function addressable(){
+        return $this->morphTo();
+    }
     public function ward(){
         return $this->belongsTo(Ward::class,'ward_id');
     }

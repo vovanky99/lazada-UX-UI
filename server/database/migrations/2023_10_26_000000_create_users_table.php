@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('identity_number',15)->unique()->nullable();
             $table->string('phone_number')->unique()->nullable();
             $table->text('password')->nullable();
             $table->string('avatar')->nullable();

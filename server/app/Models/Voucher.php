@@ -2,25 +2,28 @@
 
 namespace App\Models;
 
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Voucher extends Model
+class Voucher extends Model implements Viewable
 {
-    use HasFactory;
+    use InteractsWithViews;
     public $table = 'voucher';
     protected $fillable = [
         'name',
         'descriptions',
-        'code',
-        'percents',
+        'coupon_code',
         'quantity',
         'status',
-        'category_id',
+        'voucher_unit',
+        'voucherable_type',
+        'voucherable_id',
         'start_day',
         'end_day',
     ];
-    public function category(){
-        return $this->belongsTo(Categories::class,'category_id','id');
+    public function voucherable(){
+        return $this->morphTo();
     }
 }

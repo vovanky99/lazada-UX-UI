@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail,Viewable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable,InteractsWithViews;
 
     protected $fillable = [
         'name',
         'email',
+        'identity_number',
         'password',
         'phone_number',
         'birthday',

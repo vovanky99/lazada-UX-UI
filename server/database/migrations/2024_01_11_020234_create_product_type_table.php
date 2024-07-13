@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('product_type', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name',50);
+            $table->string('name',50)->index();
             $table->boolean('status')->default(1);
-            $table->string('descriptions');
+            $table->string('descriptions')->nullable();
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });

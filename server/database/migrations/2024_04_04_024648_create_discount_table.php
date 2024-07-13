@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('discount', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->double('number',2);
+            $table->string('coupon_code',10)->index();
+            $table->double('discount_unit',2)->unsigned();
+            $table->double('minimun_order_value')->unsigned();
+            $table->double('maximum_discount_amount')->unsigned();
             $table->boolean('status')->default(1);
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+            $table->dateTime('start_valid');
+            $table->dateTime('valid_until');
             $table->softDeletes();
             $table->timestamps();
         });

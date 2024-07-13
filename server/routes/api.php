@@ -22,6 +22,7 @@ use App\Http\Controllers\CheckController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;
+use App\Http\Controllers\Seller\HomeController as SellerHomeController;
 use App\Http\Controllers\Seller\ProfileController as SellerProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,8 +44,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/user',[LifeShopController::class,'getUser']);
     //get admin 
     Route::get('/admin',[AdminAuthController::class,'getAmin']);
-    Route::get('/seller',[SellerAuthController::class,'getSeller']);
     
+    Route::get('/seller',[SellerAuthController::class,'getSeller']);
 });
 
 /* life shop */
@@ -188,7 +189,7 @@ Route::prefix('/seller')->group(function () {
      /* seller verified email */
 
      Route::controller( SellerAuthController::class)->group(function(){
-        Route::post('/login','login');
+        Route::post('/login','login')->name('login');
         Route::post('/register','register');
         Route::post('/password/email','sendResetLinkEmail');
         Route::post('/password/reset','reset')->name('password.reset');
@@ -202,9 +203,14 @@ Route::prefix('/seller')->group(function () {
         Route::controller(SellerProfileController::class)->group(function(){
             Route::post('/register-shop/{type}','RegisterShop');
         });
+        Route::controller(SellerHomeController::class)->group(function(){
+            Route::get('/home/todo-list','todoList');
+            Route::get('/home/sales-analysis','salesAnalysis');
+        });
     });
 
 });
+
 
 /* location public*/
 Route::controller(LocationController::class)->group(function(){

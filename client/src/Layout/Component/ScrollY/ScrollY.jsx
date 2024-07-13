@@ -5,10 +5,12 @@ import styles from './ScrollY.module.scss';
 
 const cx = classNames.bind(styles);
 
-export default function ScrollY({ className, children }) {
+export default function ScrollY({ id, className, children }) {
   return (
     <Fragment>
-      <div className={cx('wrapper', className)}>{children}</div>
+      <div id={id} className={cx('wrapper', className)}>
+        {children}
+      </div>
     </Fragment>
   );
 }

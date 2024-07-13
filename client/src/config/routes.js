@@ -149,6 +149,7 @@ export const ShopSeller = {
   MarketingShopDiscount: '/seller/shop/marketing/list/discount',
   MarketingShopFLashSale: '/seller/shop/marketing/shop-flash-sale/list',
   MarketingShopVoucher: '/seller/shop/marketing/voucher',
+  MarketingShopAdvertising: '/seller/shop/marketing/advertising',
   MarketingShopNewVoucher: '/seller/shop/marketing/voucher/new',
   MarketingShopCampaign: '/seller/shop/marketing/campaign',
 };

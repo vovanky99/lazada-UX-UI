@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Messages extends Model
 {
-    use HasFactory;
     protected $table = 'messages';
     protected $fillable = [
         'content',

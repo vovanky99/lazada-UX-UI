@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Momo extends Model
 {
-    use HasFactory;
     public $table = 'momo';
     protected $fillable = [
         'txn_id',

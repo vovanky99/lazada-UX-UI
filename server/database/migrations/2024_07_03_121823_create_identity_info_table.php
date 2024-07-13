@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('identity_info', function (Blueprint $table) {
             $table->id();
-            $table->double('type')->comment('1:CCCD 2:CMND 3:Passport')->default(1);
-            $table->double('status')->default(1);
+            $table->double('type',1)->unsigned()->comment('1:CCCD 2:CMND 3:Passport')->default(1);
+            $table->double('status')->unsigned()->default(1);
             $table->string('identity_number',20);
             $table->string('fullname');
             $table->string('identity_image');

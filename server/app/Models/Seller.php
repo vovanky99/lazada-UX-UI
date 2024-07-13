@@ -16,6 +16,7 @@ class Seller extends Authenticatable implements MustVerifyEmail
     protected $fillable =[
         'name',
         'email',
+        'identity_number',
         'password',
         'phone_number',
         'avatar',

@@ -45,7 +45,8 @@
       "marketing_centre": "kênh marketing",
       "discount": "giảm giá của shop",
       "voucher": "mã giảm giá của shop",
-      "campaign": "Chương Trình Khuyến Mãi"
+      "campaign": "Chương Trình Khuyến Mãi",
+      "advertising_lifeshop": "quảng cáo life shop"
     },
     "service": {
       "title": "dịch vụ",
@@ -53,7 +54,6 @@
       "review_management": "Quản lý đánh giá",
       "customer_service": "Chăm sóc khách hàng"
     },
-    "todo_list": "Danh sách cần làm",
     "finance": {
       "title": "tài chính",
       "banks_account": "tài khoản ngân hàng",
@@ -84,9 +84,13 @@
         "open": "Để hoàn tất việc kích hoạt phương thức vận chuyển, vui lòng đi tới Tất cả sản phẩm, chọn chỉnh sửa từng sản phẩm hoặc chọn Công cụ xử lý hàng loạt để kích hoạt tính năng này cho các sản phẩm của Shop"
       }
     },
-    "page": {
+    "pages": {
       "register_shop": {
         "completed_title": "Đăng sản phẩm đầu tiên của bạn để bắt đầu hành trình bán hàng với LifeShop!"
+      },
+      "home": {
+        "todo_list": "Danh sách cần làm",
+        "note": "Những việc bạn sẽ phải làm"
       }
     }
   },
@@ -136,9 +140,9 @@
       "marketing_centre": "Marketing Centre",
       "discount": "Discount",
       "voucher": "Voucher",
-      "campaign": "Chương Trình Khuyến Mãi"
+      "campaign": "Chương Trình Khuyến Mãi",
+      "advertising_lifeshop": "quảng cáo life shop"
     },
-    "todo_list": "Todo List",
     "service": {
       "title": "service",
       "customer_service": "Customer Service",
@@ -178,6 +182,10 @@
     "page": {
       "register_shop": {
         "completed_title": "Post your first product to start your sales journey with LifeShop!"
+      },
+      "home": {
+        "todo_list": "Todo List",
+        "note": "Những việc bạn sẽ phải làm"
       }
     }
   }
