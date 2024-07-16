@@ -12,8 +12,8 @@ class NotificationsGeneral extends Model
         'title',
         'is_read',
         'notification_id',
-        'notificationable_type',
-        'notificationable_id',
+        'ntfctable_type',
+        'ntfctable_id',
     ];
     public function notification_generalable(){
         return $this->morphTo();

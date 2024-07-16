@@ -4,7 +4,6 @@ namespace App\Models;
 
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Shop extends Model implements Viewable
@@ -26,6 +25,9 @@ class Shop extends Model implements Viewable
     }
     public function sellers(){
         return $this->hasMany(Seller::class,'shop_id');
+    }
+    public function seller(){
+        return $this->belongsTo(Seller::class,'seller_id');
     }
     public function products(){
         return $this->hasMany(Products::class,'shop_id');

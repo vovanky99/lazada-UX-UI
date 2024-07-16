@@ -2,6 +2,7 @@ import { forwardRef, useState } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './FormGroupRaw.module.scss';
+import Translate from '../Translate';
 
 const cx = classNames.bind(styles);
 
@@ -15,6 +16,7 @@ const FormText = forwardRef(function FormText(
     title,
     disabled,
     name,
+    placeholder,
     handleOnchange = () => {},
     ...passProps
   },
@@ -38,7 +40,9 @@ const FormText = forwardRef(function FormText(
   });
   return (
     <div className={cx(containerClass, 'd-flex flex-row align-items-center')}>
-      <label className={cx(labelClass, 'form-label col-2 text-end text-capitalize')}>{title}</label>
+      <label className={cx(labelClass, 'form-label col-2 text-end text-capitalize')}>
+        {Translate({ children: title })}
+      </label>
       <input
         ref={ref}
         name={name}
@@ -49,7 +53,7 @@ const FormText = forwardRef(function FormText(
           setValue(e.target.value);
         }}
         className={cx(inputClassName, 'form-control col')}
-        placeholder="Please Enter Name... "
+        placeholder={Translate({ children: placeholder || `placeholder.text` })}
         disabled={disabled}
       />
     </div>

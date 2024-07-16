@@ -13,15 +13,22 @@ import MessageText from '~/layout/Component/Message/MessageText';
 import Modal from '~/layout/Component/Modal';
 import Location from '../Location';
 import LocalStorageService from '~/services/LocalStorageService';
+import Translate from '~/layout/Component/Translate';
 
 const cx = classNames.bind(styles);
 
-export default function DetailAddress({ country, seller, handleCloseAddress = () => {} }) {
+export default function DetailAddress({ handleResetComponent, country, seller, handleCloseAddress = () => {} }) {
   const locationValueRef = useRef();
   const addressRef = useRef();
   const fullNameRef = useRef();
   const phoneNumberRef = useRef();
   const [valid, setValid] = useState(null);
+  const messageValid = {
+    fullname: Translate({ children: 'valid.fullname' }),
+    phone_number: Translate({ children: 'valid.phone_number' }),
+    address: Translate({ children: 'valid.address' }),
+    ward: Translate({ children: 'valid.ward' }),
+  };
   const [data, setData] = useState(false);
   const [addressDetail, setAddressDetail] = useImmer(() => {
     if (LocalStorageService.getItem('addressDetails')) {
@@ -55,7 +62,7 @@ export default function DetailAddress({ country, seller, handleCloseAddress = ()
   const validate = (field = addressDetail) => {
     const errorMessage = { ...valid };
     if ('fullname' in field) {
-      errorMessage.fullname = !field.fullname ? 'please enter fullname!' : '';
+      errorMessage.fullname = !field.fullname ? messageValid.fullname : '';
       if (errorMessage.fullname) {
         fullNameRef.current.classList.add('border_danger');
       } else {
@@ -67,7 +74,7 @@ export default function DetailAddress({ country, seller, handleCloseAddress = ()
       errorMessage.phone_number =
         field.phone_number.match(areaCodeRegex) && !field.phone_number.match(/[a-zA-Z$]/g)
           ? ''
-          : "phone number don't valid!";
+          : messageValid.phone_number;
       if (errorMessage.phone_number) {
         phoneNumberRef.current.classList.add('border_danger');
       } else {
@@ -75,7 +82,7 @@ export default function DetailAddress({ country, seller, handleCloseAddress = ()
       }
     }
     if ('address' in field) {
-      errorMessage.address = !field.address ? 'please enter address detail!' : '';
+      errorMessage.address = !field.address ? messageValid.address : '';
       if (errorMessage.address) {
         addressRef.current.classList.add('border_danger');
       } else {
@@ -83,34 +90,37 @@ export default function DetailAddress({ country, seller, handleCloseAddress = ()
       }
     }
     if ('ward_name' in field) {
-      errorMessage.ward_name = !field.ward_name ? 'please select ward!' : '';
+      errorMessage.ward_name = !field.ward_name ? messageValid.ward : '';
       if (errorMessage.ward_name) {
         locationValueRef.current.classList.add('border_danger');
       } else {
         locationValueRef.current.classList.remove('border_danger');
       }
     }
-    setValid({ ...errorMessage });
-    if (field === valid) {
-      Object.values(errorMessage).every((x) => x === '');
+    if (field === addressDetail) {
+      Object.entries(errorMessage).map(([key, value]) => {
+        if (value === '') {
+          delete errorMessage[key];
+        }
+      });
     }
+    setValid({ ...errorMessage });
+    return errorMessage;
   };
 
   /* submit address detail */
   const handleSaveAddressDetail = (e) => {
     e.preventDefault();
-    validate();
+    const validationErrors = validate();
     if (
       addressDetail.fullname &&
       addressDetail.phone_number &&
       addressDetail.address &&
       addressDetail.ward_id &&
-      !valid?.fullname &&
-      !valid?.phone_number &&
-      !valid?.ward_name &&
-      !valid?.address
+      Object.keys(validationErrors).length === 0
     ) {
       LocalStorageService.setItem('addressDetails', addressDetail);
+      handleResetComponent(1);
       handleCloseAddress();
     }
   };
@@ -137,7 +147,9 @@ export default function DetailAddress({ country, seller, handleCloseAddress = ()
       >
         <div className={cx('seller_details_address_wrapper', 'd-flex flex-column ')}>
           <div className={cx('seller_details_address_header', 'd-flex flex-row justify-content-between')}>
-            <h4 className={cx('title', 'text-capitalize')}>Address Details</h4>
+            <h4 className={cx('title', 'text-capitalize')}>
+              <Translate>address_detail</Translate>
+            </h4>
             <div className={cx('close')}>
               <FontAwesomeIcon icon={faClose} onClick={handleCloseAddress} />
             </div>
@@ -154,7 +166,7 @@ export default function DetailAddress({ country, seller, handleCloseAddress = ()
                   <div className={cx('fullname', 'd-flex flex-column')}>
                     <FormSearch
                       ref={fullNameRef}
-                      title="full name"
+                      title="full_name"
                       name="fullname"
                       Value={addressDetail?.fullname}
                       useColumn
@@ -180,7 +192,9 @@ export default function DetailAddress({ country, seller, handleCloseAddress = ()
                     />
                   </div>
                   <div className={cx('address', 'd-flex flex-column')}>
-                    <h5 className="text-capitalize">Address</h5>
+                    <h5 className="text-capitalize">
+                      <Translate>address</Translate>
+                    </h5>
                     <Location
                       ref={locationValueRef}
                       data={addressDetail}
@@ -191,7 +205,7 @@ export default function DetailAddress({ country, seller, handleCloseAddress = ()
                       <FormText
                         ref={addressRef}
                         data={addressDetail?.address}
-                        title="address details"
+                        title="address_detail"
                         name="address"
                         rows="3"
                         handleOnchange={handleOnchange}
@@ -202,7 +216,7 @@ export default function DetailAddress({ country, seller, handleCloseAddress = ()
                 </div>
                 <div className={cx('seller_details_content_btn', 'text-end')}>
                   <Button type="submit" className={cx('text-capitalize')} primary small>
-                    Save
+                    <Translate>save</Translate>
                   </Button>
                 </div>
               </form>

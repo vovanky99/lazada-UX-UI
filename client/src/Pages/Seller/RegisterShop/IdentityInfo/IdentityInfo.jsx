@@ -15,6 +15,7 @@ import CldUploadImg from '~/services/cloudinary/CldUploadImg';
 import MessageText from '~/layout/Component/Message/MessageText';
 import Progress from '~/components/Progress';
 import { RegisterShop } from '~/api/Seller/Profile';
+import Translate from '~/layout/Component/Translate';
 
 const cx = classNames.bind(styles);
 
@@ -61,20 +62,21 @@ export default function IdentityInfo({ seller }) {
       messageError.checked = field.check_policies !== 1 ? 'Please tick the checkbox above to continue!' : '';
     }
     if (field === identityInfo) {
-      Object.entries(messageError).map((d) => {
-        if (d[1] === '') {
-          delete messageError[d[0]];
+      Object.entries(messageError).map(([key, value]) => {
+        if (value === '') {
+          delete messageError[key];
         }
       });
     }
     setValid({ ...messageError });
+    return messageError;
   };
 
   const handleBackTaxInfo = (e) => {
     const stepsRegister = document.querySelectorAll('.steps_register');
     const taxContent = document.getElementById('tax_info_content');
     const identificationInfoContent = document.getElementById('identification_info_content');
-    if (sellerIdentity && stepsRegister && taxContent && identificationInfoContent) {
+    if (!sellerIdentity && stepsRegister && taxContent && identificationInfoContent) {
       for (let i = 0; i < stepsRegister.length; i++) {
         if (stepsRegister[i].getAttribute('id') === 'tax_info') {
           stepsRegister[i].classList.add('active');
@@ -92,9 +94,9 @@ export default function IdentityInfo({ seller }) {
     const completedContent = document.getElementById('completed_content');
     const identityInfoContent = document.getElementById('identification_info_content');
     const stepsRegister = document.querySelectorAll('.steps_register');
-    validate();
+    const val = validate();
     if (
-      Object.entries(valid).length === 0 &&
+      Object.keys(val).length === 0 &&
       Object.values(identityInfo).filter((d) => d === '').length === 0 &&
       identityInfo.check_policies === 1
     ) {
@@ -362,31 +364,34 @@ export default function IdentityInfo({ seller }) {
           <div className={cx('form_header_alert', 'd-flex flex-row align-items-center')}>
             <FontAwesomeIcon icon={faExclamation} />
             <p>
-              Please provide Identification Information of the Shop Owner (if an individual), or Legal Representative on
-              the business registration.
+              <Translate>identity.note</Translate>
             </p>
           </div>
           <div className={cx('form_header_content', 'd-flex flex-column')}>
             <div className={cx('form_of_identity', 'd-flex flex-row')}>
-              <label className={cx('form-label')}>Form of identification</label>
+              <label className={cx('form-label')}>
+                <Translate>pages.register_shop.form_of_identification</Translate>
+              </label>
               <div className={cx('form_of_identity_content', 'd-flex flex-row')}>
                 <Radio
-                  title="Citizen identification card"
+                  title="citizen_identification_card"
                   type="1"
                   className={cx('form_of_identity_content_item')}
                   primary
                 />
-                <Radio title="ID card" type="2" className={cx('form_of_identity_content_item')} primary />
-                <Radio title="Passport" type="3" className={cx('form_of_identity_content_item')} primary />
+                <Radio title="id_card" type="2" className={cx('form_of_identity_content_item')} primary />
+                <Radio title="passport" type="3" className={cx('form_of_identity_content_item')} primary />
               </div>
             </div>
             <div className={cx('identity_number', 'd-flex flex-row')}>
               <label className="form-label">
-                {identityInfo.form_of_identity === 1
-                  ? 'Citizen identification card'
-                  : identityInfo.form_of_identity === 2
-                  ? 'ID card'
-                  : 'Passport'}
+                {identityInfo.form_of_identity === 1 ? (
+                  <Translate>citizen_identification_card</Translate>
+                ) : identityInfo.form_of_identity === 2 ? (
+                  <Translate>id_card</Translate>
+                ) : (
+                  <Translate>passport</Translate>
+                )}
               </label>
               <div className={cx('identity_number_content')}>
                 <FormSearch
@@ -408,7 +413,9 @@ export default function IdentityInfo({ seller }) {
               </div>
             </div>
             <div className={cx('fullname', 'd-flex flex-row')}>
-              <label className="form-label">Full name</label>
+              <label className="form-label text-capitalize">
+                <Translate>full_name</Translate>
+              </label>
               <div className={cx('fullname_content')}>
                 <div className={cx('fullname_content_header')}>
                   <FormSearch
@@ -424,11 +431,15 @@ export default function IdentityInfo({ seller }) {
                   </FormSearch>
                   <MessageText message={valid?.fullname} className={cx('message', 'text-danger')} />
                 </div>
-                <div className={cx('note')}>According to ID card/CCCD/Passport</div>
+                <div className={cx('note')}>
+                  <Translate>pages.register_shop.fullname_note</Translate>
+                </div>
               </div>
             </div>
             <div className={cx('photo_of_identity', 'd-flex flex-row')}>
-              <label className="form-label">Photo of ID card/CCCD/passport</label>
+              <label className="form-label">
+                <Translate>pages.register_shop.photo_of_id</Translate>
+              </label>
               <div className={cx('photo_of_identity_content')}>
                 <div className={cx('content_header', 'd-flex flex-row align-items-end')}>
                   <div className={cx('upload_identity_images')}>
@@ -468,13 +479,14 @@ export default function IdentityInfo({ seller }) {
                 </div>
                 <MessageText message={valid?.identity_images} className={cx('message', 'text-danger')} />
                 <div className={cx('note')}>
-                  Please provide a close-up photo of your ID card/CCCD/Passport Information in ID card/CCCD/Passport
-                  must be clearly displayed (Photo size must not exceed 5.0 MB)
+                  <Translate>pages.register_shop.photo_note</Translate>
                 </div>
               </div>
             </div>
             <div className={cx('photo_hold_your_identity', 'd-flex flex-row')}>
-              <label className="form-label">Photo of ID card/CCCD/passport</label>
+              <label className="form-label">
+                <Translate>pages.register_shop.photo_of_id</Translate>
+              </label>
               <div className={cx('photo_hold_your_identity_content')}>
                 <div className={cx('content_header', 'd-flex flex-row align-items-end')}>
                   <div className={cx('upload_identity_images')}>
@@ -517,8 +529,7 @@ export default function IdentityInfo({ seller }) {
                 </div>
                 <MessageText message={valid?.identity_hold_images} className={cx('message', 'text-danger')} />
                 <div className={cx('note')}>
-                  Please provide a photo of you holding your ID card/CCCD/Passport as a sample photo. The information in
-                  your ID card/CCCD/Passport and photos must be clearly displayed (Photo size must not exceed 5.0 MB)
+                  <Translate>pages.register_shop.photo_hold_note</Translate>
                 </div>
               </div>
             </div>
@@ -529,7 +540,7 @@ export default function IdentityInfo({ seller }) {
                   requir={false}
                   className={cx('check_policies_content')}
                   checkboxclass={cx('check_item')}
-                  Label="I confirm all data provided is accurate and truthful. I have read and agree to Shopee's Privacy Policy."
+                  Label={Translate({ children: 'pages.register_shop.policy_note' })}
                 />
               </div>
               <MessageText message={valid?.checked} className={cx('message', 'text-danger')} />
@@ -538,10 +549,10 @@ export default function IdentityInfo({ seller }) {
         </div>
         <div className={cx('form_btn', 'd-flex flex-row justify-content-between text-capitalize')}>
           <Button type="button" small outline onClick={handleBackTaxInfo} disabled={sellerIdentity ? true : false}>
-            Back
+            <Translate>back</Translate>
           </Button>
           <Button type="button" small primary onClick={handleNextCompleted}>
-            next
+            <Translate>next</Translate>
           </Button>
         </div>
       </form>

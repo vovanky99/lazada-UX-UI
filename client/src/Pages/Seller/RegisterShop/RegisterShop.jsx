@@ -19,6 +19,7 @@ const cx = classNames.bind(styles);
 
 export default function RegisterShop() {
   const { seller, sellerAuthenticated, country } = useSelector((state) => state.Auth);
+  const [resetCompponent, setResetComponent] = useState(1);
   const [addressDetail, setAddressDetail] = useState(() => {
     if (LocalStorageService.getItem('addressDetails')) {
       return LocalStorageService.getItem('addressDetails');
@@ -26,6 +27,14 @@ export default function RegisterShop() {
       return '';
     }
   });
+
+  const handleResetComponent = (value) => {
+    setResetComponent(value + resetCompponent);
+  };
+
+  useEffect(() => {
+    setAddressDetail(LocalStorageService.getItem('addressDetails'));
+  }, [resetCompponent]);
 
   useEffect(() => {
     const stepsRegister = document.querySelectorAll('.steps_register');
@@ -72,7 +81,7 @@ export default function RegisterShop() {
         stepsRegister[i].classList.remove('active');
       }
     }
-  }, [seller]);
+  }, [seller, country]);
 
   useEffect(() => {
     setAddressDetail(() => {
@@ -84,7 +93,6 @@ export default function RegisterShop() {
     });
   }, []);
 
-  useEffect(() => {}, []);
   return (
     <Seller>
       {seller ? (
@@ -138,7 +146,12 @@ export default function RegisterShop() {
               </div>
               <div id="seller_main_content" className={cx('seller_main_content')}>
                 <div id="shop_info_content" className={cx('shop_info', 'content_register active')}>
-                  <ShopInfo seller={seller} addressDetail={addressDetail} country={country} />
+                  <ShopInfo
+                    handleResetComponent={handleResetComponent}
+                    seller={seller}
+                    addressDetail={addressDetail}
+                    country={country}
+                  />
                 </div>
                 <div id="setting_shipping_content" className={cx('setting_shipping', 'content_register')}>
                   <SettingShipping seller={seller} />
@@ -160,7 +173,7 @@ export default function RegisterShop() {
                     <p>
                       <Translate>pages.register_shop.completed_title</Translate>
                     </p>
-                    <Button className="text-capitalize" to={config.ShopSeller.IdentityInfo} primary small>
+                    <Button className="text-capitalize" to={config.ShopSeller.SettingIdentityInfo} primary small>
                       <Translate>completed</Translate>
                     </Button>
                   </div>

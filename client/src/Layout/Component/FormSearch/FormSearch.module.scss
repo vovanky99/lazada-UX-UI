@@ -34,7 +34,7 @@
     font-size: 1.5rem;
     border-color: var(--border_color_admin);
     &::placeholder {
-      text-transform: capitalize;
+      font-size: 1.2rem;
     }
     &:focus {
       border-color: var(--input_focus_admin) !important;

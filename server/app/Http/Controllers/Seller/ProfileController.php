@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 class ProfileController extends Controller {
     public function RegisterShop(Request $request,$type){
         $type = $request->type;
-        $shop= Shop::where('seller_id',Auth::user()->id)->firstOrFail();
+        $shop= Shop::where('seller_id',Auth::user()->id)->first();
         try{
             if($type === 'shop_info'){
                 $shopname = $request->shop_name;
@@ -30,16 +30,18 @@ class ProfileController extends Controller {
                         'seller_id'=>Auth::user()->id,
                         'status'=>0,
                     ]);
-                    $NewShop->address()->create([
+                    $address = Address::create([
                         'street_address'=>$address,
                         'ward_id'=>$ward_id,
                         'phone'=>$phone,
                         'name'=>$fullname,
+                        'addressable_type'=>Shop::class,
+                        'addressable_id'=>$NewShop->id,
                     ]);
                     $NewShop->update([
                         'address_id'=>$address->id,
                     ]);
-                    $NewShop->sellers()->update([
+                    $NewShop->seller()->update([
                         'shop_id'=>$NewShop->id,
                     ]);
                     return response()->json(['success'=>'create success!']);

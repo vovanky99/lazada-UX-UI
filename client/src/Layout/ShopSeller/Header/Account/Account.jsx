@@ -173,7 +173,7 @@ export default function Account({ isRegisterShop }) {
                   </div>
                 )}
                 <Button
-                  className={cx('seller_logout', 'd-flex flex-row justify-content-start')}
+                  className={cx('seller_logout', 'd-flex flex-row justify-content-start text-capitalize')}
                   type="button"
                   onClick={handleOpenDialog}
                   transparent

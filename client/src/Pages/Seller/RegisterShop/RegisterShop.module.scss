@@ -91,12 +91,19 @@
                   font-size: 1.6rem;
                 }
               }
+              .shop_info_item {
+                gap: 5px;
+                .message {
+                  width: 405px;
+                }
+              }
               .phone_number {
                 > div {
                   font-size: 1.6rem;
                 }
               }
               .name_shop {
+                gap: 15px;
               }
             }
             .pickup_address_edit {
@@ -356,7 +363,7 @@
                   .add_email {
                     border: 1px solid var(--border_color_admin);
                     height: 30px;
-                    width: 160px;
+                    width: 250px;
                     font-size: 1.5rem;
                     gap: 5px;
                     color: #333;
@@ -569,6 +576,9 @@
         }
       }
       .message {
+        &::first-letter {
+          text-transform: capitalize;
+        }
         transition: all 0.5s ease-in-out;
         font-size: 1.4rem;
       }
@@ -586,7 +596,7 @@
         cursor: pointer;
         min-height: 30px;
         max-height: 32px;
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         svg {
           color: var(--border_color_admin);
           font-size: 1.4rem;
@@ -602,6 +612,7 @@
             background-color: #f6f6f6;
             cursor: no-drop;
             pointer-events: none;
+            text-transform: capitalize;
             padding: 3px;
             &:hover {
               background-color: #edf9f7;
@@ -682,6 +693,9 @@
         > div {
           .message {
             height: 20px;
+            &::first-letter {
+              text-transform: capitalize;
+            }
           }
         }
         .address {
@@ -705,6 +719,8 @@
       &_btn {
         box-shadow: 0px -3px 3px 1px var(--box_shadow_admin);
         padding: 20px;
+        z-index: 1;
+        position: relative;
       }
     }
   }

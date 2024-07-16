@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('setting_notifications', function (Blueprint $table) {
+        Schema::create('coins', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('notification_type')->references('id')->on('notifications')->onDelete('cascade');
-            $table->boolean('status')->comment('1:enabled 0:disabled')->default(1);
-            $table->morphs('st_ntfctable');
+            $table->string('name',50);
+            $table->string('symbol',10);
+            $table->decimal('value',18,8);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('setting_notifications_type');
+        Schema::dropIfExists('coins');
     }
 };

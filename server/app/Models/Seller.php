@@ -43,6 +43,9 @@ class Seller extends Authenticatable implements MustVerifyEmail
     public function shop(){
         return $this->belongsTo(Shop::class,'shop_id','id');
     }
+    public function shop_owner(){
+        return $this->hasOne(Shop::class,'seller_id');
+    }
     public function sendEmailVerificationNotification()
     {
         $this->notify(new SellerVerifyEmail);

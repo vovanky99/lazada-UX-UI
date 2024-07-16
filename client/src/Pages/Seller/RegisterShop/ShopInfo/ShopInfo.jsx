@@ -7,12 +7,20 @@ import FormText from '~/layout/Component/FormGroupRow/FormText';
 import DetailAddress from '../DetailAddress';
 import LocalStorageService from '~/services/LocalStorageService';
 import { RegisterShop } from '~/api/Seller/Profile';
+import Translate from '~/layout/Component/Translate';
+import MessageDanger from '~/layout/Component/Message/MessageDanger';
+import { FormSearch } from '~/layout/Component/FormSearch';
+import MessageText from '~/layout/Component/Message/MessageText';
 
 const cx = classNames.bind(styles);
 
-export default function ShopInfo({ country, seller, addressDetail }) {
+export default function ShopInfo({ handleResetComponent, country, seller, addressDetail }) {
   const nameRef = useRef();
   const [editAddress, setEditAddress] = useState(false);
+  const messageValid = {
+    name: Translate({ children: 'valid.name_shop' }),
+  };
+  const [nameValid, setNameValid] = useState('');
   const [shopName, setShopName] = useState(seller?.shop?.name || '');
   const handleCloseEditAddress = () => {
     setEditAddress(false);
@@ -52,6 +60,9 @@ export default function ShopInfo({ country, seller, addressDetail }) {
           }
         })
         .catch((e) => console.log(e));
+    } else {
+      nameRef.current.classList.add('border_danger');
+      setNameValid(messageValid.name);
     }
   };
 
@@ -61,30 +72,43 @@ export default function ShopInfo({ country, seller, addressDetail }) {
     const handleBlur = (e) => {
       if (e.target.value === '') {
         name.classList.add('border_danger');
+        setNameValid(messageValid.name);
       } else {
         name.classList.remove('border_danger');
+        setNameValid('');
       }
     };
     if (name) {
       name.addEventListener('blur', handleBlur);
     }
+    return () => {
+      if (name) {
+        name.removeEventListener('blur', handleBlur);
+      }
+    };
   }, [shopName]);
   return (
     <Fragment>
       <form className={cx('shop_info_form')} noValidate>
         <div className={cx('form_content')}>
           <div className={cx('form_content_container', 'd-flex flex-column')}>
-            <FormText
-              ref={nameRef}
-              containerClass={cx('name_shop')}
-              labelClass={cx('col-3')}
-              data={shopName}
-              title="name shop"
-              name="shop_name"
-              handleOnchange={handlSetShopName}
-            />
+            <div className={cx('shop_info_item', 'd-flex flex-column align-items-end')}>
+              <FormText
+                ref={nameRef}
+                containerClass={cx('name_shop', 'd-flex col-12 align-items-center')}
+                labelClass={cx('col-3 justify-content-end')}
+                data={shopName}
+                useTippy={false}
+                title="name_shop"
+                name="shop_name"
+                handleOnchange={handlSetShopName}
+              />
+              <MessageDanger message={nameValid} classNames={cx('message')} />
+            </div>
             <div className={cx('pickup_address', 'form-group d-flex flex-row')}>
-              <label className="text-capitalize col-3  text-end">pickup address</label>
+              <label className="text-capitalize col-3  text-end">
+                <Translate>pickup_address</Translate>
+              </label>
               <div className={cx('pickup_address_content', 'col flex-start')}>
                 {addressDetail ? (
                   <Fragment>
@@ -104,7 +128,11 @@ export default function ShopInfo({ country, seller, addressDetail }) {
                   <Fragment></Fragment>
                 )}
                 <Button className={cx('pickup_address_edit')} type="button" onClick={handleEditAddress} transparent>
-                  Edit Address
+                  {addressDetail ? (
+                    <Translate>pages.register_shop.edit_address</Translate>
+                  ) : (
+                    <Translate>pages.register_shop.select_address</Translate>
+                  )}
                 </Button>
               </div>
             </div>
@@ -117,19 +145,26 @@ export default function ShopInfo({ country, seller, addressDetail }) {
               disabled
             />
             <div className={cx('phone_number', 'd-flex flex-row')}>
-              <label className="text-capitalize col-3 text-end">Phone Number</label>
+              <label className="text-capitalize col-3 text-end">
+                <Translate>phone_number</Translate>
+              </label>
               <div>{seller?.phone_number}</div>
             </div>
           </div>
         </div>
         <div className={cx('form_btn', 'd-flex flex-row justify-content-end')}>
           <Button type="button" primary onClick={handleNextSettingShipping} data-type="next">
-            Next
+            <Translate>next</Translate>
           </Button>
         </div>
       </form>
       {editAddress ? (
-        <DetailAddress country={country} seller={seller} handleCloseAddress={handleCloseEditAddress} />
+        <DetailAddress
+          handleResetComponent={handleResetComponent}
+          country={country}
+          seller={seller}
+          handleCloseAddress={handleCloseEditAddress}
+        />
       ) : (
         <></>
       )}

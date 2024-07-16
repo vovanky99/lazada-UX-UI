@@ -14,6 +14,7 @@ import EmailItem from './EmailItem';
 import MessageDanger from '~/layout/Component/Message/MessageDanger';
 import LocalStorageService from '~/services/LocalStorageService';
 import { RegisterShop } from '~/api/Seller/Profile';
+import Translate from '~/layout/Component/Translate';
 
 const cx = classNames.bind(styles);
 
@@ -322,27 +323,24 @@ export default function TaxInfo({ email, location }) {
         <div className={cx('form_header_alert', 'd-flex flex-row align-items-center')}>
           <FontAwesomeIcon icon={faExclamation} />
           <p>
-            The collection of Tax Information and Identification Information is mandatory according to the regulations
-            of Vietnam's Cybersecurity, E-commerce, and Tax laws. Tax Information and Identification Information will be
-            protected according to Shopee's privacy policy. The seller is fully responsible for the accuracy of the
-            information.
+            <Translate>tax.note</Translate>
           </p>
         </div>
         <div className={cx('form_header_content', 'd-flex flex-column')}>
           <div className={cx('business_type', 'd-flex flex-row')}>
             <label htmlFor="business_type_option" className="form-label">
-              business type
+              <Translate>pages.register_shop.business_type</Translate>
             </label>
             <div id="business_type_option" className={cx('business_type_option', 'd-flex flex-row')}>
-              <Radio title="Individual" type={1} className={cx('business_type_item')} primary />
-              <Radio title="Household business" type={2} className={cx('business_type_item')} primary />
-              <Radio title="Company" type={3} className={cx('business_type_item')} primary />
+              <Radio title="individual" type={1} className={cx('business_type_item')} primary />
+              <Radio title="household_business" type={2} className={cx('business_type_item')} primary />
+              <Radio title="company" type={3} className={cx('business_type_item')} primary />
             </div>
           </div>
           {taxInfo.business_type !== 1 ? (
             <div className={cx('business_name', 'd-flex flex-row')}>
               <label htmlFor="business_name_content" className="form-label text-capitalize">
-                business name
+                <Translate>tax.business_name</Translate>
               </label>
               <div id="business_name_content" className={cx('business_name_content', 'd-flex flex-column')}>
                 <div className={cx('business_name_content_main', 'd-flex flex-column flex-grow-1')}>
@@ -360,7 +358,7 @@ export default function TaxInfo({ email, location }) {
                   <MessageDanger message={valid?.business_name} classNames={cx('message')} />
                 </div>
                 <div className={cx('note')}>
-                  Please fill in the full company name, no abbreviations. For example: "ABC Limited Liability Company"
+                  <Translate>tax.business_name_note</Translate>
                 </div>
               </div>
             </div>
@@ -369,7 +367,7 @@ export default function TaxInfo({ email, location }) {
           )}
           <div className={cx('registered_business_address', 'd-flex flex-row')}>
             <label htmlFor="registered_business_address_content" className="form-label">
-              Registered business address
+              <Translate>pages.register_shop.registered_business_address</Translate>
             </label>
             <div
               id="registered_business_address_content"
@@ -401,7 +399,7 @@ export default function TaxInfo({ email, location }) {
           </div>
           <div className={cx('email_receive_electronic_invoice', 'd-flex flex-row')}>
             <label htmlFor="email_receive_electronic_invoice_content" className="form-label">
-              Email receive electronic invoice
+              <Translate>pages.register_shop.email_receive_electronic_invoice</Translate>
             </label>
             <div
               id="email_receive_electronic_invoice_content"
@@ -420,7 +418,9 @@ export default function TaxInfo({ email, location }) {
               {Object.keys(taxInfo.email_receive_electronic_invoice).length < 5 ? (
                 <Button className={cx('add_email')} type="button" transparent small onClick={handleAddEmail}>
                   <FontAwesomeIcon icon={faPlus} />
-                  <div className={cx('add_email_title', 'text-capitalize')}>add email</div>
+                  <div className={cx('add_email_title', 'text-capitalize')}>
+                    <Translate>add_email</Translate>
+                  </div>
                   <div className={cx('add_email_limit')}>
                     ({Object.keys(taxInfo.email_receive_electronic_invoice).length}/5)
                   </div>
@@ -428,12 +428,14 @@ export default function TaxInfo({ email, location }) {
               ) : (
                 <></>
               )}
-              <div className={cx('note')}>Your electronic invoice will be sent to this email address</div>
+              <div className={cx('note')}>
+                <Translate>tax.email_note</Translate>
+              </div>
             </div>
           </div>
           <div className={cx('tax_code', 'd-flex flex-row')}>
             <label htmlFor="tax_code_content" className="form-label">
-              Tax code
+              <Translate>pages.register_shop.tax_code</Translate>
             </label>
             <div id="tax_code_content" className={cx('tax_code_content', 'd-flex flex-column')}>
               <FormSearch
@@ -449,8 +451,7 @@ export default function TaxInfo({ email, location }) {
                 <div className={cx('tax_code_length')}>{taxInfo.tax_code.length}/14</div>
               </FormSearch>
               <div className={cx('note')}>
-                According to Vietnam E-commerce Regulations (Decree 52/2013/ND-CP), Sellers must provide Tax Code
-                information to the e-commerce platform.
+                <Translate>tax.tax_code_note</Translate>
               </div>
             </div>
           </div>
@@ -458,10 +459,10 @@ export default function TaxInfo({ email, location }) {
       </div>
       <div className={cx('form_btn', 'd-flex flex-row justify-content-between text-capitalize')}>
         <Button type="button" small outline onClick={handleBackSettingShipping}>
-          Back
+          <Translate>back</Translate>
         </Button>
         <Button type="button" small primary onClick={handleNextIdentificationInfo}>
-          next
+          <Translate>next</Translate>
         </Button>
       </div>
     </form>

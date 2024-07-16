@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import MessageText from '~/layout/Component/Message/MessageText';
 import { useSelector } from 'react-redux';
+import Translate from '~/layout/Component/Translate';
 
 const cx = classNames.bind(styles);
 
@@ -27,7 +28,6 @@ const Location = forwardRef(function Location(
   const wardWrapperRef = useRef();
   const { country } = useSelector((state) => state.Auth);
   const [selectLocation, setSelectLocation] = useState(false);
-  // const [country, setCountry] = useState(null);
   const [city, setCity] = useState(null);
   const [district, setDistrict] = useState(null);
   const [ward, setWard] = useState(null);
@@ -60,12 +60,14 @@ const Location = forwardRef(function Location(
       }
     }
     e.target.classList.add('btn_item_active');
-    setLocation((draft) => {
-      draft.district_name = name;
-      draft.district_id = id;
-      draft.ward_name = '';
-      draft.ward_id = '';
-    });
+    if (id !== location.district_id) {
+      setLocation((draft) => {
+        draft.district_name = name;
+        draft.district_id = id;
+        draft.ward_name = '';
+        draft.ward_id = '';
+      });
+    }
     DistrictValue.classList.remove('location_active');
     WardValue.classList.add('location_active');
     BtnDistrict.classList.remove('btn_active');
@@ -82,10 +84,12 @@ const Location = forwardRef(function Location(
       }
     }
     e.target.classList.add('btn_item_active');
-    setLocation((draft) => {
-      draft.ward_name = name;
-      draft.ward_id = id;
-    });
+    if (id !== location.ward_id) {
+      setLocation((draft) => {
+        draft.ward_name = name;
+        draft.ward_id = id;
+      });
+    }
     setSelectLocation(false);
   };
 
@@ -114,11 +118,11 @@ const Location = forwardRef(function Location(
         setWard(result);
       })
       .catch((e) => console.log(e));
-  }, [location.district_id]);
+  }, [location.district_id, location.city_id]);
 
   /* handle set pointer for button when select location value */
   useEffect(() => {
-    const btnCity = btnCityRef.current;
+    // const btnCity = btnCityRef.current;
     const btnDistrict = btnDistrictRef.current;
     const btnWard = btnWardRef.current;
     if (btnDistrict) {
@@ -147,20 +151,23 @@ const Location = forwardRef(function Location(
 
     const handleSelectCity = (e) => {
       const { id, name } = e.target.dataset;
+      if (id !== location.city_id) {
+        setLocation((draft) => {
+          draft.city_name = name;
+          draft.city_id = id;
+          draft.district_name = '';
+          draft.district_id = '';
+          draft.ward_name = '';
+          draft.ward_id = '';
+        });
+      }
       for (let i = 0; i < CityItem.length; i++) {
         if (CityItem[i].classList.contains('btn_item_active')) {
           CityItem[i].classList.remove('btn_item_active');
         }
       }
+
       e.target.classList.add('btn_item_active');
-      setLocation((draft) => {
-        draft.district_name = '';
-        draft.district_id = '';
-        draft.ward_name = '';
-        draft.ward_id = '';
-        draft.city_name = name;
-        draft.city_id = id;
-      });
       CityValue.classList.remove('location_active');
       DistrictValue.classList.add('location_active');
       BtnCity.classList.remove('btn_active');
@@ -260,18 +267,17 @@ const Location = forwardRef(function Location(
         }
       }
     }
-    if (WardItem) {
-      for (let i = 0; i < WardItem.length; i++) {
-        if (WardItem[i].dataset.id === location.ward_id) {
-          WardItem[i].classList.add('btn_item_active');
-        }
-      }
-    }
-
     if (DistrictItem) {
       for (let i = 0; i < DistrictItem.length; i++) {
         if (DistrictItem[i].dataset.id === location.district_id) {
           DistrictItem[i].classList.add('btn_item_active');
+        }
+      }
+    }
+    if (WardItem) {
+      for (let i = 0; i < WardItem.length; i++) {
+        if (WardItem[i].dataset.id === location.ward_id) {
+          WardItem[i].classList.add('btn_item_active');
         }
       }
     }
@@ -287,9 +293,9 @@ const Location = forwardRef(function Location(
       CityContent.classList.remove('location_active');
       DistrictContent.classList.add('location_active');
     }
-  }, [selectLocation]);
+  }, [selectLocation, country, city, district, ward]);
   return (
-    <div className={cx('location')}>
+    <div className={cx('location')} tabIndex={1}>
       <Tippy
         interactive
         visible={selectLocation}
@@ -305,13 +311,13 @@ const Location = forwardRef(function Location(
           >
             <div className={cx('location_header', 'd-flex flex-row')}>
               <Button ref={btnCityRef} className={cx('btn_location btn_active')} type="button" data-name="city">
-                City
+                <Translate>city</Translate>
               </Button>
               <Button ref={btnDistrictRef} className={cx('btn_location')} type="button" data-name="district">
-                District
+                <Translate>district</Translate>
               </Button>
               <Button ref={btnWardRef} className={cx('btn_location')} type="button" data-name="ward">
-                Ward
+                <Translate>ward</Translate>
               </Button>
             </div>
             <div className={cx('location_content')}>
@@ -362,14 +368,18 @@ const Location = forwardRef(function Location(
         onClickOutside={handleSelectLocationOutside}
       >
         <div ref={locationWrapperRef} name={name} className={cx('location_container', 'form-group')}>
-          {useLabel === true ?? <label className="text-capitalize form-label">city/district/ward</label>}
+          {useLabel === true ?? (
+            <label className="text-capitalize form-label">
+              <Translate>location_title</Translate>
+            </label>
+          )}
           <div
             ref={ref}
             className={cx('location_value', 'd-flex flex-row justify-content-between align-items-center form-control')}
             onClick={handleSelectLocation}
           >
             <div>
-              {location.city_name}
+              {location.city_name ? location.city_name : <Translate>pages.register_shop.location</Translate>}
               {location.district_name ? '/' + location.district_name : ''}
               {location.ward_name ? '/' + location.ward_name : ''}
             </div>

@@ -7,6 +7,48 @@
     "register_shop_title": "Đăng ký để trở thành Người bán LifeShop",
     "profile": "hồ sơ",
     "completed": "hoàn thành",
+    "next": "tiếp theo",
+    "back": "quay lại",
+    "save": "lưu thông tin",
+    "phone_number": "số điện thoại",
+    "phone": "điện thoại",
+    "address": "địa chỉ",
+    "country": "quốc gia",
+    "city": "thành phố",
+    "district": "quận",
+    "ward": "phường",
+    "address_detail": "địa chỉ chi tiết",
+    "full_name": "họ tên",
+    "name_shop": "tên shop",
+    "forgot_passowrd": "quên mật khẩu?",
+    "pickup_address": "Chọn địa chỉ",
+    "collapse": "đóng lại",
+    "expand": "mở ra",
+    "add_email": "thêm email",
+    "individual": "Cá nhân",
+    "household_business": "hộ gia đình",
+    "company": "công ty",
+    "citizen_identification_card": "Thẻ căn cước công dân",
+    "id_card": "CMND",
+    "passport": "Hộ chiếu",
+    "cod": {
+      "enabled": "COD đã kích hoạt",
+      "disabled": "COD đã vô hiệu hóa"
+    },
+    "valid": {
+      "name_shop": "Vui lòng nhập tên shop!",
+      "fullname": "Vui lòng nhập tên đầy đủ!",
+      "phone_number": "Số điện thoại không chính xác",
+      "address": "Vui lòng nhập địa chỉ!",
+      "ward": "Vui lòng chọn phường"
+    },
+    "component": {
+      "form_text": "Vui lòng nhập "
+    },
+    "placeholder": {
+      "text": "Vui lòng nhập tên của bạn...",
+      "default": "Vui lòng nhập"
+    },
     "shop": {
       "title": "cửa hàng",
       "shop_info": "thông tin shop",
@@ -15,11 +57,17 @@
     },
     "tax": {
       "title": "thuế",
-      "tax_info": "thông tin thuế"
+      "tax_info": "thông tin thuế",
+      "note": "Việc thu thập Thông tin thuế và Thông tin nhận dạng là bắt buộc theo quy định của pháp luật An ninh mạng, Thương mại điện tử và Thuế của Việt Nam. Thông tin thuế và thông tin nhận dạng sẽ được bảo vệ theo chính sách quyền riêng tư của Shop. Người bán hoàn toàn chịu trách nhiệm về tính chính xác của thông tin.",
+      "email_note": "Hóa đơn điện tử của bạn sẽ được gửi đến địa chỉ email này",
+      "tax_code_note": "Theo Quy định Thương mại điện tử Việt Nam (Nghị định 52/2013/ND-CP), Người bán phải cung cấp thông tin Mã số thuế cho sàn thương mại điện tử.",
+      "business_name_note": "Vui lòng điền đầy đủ tên công ty, không viết tắt. Ví dụ: “Công ty trách nhiệm hữu hạn ABC”",
+      "business_name": "tên doanh nghiệp"
     },
     "identity": {
       "title": "danh tính",
-      "identification_info": "thông tin cá nhân"
+      "identification_info": "thông tin cá nhân",
+      "note": "Vui lòng cung cấp Thông tin nhận dạng Chủ cửa hàng (nếu là cá nhân) hoặc Người đại diện theo pháp luật khi đăng ký kinh doanh."
     },
     "order": {
       "title": "đơn hàng",
@@ -86,13 +134,29 @@
     },
     "pages": {
       "register_shop": {
-        "completed_title": "Đăng sản phẩm đầu tiên của bạn để bắt đầu hành trình bán hàng với LifeShop!"
+        "completed_title": "Đăng sản phẩm đầu tiên của bạn để bắt đầu hành trình bán hàng với LifeShop!",
+        "edit_address": "chỉnh sửa địa chỉ",
+        "select_address": "chọn địa chỉ",
+        "location": "Vui lòng chọn lựa địa chỉ...",
+        "location_title": "thành phố/thị xã/phường",
+        "setting_shipping_note": "Kích hoạt phương thức vận chuyển thích hợp.",
+        "business_type": "loại doanh nghiệp",
+        "registered_business_address": "địa chỉ kinh doanh đã đăng ký",
+        "email_receive_electronic_invoice": "Email nhận hóa đơn điện tử",
+        "tax_code": "mã số thuế",
+        "fullname_note": "Theo CMND/CCCD/Hộ chiếu",
+        "form_of_identification": "Hình thức nhận dạng",
+        "photo_of_id": "Photo CMND/CCCD/hộ chiếu",
+        "photo_note": "Vui lòng cung cấp ảnh cận cảnh CMND/CCCD/Hộ chiếu Thông tin trong CMND/CCCD/Hộ chiếu phải được hiển thị rõ ràng (Kích thước ảnh không quá 5,0 MB)",
+        "photo_hold_note": "Vui lòng cung cấp ảnh bạn cầm CMND/CCCD/Hộ chiếu làm ảnh mẫu. Các thông tin trong CMND/CCCD/Hộ chiếu và ảnh phải được hiển thị rõ ràng (Kích thước ảnh không quá 5,0 MB)",
+        "policy_note": "Tôi xác nhận tất cả dữ liệu được cung cấp là chính xác và trung thực. Tôi đã đọc và đồng ý với Chính sách quyền riêng tư của Shopify."
       },
       "home": {
         "todo_list": "Danh sách cần làm",
         "note": "Những việc bạn sẽ phải làm"
       }
-    }
+    },
+    "database": {}
   },
   "en": {
     "login": "login",
@@ -103,10 +167,54 @@
     "seller_centre": "Seller Centre",
     "register_shop_title": "Register to become a LifeShop Seller",
     "profile": "Profile",
+    "shop_info": "shop info",
     "completed": "completed",
+    "next": "next",
+    "back": "back",
+    "save": "save",
+    "phone_number": "phone number",
+    "phone": "phone",
+    "country": "country",
+    "city": "city",
+    "district": "district",
+    "ward": "ward",
+    "address_detail": "address details",
+    "name_shop": "name shop",
+    "full_name": "full name",
+    "pickup_address": "Pickup Address",
+    "address": "address",
+    "forgot_passowrd": "Forgot Password?",
+    "collapse": "collapse",
+    "expand": "expand",
+    "add_email": "add email",
+    "individual": "individual",
+    "household_business": "household business",
+    "company": "company",
+    "citizen_identification_card": "Citizen identification card",
+    "id_card": "ID Card",
+    "passport": "Passport",
+    "cod": {
+      "enabled": "COD is enabled",
+      "disabled": "COD is disabled"
+    },
+    "valid": {
+      "name_shop": "Please enter name shop!",
+      "fullname": "Please enter full name!",
+      "phone_number": "Phone valid don't valid!",
+      "address": "Please enter address!",
+      "ward": "Please select ward!"
+    },
+    "component": {
+      "form_text": "Enter keyword for "
+    },
+    "placeholder": {
+      "text": "Please enter name... ",
+      "default": "Please enter"
+    },
     "identity": {
       "title": "identity",
-      "identification_info": "identification information"
+      "identification_info": "identification information",
+      "note": "Please provide Identification Information of the Shop Owner (if an individual), or Legal Representative on the business registration."
     },
     "setting": {
       "setting_shipping": "Setting Shipping",
@@ -114,7 +222,12 @@
     },
     "tax": {
       "title": "tax",
-      "tax_info": "tax infomation"
+      "tax_info": "tax infomation",
+      "note": "The collection of Tax Information and Identification Information is mandatory according to the regulations of Vietnam's Cybersecurity, E-commerce, and Tax laws. Tax Information and Identification Information will be protected according to Shopee's privacy policy. The seller is fully responsible for the accuracy of the information.",
+      "email_note": "Your electronic invoice will be sent to this email address",
+      "tax_code_note": "According to Vietnam E-commerce Regulations (Decree 52/2013/ND-CP), Sellers must provide Tax Code information to the e-commerce platform.",
+      "business_name": "business name",
+      "business_name_note": "Please fill in the full company name, no abbreviations. For example: “ABC Limited Liability Company”"
     },
     "shop": {
       "title": "shop",
@@ -130,9 +243,10 @@
       "return_refund": "Return/Refund",
       "my_order": "My Order"
     },
-    "product": {
+    "products": {
       "add_new_products": "Add New Products",
       "my_products": "My Products",
+      "product_management": "product management",
       "title": "Product"
     },
     "marketing": {
@@ -140,8 +254,8 @@
       "marketing_centre": "Marketing Centre",
       "discount": "Discount",
       "voucher": "Voucher",
-      "campaign": "Chương Trình Khuyến Mãi",
-      "advertising_lifeshop": "quảng cáo life shop"
+      "campaign": "Promotions",
+      "advertising_lifeshop": "life shop advertising"
     },
     "service": {
       "title": "service",
@@ -179,14 +293,31 @@
         "open": "To complete shipping method activation, please go to All Products, choose to edit each product or select Bulk Processing Tool to enable it for Shop products"
       }
     },
-    "page": {
+    "pages": {
       "register_shop": {
-        "completed_title": "Post your first product to start your sales journey with LifeShop!"
+        "completed_title": "Post your first product to start your sales journey with LifeShop!",
+        "edit_address": "edit address",
+        "select_address": "select address",
+        "location": "Please select address...",
+        "location_title": "city/district/ward",
+        "setting_shipping_note": "Activate the appropriate shipping method.",
+        "business_type": "business type",
+        "registered_business_address": "registered business address",
+        "email_receive_electronic_invoice": "email receive electronic invoice",
+        "tax_code": "tax code",
+        "form_of_identification": "Form of identification",
+
+        "fullname_note": "According to ID card/CCCD/Passport",
+        "photo_of_id": "Photo of ID card/CCCD/passport",
+        "photo_note": "Please provide a close-up photo of your ID card/CCCD/Passport Information in ID card/CCCD/Passport must be clearly displayed (Photo size must not exceed 5.0 MB)",
+        "photo_hold_note": "Please provide a photo of you holding your ID card/CCCD/Passport as a sample photo. The information in your ID card/CCCD/Passport and photos must be clearly displayed (Photo size must not exceed 5.0 MB)",
+        "policy_note": "I confirm all data provided is accurate and truthful. I have read and agree to Shopee's Privacy Policy."
       },
       "home": {
         "todo_list": "Todo List",
-        "note": "Những việc bạn sẽ phải làm"
+        "note": "Things you will have to do"
       }
-    }
+    },
+    "database": {}
   }
 }

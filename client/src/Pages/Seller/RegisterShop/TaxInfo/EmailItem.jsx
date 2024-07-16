@@ -6,6 +6,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import styles from '../RegisterShop.module.scss';
 import Button from '~/components/Button';
 import MessageText from '~/layout/Component/Message/MessageText';
+import Translate from '~/layout/Component/Translate';
 
 const cx = classNames.bind(styles);
 
@@ -34,7 +35,7 @@ const EmailItem = forwardRef(function EmailItem(
               handleOnchange(e);
             }}
             autoComplete="true"
-            placeholder="Enter"
+            placeholder={Translate({ children: 'placeholder.default' })}
             className={cx(`${dt?.name}`, dt?.error ? 'border_danger' : '', ' email_item form-control')}
             maxLength={MaxLength}
           />

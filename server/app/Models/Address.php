@@ -14,6 +14,7 @@ class Address extends Model
         'addressable_id',
         'addressable_type',
         'home',
+        'name',
         'phone',
         'street_address',
         'ward_id',

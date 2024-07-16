@@ -187,8 +187,7 @@ Route::prefix('/admin')->group(function(){
 /* admin seller */
 Route::prefix('/seller')->group(function () {
      /* seller verified email */
-
-     Route::controller( SellerAuthController::class)->group(function(){
+     Route::controller(SellerAuthController::class)->group(function(){
         Route::post('/login','login')->name('login');
         Route::post('/register','register');
         Route::post('/password/email','sendResetLinkEmail');

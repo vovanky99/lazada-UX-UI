@@ -10,8 +10,8 @@ class SettingNotifications extends Model
     protected $fillable= [
         'notification_type_id',
         'status',
-        'setting_notificationable_type',
-        'setting_notificationable_id',
+        'st_ntfctable_type',
+        'st_ntfctable_id',
     ];
     public function setting_notificationable(){
         return $this->morphTo();

@@ -5,6 +5,7 @@ import { Fragment, forwardRef, useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import Debounce from '~/hooks/Debounce';
 import Button from '~/components/Button';
+import Translate from '../Translate';
 
 const cx = classNames.bind(styles);
 
@@ -13,10 +14,8 @@ export const FormSearch = forwardRef(function FormSearch(
     useTippy = true,
     name,
     valueID,
-    useColumn = false,
     inputType = 'text',
     inputClass,
-    useForgetPassword = false,
     MaxLength,
     forgetLink,
     containerClass,
@@ -26,6 +25,9 @@ export const FormSearch = forwardRef(function FormSearch(
     data,
     title,
     classTitle,
+    labelClass,
+    useForgetPassword = false,
+    useColumn = false,
     useLabel = true,
     useNull = false,
     areaCode,
@@ -134,11 +136,13 @@ export const FormSearch = forwardRef(function FormSearch(
         )}
       >
         {useLabel ? (
-          <label className="form-label text-capitalize">
-            {title}
+          <label className={cx(labelClass + ' form-label text-capitalize')}>
+            {Translate({ children: title })}
             {useForgetPassword ? (
               <Button to={forgetLink} className={cx('p-0')} transparent tabIndex="-1">
-                <strong>Forgot Password?</strong>
+                <strong className="text-capitalize">
+                  <Translate>forget_password</Translate>
+                </strong>
               </Button>
             ) : (
               ''
@@ -190,7 +194,7 @@ export const FormSearch = forwardRef(function FormSearch(
               name={name}
               className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
               onClick={handleClickSelect}
-              placeholder={`Please Enter ${title}`}
+              placeholder={Translate({ children: 'component.form_text' }) + Translate({ children: title })}
               value={search}
               onChange={(e) => {
                 const { value, maxLength } = e.target;
@@ -215,7 +219,7 @@ export const FormSearch = forwardRef(function FormSearch(
               max={max}
               disabled={disabled}
               className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
-              placeholder={`Please Enter ${title}`}
+              placeholder={Translate({ children: 'component.form_text' }) + Translate({ children: title })}
               value={search}
               autoComplete={inputType === 'password' ? `on` : ''}
               onBlur={handleBlur}

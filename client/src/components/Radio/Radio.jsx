@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './Radio.module.scss';
+import Translate from '~/layout/Component/Translate';
 
 const cx = classNames.bind(styles);
 
@@ -51,7 +52,9 @@ const Radio = forwardRef(function Radio(
       onClick={handleOnclick}
     >
       <div className={cx('node')}></div>
-      <div className={cx('title')}>{title}</div>
+      <div className={cx('title')}>
+        <Translate>{title}</Translate>
+      </div>
     </div>
   );
 });

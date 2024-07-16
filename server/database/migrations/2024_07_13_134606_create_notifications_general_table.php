@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title',100);
             $table->boolean('is_read')->default(false);
             $table->foreignId('notification_id')->references('id')->on('notifications')->onDelete('cascade');
-            $table->morphs('notificationable');
+            $table->morphs('ntfctable');
             $table->timestamps();
         });
     }

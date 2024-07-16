@@ -9,6 +9,7 @@ import styles from '../RegisterShop.module.scss';
 import LocalStorageService from '~/services/LocalStorageService';
 import { RegisterShop } from '~/api/Seller/Profile';
 import Dialog from '~/layout/Component/Dialog';
+import Translate from '~/layout/Component/Translate';
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +19,7 @@ export default function SettingShipping({ seller }) {
   const [resolvePromise, setResolvePromise] = useState(null);
   const setting = seller?.shop?.shop_shipping_methods;
   const [btnSetting, setBtnSetting] = useImmer(() => {
-    if (setting) {
+    if (setting.length !== 0) {
       const object = {};
       setting.map((dt) => {
         object[dt?.shipping_method.name] = dt?.status ? true : false;
@@ -34,7 +35,7 @@ export default function SettingShipping({ seller }) {
     }
   });
   const [radioSetting, setRadioSetting] = useImmer(() => {
-    if (setting) {
+    if (setting.length !== 0) {
       const object = { cod: {} };
       setting.map((dt) => {
         object[dt?.shipping_method?.name] = dt?.status ? true : false;
@@ -109,14 +110,24 @@ export default function SettingShipping({ seller }) {
     }
   };
 
-  const handleOpenDialog = (message) => {
-    setDialog(true);
-    setMessageDialog(message);
+  /* handle for confirm  */
+  const setShowConfirmBox = (message) => {
+    return new Promise((resolve) => {
+      setResolvePromise(() => resolve);
+      setMessageDialog(message);
+      setDialog(true);
+    });
   };
-  const handleCloseDialog = () => {
-    setDialog(false);
+  const handleConfirmDialog = (e) => {
+    const { type } = e.currentTarget.dataset;
+    if (type === 'no') {
+      setDialog(false);
+      if (resolvePromise) resolvePromise(false);
+    } else {
+      setDialog(false);
+      if (resolvePromise) resolvePromise(true);
+    }
   };
-  const handleDialogFunction = () => {};
 
   /* handle set cod or setting shipping items */
   useEffect(() => {
@@ -142,31 +153,35 @@ export default function SettingShipping({ seller }) {
         }
       } else {
         if (classList.contains('lifeshop_switch_open')) {
-          handleOpenDialog('dialog.setting_shipping.close');
-          setRadioSetting((draft) => {
-            draft[name] = false;
-            draft.cod[name] = false;
-          });
-          lifeSwitch.forEach((d) => {
-            const codName = d.dataset.name;
-            if (codName === name) {
-              d.classList.add('lifeshop_switch_close');
-              d.classList.remove('lifeshop_switch_open');
-            }
-          });
+          const userConfirm = await setShowConfirmBox('dialog.setting_shipping.close');
+          if (userConfirm) {
+            setRadioSetting((draft) => {
+              draft[name] = false;
+              draft.cod[name] = false;
+            });
+            lifeSwitch.forEach((d) => {
+              const codName = d.dataset.name;
+              if (codName === name) {
+                d.classList.add('lifeshop_switch_close');
+                d.classList.remove('lifeshop_switch_open');
+              }
+            });
+          }
         } else {
-          handleOpenDialog('dialog.setting_shipping.open');
-          setRadioSetting((draft) => {
-            draft[name] = true;
-            draft.cod[name] = true;
-          });
-          lifeSwitch.forEach((d) => {
-            const codName = d.dataset.name;
-            if (codName === name) {
-              d.classList.remove('lifeshop_switch_close');
-              d.classList.add('lifeshop_switch_open');
-            }
-          });
+          const userConfirm = await setShowConfirmBox('dialog.setting_shipping.open');
+          if (userConfirm) {
+            setRadioSetting((draft) => {
+              draft[name] = true;
+              draft.cod[name] = true;
+            });
+            lifeSwitch.forEach((d) => {
+              const codName = d.dataset.name;
+              if (codName === name) {
+                d.classList.remove('lifeshop_switch_close');
+                d.classList.add('lifeshop_switch_open');
+              }
+            });
+          }
         }
       }
     };
@@ -234,8 +249,12 @@ export default function SettingShipping({ seller }) {
     <form className={cx('setting_shipping_form')} noValidate>
       <div className={cx('setting_shipping_form_wrapper')}>
         <div className={cx('title')}>
-          <h4 className="text-capitalize">shipping method</h4>
-          <div>Activate the appropriate shipping method.</div>
+          <h4 className="text-capitalize">
+            <Translate>setting.setting_shipping</Translate>
+          </h4>
+          <div>
+            <Translate>pages.register_shop.setting_shipping_note</Translate>
+          </div>
         </div>
         <div className={cx('setting_shipping_form_content')} noValidate>
           <div className={cx('form_content_header', 'd-flex flex-column')}>
@@ -245,11 +264,11 @@ export default function SettingShipping({ seller }) {
                 <Button className={cx('text-capitalize')} type="button" data-name="express" small>
                   {btnSetting.express ? (
                     <div className={cx('btn_toggle', 'd-flex flew-row align-items-center')}>
-                      Collapse <FontAwesomeIcon icon={faChevronDown} />
+                      <Translate>collapse</Translate> <FontAwesomeIcon icon={faChevronDown} />
                     </div>
                   ) : (
                     <div className={cx('btn_toggle', 'd-flex flew-row align-items-center')}>
-                      expand <FontAwesomeIcon icon={faChevronUp} />
+                      <Translate>expand</Translate> <FontAwesomeIcon icon={faChevronUp} />
                     </div>
                   )}
                 </Button>
@@ -258,11 +277,15 @@ export default function SettingShipping({ seller }) {
                 <div className={cx('express_content_left', 'd-flex flex-row  text-capitalize align-items-center')}>
                   Express
                   {radioSetting.express && radioSetting.cod.express ? (
-                    <div> [COD is enabled] </div>
+                    <div>
+                      [<Translate>cod.enabled</Translate>]
+                    </div>
                   ) : !radioSetting.express ? (
                     ''
                   ) : !radioSetting.cod.express ? (
-                    <div> [COD is disabled] </div>
+                    <div>
+                      [<Translate>cod.disabled</Translate>]
+                    </div>
                   ) : (
                     ''
                   )}
@@ -297,24 +320,28 @@ export default function SettingShipping({ seller }) {
                 <Button className={cx('text-capitalize')} type="button" data-name="fast" small>
                   {btnSetting.fast ? (
                     <div className={cx('btn_toggle', 'd-flex flew-row align-items-center')}>
-                      collapse <FontAwesomeIcon icon={faChevronDown} />
+                      <Translate>collapse</Translate> <FontAwesomeIcon icon={faChevronDown} />
                     </div>
                   ) : (
                     <div className={cx('btn_toggle', 'd-flex flew-row align-items-center')}>
-                      expand <FontAwesomeIcon icon={faChevronUp} />{' '}
+                      <Translate>expand</Translate> <FontAwesomeIcon icon={faChevronUp} />
                     </div>
                   )}
                 </Button>
               </div>
               <div className={cx('fast_content', ' flex-row flex-wrap justify-content-between')}>
                 <div className={cx('fast_content_left', 'd-flex flex-row text-capitalize align-items-center')}>
-                  fast{' '}
+                  fast
                   {radioSetting.fast && radioSetting.cod.fast ? (
-                    <div> [COD is enabled] </div>
-                  ) : !radioSetting.fast ? (
+                    <div>
+                      [<Translate>cod.enabled</Translate>]
+                    </div>
+                  ) : !radioSetting.express ? (
                     ''
-                  ) : !radioSetting.cod.fast ? (
-                    <div> [COD is disabled] </div>
+                  ) : !radioSetting.cod.express ? (
+                    <div>
+                      [<Translate>cod.disabled</Translate>]
+                    </div>
                   ) : (
                     ''
                   )}
@@ -349,11 +376,11 @@ export default function SettingShipping({ seller }) {
                 <Button className={cx('text-capitalize')} type="button" data-name="saving" small>
                   {btnSetting.saving ? (
                     <div className={cx('btn_toggle', 'd-flex flew-row align-items-center')}>
-                      Collapse <FontAwesomeIcon icon={faChevronDown} />
+                      <Translate>collapse</Translate> <FontAwesomeIcon icon={faChevronDown} />
                     </div>
                   ) : (
                     <div className={cx('btn_toggle', 'd-flex flew-row align-items-center')}>
-                      expand <FontAwesomeIcon icon={faChevronUp} />
+                      <Translate>expand</Translate> <FontAwesomeIcon icon={faChevronUp} />
                     </div>
                   )}
                 </Button>
@@ -362,11 +389,15 @@ export default function SettingShipping({ seller }) {
                 <div className={cx('saving_content_left', 'd-flex  flex-row text-capitalize align-items-center')}>
                   saving{' '}
                   {radioSetting.saving && radioSetting.cod.saving ? (
-                    <div> [COD is enabled] </div>
-                  ) : !radioSetting.saving ? (
+                    <div>
+                      [<Translate>cod.enabled</Translate>]
+                    </div>
+                  ) : !radioSetting.express ? (
                     ''
-                  ) : !radioSetting.cod.saving ? (
-                    <div> [COD is disabled] </div>
+                  ) : !radioSetting.cod.express ? (
+                    <div>
+                      [<Translate>cod.disabled</Translate>]
+                    </div>
                   ) : (
                     ''
                   )}
@@ -397,28 +428,32 @@ export default function SettingShipping({ seller }) {
             </div>
             <div id="heavy_things" className={cx('heavy_things', 'd-flex flex-column')}>
               <div className={cx('heavy_things_header', 'setting-title d-flex flex-row justify-content-between')}>
-                <div className={cx('title', 'text-capitalize')}>heavy_things</div>
+                <div className={cx('title', 'text-capitalize')}>heavy things</div>
                 <Button className={cx('text-capitalize')} type="button" data-name="heaving_things" small>
                   {btnSetting.heavy_things ? (
                     <div className={cx('btn_toggle', 'd-flex flew-row align-items-center')}>
-                      Collapse <FontAwesomeIcon icon={faChevronDown} />
+                      <Translate>collapse</Translate> <FontAwesomeIcon icon={faChevronDown} />
                     </div>
                   ) : (
                     <div className={cx('btn_toggle', 'd-flex flew-row align-items-center')}>
-                      expand <FontAwesomeIcon icon={faChevronUp} />
+                      <Translate>expand</Translate> <FontAwesomeIcon icon={faChevronUp} />
                     </div>
                   )}
                 </Button>
               </div>
               <div className={cx('heavy_things_content', 'flex-wrap flex-row justify-content-between')}>
                 <div className={cx('heavy_things_content_left', 'd-flex flex-row text-capitalize align-items-center')}>
-                  heavy things{' '}
+                  heavy things
                   {radioSetting.heavy_things && radioSetting.cod.heavy_things ? (
-                    <div> [COD is enabled] </div>
-                  ) : !radioSetting.heavy_things ? (
+                    <div>
+                      [<Translate>cod.enabled</Translate>]
+                    </div>
+                  ) : !radioSetting.express ? (
                     ''
-                  ) : !radioSetting.cod.heavy_things ? (
-                    <div> [COD is disabled] </div>
+                  ) : !radioSetting.cod.express ? (
+                    <div>
+                      [<Translate>cod.disabled</Translate>]
+                    </div>
                   ) : (
                     ''
                   )}
@@ -454,13 +489,13 @@ export default function SettingShipping({ seller }) {
       </div>
       <div className={cx('form_btn', 'd-flex flex-row justify-content-between')}>
         <Button type="button" outline small onClick={handleBackShopInfo}>
-          Back
+          <Translate>back</Translate>
         </Button>
         <Button type="button" primary small onClick={handleNextTaxInfo}>
-          Next
+          <Translate>next</Translate>
         </Button>
       </div>
-      <Dialog message={messageDialog} onClose={handleCloseDialog} open={dialog} />
+      <Dialog message={messageDialog} open={dialog} onCancel={handleConfirmDialog} onConfirm={handleConfirmDialog} />
     </form>
   );
 }

@@ -4,20 +4,25 @@ import * as languages from '~/locales/Translation.json';
 const Tranlates = (text) => {
   const { language } = useSelector((state) => state.Auth);
   const arrayText = text.split('.');
-  let lang = null;
-  if (Object.keys(languages).includes(language)) {
-    lang = languages[language];
-  } else {
-    return (lang = text);
+  let lang = languages[language];
+  if (!lang) {
+    return text;
   }
-  for (let i = 0; i < arrayText.length; i++) {
-    if (Object.keys(lang).includes(arrayText[i])) {
+  try {
+    for (let i = 0; i < arrayText.length; i++) {
+      if (lang[arrayText[i]] === undefined) {
+        return text;
+      }
       lang = lang[arrayText[i]];
-    } else {
-      return (lang = text);
     }
+    if (typeof lang === 'object') {
+      console.error('Expected a string but got an object:', lang);
+      return text;
+    }
+    return lang;
+  } catch (e) {
+    return text;
   }
-  return lang;
 };
 
 const Translate = ({ children }) => {

@@ -21,10 +21,18 @@ export default function Dialog({
   const handleConfirmDialog = (e) => {
     const { type } = e.currentTarget.dataset;
     if (type === 'no') {
-      onClose();
+      if (onCancel) {
+        onCancel(e);
+      } else {
+        onClose();
+      }
     } else {
-      onClose();
-      handleFunction();
+      if (onConfirm) {
+        onConfirm(e);
+      } else {
+        onClose();
+        handleFunction();
+      }
     }
   };
   return (
