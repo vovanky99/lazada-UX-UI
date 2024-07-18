@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('attributes_translation', function (Blueprint $table) {
             $table->string('name');
             $table->foreignId('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
-            $table->foreignId('language_id')->references('id')->on('language')->onDelete('cascade');
+            $table->foreignId('language_id')->references('id')->on('languages')->onDelete('cascade');
             $table->timestamps();
         });
     }

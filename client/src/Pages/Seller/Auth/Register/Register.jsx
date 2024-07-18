@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +14,10 @@ import { useNavigate } from 'react-router-dom';
 import Nominatim from '~/services/Nominatim';
 import GetLocation from '~/api/Location/GetLocation';
 import Store from '~/redux/Store';
+import { useSelector } from 'react-redux';
+import Country from '~/layout/Component/Country';
+import Translate from '~/layout/Component/Translate';
+import { useImmer } from 'use-immer';
 
 const cx = classNames.bind(styles);
 
@@ -21,18 +25,29 @@ export default function Register() {
   const emailRef = useRef();
   const phoneRef = useRef();
   const passwordRef = useRef();
+  const fullnameRef = useRef();
   const navigate = useNavigate();
+  const { country } = useSelector((state) => state.Auth);
   const [showPass, setShowPass] = useState(false);
-  const [areaCode, setAreaCode] = useState(84);
   const [disabled, setDisabled] = useState(true);
+  const validMessage = {
+    email_empty: Translate({ children: 'valid.email_empty' }),
+    email_not_valid: Translate({ children: 'valid.email_not_valid' }),
+    password_empty: Translate({ children: 'valid.password' }),
+    password_length: Translate({ children: 'valid.password_length' }),
+    phone_empty: Translate({ children: 'valid.phone_empty' }),
+    phone_not_valid: Translate({ children: 'valid.phone_not_valid' }),
+    fullname_empty: Translate({ children: 'valid.fullname' }),
+  };
   const [valid, setValid] = useState({});
-  const [seller, setSeller] = useState({
+  const [seller, setSeller] = useImmer({
     email: '',
     password: '',
     phone_number: '',
+    fullname: '',
   });
 
-  const areaCodeRegex = new RegExp(`\\+${areaCode}\\d+`, 'g');
+  const areaCodeRegex = new RegExp(`\\+${country?.international_codes}\\d+`, 'g');
 
   /* handle show hide pass */
   const handleShowHidePass = () => {
@@ -46,13 +61,13 @@ export default function Register() {
     }
   };
 
-  const validate = (field = seller) => {
+  const validate = async (field = seller) => {
     let errorMessage = { ...valid };
     if ('email' in field) {
       errorMessage.email = !field.email
-        ? 'please enter email!'
+        ? validMessage.email_empty
         : !field.email.match(/@gmail.com$/g)
-        ? 'email must be @gmail.com!'
+        ? validMessage.email_not_valid
         : '';
       if (errorMessage.email !== '') {
         emailRef.current.classList.add('border_danger');
@@ -62,10 +77,10 @@ export default function Register() {
     }
     if ('password' in field) {
       errorMessage.password = !field.password
-        ? 'please enter password!'
+        ? validMessage.password_empty
         : field.password.length >= 7
         ? ''
-        : `password can't short 7 character!`;
+        : validMessage.password_length;
       if (errorMessage.password !== '') {
         passwordRef.current.classList.add('border_danger');
       } else {
@@ -74,50 +89,51 @@ export default function Register() {
     }
     if ('phone_number' in field) {
       errorMessage.phone_number = !field.phone_number
-        ? 'please enter phone!'
+        ? validMessage.phone_empty
         : field.phone_number.match(areaCodeRegex) &&
           !field.phone_number.match(/[a-zA-Z$]/g) &&
           field.phone_number.length === 12
         ? ''
-        : 'phone number invalid!';
+        : validMessage.phone_not_valid;
       if (errorMessage.phone_number !== '') {
         phoneRef.current.classList.add('border_danger');
       } else {
         phoneRef.current.classList.remove('border_danger');
       }
     }
+    if ('fullname' in field) {
+      errorMessage.fullname = !field.fullname ? validMessage.fullname_empty : '';
+      if (errorMessage.fullname !== '') {
+        fullnameRef.current.classList.add('border_danger');
+      } else {
+        fullnameRef.current.classList.remove('border_danger');
+      }
+    }
     if (field === seller) {
-      Object.entries(errorMessage).map((x) => {
-        if (x[1] === '') {
-          delete errorMessage[x[0]];
+      Object.entries(errorMessage).map(([key, value]) => {
+        if (value === '') {
+          delete errorMessage[key];
         }
       });
     }
     setValid({ ...errorMessage });
+    return errorMessage;
   };
   const handleOnchange = (e) => {
     const { name, value } = e.target;
-    setSeller({
-      ...seller,
-      [name]: value,
+    setSeller((draft) => {
+      draft[name] = value;
     });
   };
   const handleSetPhone = (value) => {
-    setSeller({
-      ...seller,
-      phone_number: value,
+    setSeller((draft) => {
+      draft.phone_number = value;
     });
   };
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    validate();
-    if (
-      seller.email.match(/@gmail.com$/g) &&
-      seller.password.length >= 7 &&
-      seller.phone_number.match(areaCodeRegex) &&
-      !seller.phone_number.match(/[a-zA-Z$]/g) &&
-      seller.phone_number.length === 12
-    ) {
+    const val = await validate();
+    if (Object.keys(val).length === 0) {
       RegisterSeller(seller)
         .then((result) => {
           if (result.token) {
@@ -130,27 +146,9 @@ export default function Register() {
     }
   };
 
-  /* handle get area code */
+  /* disable button login when email, passowrd, phone_number, fullname is empty */
   useEffect(() => {
-    const GetAreaCode = () => {
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          Nominatim(position.coords.latitude, position.coords.longitude)
-            .then((result) => {
-              GetLocation('country', result.address.country)
-                .then((result) => {
-                  setAreaCode(result[0].international_codes);
-                })
-                .catch((e) => console.log(e));
-            })
-            .catch((e) => console.log(e));
-        });
-      }
-    };
-    GetAreaCode();
-  }, []);
-  useEffect(() => {
-    if (seller.email && seller.password && seller.phone_number) {
+    if (seller.email && seller.password && seller.phone_number && seller.fullname) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -165,58 +163,74 @@ export default function Register() {
     }
   }, []);
   return (
-    <div id="main" className={cx('seller_register', 'd-flex justify-content-center align-items-center')}>
-      <div className={cx('seller_register_container', 'd-flex flex-column')}>
-        <h3 className="text-capitalize text-center">Register</h3>
-        <form className={cx('form_register', 'd-flex flex-column')} onSubmit={handleRegister} noValidate>
-          <div className={cx('email')}>
-            <FormSearch ref={emailRef} title="email" name="email" useTippy={false} handleOnchange={handleOnchange} />
-            <MessageText className={cx('text-capitalize text-danger')} message={valid?.email} />
-          </div>
-          <div className={cx('password')}>
-            <FormSearch
-              ref={passwordRef}
-              title="password"
-              name="password"
-              inputType="password"
-              useTippy={false}
-              handleOnchange={handleOnchange}
-            >
-              <div className={cx('show-hide-password')}>
-                {showPass ? (
-                  <FontAwesomeIcon className="show-hide" icon={faEye} onClick={handleShowHidePass} />
-                ) : (
-                  <FontAwesomeIcon className="show-hide" icon={faEyeSlash} onClick={handleShowHidePass} />
-                )}
-              </div>
-            </FormSearch>
-            <MessageText className={cx('text-capitalize text-danger')} message={valid?.password} />
-          </div>
-          <div className={cx('phone_number')}>
-            <FormSearch
-              ref={phoneRef}
-              title="phone number"
-              name="phone_number"
-              areaCode={areaCode}
-              value={seller.phone_number}
-              useTippy={false}
-              searchValue={handleSetPhone}
-            />
-            <MessageText className={cx('text-capitalize text-danger')} message={valid?.phone_number} />
-          </div>
-          <div className={cx('btn_register')}>
-            <Button type="submit" disabled={disabled}>
-              Register
-            </Button>
-          </div>
-          <div className={cx('text-center')}>
-            New to Shopee?
-            <Button transparent to={config.ShopSeller.SignIn}>
-              Sign In
-            </Button>
-          </div>
-        </form>
+    <Country>
+      <div id="main" className={cx('seller_register', 'd-flex justify-content-center align-items-center')}>
+        <div className={cx('seller_register_container', 'd-flex flex-column')}>
+          <h3 className="text-capitalize text-center">
+            <strong>
+              <Translate>register</Translate>
+            </strong>
+          </h3>
+          <form className={cx('form_register', 'd-flex flex-column')} onSubmit={handleRegister} noValidate>
+            <div className={cx('fullname')}>
+              <FormSearch
+                ref={fullnameRef}
+                title="full_name"
+                name="fullname"
+                useTippy={false}
+                handleOnchange={handleOnchange}
+              />
+              <MessageText className={cx('text-capitalize text-danger')} message={valid?.email} />
+            </div>
+            <div className={cx('email')}>
+              <FormSearch ref={emailRef} title="email" name="email" useTippy={false} handleOnchange={handleOnchange} />
+              <MessageText className={cx('text-capitalize text-danger')} message={valid?.email} />
+            </div>
+            <div className={cx('password')}>
+              <FormSearch
+                ref={passwordRef}
+                title="password"
+                name="password"
+                inputType="password"
+                useTippy={false}
+                handleOnchange={handleOnchange}
+              >
+                <div className={cx('show-hide-password')}>
+                  {showPass ? (
+                    <FontAwesomeIcon className="show-hide" icon={faEye} onClick={handleShowHidePass} />
+                  ) : (
+                    <FontAwesomeIcon className="show-hide" icon={faEyeSlash} onClick={handleShowHidePass} />
+                  )}
+                </div>
+              </FormSearch>
+              <MessageText className={cx('text-capitalize text-danger')} message={valid?.password} />
+            </div>
+            <div className={cx('phone_number')}>
+              <FormSearch
+                ref={phoneRef}
+                title="phone_number"
+                name="phone_number"
+                areaCode={country?.international_codes}
+                value={seller.phone_number}
+                useTippy={false}
+                searchValue={handleSetPhone}
+              />
+              <MessageText className={cx('text-capitalize text-danger')} message={valid?.phone_number} />
+            </div>
+            <div className={cx('btn_register')}>
+              <Button type="submit" disabled={disabled}>
+                <Translate>register</Translate>
+              </Button>
+            </div>
+            <div className={cx('btn_register_sub', 'text-center')}>
+              <Translate>register_note</Translate>
+              <Button transparent to={config.ShopSeller.SignIn}>
+                <Translate>sign_in</Translate>
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </Country>
   );
 }

@@ -6,6 +6,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import Translate from '../Translate';
+import IsFunctionEmpty from '~/services/IsFunctionEmpty/IsFunctionEmpty';
 
 const cx = classNames.bind(styles);
 
@@ -20,6 +21,7 @@ export default function Dialog({
 }) {
   const handleConfirmDialog = (e) => {
     const { type } = e.currentTarget.dataset;
+    console.log(IsFunctionEmpty(handleFunction()));
     if (type === 'no') {
       if (onCancel) {
         onCancel(e);

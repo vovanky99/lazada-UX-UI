@@ -7,6 +7,7 @@ import { SendEmailResetPasswordSeller } from '~/api/Auth/AuthSeller';
 import { useNavigate } from 'react-router-dom';
 import config from '~/config';
 import { FormSearch } from '~/layout/Component/FormSearch';
+import Translate from '~/layout/Component/Translate';
 
 const cx = classNames.bind(styles);
 
@@ -25,7 +26,6 @@ export default function LinkResetPassword() {
       [name]: value,
     });
   };
-  console.log(resetSeller);
 
   const validate = () => {
     if (!resetSeller.email.match(/@gmail.com$/g) || !resetSeller.email) {
@@ -68,7 +68,9 @@ export default function LinkResetPassword() {
         className={cx('seller_Link_reset_password', 'd-flex flex-row align-items-center justify-content-center')}
       >
         <div className={cx('seller_Link_reset_password_content', 'd-flex flex-column justify-content-center')}>
-          <h3 className="text-center text-capitalize">Reset Password</h3>
+          <h3 className="text-center text-capitalize">
+            <Translate>reset_password</Translate>
+          </h3>
           <form className={cx('seller_reset_form', 'd-flex flex-column')} onSubmit={handleSendEmail} noValidate>
             <FormSearch
               ref={emailRef}
@@ -80,14 +82,16 @@ export default function LinkResetPassword() {
             />
             <div className={cx('text-center')}>
               <Button className={cx('text-capitalize')} primary disabled={disabled}>
-                send Link
+                <Translate>send_link</Translate>
               </Button>
             </div>
           </form>
           <div className={cx('seller_back_login', 'text-center text-capitalize')}>
-            if you don't want reset password can back
+            <Translate>link_reset_note</Translate>
             <Button to={config.ShopSeller.SignIn} transparent>
-              <strong> Login</strong>
+              <strong>
+                <Translate>sign_in</Translate>
+              </strong>
             </Button>
           </div>
         </div>

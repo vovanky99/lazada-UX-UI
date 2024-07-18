@@ -140,9 +140,7 @@ export const FormSearch = forwardRef(function FormSearch(
             {Translate({ children: title })}
             {useForgetPassword ? (
               <Button to={forgetLink} className={cx('p-0')} transparent tabIndex="-1">
-                <strong className="text-capitalize">
-                  <Translate>forget_password</Translate>
-                </strong>
+                <Translate>forget_password</Translate>
               </Button>
             ) : (
               ''

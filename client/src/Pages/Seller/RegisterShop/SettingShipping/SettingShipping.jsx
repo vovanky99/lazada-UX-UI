@@ -19,7 +19,7 @@ export default function SettingShipping({ seller }) {
   const [resolvePromise, setResolvePromise] = useState(null);
   const setting = seller?.shop?.shop_shipping_methods;
   const [btnSetting, setBtnSetting] = useImmer(() => {
-    if (setting.length !== 0) {
+    if (setting?.length !== 0 && typeof setting !== 'undefined') {
       const object = {};
       setting.map((dt) => {
         object[dt?.shipping_method.name] = dt?.status ? true : false;
@@ -35,7 +35,7 @@ export default function SettingShipping({ seller }) {
     }
   });
   const [radioSetting, setRadioSetting] = useImmer(() => {
-    if (setting.length !== 0) {
+    if (setting?.length !== 0 && typeof setting !== 'undefined') {
       const object = { cod: {} };
       setting.map((dt) => {
         object[dt?.shipping_method?.name] = dt?.status ? true : false;

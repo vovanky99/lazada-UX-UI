@@ -22,11 +22,10 @@
     justify-content: space-between;
     a {
       color: var(--black);
-      font-size: 1.4rem;
-      strong {
-        &:hover {
-          text-decoration: underline;
-        }
+      font-size: 1.3rem;
+      text-transform: initial;
+      &:hover {
+        text-decoration: underline !important;
       }
     }
   }

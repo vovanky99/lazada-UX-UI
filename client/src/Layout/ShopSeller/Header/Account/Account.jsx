@@ -24,10 +24,9 @@ import Translate from '~/layout/Component/Translate';
 
 const cx = classNames.bind(styles);
 
-export default function Account({ isRegisterShop }) {
+export default function Account({ isRegisterShop, seller }) {
   const navigate = useNavigate();
   const accountRef = useRef();
-  const { seller, sellerAuthenticated, language } = useSelector((state) => state.Auth);
   const [account, setAccount] = useState(false);
   const [changeLanguage, setChangeLanguage] = useState(false);
   const [dialog, setDialog] = useState(false);
@@ -126,7 +125,7 @@ export default function Account({ isRegisterShop }) {
                       alt={seller?.avatar || require('~/assets/images/avatar/no-avatar.jpg')}
                     />
                   </div>
-                  <div className={cx('seller_fullname', 'text-center')}>{seller.name || 'No Name'}</div>
+                  <div className={cx('seller_fullname', 'text-center')}>{seller?.fullname}</div>
                 </div>
                 {!isRegisterShop && (
                   <div className={cx('account_middle', 'd-flex flex-column alig-items-start text-capitalize')}>
@@ -197,7 +196,7 @@ export default function Account({ isRegisterShop }) {
                 alt={seller?.avatar || require('~/assets/images/avatar/no-avatar.jpg')}
               />
             </div>
-            <div className={cx('seller_fullname')}>{seller.name || 'No Name'}</div>
+            <div className={cx('seller_fullname')}>{seller?.fullname}</div>
             <div className={cx('icon')}>
               <FontAwesomeIcon icon={faChevronDown} />
               <FontAwesomeIcon icon={faChevronUp} />

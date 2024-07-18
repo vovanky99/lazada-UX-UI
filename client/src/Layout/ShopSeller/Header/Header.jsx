@@ -33,7 +33,7 @@ export default function Header({ title, isRegisterShop = false }) {
               <div className={cx('action_splitter')}></div>
             </Fragment>
           )}
-          <Account isRegisterShop={isRegisterShop} />
+          <Account seller={seller} isRegisterShop={isRegisterShop} />
         </div>
       </header>
     </>

@@ -39,6 +39,7 @@ class SellerAuthController extends Controller{
                 'email'=>$request->email,
                 'phone_number'=>$request->phone_number,
                 'password'=>Hash::make($request->password),
+                'fullname'=>$request->fullname,
             ]);
             event(new Registered($seller));
             $credentials = $request->only('email','password');

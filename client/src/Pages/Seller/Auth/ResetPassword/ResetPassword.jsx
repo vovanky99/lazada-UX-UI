@@ -10,6 +10,8 @@ import { FormSearch } from '~/layout/Component/FormSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import MessageText from '~/layout/Component/Message/MessageText';
+import Translate from '~/layout/Component/Translate';
+import Country from '~/layout/Component/Country';
 
 const cx = classNames.bind(styles);
 
@@ -21,6 +23,12 @@ export default function ResetPassword() {
   const [showPass, setShowPass] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const validMessage = {
+    password: Translate({ children: 'valid.password' }),
+    password_length: Translate({ children: 'valid.password_length' }),
+    password_confirm: Translate({ children: 'valid.password_confirm' }),
+    password_confirm_length: Translate({ children: 'valid.password_confirm_length' }),
+  };
   const [valid, setValid] = useState({});
   const [resetSeller, setResetSeller] = useState({
     email: searchParam.get('email'),
@@ -55,33 +63,41 @@ export default function ResetPassword() {
     });
   };
 
-  const validate = (field = resetSeller) => {
+  const validate = async (field = resetSeller) => {
     let errorMessage = { ...valid };
     if ('password' in field) {
       errorMessage.password = field.password
-        ? 'please enter password!'
+        ? validMessage.password
         : field.password.length < 8
-        ? "password can't short 8 character"
+        ? validMessage.password_length
         : '';
     }
     if ('password_confirmation' in field) {
       errorMessage.password_confirmation = field.password_confirmation
-        ? 'please enter password confirm!'
+        ? validMessage.password_confirm
         : field.password_confirmation !== field.password
-        ? "password confirm don't correct with password!"
+        ? validMessage.password_confirm_length
         : '';
     }
+    if (field === resetSeller) {
+      Object.entries(errorMessage).map(([key, value]) => {
+        if (value === '') {
+          delete errorMessage[key];
+        }
+      });
+    }
+    setValid({ ...errorMessage });
+    return errorMessage;
   };
-  const handleSendEmail = (e) => {
+  const handleSendEmail = async (e) => {
     e.preventDefault();
-    validate();
+    const val = await validate();
     if (
       resetSeller.password &&
       resetSeller.password_confirmation &&
       resetSeller.email &&
       resetSeller.token &&
-      !valid?.password &&
-      !valid?.password_confirmation
+      Object.keys(val).length === 0
     ) {
       ResetPasswordSeller(resetSeller)
         .then((result) => {})
@@ -107,10 +123,12 @@ export default function ResetPassword() {
   }, []);
 
   return (
-    <Fragment>
+    <Country>
       <div id="main" className={cx('seller_reset_email', 'd-flex flex-row align-items-center justify-content-center')}>
         <div className={cx('seller_reset_email_content', 'd-flex flex-column justify-content-center')}>
-          <h3 className="text-center text-capitalize">Reset Password</h3>
+          <h3 className="text-center text-capitalize">
+            <Translate>reset_password</Translate>
+          </h3>
           <form className={cx('seller_reset_form', 'd-flex flex-column')} onSubmit={handleSendEmail} noValidate>
             <div className={cx('seller_input_group', 'd-flex flex-column')}>
               <div className={cx('password')}>
@@ -135,7 +153,7 @@ export default function ResetPassword() {
               <div className={cx('password')}>
                 <FormSearch
                   ref={passwordConfirmRef}
-                  title="password confirm"
+                  title="password_confirm"
                   name="password_confirmation"
                   inputType="password"
                   useTippy={false}
@@ -157,12 +175,12 @@ export default function ResetPassword() {
             </div>
             <div className={cx('text-center')}>
               <Button className={cx('text-capitalize')} primary disabled={disabled}>
-                reset password
+                <Translate>reset_password</Translate>
               </Button>
             </div>
           </form>
         </div>
       </div>
-    </Fragment>
+    </Country>
   );
 }

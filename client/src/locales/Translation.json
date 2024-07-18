@@ -20,7 +20,14 @@
     "address_detail": "địa chỉ chi tiết",
     "full_name": "họ tên",
     "name_shop": "tên shop",
-    "forgot_passowrd": "quên mật khẩu?",
+    "sign_in": "đăng nhập",
+    "password": "mật khẩu",
+    "password_confirm": "xác nhận mật khẩu",
+    "verify_email": "Xác Nhận Email",
+    "register": "đăng ký",
+    "register_note": "Có một tài khoản?",
+    "sign_in_note": "Bạn mới sử dụng Shopee?",
+    "forget_password": "Quên mật khẩu?",
     "pickup_address": "Chọn địa chỉ",
     "collapse": "đóng lại",
     "expand": "mở ra",
@@ -31,16 +38,35 @@
     "citizen_identification_card": "Thẻ căn cước công dân",
     "id_card": "CMND",
     "passport": "Hộ chiếu",
+    "image_scale_1_1": "Hình ảnh tỷ lệ 1:1",
+    "image_scale_3_4": "Hình ảnh tỷ lệ 3:4",
+    "send_link": "gửi liên kết",
+    "link_reset_note": "nếu bạn không muốn đặt lại mật khẩu có thể quay lại",
+    "verify_notification": {
+      "one_line": "Một liên kết xác minh mới đã được gửi đến địa chỉ email của bạn.",
+      "two_line": "Trước khi tiếp tục, vui lòng kiểm tra email của bạn để lấy liên kết xác minh.",
+      "three_line": "nếu bạn không nhận được email"
+    },
+    "resend_email": "Gửi lại email",
     "cod": {
       "enabled": "COD đã kích hoạt",
       "disabled": "COD đã vô hiệu hóa"
     },
     "valid": {
       "name_shop": "Vui lòng nhập tên shop!",
-      "fullname": "Vui lòng nhập tên đầy đủ!",
+      "email_empty": "Vui lòng nhập email!",
+      "email_not_valid": "Email phải có đuôi @gmail.com!",
+      "password": "Vui lòng nhập mật khẩu!",
+      "password_confirm": "Vui lòng nhập mật khẩu xác nhận!",
+      "password_confirm_length": "Xác nhận mật khẩu không đúng với mật khẩu!",
+      "password_length": "Mật khẩu không thể ngắn hơn 7 ký tự!",
+      "login_error": "Email hoặc mật khẩu không đúng!",
+      "phone_empty": "Vui lòng nhập số điện thoại!",
+      "phone_not_valid": "Số điện thoại không hợp lệ!",
+      "fullname": "Vui lòng nhập họ tên!",
       "phone_number": "Số điện thoại không chính xác",
       "address": "Vui lòng nhập địa chỉ!",
-      "ward": "Vui lòng chọn phường"
+      "ward": "Vui lòng chọn phường!"
     },
     "component": {
       "form_text": "Vui lòng nhập "
@@ -151,6 +177,25 @@
         "photo_hold_note": "Vui lòng cung cấp ảnh bạn cầm CMND/CCCD/Hộ chiếu làm ảnh mẫu. Các thông tin trong CMND/CCCD/Hộ chiếu và ảnh phải được hiển thị rõ ràng (Kích thước ảnh không quá 5,0 MB)",
         "policy_note": "Tôi xác nhận tất cả dữ liệu được cung cấp là chính xác và trung thực. Tôi đã đọc và đồng ý với Chính sách quyền riêng tư của Shopify."
       },
+      "add_product": {
+        "add_image": "Thêm hình ảnh",
+        "basic_info": "Thông tin cơ bản",
+        "sales_info": "Thông tin bán hàng",
+        "transport": "Vận chuyển",
+        "note": "Có thể điều chỉnh sau khi chọn ngành hàng",
+        "other_info": "Thông tin khác",
+        "product_image": {
+          "title": "Hình ảnh sản phẩm"
+        },
+        "suggest": {
+          "title": "Gợi ý điền Thông tin",
+          "add_image": "Thêm ít nhất 3 hình ảnh",
+          "add_video": "Thêm video sản phẩm",
+          "product_title": "Tên sản phẩm có ít nhất 25~100 kí tự",
+          "descriptions": "Thêm ít nhất 100 kí tự hoặc 1 hình ảnh trong mô tả sản phẩm",
+          "add_brand": "Thêm thương hiệu"
+        }
+      },
       "home": {
         "todo_list": "Danh sách cần làm",
         "note": "Những việc bạn sẽ phải làm"
@@ -162,10 +207,25 @@
     "login": "login",
     "logout": "logout",
     "register": "Register",
-    "reset_passowrd": "Reset Password",
+    "password": "Password",
+    "sign_in": "sign in",
+    "verify_email": "Verify Email",
+    "send_link": "send link",
+    "link_reset_note": " if you don't want reset password can back",
+    "verify_notification": {
+      "one_line": "A fresh verification link has been sent to your email address.",
+      "two_line": "Before proceeding, please check your email for a verification link.",
+      "three_line": "If you did not receive the email"
+    },
+    "resend_email": "resend email",
+    "register_note": "Have an account?",
+    "sign_in_note": "New to Shopee?",
+    "forget_password": "forget password",
+    "reset_password": "Reset Password",
     "change_password": "Change Password",
     "seller_centre": "Seller Centre",
     "register_shop_title": "Register to become a LifeShop Seller",
+    "password_confirm": "password confirm",
     "profile": "Profile",
     "shop_info": "shop info",
     "completed": "completed",
@@ -193,13 +253,24 @@
     "citizen_identification_card": "Citizen identification card",
     "id_card": "ID Card",
     "passport": "Passport",
+    "image_scale_1_1": "1:1 scale image",
+    "image_scale_3_4": "3:4 scale image",
     "cod": {
       "enabled": "COD is enabled",
       "disabled": "COD is disabled"
     },
     "valid": {
       "name_shop": "Please enter name shop!",
-      "fullname": "Please enter full name!",
+      "fullname": "Please enter fullname!",
+      "email_empty": "Please enter email!",
+      "email_not_valid": "Email must have be @gmail.com!",
+      "pasoword": "Please enter password!",
+      "password_length": "Password cannot be shorter than 7 characters!",
+      "password_confirm": "Please enter password confirm!",
+      "password_confirm_length": "Password confirm don't correct with password!",
+      "login_error": "Email or password don't correct!",
+      "phone_empty": "Please enter the phone number!",
+      "phone_not_valid": "Phone number invalid!",
       "phone_number": "Phone valid don't valid!",
       "address": "Please enter address!",
       "ward": "Please select ward!"
@@ -306,12 +377,30 @@
         "email_receive_electronic_invoice": "email receive electronic invoice",
         "tax_code": "tax code",
         "form_of_identification": "Form of identification",
-
         "fullname_note": "According to ID card/CCCD/Passport",
         "photo_of_id": "Photo of ID card/CCCD/passport",
         "photo_note": "Please provide a close-up photo of your ID card/CCCD/Passport Information in ID card/CCCD/Passport must be clearly displayed (Photo size must not exceed 5.0 MB)",
         "photo_hold_note": "Please provide a photo of you holding your ID card/CCCD/Passport as a sample photo. The information in your ID card/CCCD/Passport and photos must be clearly displayed (Photo size must not exceed 5.0 MB)",
         "policy_note": "I confirm all data provided is accurate and truthful. I have read and agree to Shopee's Privacy Policy."
+      },
+      "add_product": {
+        "add_image": "add images",
+        "baisc_info": "Basic information",
+        "sales_info": "Sales information",
+        "transport": "Transport",
+        "note": "Can be adjusted after selecting a product line",
+        "other_info": "other information",
+        "product_image": {
+          "title": "product images"
+        },
+        "suggest": {
+          "title": "Suggestions for filling out Information",
+          "add_image": "Add at least 3 images",
+          "add_video": "Add product videos",
+          "product_title": "Product name must be at least 25~100 characters",
+          "descriptions": "Add at least 100 characters or 1 image in the product description",
+          "add_brand": "Add brand"
+        }
       },
       "home": {
         "todo_list": "Todo List",

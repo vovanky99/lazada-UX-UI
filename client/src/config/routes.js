@@ -97,7 +97,6 @@ export const ShopSeller = {
   ManagementReturnRefund: '/seller/shop/sale/return',
 
   /* product */
-  // Product: '/seller/shop/product/new',
   NewProduct: '/seller/shop/product/new',
   AllProduct: '/seller/shop/product/all-product',
 

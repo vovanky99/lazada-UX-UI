@@ -13,6 +13,7 @@ const Button = forwardRef(function Button(
     children,
     onClick,
     className,
+    full_width = false,
     transparent = false,
     rounded = false,
     primary = false,
@@ -60,6 +61,7 @@ const Button = forwardRef(function Button(
     text,
     disabled,
     rounded,
+    full_width,
     [className]: className,
   });
   return (

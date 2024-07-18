@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import config from '~/config';
 import { getSeller, setSession } from '~/redux/Actions/Auth';
-import { GetCountry } from '~/redux/Actions/General';
 import Store from '~/redux/Store';
 import LocalStorageService from '~/services/LocalStorageService/index';
+import { getCountry } from '../Country/Country';
 
 export default function Seller({ children }) {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export default function Seller({ children }) {
 
   /* handle get seller */
   useEffect(() => {
-    Store.dispatch(GetCountry());
+    getCountry();
     const token = LocalStorageService.getItem('sellerToken');
     if (token) {
       Store.dispatch(setSession(token, 'sellerToken'));
