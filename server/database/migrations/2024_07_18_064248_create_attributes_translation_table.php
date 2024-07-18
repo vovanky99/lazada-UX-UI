@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attributes', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('cat_id')->nullable()->references('id')->on('categories')->onDelete('cascade');
+        Schema::create('attributes_translation', function (Blueprint $table) {
+            $table->string('name');
+            $table->foreignId('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
+            $table->foreignId('language_id')->references('id')->on('language')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attributes');
+        Schema::dropIfExists('attributes_translation');
     }
 };

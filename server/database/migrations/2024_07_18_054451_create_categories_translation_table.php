@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('country', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->index();
-            $table->double('international_codes');
-            $table->string('acronym',10);
+        Schema::create('categories_translation', function (Blueprint $table) {
+            $table->string('name',50)->index();
+            $table->string('slug');
+            $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreignId('language_id')->references('id')->on('languages')->onDelete('cascade');
             $table->timestamps();
         });
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('country');
+        Schema::dropIfExists('categories_translation');
     }
 };

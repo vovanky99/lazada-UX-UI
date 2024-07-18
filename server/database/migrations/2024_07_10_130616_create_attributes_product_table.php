@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('value')->nullable();
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreignId('attributes_detail_id')->nullable()->references('id')->on('attributes_detail')->onDelete('cascade');
+            $table->foreignId('attribute_detail_id')->nullable()->references('id')->on('attributes_detail')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('country', function (Blueprint $table) {
-            $table->id();
+        Schema::create('attributes_detail_translation', function (Blueprint $table) {
             $table->string('name')->index();
-            $table->double('international_codes');
-            $table->string('acronym',10);
-            $table->foreignId('language_id')->references('id')->on('languages')->onDelete('cascade');
+            $table->foreignId('attribute_detail_id')->references('id')->on('attributes_detail')->onDelete('cascade');
+            $table->foreignId('language_id')->references('id')->on('language')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('country');
+        Schema::dropIfExists('attributes_detail_translation');
     }
 };

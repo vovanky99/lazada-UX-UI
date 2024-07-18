@@ -9,12 +9,15 @@ class AttributesDetail extends Model
 {
     public $table = 'attributes_detail';
     protected $fillable =[
-        'name','attributes_detail_id'
+        'attribute_id'
     ];
     public function attribute(){
-        return $this->belongsTo(Attributes::class,'attributes_id');
+        return $this->belongsTo(Attributes::class,'attribute_id');
     }
     public function attributes_product(){
-        return $this->belongsTo(AttributesProduct::class,'attributes_detail_id');
+        return $this->hasMany(AttributesProduct::class,'attributes_detail_id');
+    }
+    public function attribute_detail_translation(){
+        return $this->hasMany(AttributesDetailTranslation::class,'attribute_detail_id');
     }
 }

@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('attributes_detail', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->index();
-            $table->foreignId('attributes_id')->nullable()->references('id')->on('attributes')->onDelete('cascade');
+            $table->foreignId('attribute_id')->nullable()->references('id')->on('attributes')->onDelete('cascade');
             $table->timestamps();
         });
     }
