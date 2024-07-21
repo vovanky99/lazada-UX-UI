@@ -1,4 +1,4 @@
-import { CHANGE_LANGUAGE, GET_COUNTRY } from '../Types';
+import { CHANGE_LANGUAGE, GET_COUNTRY, SIGNATURE_CLOUDINARY } from '../Types';
 import Nominatim from '~/services/Nominatim';
 import GetLocation from '~/api/Location/GetLocation';
 
@@ -33,6 +33,15 @@ export const ChangeLanguage = (value) => {
   return async (dispatch) => {
     dispatch({
       type: CHANGE_LANGUAGE,
+      payload: value,
+    });
+  };
+};
+
+export const GetSignatureCloudinary = (value) => {
+  return async (dispatch) => {
+    dispatch({
+      type: SIGNATURE_CLOUDINARY,
       payload: value,
     });
   };

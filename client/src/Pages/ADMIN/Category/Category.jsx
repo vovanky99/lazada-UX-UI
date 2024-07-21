@@ -8,21 +8,31 @@ import ElementCat from './ElementCat';
 import { CreateData, GetData } from '~/api/General/HandleData';
 import Category from '~/layout/Component/Category';
 import AddCat from '~/pages/ADMIN/Category/AddCat/';
+import { useImmer } from 'use-immer';
+import Button from '~/components/Button';
+import Translate from '~/layout/Component/Translate';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
 export default function AllCategory() {
+  const { language, signatureCloudinary } = useSelector((state) => state.Auth);
   const [dataTable, setDataTable] = useState(null);
   const [reloadData, setReloadData] = useState(1);
-
+  const [addCat, setAddCat] = useState(false);
   // state for filter
-  const [filterCat, setFilterCat] = useState({
+  const [filterCat, setFilterCat] = useImmer({
     name: '',
     status: '',
     parent_id: '',
   });
   const [deleteSuccess, setDeleteSuccess] = useState(1);
-
+  const handleClickAddCat = () => {
+    setAddCat(true);
+  };
+  const handleClose = () => {
+    setAddCat(false);
+  };
   const handleReloadData = (value) => {
     setReloadData(reloadData + value);
   };
@@ -31,30 +41,27 @@ export default function AllCategory() {
   };
 
   const setNameFilter = (value) => {
-    setFilterCat({
-      ...filterCat,
-      name: value,
+    setFilterCat((draft) => {
+      draft.name = value;
     });
   };
 
   const handleSetParentCat = (e) => {
     const { id, name } = e.target.dataset;
-    setFilterCat({
-      ...filterCat,
-      [name]: id,
+    setFilterCat((draft) => {
+      draft[name] = id;
     });
   };
 
   const handleSetStatus = (value) => {
-    setFilterCat({
-      ...filterCat,
-      status: value,
+    setFilterCat((draft) => {
+      draft.status = value;
     });
   };
 
   /* get all for Data table */
   useEffect(() => {
-    GetData('admin', 'category', filterCat)
+    GetData('admin', 'category', filterCat, 'all')
       .then((result) => {
         setDataTable(result);
       })
@@ -63,31 +70,50 @@ export default function AllCategory() {
   return (
     <>
       <WrapperMain
-        title="All Category"
+        title="all_category"
         BtnAddRender={
           <>
-            <AddCat handleReload={handleReloadData} />
+            <Button className={cx('btn_add_cat', 'text-capitalize')} small onClick={handleClickAddCat} gradient_primary>
+              <Translate>add_category</Translate>
+            </Button>
           </>
         }
       >
         <div className={cx('filter_data')}>
           <h4 className="text-capitalize">
-            <b>filter Data</b>
+            <b>
+              <Translate>filter_data</Translate>
+            </b>
           </h4>
           <div className={cx('filter_content', 'd-flex flex-row flex-wrap')}>
-            <FormSearch title="name" useTippy={false} searchValue={setNameFilter} />
+            <FormSearch title="name" useTippy={false} useColumn searchValue={setNameFilter} />
             <FormSelect title="status" useStatus={true} handleSetValue={handleSetStatus} />
-            <Category title="parent" titleClass="parent-id" name="parent_id" handleOnclick={handleSetParentCat} />
+            <Category
+              title="cat_parent"
+              classTitle="parent-id"
+              name="parent_id"
+              language={language}
+              useColumn={true}
+              handleOnclick={handleSetParentCat}
+            />
           </div>
         </div>
         <div className={cx('data_table')}>
           <table>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>parent</th>
-                <th>status</th>
-                <th>tolls</th>
+                <th>
+                  <Translate>name</Translate>
+                </th>
+                <th>
+                  <Translate>cat_parent</Translate>
+                </th>
+                <th>
+                  <Translate>status</Translate>
+                </th>
+                <th>
+                  <Translate>tolls</Translate>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -97,6 +123,7 @@ export default function AllCategory() {
             </tbody>
           </table>
         </div>
+        {addCat ? <AddCat handleReload={handleReloadData} handleClose={handleClose} language={language} /> : ''}
       </WrapperMain>
     </>
   );

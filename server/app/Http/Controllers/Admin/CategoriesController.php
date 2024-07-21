@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Models\Categories;
+use App\Models\Languages;
 use Exception;
 
 class CategoriesController extends Controller
@@ -14,10 +15,16 @@ class CategoriesController extends Controller
 
     /* create category */
     public function store(Request $request){
-        $name = $request->name;
+        $name_vi = $request->name_vi;
+        $name_en = $request->name_en;
         $parent_id = $request->parent_id;
-        $slug = Str::slug($name);
-        $checkTitle = Categories::where('name',$name)->first();
+        $slug_vi = Str::slug($name_vi);
+        $slug_en = Str::slug($name_en);
+        $type = $request->type;
+
+        $checkTitle = Categories::with(['categories_translation'=>function($query) use( $name_en,$name_vi){
+            $query->where('name',$name_vi)->orWhere('name',$name_en);
+        }])->first();
         if(!$checkTitle){
             if($parent_id){
                 $parent = Categories::find($parent_id);
@@ -41,16 +48,22 @@ class CategoriesController extends Controller
                         $cat->save();
                     }
                 }
-
-
-                // create cat
-                Categories::create([
-                    'name'=>$name,
-                    'slug'=>$slug,
+                
+                $category = Categories::create([
                     '_lft'=> $parent->_lft +1,
                     '_rgt'=> $parent->_lft +2,
+                    'type'=>$type,
                     'parent_id'=>$parent_id,
                 ]);
+                $category->categories_translation()->createMany([[
+                    'name'=>$name_vi,
+                    'slug'=>$slug_vi,
+                    'language_id'=>1,
+                ],[
+                    'name'=>$name_en,
+                    'slug'=>$slug_en,
+                    'language_id'=>2,
+                ]]);
             }
             else{
                 $parent = Categories::orderBy('_rgt','DESC')->first();
@@ -60,13 +73,20 @@ class CategoriesController extends Controller
                 else{
                     $_rgt = 0;
                 }
-                // create cat
-                Categories::create([
-                    'name'=>$name,
-                    'slug'=>$slug,
+                $category = Categories::create([
                     '_lft'=>$_rgt+1,
                     '_rgt'=>$_rgt+2,
+                    'type'=>$type,
                 ]);
+                $category->categories_translation()->createMany([[
+                    'name'=>$name_vi,
+                    'slug'=>$slug_vi,
+                    'language_id'=>1,
+                ],[
+                    'name'=>$name_en,
+                    'slug'=>$slug_en,
+                    'language_id'=>2,
+                ]]);
             }
             return response()->json(['success'=>'created success!']);
         } 
@@ -84,6 +104,7 @@ class CategoriesController extends Controller
         $cat = Categories::find($id);
         if(count($checkTitle)<=1 ){
             if($cat->parent_id == $parent_id){
+                $cat->
                 $cat->update([
                     'name'=>$name,
                     'slug'=>$slug,
@@ -198,11 +219,19 @@ class CategoriesController extends Controller
     }
 
     /* get category */
-    public function index(Request $request){
+    public function index(Request $request,$language){
         $name = $request->get('name');
         $parent_id = $request->get('parent_id');
         $status = $request->get('status');
-        $cat = DB::table('categories')->select('categories.*','cat.name as cat_name')->leftJoin('categories as cat','cat.id','=','categories.parent_id')->where('categories.name','like',$name.'%');
+        $cat = DB::table('categories')->join('categories_translation','categories_translation.category_id','=','categories.id')->join('languages','categories_translation.language_id','=','languages.id')->leftJoin('categories as cat_parent','cat_parent.id','=','categories.parent_id')->where('categories_translation.name','like',$name.'%');
+        if($language != 'all'){
+            $lang = Languages::where('acronym',$language)->first();
+            $cat->select('categories.*','cat_parent.*','categories_translation.*')->where('categories_translation.language_id',$lang->id);
+        }
+        else{
+            
+        }
+       
         if($parent_id){
             $cat->where('categories.parent_id',$parent_id);
         }

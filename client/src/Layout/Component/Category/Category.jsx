@@ -8,6 +8,7 @@ const Category = forwardRef(function Category(
     classTitle,
     ValueID,
     foreignID,
+    useColumn = false,
     SearchValue,
     useLabel = true,
     handleSetID = () => {},
@@ -15,6 +16,7 @@ const Category = forwardRef(function Category(
     handleSetName = () => {},
     handleOnclick = () => {},
     name,
+    language,
   },
   ref,
 ) {
@@ -32,7 +34,7 @@ const Category = forwardRef(function Category(
 
   /* get data */
   useEffect(() => {
-    GetData('admin', 'category', { value: searchValue })
+    GetData('admin', 'category', { value: searchValue }, language)
       .then((result) => {
         setData(result);
       })
@@ -52,6 +54,7 @@ const Category = forwardRef(function Category(
         classTitle={classTitle}
         useNull={true}
         data={Data}
+        useColumn={useColumn}
         handleOnclick={handleOnclick}
         handleOnchange={handleOnchange}
         searchValue={setSearchValue}

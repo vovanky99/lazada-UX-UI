@@ -1,17 +1,18 @@
 import classNames from 'classnames/bind';
 import styles from './FormGroup.module.scss';
 import { forwardRef, useEffect, useState } from 'react';
+import Translate from '../Translate';
 
 const cx = classNames.bind(styles);
 
 const gender = [
-  { name: 'Female', id: '0' },
-  { name: 'Male', id: '1' },
+  { name: 'female', id: '0' },
+  { name: 'male', id: '1' },
 ];
 
 const status = [
-  { name: 'Hide', id: '0' },
-  { name: 'Show', id: '1' },
+  { name: 'hide', id: '0' },
+  { name: 'show', id: '1' },
 ];
 
 export const FormSelect = forwardRef(function Form(
@@ -34,7 +35,9 @@ export const FormSelect = forwardRef(function Form(
   }, [value]);
   return (
     <div className={cx('form-select', containerClass || ' form-group flex-grow-1')}>
-      <label className={cx('form-label text-capitalize')}>{title}</label>
+      <label className={cx('form-label text-capitalize')}>
+        <Translate>{title}</Translate>
+      </label>
       <select
         name={name}
         ref={ref}
@@ -45,7 +48,13 @@ export const FormSelect = forwardRef(function Form(
           handleOnchange(e);
         }}
       >
-        {defaultValue ? '' : <option value="">Null</option>}
+        {defaultValue ? (
+          ''
+        ) : (
+          <option value="" className="text-capitalize">
+            <Translate>null</Translate>
+          </option>
+        )}
         {data
           ? data.map((d, index) => (
               <option value={d.id} key={index}>
@@ -55,12 +64,12 @@ export const FormSelect = forwardRef(function Form(
           : useStatus
           ? status.map((d, index) => (
               <option value={d.id} key={index}>
-                {d.name}
+                {Translate({ children: d.name })}
               </option>
             ))
           : gender.map((d, index) => (
               <option value={d.id} key={index}>
-                {d.name}
+                {Translate({ children: d.name })}
               </option>
             ))}
       </select>

@@ -18,13 +18,16 @@ export async function CreateData(prefixServer = '', name, data) {
   }
 }
 
-export async function GetData(prefixServer = '', name, data) {
+export async function GetData(prefixServer = '', name, data, language = '') {
   try {
-    const res = await axios.get(`/api${prefixServer ? '/' + prefixServer : ''}/get-${name}`, {
-      params: {
-        ...data,
+    const res = await axios.get(
+      `/api${prefixServer ? '/' + prefixServer : ''}/get-${name}${language ? '/' + language : ''}`,
+      {
+        params: {
+          ...data,
+        },
       },
-    });
+    );
     return res.data;
   } catch (e) {
     console.log(e);
@@ -95,6 +98,15 @@ export async function RequestPhone(data) {
 export async function ResetPassword(prefixServer, data) {
   try {
     const res = await axios.post(`/api${prefixServer ? '/' + prefixServer : ''}/password/reset-password`, data);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function GenerateSignatureCloudinary() {
+  try {
+    const res = await axios.get(`/api/generate-signature/cloudianry`);
     return res.data;
   } catch (e) {
     console.log(e);

@@ -36,6 +36,8 @@ export const adminRoutes = {
   AllShop: '/admin/shop',
   EditShop: '/admin/edit-shop/:id',
   Location: '/admin/location',
+  Attributes: '/admin/attributes',
+  Attributes_product: '/admin/attributes-products',
   Category: '/admin/category',
   Blogs: '/admin/blogs',
   EditBlogs: '/admin/edit-blogs/:id',

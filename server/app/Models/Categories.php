@@ -22,6 +22,9 @@ class Categories extends Model
     {
         return $this->hasMany(Categories::class,'parent_id','id');
     }
+    public function categories_translation(){
+        return $this->hasMany(CategoriesTranslation::class,'category_id');
+    }
     public function parent(){
         return $this->belongsTo(Categories::class,'parent_id','id');
     }

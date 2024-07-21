@@ -103,7 +103,7 @@ export const FormSearch = forwardRef(function FormSearch(
         c.forEach((e) => e.removeEventListener('click', handleClick));
       }
     };
-  }, []);
+  }, [select]);
 
   /* handle resize tippy search value */
   useEffect(() => {
@@ -115,7 +115,7 @@ export const FormSearch = forwardRef(function FormSearch(
     if (sl && op) {
       window.addEventListener('resize', handleResize);
     }
-    if (op) {
+    if (op && sl) {
       handleResize();
     }
     return () => {
@@ -123,8 +123,7 @@ export const FormSearch = forwardRef(function FormSearch(
         window.removeEventListener('resize', handleResize);
       }
     };
-  }, []);
-
+  }, [select]);
   return (
     <>
       <div

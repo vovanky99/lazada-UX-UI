@@ -8,6 +8,7 @@ import {
   LOGOUT_SELLER,
   CHANGE_LANGUAGE,
   GET_COUNTRY,
+  SIGNATURE_CLOUDINARY,
 } from '../Actions/Types';
 
 export const initialState = {
@@ -15,6 +16,7 @@ export const initialState = {
   user: null,
   adminAuthenticated: false,
   sellerAuthenticated: false,
+  signatureCloudinary: null,
   seller: null,
   admin: null,
   country: null,
@@ -68,6 +70,11 @@ export default function AuthReducer(state = initialState, action) {
       return {
         ...state,
         country: action.payload,
+      };
+    case SIGNATURE_CLOUDINARY:
+      return {
+        ...state,
+        signatureCloudinary: action.payload,
       };
     default:
       return state;

@@ -22,6 +22,7 @@ use App\Http\Controllers\CheckController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;
+use App\Http\Controllers\GenerateSignatureController;
 use App\Http\Controllers\Seller\HomeController as SellerHomeController;
 use App\Http\Controllers\Seller\ProfileController as SellerProfileController;
 use Illuminate\Support\Facades\Route;
@@ -116,7 +117,7 @@ Route::prefix('/admin')->group(function(){
         });
         /* Category public */
         Route::controller(CategoriesController::class)->group(function(){
-            Route::get('/get-category','index');
+            Route::get('/get-category/{language}','index');
             Route::post('/create-category','store');
             Route::patch('/edit-category/{id}','update');
             Route::delete('/delete-category/{id}','delete');
@@ -238,4 +239,8 @@ Route::controller(LogoController::class)->group(function(){
 
 Route::controller(ShippingMethodController::class)->group(function(){
     Route::get('/get-shipping-method','index');
+});
+
+Route::controller(GenerateSignatureController::class)->group(function(){
+    Route::get('/generate-signature/cloudianry','Cloudinary');
 });

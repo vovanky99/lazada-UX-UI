@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { RequestPhone, ResetPassword } from '~/api/General/HandleData';
 import Button from '~/components/Button';
 import config from '~/config';
+import Country from '~/layout/Component/Country';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import AdminLogo from '~/layout/Component/Logo';
+import Translate from '~/layout/Component/Translate';
 import styles from '~/pages/ADMIN/Auth/Auth.module.scss';
 
 const cx = classNames.bind(styles);
@@ -95,7 +97,7 @@ export default function ResetPass() {
     }
   };
   return (
-    <>
+    <Country>
       <section className={cx('reset')}>
         <div className={cx('reset_content', ' d-flex justify-content-center align-items-center')}>
           <div className={cx('reset_content_contain', 'd-flex justify-content-between flex-column align-items-center')}>
@@ -115,7 +117,7 @@ export default function ResetPass() {
               />
               <div className={cx('form_btn')}>
                 <Button className={cx('btn-reset', 'text-capitolize')} gradient_primary>
-                  Next
+                  <Translate>next</Translate>
                 </Button>
               </div>
             </form>
@@ -151,6 +153,6 @@ export default function ResetPass() {
           </div>
         </div>
       </section>
-    </>
+    </Country>
   );
 }
