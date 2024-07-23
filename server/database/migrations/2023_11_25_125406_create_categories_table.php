@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->double('type')->unsigned()->comment('1:products 2:blogs 3:article')->default(1);
+            $table->double('industry_code',6)->unsigned();
             $table->boolean('status')->default(1);
             NestedSet::columns($table);
             $table->timestamps();

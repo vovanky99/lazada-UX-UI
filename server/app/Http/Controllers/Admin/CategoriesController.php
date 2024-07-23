@@ -219,19 +219,27 @@ class CategoriesController extends Controller
     }
 
     /* get category */
-    public function index(Request $request,$language){
+    public function index(Request $request,$language = 'en'){
         $name = $request->get('name');
         $parent_id = $request->get('parent_id');
         $status = $request->get('status');
-        $cat = DB::table('categories')->join('categories_translation','categories_translation.category_id','=','categories.id')->join('languages','categories_translation.language_id','=','languages.id')->leftJoin('categories as cat_parent','cat_parent.id','=','categories.parent_id')->where('categories_translation.name','like',$name.'%');
-        if($language != 'all'){
-            $lang = Languages::where('acronym',$language)->first();
-            $cat->select('categories.*','cat_parent.*','categories_translation.*')->where('categories_translation.language_id',$lang->id);
+        $type = $request->get('type');
+
+        /* check language in db and return lang */
+        if(count(Languages::where('acronym',$language)->get()) ==0){
+           $language = 'en';
+           $lang = Languages::where('acronym',$language)->first();
         }
         else{
-            
+            $lang = Languages::where('acronym',$language)->first();
         }
-       
+
+        $cat = DB::table('categories')->join('categories_translation as cat_trans','cat_trans.category_id','=','categories.id')->join('languages','cat_trans.language_id','=','languages.id')->leftJoin('categories as cat_parent','cat_parent.id','=','categories.parent_id')->where('cat_trans.name','like',$name.'%')->select('categories.*','cat_parent.id as parent_id',DB::raw("(select categories_translation.name from categories_translation where cat_parent.id = categories_translation.category_id and language_id = $lang->id ) as parent_name"),'cat_trans.name as cat_name')->where('cat_trans.language_id',$lang->id);
+
+        if($type){
+            $cat->where('categories.type',$type);
+        }
+        
         if($parent_id){
             $cat->where('categories.parent_id',$parent_id);
         }
@@ -240,6 +248,11 @@ class CategoriesController extends Controller
         }
         $cats = $cat->get();
         return response()->json($cats);
+    }
+
+    public function show($id){
+        $cat = Categories::where('id',$id)->with(['parent','categories_translation','images'])->first();
+        return response()->json($cat);
     }
     public function delete($id){
         try{

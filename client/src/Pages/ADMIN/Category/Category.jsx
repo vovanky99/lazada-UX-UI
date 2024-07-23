@@ -1,25 +1,31 @@
 import classNames from 'classnames/bind';
 import styles from '~/pages/ADMIN/Category/Category.module.scss';
 import WrapperMain from '~/layout/Component/WrapperMain';
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import ElementCat from './ElementCat';
-import { CreateData, GetData } from '~/api/General/HandleData';
+import { CreateData, GetData, ShowData } from '~/api/General/HandleData';
 import Category from '~/layout/Component/Category';
 import AddCat from '~/pages/ADMIN/Category/AddCat/';
 import { useImmer } from 'use-immer';
 import Button from '~/components/Button';
 import Translate from '~/layout/Component/Translate';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+import EditCat from './ElementCat/EditCat';
 
 const cx = classNames.bind(styles);
 
 export default function AllCategory() {
   const { language, signatureCloudinary } = useSelector((state) => state.Auth);
+  const [showEdit, setShowEdit] = useState(false);
   const [dataTable, setDataTable] = useState(null);
   const [reloadData, setReloadData] = useState(1);
   const [addCat, setAddCat] = useState(false);
+  const [category, setCategory] = useState(null);
+  const [searchParams] = useSearchParams();
+
   // state for filter
   const [filterCat, setFilterCat] = useImmer({
     name: '',
@@ -30,6 +36,14 @@ export default function AllCategory() {
   const handleClickAddCat = () => {
     setAddCat(true);
   };
+  const handleShowEditCat = () => {
+    setShowEdit(true);
+  };
+
+  const handleHideEditCat = (e) => {
+    setShowEdit(false);
+  };
+
   const handleClose = () => {
     setAddCat(false);
   };
@@ -59,9 +73,18 @@ export default function AllCategory() {
     });
   };
 
+  /* get data for show category */
+  useEffect(() => {
+    ShowData('admin', 'category', searchParams.get('sp_atk'))
+      .then((result) => {
+        setCategory(result);
+      })
+      .catch((e) => console.log(e));
+  }, [searchParams.get('sp_atk')]);
+
   /* get all for Data table */
   useEffect(() => {
-    GetData('admin', 'category', filterCat, 'all')
+    GetData('admin', 'category', filterCat, language)
       .then((result) => {
         setDataTable(result);
       })
@@ -109,6 +132,9 @@ export default function AllCategory() {
                   <Translate>cat_parent</Translate>
                 </th>
                 <th>
+                  <Translate>industry_code</Translate>
+                </th>
+                <th>
                   <Translate>status</Translate>
                 </th>
                 <th>
@@ -118,12 +144,17 @@ export default function AllCategory() {
             </thead>
             <tbody>
               {dataTable?.map((d, index) => (
-                <ElementCat handleDelete={AddDeleteSuccess} key={index} data={d} />
+                <ElementCat handleDelete={AddDeleteSuccess} EditCat={handleShowEditCat} key={index} data={d} />
               ))}
             </tbody>
           </table>
         </div>
-        {addCat ? <AddCat handleReload={handleReloadData} handleClose={handleClose} language={language} /> : ''}
+        {category ? (
+          <EditCat id="edit_cat_modal" closeModal={showEdit} data={category} handleCloseEditCat={handleHideEditCat} />
+        ) : (
+          <Fragment></Fragment>
+        )}
+        <AddCat closeModal={addCat} handleReload={handleReloadData} handleClose={handleClose} language={language} />
       </WrapperMain>
     </>
   );

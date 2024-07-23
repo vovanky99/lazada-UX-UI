@@ -100,24 +100,104 @@
     gap: 10px;
   }
 }
-.data_table {
-  .list_cat_tippy {
-    padding: 20px;
-    gap: 10px;
-    box-shadow: 0px 0px 3px 1px var(--box_shadow_admin);
-    background-color: white;
-    .list_cat_tippy_content {
-      gap: 10px;
-      > div {
-        gap: 10px;
-        &:last-child {
-          button {
-            padding: 5px 20px;
-          }
+.edit_cat {
+  width: 40vw;
+  height: 100vh;
+  padding: 20px;
+  margin-right: 20px;
+  gap: 10px;
+  background-color: white;
+  &_header {
+    h4 {
+      font-size: 1.6rem;
+    }
+    > button {
+      svg {
+        color: var(--alert_word_color);
+      }
+      &:hover {
+        svg {
+          color: var(--primary);
         }
       }
     }
   }
+
+  &_content {
+    gap: 10px;
+    > div {
+      gap: 10px;
+      flex-basis: calc((100% - 10px) / 2);
+      &:last-child {
+        button {
+          padding: 5px 20px;
+        }
+      }
+      &:last-child {
+        flex-basis: 100%;
+      }
+    }
+    .images_category {
+      flex-basis: 100%;
+      &_content {
+        gap: 10px;
+        .all_images {
+          gap: 10px;
+          &_content {
+            gap: 10px;
+            border: 1px solid var(--border_color_admin);
+            padding: 5px;
+            min-height: 75px;
+            > div {
+              flex-basis: calc((100% - 50px) / 6);
+              position: relative;
+              .img {
+                width: 100%;
+                height: 65px;
+                img {
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+              .close {
+                position: absolute;
+                display: none;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                color: var(--white);
+                background-color: var(--background_color_shadow);
+                svg {
+                  cursor: pointer;
+                }
+              }
+              &:not([data-type='btn_upload']) {
+                &:hover {
+                  .close {
+                    display: block;
+                    transition: display 0.3s;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .select_images {
+          .btn_select_image {
+            font-size: 1.4rem;
+            border: 1px dashed var(--border_color_admin);
+          }
+        }
+      }
+    }
+    .status {
+      flex-basis: 25%;
+    }
+  }
+}
+.data_table {
   .toll-edit {
     gap: 5px;
     border-left: none;

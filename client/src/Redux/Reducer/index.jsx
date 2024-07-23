@@ -17,6 +17,7 @@ export const initialState = {
   adminAuthenticated: false,
   sellerAuthenticated: false,
   signatureCloudinary: null,
+  timestamp: null,
   seller: null,
   admin: null,
   country: null,
@@ -74,7 +75,8 @@ export default function AuthReducer(state = initialState, action) {
     case SIGNATURE_CLOUDINARY:
       return {
         ...state,
-        signatureCloudinary: action.payload,
+        signatureCloudinary: action.payload.signature,
+        timestamp: action.payload.timestamp,
       };
     default:
       return state;

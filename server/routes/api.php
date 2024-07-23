@@ -120,6 +120,7 @@ Route::prefix('/admin')->group(function(){
             Route::get('/get-category/{language}','index');
             Route::post('/create-category','store');
             Route::patch('/edit-category/{id}','update');
+            Route::get('/show-category/{id}','show');
             Route::delete('/delete-category/{id}','delete');
             Route::get('/todo-list-cat','TodoListCat');
         });

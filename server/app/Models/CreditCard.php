@@ -20,6 +20,6 @@ class CreditCard extends Model
         return $this->belongsTo(CreditCardType::class,'card_type');
     }
     public function address(){
-        return $this->morphMany(Address::class,'addressable_id');
+        return $this->morphMany(Address::class,'addressable');
     }
 }

@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
-import Tippy from '@tippyjs/react/headless';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 
 import { CreateData } from '~/api/General/HandleData';
 import Category from '~/layout/Component/Category';
@@ -18,15 +17,13 @@ import MessageText from '~/layout/Component/Message/MessageText';
 import Images from '~/components/Images';
 import Progress from '~/components/Progress';
 import CldUploadImg from '~/services/cloudinary/CldUploadImg';
-import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
-export default function AddCat({ handleReloadData, handleClose, language, addClass }) {
+export default function AddCat({ handleReloadData, handleClose, language, addClass, closeModal }) {
   const nameEnRef = useRef();
   const nameViRef = useRef();
   const fileImageRef = useRef();
-  const { signatureCloudinary } = useSelector((state) => state.Auth);
   const message = {
     name_vi: Translate({ children: 'valid.name_vi' }),
     name_en: Translate({ children: 'valid.name_en' }),
@@ -74,7 +71,6 @@ export default function AddCat({ handleReloadData, handleClose, language, addCla
       },
     },
   });
-  const [imageSrcs, setImageSrcs] = useState([]);
   const [createSuccess, setCreateSuccess] = useState('');
   const [createError, setCreateError] = useState('');
 
@@ -111,9 +107,7 @@ export default function AddCat({ handleReloadData, handleClose, language, addCla
           for (let i = 0; i <= Object.keys(draft.images_cat).length - 1; i++) {
             if (draft.images_cat[`images_${i}`]['local'] === '') {
               draft.images_cat[`images_${i}`]['local'] = reader.result;
-              const image = new FormData();
-              image.append('file', value);
-              CldUploadImg(image, handleUploadProgress(e, i), signatureCloudinary)
+              CldUploadImg(value, handleUploadProgress(e, i))
                 .then((result) => {
                   if (result) {
                     draft.images_cat[`images_${i}`]['data'] = result;
@@ -207,7 +201,7 @@ export default function AddCat({ handleReloadData, handleClose, language, addCla
   };
 
   return (
-    <Modal>
+    <Modal closeModal={closeModal}>
       <div className={cx('add_category')} tabIndex="-1">
         <div className={cx('add_cat_header', 'd-flex flex-row justify-content-between')}>
           <h5 className="text-center text-capitalize">

@@ -22,15 +22,5 @@ export default function Admin({ children }) {
       navigate(`${config.adminRoutes.SignIn}`);
     }
   }, []);
-  useEffect(() => {
-    GenerateSignatureCloudinary()
-      .then((result) => {
-        if (result?.signature) {
-          console.log(result.signature);
-          Store.dispatch(GetSignatureCloudinary(result.signature));
-        }
-      })
-      .catch((e) => console.log(e));
-  }, []);
   return <Country>{isAdminAuth ? <Fragment>{children}</Fragment> : ''}</Country>;
 }

@@ -104,9 +104,13 @@ export async function ResetPassword(prefixServer, data) {
   }
 }
 
-export async function GenerateSignatureCloudinary() {
+export async function GenerateSignatureCloudinary(data) {
   try {
-    const res = await axios.get(`/api/generate-signature/cloudianry`);
+    const res = await axios.get(`/api/generate-signature/cloudianry`, {
+      params: {
+        ...data,
+      },
+    });
     return res.data;
   } catch (e) {
     console.log(e);

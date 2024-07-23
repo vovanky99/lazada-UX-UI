@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Kalnoy\Nestedset\NodeTrait;
 
 class Categories extends Model
 {
-    use HasFactory;
     public $table = 'categories';
     protected $fillable = [
         'name',
         'slug',
+        'industry_code',
         '_lft',
         '_rgt',
         'parent_id',
@@ -21,6 +19,9 @@ class Categories extends Model
     public function childrens()
     {
         return $this->hasMany(Categories::class,'parent_id','id');
+    }
+    public function images(){
+        return $this->morphMany(Images::class,'imageable');
     }
     public function categories_translation(){
         return $this->hasMany(CategoriesTranslation::class,'category_id');
