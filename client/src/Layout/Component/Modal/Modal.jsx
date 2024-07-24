@@ -23,15 +23,13 @@ export default function Modal({ id, children, closeModal = true, modalEdit = fal
           clearTimeout(add);
         }
       } else {
-        if (modal.style.animationName === 'closeModal') {
-          if (modalEdit) {
-            mainContent.style.animationName = 'showModalEditChild';
-          } else {
-            mainContent.style.animationName = 'showModalChild';
-          }
-          modal.style.animationName = '';
-          modal.style.display = 'flex';
+        if (modalEdit) {
+          mainContent.style.animationName = 'showModalEditChild';
+        } else {
+          mainContent.style.animationName = 'showModalChild';
         }
+        modal.style.animationName = '';
+        modal.style.display = 'flex';
       }
     }
   }, [closeModal, id]);

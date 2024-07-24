@@ -30,6 +30,7 @@ export const FormSearch = forwardRef(function FormSearch(
     useColumn = false,
     useLabel = true,
     useNull = false,
+    placement = 'bottom',
     areaCode,
     handleSetID = () => {},
     searchValue = () => {},
@@ -153,7 +154,7 @@ export const FormSearch = forwardRef(function FormSearch(
             interactive
             visible={select}
             offset={[0, 0]}
-            placement="bottom"
+            placement={placement ? placement : 'bottom'}
             render={(attrs) => (
               <ul ref={optionRef} className={cx('option_container')} {...attrs} tabIndex="-1">
                 {data?.length > 0 && useNull ? (

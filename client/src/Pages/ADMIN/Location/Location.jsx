@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import styles from '~/pages/ADMIN/Location/Location.module.scss';
 import Button from '~/components/Button';
@@ -19,11 +19,11 @@ export default function Location() {
 
   /* toggle add country  */
   const handleBTNCountryClick = () => {
-    if (country) {
-      setCountry(false);
-    } else {
-      setCountry(true);
-    }
+    setCountry(true);
+  };
+
+  const handleCloseLocation = (e) => {
+    setCountry(false);
     setDistrict(false);
     setCity(false);
     setWard(false);
@@ -31,38 +31,17 @@ export default function Location() {
 
   /* toggle add city  */
   const handleBTNCityClick = () => {
-    if (city) {
-      setCity(false);
-    } else {
-      setCity(true);
-    }
-    setDistrict(false);
-    setCountry(false);
-    setWard(false);
+    setCity(true);
   };
 
   /* toggle add district  */
   const handleBTNDistrictClick = () => {
-    if (district) {
-      setDistrict(false);
-    } else {
-      setDistrict(true);
-    }
-    setCity(false);
-    setCountry(false);
-    setWard(false);
+    setDistrict(true);
   };
 
   /* toggle add ward  */
   const handleBTNWardClick = () => {
-    if (ward) {
-      setWard(false);
-    } else {
-      setWard(true);
-    }
-    setCity(false);
-    setCountry(false);
-    setDistrict(false);
+    setWard(true);
   };
 
   const handleReloadData = (value) => {
@@ -79,30 +58,37 @@ export default function Location() {
               <Button onClick={handleBTNCountryClick} small gradient_primary type="button">
                 Add Country
               </Button>
-              {country ? <AddLocation title="country" useCountry handleReloadData={handleReloadData} /> : <></>}
             </div>
             <div className={cx('add-city')}>
               <Button onClick={handleBTNCityClick} small gradient_primary type="button">
                 Add City
               </Button>
-              {city ? <AddLocation title="city" useCity handleReloadData={handleReloadData} /> : <></>}
             </div>
             <div className={cx('add-district')}>
               <Button onClick={handleBTNDistrictClick} small gradient_primary type="button">
                 Add District
               </Button>
-              {district ? <AddLocation title="district" useDistrict handleReloadData={handleReloadData} /> : <></>}
             </div>
             <div className={cx('add-ward')}>
               <Button onClick={handleBTNWardClick} small gradient_primary type="button">
                 Add Ward
               </Button>
-              {ward ? <AddLocation title="ward" useWard handleReloadData={handleReloadData} /> : <></>}
             </div>
           </>
         }
       >
         <ListLocation reloadData={reloadData} />
+        <AddLocation
+          id={country ? 'country' : city ? 'city' : district ? 'district' : 'ward'}
+          title={country ? 'country' : city ? 'city' : district ? 'district' : 'ward'}
+          useCountry={country}
+          useCity={city}
+          useDistrict={district}
+          handleCloseLocation={handleCloseLocation}
+          useWard={ward}
+          closeModal={country || city || district || ward}
+          handleReloadData={handleReloadData}
+        />
       </WrapperMain>
     </>
   );

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\District;
+use App\Models\Languages;
 use App\Models\Ward;
 use Exception;
 use Illuminate\Http\Request;
@@ -44,7 +45,31 @@ class LocationController extends Controller {
             return response()->json(['error'=>'Country Existed!']);
         }
         else{
-            Country::create($request->all());
+            $lang = Languages::where('name',$request->language)->first();
+            if($lang){
+                $langId= $lang->id;
+            }
+            else{
+                if($request->language){
+                    $langId = Languages::create([
+                        'name'=>$request->language,
+                        'acronym'=>$request->acronym,
+                    ])->id;
+                }
+                else{
+                    $langId = Languages::create([
+                        'name'=>$request->name,
+                        'acronym'=>$request->acronym,
+                    ])->id;
+                }
+                
+            }
+            Country::create([
+                'name'=>$request->name,
+                'acronym'=>$request->acronym,
+                'international_codes'=>$request->international_codes,
+                'language_id'=>$langId
+            ]);
             return response()->json(['success'=>'Create Success!']);
         }
     }

@@ -68,13 +68,19 @@ export default function ListLocation({ reloadData }) {
         </h4>
         <div ref={FilterRef} className={cx('filter-form', 'd-flex flex-row flex-wrap gap-3 align-items-end')}>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
-            <Location title="country" classTitle="country-filter" handleSetID={setCountryID} />
+            <Location useColumn title="country" classTitle="country-filter" handleSetID={setCountryID} />
           </div>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
-            <Location title="city" classTitle="city-filter" foreignID={countryID} handleSetID={setCityID} />
+            <Location useColumn title="city" classTitle="city-filter" foreignID={countryID} handleSetID={setCityID} />
           </div>
           <div className={cx('filter-container', 'form-group flex-grow-1')}>
-            <Location title="district" classTitle="district-filter" foreignID={cityID} handleSetID={setDistrictID} />
+            <Location
+              useColumn
+              title="district"
+              classTitle="district-filter"
+              foreignID={cityID}
+              handleSetID={setDistrictID}
+            />
           </div>
         </div>
       </div>

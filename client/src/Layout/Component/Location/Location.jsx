@@ -11,7 +11,9 @@ const Location = forwardRef(function Location(
     useTippy = true,
     name,
     SearchValue,
+    placement = 'bottom',
     useLabel = true,
+    useColumn = false,
     handleSetID = () => {},
     handleSetName = () => {},
     handleOnchange = () => {},
@@ -48,8 +50,10 @@ const Location = forwardRef(function Location(
         ref={ref}
         useTippy={useTippy}
         valueID={value}
+        useColumn={useColumn}
         useLabel={useLabel}
         Value={searchValue}
+        placement={placement}
         disabled={disabled}
         title={title}
         name={name}

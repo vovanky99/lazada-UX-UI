@@ -77,7 +77,10 @@ export default function AllCategory() {
   useEffect(() => {
     ShowData('admin', 'category', searchParams.get('sp_atk'))
       .then((result) => {
-        setCategory(result);
+        if (result.cat) {
+          console.log(result.cat);
+          setCategory(result.cat);
+        }
       })
       .catch((e) => console.log(e));
   }, [searchParams.get('sp_atk')]);
@@ -149,7 +152,7 @@ export default function AllCategory() {
             </tbody>
           </table>
         </div>
-        {category ? (
+        {category !== null ? (
           <EditCat id="edit_cat_modal" closeModal={showEdit} data={category} handleCloseEditCat={handleHideEditCat} />
         ) : (
           <Fragment></Fragment>

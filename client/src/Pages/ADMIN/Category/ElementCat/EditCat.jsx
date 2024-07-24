@@ -131,7 +131,7 @@ export default function EditCat({ closeModal, data, handleCloseEditCat }) {
         </div>
         <form className={cx('edit_cat_content', 'd-flex flex-row flex-wrap')} noValidate onSubmit={handleEditCat}>
           {Object.entries(data?.categories_translation).map(([key, value]) => (
-            <div className={cx('name')}>
+            <div className={cx('name')} key={key}>
               <FormSearch
                 title={value?.language_id === 1 ? 'name_vi' : 'name_en'}
                 name={value?.language_id === 1 ? 'name_vi' : 'name_en'}
@@ -139,7 +139,6 @@ export default function EditCat({ closeModal, data, handleCloseEditCat }) {
                 useColumn
                 useTippy={false}
                 handleOnchange={handleOnchange}
-                key={key}
               />
             </div>
           ))}

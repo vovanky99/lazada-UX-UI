@@ -252,7 +252,7 @@ class CategoriesController extends Controller
 
     public function show($id){
         $cat = Categories::where('id',$id)->with(['parent','categories_translation','images'])->first();
-        return response()->json($cat);
+        return response()->json(['cat'=>$cat]);
     }
     public function delete($id){
         try{
