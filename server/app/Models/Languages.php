@@ -10,6 +10,7 @@ class Languages extends Model
     protected $fillable = [
         'name',
         'acronym',
+        'native_name'
     ];
     public function countries(){
         return $this->hasMany(Languages::class,'language_id');

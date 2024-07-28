@@ -52,7 +52,6 @@ const Category = forwardRef(function Category(
         Value={searchValue}
         title={title}
         classTitle={classTitle}
-        useNull={true}
         data={Data}
         useColumn={useColumn}
         handleOnclick={handleOnclick}

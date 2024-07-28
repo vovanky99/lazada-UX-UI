@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 export default function Modal({ id, children, closeModal = true, modalEdit = false, delay = 600 }) {
   useEffect(() => {
     const modal = document.getElementById(`${id}`);
-    const mainContent = document.getElementById('modal_main_content');
+    const mainContent = document.getElementById(`${id}_modal_main_content`);
     if (modal && mainContent) {
       modal.style.animationDuration = `${delay}ms`;
       mainContent.style.animationDuration = `${delay}ms`;
@@ -34,17 +34,17 @@ export default function Modal({ id, children, closeModal = true, modalEdit = fal
     }
   }, [closeModal, id]);
   return (
-    <div
+    <section
       id={`${id}`}
       className={cx('wrapper', modalEdit ? 'justify-content-end' : 'justify-content-center align-items-center')}
       tabIndex={-1}
       role="dialog"
     >
       <div className={cx('main')}>
-        <div id="modal_main_content" className={cx('main_content')}>
+        <div id={`${id}_modal_main_content`} className={cx('main_content')}>
           {children}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

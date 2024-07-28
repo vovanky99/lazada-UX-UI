@@ -9,7 +9,6 @@ const Role = forwardRef(function Role(
     ValueID,
     SearchValue,
     useLabel = true,
-    useNull = true,
     handleSetID = () => {},
     handleSetName = () => {},
     handleOnclick = () => {},
@@ -49,7 +48,6 @@ const Role = forwardRef(function Role(
         Value={searchValue}
         title={title}
         classTitle={classTitle}
-        useNull={useNull}
         data={Data}
         searchValue={setSearchValue}
         handleSetID={setValue}

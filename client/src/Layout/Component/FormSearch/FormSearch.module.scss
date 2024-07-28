@@ -29,6 +29,21 @@
       }
     }
   }
+  .select_input_content {
+    position: relative;
+    .btn_close {
+      position: absolute;
+      top: 50%;
+      margin-top: 0 !important;
+      transform: translateY(-50%);
+      right: 5px;
+      color: var(--alert_word_color);
+      font-size: 1.4rem;
+      &:hover {
+        color: var(--primary);
+      }
+    }
+  }
   input {
     font-size: 1.5rem;
     border-color: var(--border_color_admin);

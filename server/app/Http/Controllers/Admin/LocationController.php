@@ -8,11 +8,18 @@ use App\Models\Country;
 use App\Models\District;
 use App\Models\Languages;
 use App\Models\Ward;
+use App\Repositories\PaginateRepository;
 use Exception;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller {
 
+    protected $paginate;
+
+    public function __construct( PaginateRepository $paginate)
+    {
+        $this->paginate = $paginate;
+    }
      // get location for datatable
      public function index(Request $request){
         $country_id = $request->get('country_id');
@@ -34,9 +41,9 @@ class LocationController extends Controller {
             $countries = Country::with('cities.districts.wards')->where('country.id',$country_id)->orderBy('name','asc')->get();  
         }
         else{
-            $countries = Country::with('cities.districts.wards')->orderBy('name','asc')->get();  
+            $countries = Country::with(['cities.districts.wards'])->orderBy('name','asc')->get();  
         }
-        return response()->json($countries);
+        return response()->json(['countries'=>$countries]);
     }
     public function createCountry(Request $request){
         $name = $request->name;
@@ -170,51 +177,64 @@ class LocationController extends Controller {
     }
     public function editCountry(Request $request,$id){
         $name = $request->name;
-        $country = Country::find($id);
-        $country->name = $name;
-        $country->save();
-        return response()->json(['success'=>"Edit Country Success!"]);
+        $internation_code = $request->internation_code;
+        $acronym = $request->acronym;
+        $language_id = $request->language_id;
+       try{ 
+            Country::find($id)->update([
+                'name'=>$name,
+                'international_codes'=>$internation_code,
+                'acronym'=>$acronym,
+                'language_id'=>$language_id,
+            ]);
+            return response()->json(['success'=>"Edit Country Success!"]);
+        }
+        catch(Exception $e){
+            return response()->json(['error'=>"Edit Country failed!"]);
+        }
 
     }
     public function editCity(Request $request,$id){
         $name = $request->name;
-        $parent_id = $request->foreign_id;
-        if($parent_id){
-            $city = City::find($id);
-            $city->name = $name;
-            $city->country_id = $parent_id;
-            $city->save();
+        $parent_id = $request->country_id;
+        try{
+            City::find($id)->update([
+                'name'=>$name,
+                'country_id'=>$parent_id
+            ]);
             return response()->json(['success'=>"Edit City Success!"]);
         }
-        else{
+        catch(Exception $e){
             return response()->json(['error'=>"Edit City failed!"]);
         }
     }
     public function editDistrict(Request $request,$id){
         $name = $request->name;
-        $parent_id = $request->foreign_id;
-        if($parent_id){
-            $district = District::find($id);
-            $district->name = $name;
-            $district->city_id = $parent_id;
-            $district->save();
+        $parent_id = $request->city_id;
+        $fee_ship= $request->fee_ship;
+        try{
+            District::find($id)->update([
+                'name'=>$name,
+                'city_id'=>$parent_id,
+                'fee_ship'=>$fee_ship,
+            ]);
             return response()->json(['success'=>"Edit District Success!"]);
         }
-        else{
+        catch(Exception $e){
             return response()->json(['error'=>"Edit District Failed!"]);
         }
     }
     public function editWard(Request $request,$id){
         $name = $request->name;
-        $parent_id = $request->foreign_id;
-        if($parent_id){
-            $Ward = Ward::find($id);
-            $Ward->name = $name;
-            $Ward->city_id = $parent_id;
-            $Ward->save();
+        $parent_id = $request->district_id;
+        try{
+             Ward::where('id',$id)->first()->update([
+                'name'=>$name,
+                'district_id'=>$parent_id,
+            ]);
             return response()->json(['success'=>"Edit Ward Success!"]);
         }
-        else{
+        catch(Exception $e){
             return response()->json(['error'=>"Edit Ward Failed!"]);
         }
     }
@@ -248,5 +268,52 @@ class LocationController extends Controller {
             return response()->json($ward);
         }
 
+    }
+    public function showLocation(Request $request){
+        $id = $request->get('id');
+        $type = $request->get('type');
+        if($type =='ward'){
+            $location = Ward::where('id',$id)->with('district.city.country.language')->first();
+            return response()->json(['ward'=>$location]);
+        }
+        if($type =='district'){
+            $location = District::where('id',$id)->with('city.country.language')->first();
+            return response()->json(['district'=>$location]);
+        }
+        if($type =='city'){
+            $location = City::where('id',$id)->with('country.language')->first();
+            return response()->json(['city'=>$location]);
+        }
+        if($type =='country'){
+            $location = Country::where('id',$id)->with('language')->first();
+            return response()->json(['country'=>$location]);
+        }
+        return response()->json(['error'=>'not value']);
+    }
+    public function editLocation(Request $request){
+        $id = $request->get('id');
+        $type = $request->get('type');
+        if($type =='ward'){
+            $location = Ward::find($id)->update([
+                
+            ]);
+            return response()->json($location);
+        }
+        if($type =='district'){
+            $location = District::where('id',$id)->with('city.country')->first();
+            return response()->json($location);
+        }
+        if($type =='city'){
+            $location = City::where('id',$id)->with('country')->first();
+            return response()->json($location);
+        }
+        if($type =='country'){
+            $location = Country::where('id',$id)->first();
+            return response()->json($location);
+        }
+        if($type =='all' || !$type){
+
+        }
+        return response()->json(['error'=>'not value']);
     }
 }

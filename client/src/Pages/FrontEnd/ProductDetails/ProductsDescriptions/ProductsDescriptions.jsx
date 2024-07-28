@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 import styles from '../ProductDetails.module.scss';
 import ProductsSuggest from '../ProductsSuggest';
 import SlideReviews from '~/layout/Component/SlideShow/SlideReviews';
-import Pagination from '~/layout/Component/Pagination';
 import Images from '~/components/Images';
+import PaginationMain from '~/layout/Component/Pagination/PaginationMain';
 
 const cx = classNames.bind(styles);
 
@@ -196,7 +196,7 @@ export default function ProductsDescriptions({ id, PD_Description, PD_Reviews, P
                 <button id="next">
                   <FontAwesomeIcon icon={faChevronRight} />
                 </button> */}
-                <Pagination
+                <PaginationMain
                   className={cx('pagination-bar')}
                   pageSize={pageSize}
                   currentPage={currentPage}

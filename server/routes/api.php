@@ -221,6 +221,7 @@ Route::controller(LocationController::class)->group(function(){
     Route::get('/get-district','getDistrict');
     Route::get('/get-ward','getWard');
     Route::get('/get-search-location','getSearchLocation');
+    Route::get('/show-location','showLocation');
 });
 Route::controller(CategoriesController::class)->group(function(){
     
@@ -244,4 +245,8 @@ Route::controller(ShippingMethodController::class)->group(function(){
 
 Route::controller(GenerateSignatureController::class)->group(function(){
     Route::get('/generate-signature/cloudianry','Cloudinary');
+});
+
+Route::controller(AdminController::class)->group(function(){
+    Route::get('get-languages','languages');
 });

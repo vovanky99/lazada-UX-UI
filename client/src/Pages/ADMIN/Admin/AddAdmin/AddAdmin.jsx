@@ -304,12 +304,10 @@ export default function Addadmin() {
               ref={roleRef}
               title="role"
               name="role"
-              useNull={false}
               handleOnchange={handleOnchange}
               handleSetID={handleSetRoleID}
             />
             <Department
-              useNull={false}
               ref={departmentRef}
               title="department"
               handleOnchange={handleOnchange}

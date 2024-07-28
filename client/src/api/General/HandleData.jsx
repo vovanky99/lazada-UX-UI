@@ -116,3 +116,17 @@ export async function GenerateSignatureCloudinary(data) {
     console.log(e);
   }
 }
+
+export async function getLanguages(language, id) {
+  try {
+    const res = await axios.get('/api/get-languages', {
+      params: {
+        language,
+        id,
+      },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}

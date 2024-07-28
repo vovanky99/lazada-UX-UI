@@ -37,7 +37,7 @@
   color: var(--white);
   border-color: var(--primary);
   &:hover {
-    opacity: 0.9;
+    opacity: 0.85;
   }
 }
 .transparent {
@@ -46,6 +46,17 @@
   outline: none;
   &:hover {
     text-decoration: underline;
+  }
+}
+
+.inverse_primary {
+  background-color: #f0e2ff;
+  border: none;
+  outline: none;
+  color: #b66cff;
+  &:hover {
+    color: var(--white);
+    background-color: #b66cff;
   }
 }
 

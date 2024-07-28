@@ -221,7 +221,6 @@ export default function AddCat({ handleReloadData, handleClose, language, addCla
               name="parent_id"
               useColumn
               handleOnclick={handleSetParentID}
-              useNull={true}
               language={language}
             />
           </div>

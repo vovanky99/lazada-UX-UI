@@ -14,13 +14,25 @@ export default async function GetLocation(location, searchValue, foreignID) {
   }
 }
 
-export async function GetAllLocation(country_id, city_id, district_id) {
+export async function GetAllLocation(data) {
   try {
     const res = await axios.get('/api/all-location', {
       params: {
-        country_id,
-        city_id,
-        district_id,
+        ...data,
+      },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function ShowLocation(type, id) {
+  try {
+    const res = await axios.get('/api/show-location', {
+      params: {
+        type,
+        id,
       },
     });
     return res.data;

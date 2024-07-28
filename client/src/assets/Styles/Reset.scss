@@ -91,6 +91,8 @@ a {
 ol,
 ul {
   list-style: none;
+  margin-bottom: 0 !important;
+  padding-left: 0 !important;
 }
 blockquote,
 q {
@@ -109,4 +111,13 @@ table {
 }
 ul {
   list-style: none !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0 !important;
 }

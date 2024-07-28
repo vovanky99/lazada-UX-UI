@@ -3,11 +3,11 @@ import * as languages from '~/locales/Translation.json';
 
 const Tranlates = (text) => {
   const { language } = useSelector((state) => state.Auth);
-  const arrayText = text.split('.');
   let lang = languages[language];
-  if (!lang) {
+  if (!lang || !text) {
     return text;
   }
+  const arrayText = text.split('.');
   try {
     for (let i = 0; i < arrayText.length; i++) {
       if (lang[arrayText[i]] === undefined) {

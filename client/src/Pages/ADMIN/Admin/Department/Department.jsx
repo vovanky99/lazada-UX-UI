@@ -8,7 +8,6 @@ const Department = forwardRef(function Department(
     classTitle,
     ValueID,
     SearchValue,
-    useNull = true,
     useLabel = true,
     handleSetID = () => {},
     handleSetName = () => {},
@@ -49,7 +48,6 @@ const Department = forwardRef(function Department(
         Value={searchValue}
         title={title}
         classTitle={classTitle}
-        useNull={useNull}
         data={Data}
         searchValue={setSearchValue}
         handleSetID={setValue}

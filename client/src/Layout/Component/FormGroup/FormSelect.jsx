@@ -42,33 +42,27 @@ export const FormSelect = forwardRef(function Form(
         name={name}
         ref={ref}
         value={value}
-        className={cx(selectClass || 'form-control py-2')}
+        className={cx(selectClass || 'form-control py-2 text-capitalize')}
         onChange={(e) => {
           setValue(e.target.value);
           handleOnchange(e);
         }}
       >
-        {defaultValue ? (
-          ''
-        ) : (
-          <option value="" className="text-capitalize">
-            <Translate>null</Translate>
-          </option>
-        )}
+        {defaultValue ? '' : <option value="" className="text-capitalize"></option>}
         {data
           ? data.map((d, index) => (
-              <option value={d.id} key={index}>
-                {d.name}
+              <option value={d?.id} key={index}>
+                <Translate>{d.name}</Translate>
               </option>
             ))
           : useStatus
           ? status.map((d, index) => (
-              <option value={d.id} key={index}>
+              <option value={d?.id} key={index}>
                 {Translate({ children: d.name })}
               </option>
             ))
           : gender.map((d, index) => (
-              <option value={d.id} key={index}>
+              <option value={d?.id} key={index}>
                 {Translate({ children: d.name })}
               </option>
             ))}

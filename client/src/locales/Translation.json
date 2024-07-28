@@ -11,6 +11,8 @@
     "completed": "hoàn thành",
     "next": "tiếp theo",
     "back": "quay lại",
+    "edit_location": "chỉnh sửa vị trí",
+    "fee_ship": "phí vận chuyển",
     "save": "lưu thông tin",
     "hide": "Ẩn",
     "show": "Hiện",
@@ -28,6 +30,11 @@
     "city": "thành phố",
     "district": "quận",
     "ward": "phường",
+    "add_country": "thêm quốc gia",
+    "add_city": "thêm thành phố",
+    "add_district": "thêm quận",
+    "add_ward": "thêm phường",
+    "location": "địa điểm",
     "address_detail": "địa chỉ chi tiết",
     "full_name": "họ tên",
     "name_shop": "tên shop",
@@ -42,6 +49,7 @@
     "update": "cập nhật",
     "all_category": "tất cả thể loại",
     "null": "Rỗng",
+    "select_type": "lựa chọn loại",
     "name_en": "tên tiếng anh",
     "add_category": "thêm thể loại",
     "status": "trạng thái",
@@ -52,6 +60,8 @@
     "sign_in_note": "Bạn mới sử dụng Shopee?",
     "forget_password": "Quên mật khẩu?",
     "pickup_address": "Chọn địa chỉ",
+    "filter": "lọc",
+    "data": "dữ liệu",
     "collapse": "đóng lại",
     "expand": "mở ra",
     "add_email": "thêm email",
@@ -106,8 +116,17 @@
       "country": "Vui lòng chọn quốc gia!",
       "create_error": "tạo không thành công!",
       "create_success": "tạo thành công!",
+      "delete_success": "xóa thành công!",
+      "delete_error": "xóa thất bại!",
       "city": "Vui lòng chọn thành phố!",
-      "district": "Vui lòng chọn quận!"
+      "district": "Vui lòng chọn quận!",
+      "name_country": "Vui lòng nhập tên quốc gia!",
+      "name_city": "Vui lòng nhập tên thành phố!",
+      "name_district": "Vui lòng nhập tên quận!",
+      "name_ward": "Vui lòng nhập tên phường!",
+      "language": "Vui lòng chọn ngôn ngữ!",
+      "type_location": "Vui lòng chọn loại dữ liệu!",
+      "delete_location": "Vui lòng chọn lại kiểu dữ liệu, kiểu dữ liệu hiện tại là null!"
     },
     "component": {
       "form_text": "Vui lòng nhập "
@@ -175,7 +194,7 @@
       "my_income": "doanh thu",
       "my_balance": "số dư TK life shop"
     },
-    "data": {
+    "data_center": {
       "business_insights": "phân tích bán hàng",
       "account_health": "hiệu quả hoạt động",
       "title": "dữ liệu"
@@ -254,6 +273,7 @@
     "industry_code": "industry code",
     "category_images": "images for category",
     "name_en": "name english",
+    "data": "data",
     "username": "username",
     "null": "Null",
     "admin_hello": "Hello! let's get started",
@@ -266,6 +286,7 @@
     "female": "Female",
     "verify_email": "Verify Email",
     "send_link": "send link",
+    "fee_ship": "fee shipping",
     "link_reset_note": " if you don't want reset password can back",
     "resend_email": "resend email",
     "register_note": "Have an account?",
@@ -278,6 +299,7 @@
     "password_confirm": "password confirm",
     "filter_data": "filter data",
     "category": "category",
+    "select_type": "select type",
     "acronym": "acronym",
     "language": "language",
     "profile": "Profile",
@@ -293,6 +315,12 @@
     "city": "city",
     "district": "district",
     "ward": "ward",
+    "add_country": "add country",
+    "add_city": "add city",
+    "add_district": "add district",
+    "filter": "filter",
+    "add_ward": "add ward",
+    "location": "location",
     "address_detail": "address details",
     "name_shop": "name shop",
     "full_name": "full name",
@@ -302,6 +330,7 @@
     "cat_parent": "category parent",
     "name": "name",
     "create": "create",
+    "edit_location": "edit location",
     "delete": "delete",
     "edit": "edit",
     "update": "update",
@@ -354,7 +383,16 @@
       "ward": "Please select ward!",
       "district": "Please select district!",
       "create_error": "creation failed!",
-      "create_success": "create success!"
+      "create_success": "create success!",
+      "name_country": "Please enter country name!",
+      "name_city": "Please enter city name!",
+      "name_district": "Please enter district name!",
+      "name_ward": "Please enter ward name!",
+      "language": "Please select language!",
+      "type_location": "Please select data type!",
+      "delete_location": "Please select the data type again, the current data type is null!",
+      "delete_success": "deleted successfully!",
+      "delete_error": "delete failed!"
     },
     "component": {
       "form_text": "Enter keyword for "
@@ -421,7 +459,7 @@
       "banks_account": "Bank Accounts",
       "title": "Finance"
     },
-    "data": {
+    "data_center": {
       "title": "Data",
       "business_insights": "Business Insights",
       "account_health": "Account Health"

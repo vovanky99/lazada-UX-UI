@@ -10,21 +10,24 @@ const Location = forwardRef(function Location(
     foreignID,
     useTippy = true,
     name,
+    type,
     SearchValue,
     placement = 'bottom',
     useLabel = true,
     useColumn = false,
+    resetValue = false,
     handleSetID = () => {},
     handleSetName = () => {},
     handleOnchange = () => {},
     handleOnclick = () => {},
+    handleResetValue = () => {},
     disabled = false,
   },
   ref,
 ) {
   const [value, setValue] = useState(ValueID || '');
   const [searchValue, setSearchValue] = useState(SearchValue || '');
-  const [Data, setData] = useState(null);
+  const [data, setData] = useState(null);
 
   // pass data for parent
   useEffect(() => {
@@ -48,6 +51,7 @@ const Location = forwardRef(function Location(
     <>
       <FormSearch
         ref={ref}
+        resetValue={resetValue}
         useTippy={useTippy}
         valueID={value}
         useColumn={useColumn}
@@ -56,10 +60,11 @@ const Location = forwardRef(function Location(
         placement={placement}
         disabled={disabled}
         title={title}
+        type={type}
         name={name}
+        handleResetValue={handleResetValue}
         classTitle={classTitle}
-        useNull={true}
-        data={Data}
+        data={data}
         searchValue={setSearchValue}
         handleOnchange={handleOnchange}
         handleSetID={setValue}

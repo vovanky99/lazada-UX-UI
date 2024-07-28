@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Admin;
 use App\Models\Department;
+use App\Models\Languages;
 use App\Models\Role;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -299,5 +300,22 @@ class AdminController extends Controller{
         $admin = Admin::find($id);
         $admin->delete();
         return response()->json(['success','deleted success!']);
+    }
+    public function languages(Request $request){
+        $language = $request->get('language');
+        $id = $request->get('id');
+        try{
+            if($id){
+                $languages = Languages::where('id',$id)->get();
+            }
+            else{
+                $languages = Languages::where('name','like',$language.'%')->get();
+            }
+            return response()->json($languages);
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
+       
     }
 }

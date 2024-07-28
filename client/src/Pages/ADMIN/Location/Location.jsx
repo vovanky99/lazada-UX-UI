@@ -1,11 +1,15 @@
 import classNames from 'classnames/bind';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 
 import styles from '~/pages/ADMIN/Location/Location.module.scss';
 import Button from '~/components/Button';
-import AddLocation from '~/pages/ADMIN/Location/AddLocation';
 import ListLocation from '~/pages/ADMIN/Location/ListLocation';
 import WrapperMain from '~/layout/Component/WrapperMain';
+import Translate from '~/layout/Component/Translate';
+import Country from './AddLocation/Country';
+import City from './AddLocation/City';
+import District from './AddLocation/District';
+import Ward from './AddLocation/Ward';
 
 const cx = classNames.bind(styles);
 
@@ -23,8 +27,8 @@ export default function Location() {
   };
 
   const handleCloseLocation = (e) => {
-    setCountry(false);
     setDistrict(false);
+    setCountry(false);
     setCity(false);
     setWard(false);
   };
@@ -55,38 +59,83 @@ export default function Location() {
         BtnAddRender={
           <>
             <div className={cx('add-country')}>
-              <Button onClick={handleBTNCountryClick} small gradient_primary type="button">
-                Add Country
+              <Button
+                className={cx('text-capitalize')}
+                onClick={handleBTNCountryClick}
+                small
+                gradient_primary
+                type="button"
+              >
+                <Translate>add_country</Translate>
               </Button>
             </div>
             <div className={cx('add-city')}>
-              <Button onClick={handleBTNCityClick} small gradient_primary type="button">
-                Add City
+              <Button
+                className={cx('text-capitalize')}
+                onClick={handleBTNCityClick}
+                small
+                gradient_primary
+                type="button"
+              >
+                <Translate>add_city</Translate>
               </Button>
             </div>
             <div className={cx('add-district')}>
-              <Button onClick={handleBTNDistrictClick} small gradient_primary type="button">
-                Add District
+              <Button
+                className={cx('text-capitalize')}
+                onClick={handleBTNDistrictClick}
+                small
+                gradient_primary
+                type="button"
+              >
+                <Translate>add_district</Translate>
               </Button>
             </div>
             <div className={cx('add-ward')}>
-              <Button onClick={handleBTNWardClick} small gradient_primary type="button">
-                Add Ward
+              <Button
+                className={cx('text-capitalize')}
+                onClick={handleBTNWardClick}
+                small
+                gradient_primary
+                type="button"
+              >
+                <Translate>add_ward</Translate>
               </Button>
             </div>
           </>
         }
       >
         <ListLocation reloadData={reloadData} />
-        <AddLocation
-          id={country ? 'country' : city ? 'city' : district ? 'district' : 'ward'}
-          title={country ? 'country' : city ? 'city' : district ? 'district' : 'ward'}
-          useCountry={country}
-          useCity={city}
-          useDistrict={district}
+        <Country
+          id="country"
+          title="country"
+          resetValue={country}
           handleCloseLocation={handleCloseLocation}
-          useWard={ward}
-          closeModal={country || city || district || ward}
+          closeModal={country}
+          handleReloadData={handleReloadData}
+        />
+        <City
+          id="city"
+          title="city"
+          resetValue={city}
+          handleCloseLocation={handleCloseLocation}
+          closeModal={city}
+          handleReloadData={handleReloadData}
+        />
+        <District
+          id="district"
+          title="district"
+          resetValue={district}
+          handleCloseLocation={handleCloseLocation}
+          closeModal={district}
+          handleReloadData={handleReloadData}
+        />
+        <Ward
+          id="ward"
+          title="ward"
+          resetValue={ward}
+          handleCloseLocation={handleCloseLocation}
+          closeModal={ward}
           handleReloadData={handleReloadData}
         />
       </WrapperMain>

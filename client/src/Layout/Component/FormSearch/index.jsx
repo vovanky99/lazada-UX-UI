@@ -6,6 +6,8 @@ import Tippy from '@tippyjs/react/headless';
 import Debounce from '~/hooks/Debounce';
 import Button from '~/components/Button';
 import Translate from '../Translate';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -14,6 +16,7 @@ export const FormSearch = forwardRef(function FormSearch(
     useTippy = true,
     name,
     valueID,
+    type = '',
     inputType = 'text',
     inputClass,
     MaxLength,
@@ -29,9 +32,10 @@ export const FormSearch = forwardRef(function FormSearch(
     useForgetPassword = false,
     useColumn = false,
     useLabel = true,
-    useNull = false,
     placement = 'bottom',
     areaCode,
+    resetValue = false,
+    handleResetValue = () => {},
     handleSetID = () => {},
     searchValue = () => {},
     handleOnchange = () => {},
@@ -43,6 +47,7 @@ export const FormSearch = forwardRef(function FormSearch(
 ) {
   const selectRef = useRef();
   const optionRef = useRef();
+  const closeRef = useRef();
   const [select, setSelect] = useState(false);
   const [ID, setID] = useState(valueID || '');
   const [search, setSearch] = useState(Value || '');
@@ -77,6 +82,24 @@ export const FormSearch = forwardRef(function FormSearch(
     handleSetID(ID);
   }, [ID]);
 
+  useEffect(() => {
+    const close = closeRef.current;
+
+    const handleClose = (e) => {
+      setSearch('');
+      handleResetValue(e);
+      setID('');
+    };
+    if (close) {
+      close.addEventListener('click', handleClose);
+    }
+    return () => {
+      if (close) {
+        close.removeEventListener('click', handleClose);
+      }
+    };
+  }, [search, ID]);
+
   /* set search value */
   useEffect(() => {
     searchValue(searchDebounce);
@@ -104,7 +127,7 @@ export const FormSearch = forwardRef(function FormSearch(
         c.forEach((e) => e.removeEventListener('click', handleClick));
       }
     };
-  }, [select]);
+  }, [select, data]);
 
   /* handle resize tippy search value */
   useEffect(() => {
@@ -125,6 +148,14 @@ export const FormSearch = forwardRef(function FormSearch(
       }
     };
   }, [select]);
+
+  /* handle reset value  */
+  useEffect(() => {
+    if (resetValue) {
+      setID('');
+      setSearch('');
+    }
+  }, [resetValue]);
   return (
     <>
       <div
@@ -157,24 +188,13 @@ export const FormSearch = forwardRef(function FormSearch(
             placement={placement ? placement : 'bottom'}
             render={(attrs) => (
               <ul ref={optionRef} className={cx('option_container')} {...attrs} tabIndex="-1">
-                {data?.length > 0 && useNull ? (
-                  <li
-                    className={cx('option-single', `option-item-${classTitle || title}`)}
-                    data-name={name}
-                    data-value=""
-                    data-id=""
-                  >
-                    Null
-                  </li>
-                ) : (
-                  ''
-                )}
                 {data
                   ? data.map((d) => (
                       <li
                         className={cx('option-single', `option-item-${classTitle || title}`)}
                         data-value={d.name}
                         data-name={name}
+                        data-type={type}
                         data-id={d.id}
                         key={d.id}
                       >
@@ -186,26 +206,40 @@ export const FormSearch = forwardRef(function FormSearch(
             )}
             onClickOutside={handleClickOutsideSelect}
           >
-            <input
-              ref={ref}
-              type={inputType}
-              name={name}
-              className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
-              onClick={handleClickSelect}
-              placeholder={Translate({ children: 'component.form_text' }) + Translate({ children: title })}
-              value={search}
-              onChange={(e) => {
-                const { value, maxLength } = e.target;
-                handleOnchange(e);
-                setSearch(value);
-                if (MaxLength) {
-                  setSearch(value.slice(0, maxLength - 1));
-                }
-              }}
-              maxLength={MaxLength}
-              data-id={ID}
-              disabled={disabled}
-            />
+            <div className={cx('select_input_content')}>
+              <input
+                id={classTitle}
+                ref={ref}
+                type={inputType}
+                name={name}
+                className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
+                onClick={handleClickSelect}
+                placeholder={Translate({ children: 'component.form_text' }) + Translate({ children: title })}
+                value={search}
+                onChange={(e) => {
+                  const { value, maxLength } = e.target;
+                  handleOnchange(e);
+                  setSearch(value);
+                  if (value === '') {
+                    setID('');
+                  }
+                  if (MaxLength) {
+                    setSearch(value.slice(0, maxLength - 1));
+                  }
+                }}
+                maxLength={MaxLength}
+                data-id={ID}
+                data-type={type}
+                disabled={disabled}
+              />
+              {ID || search ? (
+                <Button ref={closeRef} className={cx('btn_close')} data-type={type} transparent none_size type="button">
+                  <FontAwesomeIcon icon={faClose} />
+                </Button>
+              ) : (
+                <Fragment></Fragment>
+              )}
+            </div>
           </Tippy>
         ) : (
           <Fragment>
@@ -233,6 +267,9 @@ export const FormSearch = forwardRef(function FormSearch(
                 const { value, maxLength } = e.target;
                 handleOnchange(e);
                 setSearch(value);
+                if (value === '') {
+                  setID('');
+                }
                 if (MaxLength) {
                   setSearch(value.slice(0, maxLength - 1));
                 }

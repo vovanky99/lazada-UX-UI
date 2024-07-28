@@ -16,24 +16,18 @@ import { useImmer } from 'use-immer';
 
 const cx = classNames.bind(styles);
 
-export default function AddLocation({
+export default function Ward({
   title,
-  useCountry = false,
-  useCity = false,
-  useDistrict = false,
-  useWard = false,
   closeModal,
+  resetValue = false,
   handleCloseLocation = () => {},
   id,
   handleReloadData = () => {},
 }) {
   const nameRef = useRef();
-  const feeRef = useRef();
   const countryRef = useRef();
   const cityRef = useRef();
   const districtRef = useRef();
-  const acronymRef = useRef();
-  const InternationCodeRef = useRef();
 
   const messageValid = {
     name: Translate({ children: 'valid.name' }),
@@ -49,12 +43,8 @@ export default function AddLocation({
   const [valid, setValid] = useState({});
   const [createSuccess, setCreateSuccess] = useState('');
   const [createError, setCreateError] = useState('');
-  const [addLocation, setAddLocation] = useImmer({
+  const [ward, setWard] = useImmer({
     name: '',
-    international_codes: '',
-    acronym: '',
-    language: '',
-    fee_ship: '',
     country_id: '',
     city_id: '',
     district_id: '',
@@ -62,40 +52,34 @@ export default function AddLocation({
 
   const handleSetLocation = (e) => {
     const { name, id } = e.target.dataset;
-    setAddLocation((darft) => {
+    setWard((darft) => {
       darft[name] = id;
     });
   };
 
   const handleOnchange = (e) => {
     const { name, value } = e.target;
-    setAddLocation((darft) => {
+    setWard((darft) => {
       darft[name] = value;
     });
   };
 
-  const validate = async (filed = addLocation) => {
+  const validate = async (filed = ward) => {
     const messageError = { ...valid };
     if ('name' in filed) {
       messageError.name = !filed.name ? messageValid.name : '';
     }
-    if (useCountry && 'international_codes' in filed) {
-      messageError.international_codes = !filed.international_codes ? messageValid.international_codes : '';
-    }
-    if (useCountry && 'acronym' in filed) {
-      messageError.acronym = !filed.acronym ? messageValid.acronym : '';
-    }
-    if (useCity && 'country_id' in filed) {
+    if ('country_id' in filed) {
       messageError.country = !filed.country_id ? messageValid.country : '';
     }
-    if (useDistrict && 'city_id' in filed) {
+    if ('city_id' in filed) {
       messageError.city = !filed.city_id ? messageValid.city : '';
     }
-    if (useWard && 'district_id' in filed) {
+    if ('district_id' in filed) {
       messageError.district = !filed.district_id ? messageValid.district : '';
     }
 
-    if (filed === addLocation) {
+    if (filed === ward) {
       Object.entries(messageError).map(([key, value]) => {
         if (value === '') {
           delete messageError[key];
@@ -103,30 +87,14 @@ export default function AddLocation({
       });
     }
 
-    if (useCountry && messageError.name) {
+    if (messageError.name) {
       nameRef.current.classList.add('border_danger');
     } else {
       nameRef.current.classList.remove('border_danger');
     }
 
-    if (useCountry && InternationCodeRef) {
-      if (messageError.international_codes) {
-        InternationCodeRef.current.classList.add('border_danger');
-      } else {
-        InternationCodeRef.current.classList.remove('border_danger');
-      }
-    }
-
-    if (useCountry && acronymRef) {
-      if (messageError.acronym) {
-        acronymRef.current.classList.add('border_danger');
-      } else {
-        acronymRef.current.classList.remove('border_danger');
-      }
-    }
-
     // valid country
-    if (countryRef && useCity) {
+    if (countryRef) {
       const t = countryRef.current;
       if (t.dataset.id === '') {
         t.classList.add('border_danger');
@@ -136,7 +104,7 @@ export default function AddLocation({
     }
 
     //valid city
-    if (cityRef && useDistrict) {
+    if (cityRef) {
       const t = cityRef.current;
       if (t.dataset.id === '') {
         t.classList.add('border_danger');
@@ -146,7 +114,7 @@ export default function AddLocation({
     }
 
     // //valid district
-    if (districtRef && useWard) {
+    if (districtRef) {
       const t = districtRef.current;
       if (t.dataset.id === '') {
         t.classList.add('border_danger');
@@ -162,9 +130,9 @@ export default function AddLocation({
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     let val = await validate();
-    if (addLocation.name !== '') {
+    if (ward.name !== '') {
       if (Object.keys(val).length === 0) {
-        CreateData('admin', title, addLocation)
+        CreateData('admin', 'ward', ward)
           .then((result) => {
             if (result.success) {
               setCreateError('');
@@ -179,15 +147,6 @@ export default function AddLocation({
       }
     }
   };
-
-  /* reset value location */
-  useEffect(() => {
-    Object.entries(addLocation).map(([key, value]) => {
-      setAddLocation((draft) => {
-        key = '';
-      });
-    });
-  }, [closeModal]);
   return (
     <Modal id={id} closeModal={closeModal}>
       <div className={cx('add-container')}>
@@ -196,99 +155,46 @@ export default function AddLocation({
             <h4 className="text-capitalize">
               <Translate>{title}</Translate>
             </h4>
-            <Button type="button" transparent none_size>
-              <FontAwesomeIcon icon={faClose} onClick={handleCloseLocation} />
+            <Button type="button" transparent onClick={handleCloseLocation} none_size>
+              <FontAwesomeIcon icon={faClose} />
             </Button>
           </div>
           <div className={cx('form_content', 'form-group d-flex flex-row flex-wrap mb-3  ')}>
-            {!useCountry || useCity || useDistrict || useWard ? (
-              <Location
-                ref={countryRef}
-                useColumn
-                title="country"
-                name="country_id"
-                handleOnclick={handleSetLocation}
-              />
-            ) : (
-              ''
-            )}
-
-            {(!useCountry && !useCity) || useDistrict || useWard ? (
-              <Location
-                ref={cityRef}
-                useColumn
-                title="city"
-                name="city_id"
-                foreignID={addLocation.country_id}
-                handleOnclick={handleSetLocation}
-              />
-            ) : (
-              ''
-            )}
-            {(!useCountry && !useCity && !useDistrict) || useWard ? (
-              <Location
-                ref={districtRef}
-                title="district"
-                useColumn
-                name="district_id"
-                foreignID={addLocation.city_id}
-                handleOnclick={handleSetLocation}
-              />
-            ) : (
-              <></>
-            )}
-            {useDistrict ? (
-              <FormSearch
-                ref={feeRef}
-                title="fee ship"
-                name="fee_ship"
-                useColumn
-                inputType="number"
-                classTitle="fee_ship"
-                handleOnchange={handleOnchange}
-                useTippy={false}
-              />
-            ) : (
-              ''
-            )}
+            <Location
+              ref={countryRef}
+              useColumn
+              resetValue={resetValue}
+              title="country"
+              name="country_id"
+              handleOnclick={handleSetLocation}
+            />
+            <Location
+              ref={cityRef}
+              useColumn
+              resetValue={resetValue}
+              title="city"
+              name="city_id"
+              foreignID={ward?.country_id}
+              handleOnclick={handleSetLocation}
+            />
+            <Location
+              ref={districtRef}
+              title="district"
+              useColumn
+              resetValue={resetValue}
+              name="district_id"
+              foreignID={ward.city_id}
+              handleOnclick={handleSetLocation}
+            />
             <FormSearch
               ref={nameRef}
               useColumn
               title="name"
+              resetValue={resetValue}
               name="name"
               handleOnchange={handleOnchange}
               useTippy={false}
             />
-            {useCountry ? (
-              <>
-                <FormSearch
-                  ref={InternationCodeRef}
-                  inputType="number"
-                  title="international_codes"
-                  name="international_codes"
-                  useColumn
-                  handleOnchange={handleOnchange}
-                  useTippy={false}
-                />
-                <FormSearch
-                  ref={acronymRef}
-                  title="acronym"
-                  name="acronym"
-                  useColumn
-                  handleOnchange={handleOnchange}
-                  useTippy={false}
-                />
-                <FormSearch
-                  title="language"
-                  name="language"
-                  useColumn
-                  handleOnchange={handleOnchange}
-                  useTippy={false}
-                />
-              </>
-            ) : (
-              <Fragment></Fragment>
-            )}
           </div>
           <MessageSuccess message={createSuccess} />
           <MessageDanger message={createError} />

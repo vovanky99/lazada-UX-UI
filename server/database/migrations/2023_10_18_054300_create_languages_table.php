@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',);
             $table->string('acronym');
+            $table->string('native_name',200)->nullable();
             $table->timestamps();
         });
     }
