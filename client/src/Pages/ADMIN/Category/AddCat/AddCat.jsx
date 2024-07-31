@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 
 import { CreateData } from '~/api/General/HandleData';
 import Category from '~/layout/Component/Category';
@@ -16,11 +16,11 @@ import Translate from '~/layout/Component/Translate';
 import MessageText from '~/layout/Component/Message/MessageText';
 import Images from '~/components/Images';
 import Progress from '~/components/Progress';
-import CldUploadImg from '~/services/cloudinary/CldUploadImg';
+import CldUploadImg, { DeleteImageCld } from '~/services/cloudinary/CldUploadImg';
 
 const cx = classNames.bind(styles);
 
-export default function AddCat({ handleReloadData, handleClose, language, addClass, closeModal }) {
+export default function AddCat({ handleReloadData = () => {}, handleClose, language, addClass, closeModal }) {
   const nameEnRef = useRef();
   const nameViRef = useRef();
   const fileImageRef = useRef();
@@ -42,32 +42,32 @@ export default function AddCat({ handleReloadData, handleClose, language, addCla
       images_0: {
         data: '',
         local: '',
-        progress: 0,
+        progress: '',
       },
       images_1: {
         data: '',
         local: '',
-        progress: 0,
+        progress: '',
       },
       images_2: {
         data: '',
         local: '',
-        progress: 0,
+        progress: '',
       },
       images_3: {
         data: '',
         local: '',
-        progress: 0,
+        progress: '',
       },
       images_4: {
         data: '',
         local: '',
-        progress: 0,
+        progress: '',
       },
       images_5: {
         data: '',
+        progress: '',
         local: '',
-        progress: 0,
       },
     },
   });
@@ -81,9 +81,10 @@ export default function AddCat({ handleReloadData, handleClose, language, addCla
     });
   };
 
-  const handleSetParentID = (value) => {
+  const handleSetParentID = (e) => {
+    const { id } = e.currentTarget.dataset;
     setAddCat((draft) => {
-      draft.parent_id = value;
+      draft.parent_id = id;
     });
   };
 
@@ -91,29 +92,57 @@ export default function AddCat({ handleReloadData, handleClose, language, addCla
     const Image = fileImageRef.current;
     Image.click();
   };
+
+  /* handle for upload images to cloudinary */
+
+  const handleUploadProgress = (event) => {
+    const { loaded, total } = event;
+    const percent = Math.round((loaded * 100) / total);
+    setAddCat((draft) => {
+      for (let i = 0; i <= Object.keys(draft.images_cat).length - 1; i++) {
+        const key = `images_${i}`;
+        if (!addCat.images_cat[key]['data']) {
+          draft.images_cat[key]['progress'] = percent;
+          break;
+        }
+      }
+    });
+  };
+
+  const uploadFile = (file, reader) => {
+    try {
+      CldUploadImg(file, handleUploadProgress)
+        .then((result) => {
+          if (result) {
+            setAddCat((draft) => {
+              for (let i = 0; i <= Object.keys(draft.images_cat).length - 1; i++) {
+                const key = `images_${i}`;
+                if (draft.images_cat[key]['local'] === reader) {
+                  draft.images_cat[key]['data'] = result;
+                  draft.images_cat[key]['progress'] = 0;
+                  break;
+                }
+              }
+            });
+          }
+        })
+        .catch((e) => console.log(e));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleUploadImages = (e) => {
     let { files, value } = e.target;
     let imageExists = false;
-    const handleUploadProgress = (e, index) => {
-      const progress = Math.round((e.loaded * 100) / e.total);
-      setAddCat((draft) => {
-        draft.images_cat[`images_${index}`]['progress'] = progress;
-      });
-    };
+
     Object.entries(files).forEach(([key, value]) => {
       const reader = new FileReader();
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         setAddCat((draft) => {
           for (let i = 0; i <= Object.keys(draft.images_cat).length - 1; i++) {
             if (draft.images_cat[`images_${i}`]['local'] === '') {
               draft.images_cat[`images_${i}`]['local'] = reader.result;
-              CldUploadImg(value, handleUploadProgress(e, i))
-                .then((result) => {
-                  if (result) {
-                    draft.images_cat[`images_${i}`]['data'] = result;
-                  }
-                })
-                .catch((e) => console.log(e));
               break;
             }
             if (draft.images_cat[`images_${i}`]['local'] === reader.result) {
@@ -122,6 +151,10 @@ export default function AddCat({ handleReloadData, handleClose, language, addCla
             }
           }
         });
+        if (imageExists) {
+          return;
+        }
+        uploadFile(value, reader.result);
       };
       if (value) {
         reader.readAsDataURL(value);
@@ -139,12 +172,23 @@ export default function AddCat({ handleReloadData, handleClose, language, addCla
     // Clear the input value to allow the same file to be selected again
     value = '';
   };
-
   const handleCloseImages = (e) => {
-    const { name } = e.currentTarget.dataset;
-    setAddCat((draft) => {
-      draft.images_cat[name] = '';
-    });
+    const { name, public_id } = e.currentTarget.dataset;
+    if (public_id) {
+      DeleteImageCld(public_id)
+        .then((result) => {
+          if (result) {
+            setAddCat((draft) => {
+              draft.images_cat[name] = {
+                data: '',
+                local: '',
+                progress: '',
+              };
+            });
+          }
+        })
+        .catch((e) => console.log(e));
+    }
   };
 
   const validate = async (field = addCat) => {
@@ -177,17 +221,43 @@ export default function AddCat({ handleReloadData, handleClose, language, addCla
     }
     return messageError;
   };
+
+  /* function handle create category */
   const handleCreateCategory = async (e) => {
     e.preventDefault();
     const val = await validate();
     if (addCat.name_en && addCat.name_vi && Object.keys(val).length === 0) {
       setCreateSuccess('');
-      CreateData('admin', 'category', addCat)
+      setCreateError('');
+      const data = new FormData();
+      let images = [];
+      //handle data for create
+      Object.entries(addCat).map(([key, value]) => {
+        if (typeof value !== 'object') {
+          data.append(key, value);
+        } else {
+          Object.entries(value).map(([key, value]) => {
+            if (typeof value === 'object' && value.data !== '') {
+              images.push(value.data.url);
+            }
+          });
+        }
+      });
+      data.append('images', images);
+      CreateData('admin', 'category', data)
         .then((result) => {
-          if (result?.success) {
+          if (result.success) {
             setCreateSuccess(message.success);
             handleReloadData(1);
-            setCreateError('');
+            setAddCat((draft) => {
+              Object.entries(draft.images_cat).map(([key, value]) => {
+                draft.images_cat[key].data = '';
+                draft.images_cat[key].progress = '';
+                draft.images_cat[key].local = '';
+              });
+              draft.name_en = '';
+              draft.name_vi = '';
+            });
           } else {
             setCreateSuccess('');
             setCreateError(message.category_exists);
@@ -200,6 +270,12 @@ export default function AddCat({ handleReloadData, handleClose, language, addCla
     }
   };
 
+  useEffect(() => {
+    if (!closeModal) {
+      setCreateError('');
+      setCreateSuccess('');
+    }
+  }, [closeModal]);
   return (
     <Modal closeModal={closeModal}>
       <div className={cx('add_category')} tabIndex="-1">
@@ -263,19 +339,24 @@ export default function AddCat({ handleReloadData, handleClose, language, addCla
               <div className={cx('all_images', 'd-flex flex-column')}>
                 <div className={cx('all_images_content', 'd-flex flex-row')}>
                   {Object.entries(addCat.images_cat).map(([key, value]) => {
-                    return value?.data ? (
-                      <div className={cx('images_container')} key={key}>
-                        <div className={cx('img')}>
-                          <Images src={value?.data?.src || value?.local} alt={value?.data?.src || value?.local} />
+                    if (value?.data || value?.local) {
+                      return (
+                        <div className={cx('images_container')} key={key}>
+                          <div className={cx('img')}>
+                            <Images src={value?.data?.url || value?.local} alt={value?.data?.url || value?.local} />
+                          </div>
+                          <Progress data={value?.progress} />
+                          <Button className={cx('close')} transparent none_size type="button">
+                            <FontAwesomeIcon
+                              icon={faClose}
+                              onClick={handleCloseImages}
+                              data-name={key}
+                              data-public_id={value?.data?.public_id}
+                            />
+                          </Button>
                         </div>
-                        <Progress />
-                        <Button className={cx('close')} transparent none_size type="button">
-                          <FontAwesomeIcon icon={faClose} onClick={handleCloseImages} data-name={key} />
-                        </Button>
-                      </div>
-                    ) : (
-                      <Fragment key={key}></Fragment>
-                    );
+                      );
+                    }
                   })}
                   {Object.values(addCat.images_cat).filter((d) => d.data !== '').length !== 6 ? (
                     <div

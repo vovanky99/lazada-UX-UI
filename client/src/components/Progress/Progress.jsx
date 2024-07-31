@@ -19,7 +19,7 @@ const Progress = forwardRef(function Progress({ className, seconds = 5, data = 0
   );
 
   useEffect(() => {
-    const duration = seconds * 1000; //  seconds in milliseconds
+    const duration = seconds * 100; //  seconds in milliseconds 1000
     const intervalTime = 100; // Update interval in milliseconds
     const totalIntervals = duration / intervalTime;
     let currentProgress = 0;

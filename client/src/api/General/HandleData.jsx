@@ -1,8 +1,8 @@
 import axios from '~/api/axios';
 
-export async function ShowData(prefixServer = '', name, id) {
+export async function ShowData(prefixServer = '', name, id, language) {
   try {
-    const res = await axios.get(`/api${prefixServer ? '/' + prefixServer : ''}/show-${name}/${id}`);
+    const res = await axios.get(`/api${prefixServer ? '/' + prefixServer : ''}/show-${name}/${id}/${language}`);
     return res.data;
   } catch (e) {
     console.log(e);
@@ -106,11 +106,7 @@ export async function ResetPassword(prefixServer, data) {
 
 export async function GenerateSignatureCloudinary(data) {
   try {
-    const res = await axios.get(`/api/generate-signature/cloudianry`, {
-      params: {
-        ...data,
-      },
-    });
+    const res = await axios.post(`/api/cloudinary`, data);
     return res.data;
   } catch (e) {
     console.log(e);
@@ -123,6 +119,19 @@ export async function getLanguages(language, id) {
       params: {
         language,
         id,
+      },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function GetCatBar(data, language) {
+  try {
+    const res = await axios.get(`/api/admin/catbar/${language}`, {
+      params: {
+        ...data,
       },
     });
     return res.data;

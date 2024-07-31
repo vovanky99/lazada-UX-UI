@@ -126,7 +126,8 @@
       "name_ward": "Vui lòng nhập tên phường!",
       "language": "Vui lòng chọn ngôn ngữ!",
       "type_location": "Vui lòng chọn loại dữ liệu!",
-      "delete_location": "Vui lòng chọn lại kiểu dữ liệu, kiểu dữ liệu hiện tại là null!"
+      "delete_location": "Vui lòng chọn lại kiểu dữ liệu, kiểu dữ liệu hiện tại là null!",
+      "images_cat": "Không đủ 6 bức ảnh!"
     },
     "component": {
       "form_text": "Vui lòng nhập "
@@ -391,8 +392,9 @@
       "language": "Please select language!",
       "type_location": "Please select data type!",
       "delete_location": "Please select the data type again, the current data type is null!",
-      "delete_success": "deleted successfully!",
-      "delete_error": "delete failed!"
+      "delete_success": "Deleted successfully!",
+      "delete_error": "Delete failed!",
+      "images_cat": "Not enough 6 photos!"
     },
     "component": {
       "form_text": "Enter keyword for "

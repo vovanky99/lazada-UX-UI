@@ -6,53 +6,63 @@ import styles from '~/pages/ADMIN/Category/Category.module.scss';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import Button from '~/components/Button';
 import Modal from '~/layout/Component/Modal';
-import { EditData } from '~/api/General/HandleData';
+import { EditData, ShowData } from '~/api/General/HandleData';
 import { FormSelect } from '~/layout/Component/FormGroup/FormSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import Translate from '~/layout/Component/Translate';
 import Images from '~/components/Images';
 import Progress from '~/components/Progress';
-import CldUploadImg from '~/services/cloudinary/CldUploadImg';
+import CldUploadImg, { DeleteImageCld } from '~/services/cloudinary/CldUploadImg';
 import { useImmer } from 'use-immer';
 import MessageText from '~/layout/Component/Message/MessageText';
+import { useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
-export default function EditCat({ closeModal, data, handleCloseEditCat }) {
+export default function EditCat({ closeModal, handleReloadData = () => {}, handleCloseEditCat }) {
   const fileImageRef = useRef();
-  const [editCat, setEditCat] = useImmer(() => {
-    return data;
-  });
+  const nameEnRef = useRef();
+  const nameViRef = useRef();
+  const imagesRef = useRef();
+  const { language } = useSelector((state) => state.Auth);
+  const [searchParams] = useSearchParams();
+  const [editSuccess, setEditSuccess] = useState('');
+  const [editError, setEditError] = useState('');
+  const [editCat, setEditCat] = useImmer(null);
   const message = {
     name_vi: Translate({ children: 'valid.name_vi' }),
     name_en: Translate({ children: 'valid.name_en' }),
     success: Translate({ children: 'valid.create_cat_success' }),
     error: Translate({ children: 'valid.create_cat_error' }),
-    category_exists: Translate({ children: 'valid.category_exists' }),
     image_exists: Translate({ children: 'valid.image_exists' }),
+    images_cat: Translate({ children: 'valid.images_cat' }),
   };
   const [valid, setValid] = useImmer({});
   const handleOnchange = (e) => {
     const { name, value } = e.target;
-    setEditCat({
-      ...editCat,
-      [name]: value,
-    });
+    if (name === 'name_vi') {
+      setEditCat((draft) => {
+        draft.categories_translation[0].name = value;
+      });
+    } else {
+      setEditCat((draft) => {
+        draft.categories_translation[1].name = value;
+      });
+    }
   };
 
   const HandleSetParent = (e) => {
     const { name, id } = e.target.dataset;
-    setEditCat({
-      ...editCat,
-      [name]: id,
+    setEditCat((draft) => {
+      draft.parent_id = id;
     });
   };
 
   const handleSetStatus = (value) => {
-    setEditCat({
-      ...editCat,
-      status: value,
+    setEditCat((draft) => {
+      draft.status = value;
     });
   };
 
@@ -61,39 +71,142 @@ export default function EditCat({ closeModal, data, handleCloseEditCat }) {
     Image.click();
   };
 
-  const handleDeleteImages = () => {};
+  const handleDeleteImages = (e) => {
+    const { id, type } = e.currentTarget.dataset;
+    if (type) {
+      DeleteImageCld(type)
+        .then((result) => {
+          if (result.success) {
+            setEditCat((draft) => {
+              draft.images[id].data = '';
+              draft.images[id].progress = '';
+              draft.images[id].local = '';
+            });
+          }
+        })
+        .catch((e) => console.log(e));
+    } else {
+      Object.entries(editCat.images).map(([key, value]) => {
+        if ((key = parseInt(id))) {
+          setEditCat((draft) => {
+            draft.images[key].name = '';
+          });
+        }
+      });
+    }
+  };
+
+  /* validate */
+  const validate = async (field = editCat) => {
+    const messageValid = { ...valid };
+    if ('name' in field.categories_translation[0]) {
+      messageValid.name_vi = !field.categories_translation[0].name ? message.name_vi : '';
+      if (messageValid.name_vi) {
+        nameViRef.current.clasList.add('border_danger');
+      } else {
+        nameViRef.current.clasList.remove('border_danger');
+      }
+    }
+    if ('name' in field.categories_translation[1]) {
+      messageValid.name_en = !field.categories_translation[1].name ? message.name_en : '';
+      if (messageValid.name_en) {
+        nameEnRef.current.clasList.add('border_danger');
+      } else {
+        nameEnRef.current.clasList.remove('border_danger');
+      }
+    }
+
+    if ('images' in field) {
+      messageValid.images =
+        !field.images.length !== 6 &&
+        !Object.entries(field.images).filter((d) => d?.name !== '' || d?.data !== '').length === 6
+          ? message.images_cat
+          : '';
+      if (messageValid.images) {
+        imagesRef.current.clasList.add('border_danger');
+      } else {
+        imagesRef.current.clasList.remove('border_danger');
+      }
+    }
+
+    Object.entries(messageValid).map(([key, value]) => {
+      if (value === '') {
+        delete messageValid[key];
+      } else {
+        setValid((draft) => {
+          draft[key] = value;
+        });
+      }
+    });
+    return messageValid;
+  };
+
+  const handleUploadProgress = (event) => {
+    const { loaded, total } = event;
+    const percent = Math.round((loaded * 100) / total);
+    setEditCat((draft) => {
+      for (let i = 0; i <= 5; i++) {
+        if (!editCat.images[i]?.name && !editCat.images[i]?.data) {
+          draft.images[i].progress = 100;
+          break;
+        }
+      }
+    });
+  };
+
+  const uploadFile = (file, reader) => {
+    try {
+      CldUploadImg(file, handleUploadProgress)
+        .then((result) => {
+          if (result) {
+            setEditCat((draft) => {
+              for (let i = 0; i <= 5; i++) {
+                if (draft.images[i]?.local && draft.images[i]['local'] === reader) {
+                  draft.images[i]['data'] = result;
+                  draft.images[i]['progress'] = 0;
+                  break;
+                }
+              }
+            });
+          }
+        })
+        .catch((e) => console.log(e));
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleUploadImages = (e) => {
     let { files, value } = e.target;
     let imageExists = false;
-    const handleUploadProgress = (e, index) => {
-      const progress = Math.round((e.loaded * 100) / e.total);
-      setEditCat((draft) => {
-        draft.images_cat[`images_${index}`]['progress'] = progress;
-      });
-    };
+
     Object.entries(files).forEach(([key, value]) => {
       const reader = new FileReader();
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         setEditCat((draft) => {
-          for (let i = 0; i <= draft.images.length - 1; i++) {
-            if (draft.images_cat[`images_${i}`]['local'] === '') {
-              draft.images_cat[`images_${i}`]['local'] = reader.result;
-              CldUploadImg(value, handleUploadProgress(e, i))
-                .then((result) => {
-                  if (result) {
-                    draft.images_cat[`images_${i}`]['data'] = result;
-                  }
-                })
-                .catch((e) => console.log(e));
+          for (let i = 0; i <= 5; i++) {
+            if (!editCat.images[i] || editCat.images[i]['name'] === '') {
+              if (!editCat.images[i]) {
+                draft.images[i] = {
+                  data: '',
+                  local: '',
+                  progress: '',
+                };
+              }
+              draft.images[i]['local'] = reader.result;
+              draft.images[i]['progress'] = 0;
               break;
             }
-            if (draft.images_cat[`images_${i}`]['local'] === reader.result) {
+            if (editCat.images[i]?.local && editCat.images[i]['local'] === reader.result) {
               imageExists = true;
               break;
             }
           }
         });
+        if (imageExists) {
+          return;
+        }
+        uploadFile(value, reader.result);
       };
       if (value) {
         reader.readAsDataURL(value);
@@ -112,112 +225,167 @@ export default function EditCat({ closeModal, data, handleCloseEditCat }) {
     value = '';
   };
 
-  const handleEditCat = (e) => {
+  const handleEditCat = async (e) => {
     e.preventDefault();
-    EditData('admin', 'category', data?.id, editCat)
-      .then((result) => {})
-      .catch((e) => console.log(e));
+    const val = await validate();
+    if (Object.keys(val).length === 0) {
+      const data = new FormData();
+      data.append('name_vi', editCat.categories_translation[0].name);
+      data.append('name_en', editCat.categories_translation[1].name);
+      data.append('parent_id', editCat.parent_id);
+      data.append('status', editCat.status);
+      let images = [];
+      //handle data for create
+      Object.entries(editCat.images).map(([key, value]) => {
+        if (value.name !== '') {
+          images.push(value.name);
+        } else if (value.data !== '') {
+          images.push(value.data);
+        }
+      });
+      data.append('images', images);
+      EditData('admin', 'category', editCat?.id, data)
+        .then((result) => {
+          if (result.success) {
+            setEditSuccess(message.success);
+            handleReloadData(1);
+          } else {
+            setEditSuccess('');
+            setEditError(message.error);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          setEditError(message.error);
+        });
+    }
   };
+  /* get data for show category */
+  useEffect(() => {
+    ShowData('admin', 'category', searchParams.get('sp_atk'), language)
+      .then((result) => {
+        if (result.cat) {
+          setEditCat(result.cat);
+        }
+      })
+      .catch((e) => console.log(e));
+  }, [searchParams.get('sp_atk'), searchParams.get('uuid')]);
   return (
     <Modal id="edit_cat_modal" closeModal={closeModal} modalEdit>
       <div className={cx('edit_cat', 'edit-element d-flex flex-column')} tabIndex="-1">
         <div className={cx('edit_cat_header', 'd-flex flex-row justify-content-between')}>
           <h4 className="text-center text-capitalize">
-            <b>Edit Category</b>
+            <b>
+              <Translate>edit</Translate> <Translate>category</Translate>
+            </b>
           </h4>
-          <Button type="button" none_size transparent>
-            <FontAwesomeIcon icon={faClose} onClick={handleCloseEditCat} />
+          <Button type="button" onClick={handleCloseEditCat} none_size transparent>
+            <FontAwesomeIcon icon={faClose} />
           </Button>
         </div>
-        <form className={cx('edit_cat_content', 'd-flex flex-row flex-wrap')} noValidate onSubmit={handleEditCat}>
-          {Object.entries(data?.categories_translation).map(([key, value]) => (
-            <div className={cx('name')} key={key}>
-              <FormSearch
-                title={value?.language_id === 1 ? 'name_vi' : 'name_en'}
-                name={value?.language_id === 1 ? 'name_vi' : 'name_en'}
-                Value={value?.name}
+        {editCat && (
+          <form className={cx('edit_cat_content', 'd-flex flex-row flex-wrap')} noValidate onSubmit={handleEditCat}>
+            {Object.entries(editCat?.categories_translation).map(([key, value]) => (
+              <div className={cx('name')} key={key}>
+                <FormSearch
+                  title={value?.language_id === 1 ? 'name_vi' : 'name_en'}
+                  name={value?.language_id === 1 ? 'name_vi' : 'name_en'}
+                  Value={value?.name}
+                  useColumn
+                  useTippy={false}
+                  handleOnchange={handleOnchange}
+                />
+              </div>
+            ))}
+            <div className="d-flex flex-row flex-wrap">
+              <Category
+                title="parent"
+                name="parent_id"
                 useColumn
-                useTippy={false}
-                handleOnchange={handleOnchange}
+                ValueID={editCat?.parent_id || ''}
+                SearchValue={editCat?.parent?.categories_translation[0]?.name || ''}
+                handleOnclick={HandleSetParent}
               />
             </div>
-          ))}
-
-          <div className="d-flex flex-row flex-wrap">
-            <Category
-              title="parent"
-              name="parent_id"
-              useColumn
-              ValueID={editCat?.parent_id}
-              SearchValue={data?.cat_name}
-              handleOnclick={HandleSetParent}
-            />
-          </div>
-          <div className={cx('status')}>
-            <FormSelect title="status" useStatus={true} defaultValue={data?.status} handleSetValue={handleSetStatus} />
-          </div>
-          <div className={cx('images_category')}>
-            <h4 className="text-capitalize">
-              <Translate>category_images</Translate>
-            </h4>
-            <div className={cx('images_category_content', 'd-flex flex-column')}>
-              <div className={cx('all_images', 'd-flex flex-column')}>
-                <div className={cx('all_images_content', 'd-flex flex-row')}>
-                  {data?.images.map(([key, value]) => {
-                    return value?.data ? (
-                      <div className={cx('images_container')} key={key}>
-                        <div className={cx('img')}>
-                          <Images src={value?.data?.src || value?.local} alt={value?.data?.src || value?.local} />
-                        </div>
-                        <Progress />
-                        <Button className={cx('close')} transparent none_size type="button">
-                          <FontAwesomeIcon icon={faClose} onClick={handleDeleteImages} data-name={key} />
+            <div className={cx('status')}>
+              <FormSelect
+                title="status"
+                useStatus={true}
+                defaultValue={editCat?.status}
+                handleSetValue={handleSetStatus}
+              />
+            </div>
+            <div className={cx('images_category')}>
+              <h4 className="text-capitalize">
+                <Translate>category_images</Translate>
+              </h4>
+              <div className={cx('images_category_content', 'd-flex flex-column')}>
+                <div className={cx('all_images', 'd-flex flex-column')}>
+                  <div className={cx('all_images_content', 'd-flex flex-row')}>
+                    {editCat?.images &&
+                      editCat?.images?.map((image, index) => {
+                        return (
+                          (image?.name || image?.local || image?.data) && (
+                            <div className={cx('images_container')} key={index}>
+                              <div className={cx('img')}>
+                                <Images src={image?.name || image?.local || image?.data?.src} alt={image?.name} />
+                              </div>
+                              <Progress />
+                              <Button className={cx('close')} transparent none_size type="button">
+                                <FontAwesomeIcon
+                                  icon={faClose}
+                                  onClick={handleDeleteImages}
+                                  data-id={index}
+                                  data-type={image?.data?.public_id || ''}
+                                />
+                              </Button>
+                            </div>
+                          )
+                        );
+                      })}
+                    {editCat?.images.filter((d) => d?.data !== '' || d?.name !== '').length !== 6 ? (
+                      <div
+                        data-type="btn_upload"
+                        className={cx('select_images', 'd-flex flex-row justify-content-center')}
+                      >
+                        <input
+                          ref={fileImageRef}
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={handleUploadImages}
+                          multiple
+                        />
+                        <Button
+                          className={cx('btn_select_image', 'text-capitalize')}
+                          transparent
+                          type="button"
+                          onClick={handleSelectMultipleImages}
+                        >
+                          <Translate>select_image</Translate>
                         </Button>
                       </div>
                     ) : (
-                      <Fragment key={key}></Fragment>
-                    );
-                  })}
-                  {editCat?.images.filter((d) => d?.data !== '').length !== 6 ? (
-                    <div
-                      data-type="btn_upload"
-                      className={cx('select_images', 'd-flex flex-row justify-content-center')}
-                    >
-                      <input
-                        ref={fileImageRef}
-                        type="file"
-                        accept="image/*"
-                        style={{ display: 'none' }}
-                        onChange={handleUploadImages}
-                        multiple
-                      />
-                      <Button
-                        className={cx('btn_select_image', 'text-capitalize')}
-                        transparent
-                        type="button"
-                        onClick={handleSelectMultipleImages}
-                      >
-                        <Translate>select_image</Translate>
-                      </Button>
-                    </div>
-                  ) : (
-                    <Fragment></Fragment>
-                  )}
+                      <Fragment></Fragment>
+                    )}
+                  </div>
+                  <MessageText
+                    className={cx('message', 'text-capitalize text-center text-danger')}
+                    message={valid?.images_cat}
+                  />
                 </div>
-                <MessageText
-                  className={cx('message', 'text-capitalize text-center text-danger')}
-                  message={valid?.images_cat}
-                />
               </div>
             </div>
-          </div>
-
-          <div className="d-flex flex-row justify-content-center">
-            <Button gradient_primary type="submit">
-              Edit
-            </Button>
-          </div>
-        </form>
+            <div className="d-flex flex-row justify-content-center">
+              <MessageText message={editError || editSuccess} />
+            </div>
+            <div className="d-flex flex-row justify-content-center">
+              <Button className={cx('text-capitalize')} gradient_primary type="submit">
+                <Translate>edit</Translate>
+              </Button>
+            </div>
+          </form>
+        )}
       </div>
     </Modal>
   );

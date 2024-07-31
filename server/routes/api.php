@@ -22,7 +22,7 @@ use App\Http\Controllers\CheckController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;
-use App\Http\Controllers\GenerateSignatureController;
+use App\Http\Controllers\CloudinaryController;
 use App\Http\Controllers\Seller\HomeController as SellerHomeController;
 use App\Http\Controllers\Seller\ProfileController as SellerProfileController;
 use Illuminate\Support\Facades\Route;
@@ -118,9 +118,10 @@ Route::prefix('/admin')->group(function(){
         /* Category public */
         Route::controller(CategoriesController::class)->group(function(){
             Route::get('/get-category/{language}','index');
+            Route::get('/catbar/{language}','catBar');
             Route::post('/create-category','store');
             Route::patch('/edit-category/{id}','update');
-            Route::get('/show-category/{id}','show');
+            Route::get('/show-category/{id}/{language}','show');
             Route::delete('/delete-category/{id}','delete');
             Route::get('/todo-list-cat','TodoListCat');
         });
@@ -243,8 +244,9 @@ Route::controller(ShippingMethodController::class)->group(function(){
     Route::get('/get-shipping-method','index');
 });
 
-Route::controller(GenerateSignatureController::class)->group(function(){
-    Route::get('/generate-signature/cloudianry','Cloudinary');
+Route::controller(CloudinaryController::class)->group(function(){
+    Route::post('/cloudinary','generateSignature');
+    Route::post('/delete-image','deleteImage');
 });
 
 Route::controller(AdminController::class)->group(function(){

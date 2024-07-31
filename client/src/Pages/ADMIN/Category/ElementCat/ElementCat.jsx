@@ -29,7 +29,7 @@ export default function ListCat({ handleDelete = () => {}, data, EditCat = () =>
   return (
     <Fragment>
       <tr className={cx(`tbody-element`)}>
-        <td>{data.cat_name}</td>
+        <td>{data.name}</td>
         <td>{data.parent_name}</td>
         <td>{data.industry_code}</td>
         <td>{data.status === 1 ? <Translate>show</Translate> : <Translate>hide</Translate>}</td>
@@ -38,7 +38,7 @@ export default function ListCat({ handleDelete = () => {}, data, EditCat = () =>
             <Button
               gradient_primary
               onClick={handleToggleEdit}
-              to={`${config.adminRoutes.Category}?${data.cat_name}.${id}&sp_atk=${data.id}`}
+              to={`${config.adminRoutes.Category}?${data.name}.${id}&sp_atk=${data.id}`}
             >
               Edit
             </Button>

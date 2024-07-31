@@ -1,6 +1,7 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { FormSearch } from '../FormSearch';
-import { GetData } from '~/api/General/HandleData';
+import { GetCatBar } from '~/api/General/HandleData';
+import { useSelector } from 'react-redux';
 
 const Category = forwardRef(function Category(
   {
@@ -16,10 +17,10 @@ const Category = forwardRef(function Category(
     handleSetName = () => {},
     handleOnclick = () => {},
     name,
-    language,
   },
   ref,
 ) {
+  const { language } = useSelector((state) => state.Auth);
   const [value, setValue] = useState(ValueID || '');
   const [searchValue, setSearchValue] = useState(SearchValue || '');
   const [Data, setData] = useState(null);
@@ -34,14 +35,14 @@ const Category = forwardRef(function Category(
 
   /* get data */
   useEffect(() => {
-    GetData('admin', 'category', { value: searchValue }, language)
+    GetCatBar({ name: searchValue, parent_id: value }, language)
       .then((result) => {
         setData(result);
       })
       .catch((e) => {
         console.log(e);
       });
-  }, [searchValue]);
+  }, [searchValue, value]);
   return (
     <>
       <FormSearch

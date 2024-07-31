@@ -60,13 +60,6 @@
             }
           }
         }
-
-        .select_images {
-          .btn_select_image {
-            font-size: 1.4rem;
-            border: 1px dashed var(--border_color_admin);
-          }
-        }
       }
     }
   }
@@ -101,7 +94,7 @@
   }
 }
 .edit_cat {
-  width: 40vw;
+  width: 45vw;
   height: 100vh;
   padding: 20px;
   margin-right: 20px;
@@ -166,10 +159,13 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                color: var(--white);
                 background-color: var(--background_color_shadow);
                 svg {
+                  color: var(--white);
                   cursor: pointer;
+                  &:hover {
+                    color: var(--primary);
+                  }
                 }
               }
               &:not([data-type='btn_upload']) {
@@ -183,13 +179,6 @@
             }
           }
         }
-
-        .select_images {
-          .btn_select_image {
-            font-size: 1.4rem;
-            border: 1px dashed var(--border_color_admin);
-          }
-        }
       }
     }
     .status {
@@ -197,11 +186,23 @@
     }
   }
 }
+.select_images {
+  .btn_select_image {
+    font-size: 1.4rem;
+    border: 1px dashed var(--border_color_admin);
+    &:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      text-decoration: none;
+    }
+  }
+}
 .data_table {
   .toll-edit {
     gap: 5px;
     border-left: none;
-    button {
+    button,
+    a {
       font-size: 1.4rem;
       padding: 5px 10px;
     }

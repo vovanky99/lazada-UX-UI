@@ -176,6 +176,7 @@ return [
         App\Providers\HelperServiceProvider::class,
         \Laravel\Sanctum\SanctumServiceProvider::class,
         App\Providers\VonageServiceProvider::class,
+        CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
         ])->toArray(),
 
     /*
