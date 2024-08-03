@@ -38,7 +38,7 @@ export default function ListCat({ handleDelete = () => {}, data, EditCat = () =>
             <Button
               gradient_primary
               onClick={handleToggleEdit}
-              to={`${config.adminRoutes.Category}?${data.name}.${id}&sp_atk=${data.id}`}
+              to={`${config.adminRoutes.Category}?${data.name}&uuid=${id}&sp_atk=${data.id}`}
             >
               Edit
             </Button>

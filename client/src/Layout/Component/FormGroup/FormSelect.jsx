@@ -48,7 +48,7 @@ export const FormSelect = forwardRef(function Form(
           handleOnchange(e);
         }}
       >
-        {defaultValue ? '' : <option value="" className="text-capitalize"></option>}
+        {defaultValue || defaultValue === 0 ? '' : <option value="" className="text-capitalize"></option>}
         {data
           ? data.map((d, index) => (
               <option value={d?.id} key={index}>

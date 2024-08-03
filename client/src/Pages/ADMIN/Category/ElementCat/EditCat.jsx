@@ -25,7 +25,6 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
   const fileImageRef = useRef();
   const nameEnRef = useRef();
   const nameViRef = useRef();
-  const imagesRef = useRef();
   const { language } = useSelector((state) => state.Auth);
   const [searchParams] = useSearchParams();
   const [editSuccess, setEditSuccess] = useState('');
@@ -46,9 +45,13 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
       setEditCat((draft) => {
         draft.categories_translation[0].name = value;
       });
-    } else {
+    } else if (name === 'name_en') {
       setEditCat((draft) => {
         draft.categories_translation[1].name = value;
+      });
+    } else {
+      setEditCat((draft) => {
+        draft.industry_code = value;
       });
     }
   };
@@ -56,13 +59,13 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
   const HandleSetParent = (e) => {
     const { name, id } = e.target.dataset;
     setEditCat((draft) => {
-      draft.parent_id = id;
+      draft.parent_id = parseInt(id);
     });
   };
 
   const handleSetStatus = (value) => {
     setEditCat((draft) => {
-      draft.status = value;
+      draft.status = parseInt(value);
     });
   };
 
@@ -87,7 +90,7 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
         .catch((e) => console.log(e));
     } else {
       Object.entries(editCat.images).map(([key, value]) => {
-        if ((key = parseInt(id))) {
+        if (key === id) {
           setEditCat((draft) => {
             draft.images[key].name = '';
           });
@@ -101,31 +104,18 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
     const messageValid = { ...valid };
     if ('name' in field.categories_translation[0]) {
       messageValid.name_vi = !field.categories_translation[0].name ? message.name_vi : '';
-      if (messageValid.name_vi) {
-        nameViRef.current.clasList.add('border_danger');
+      if (messageValid.name_vi && nameViRef) {
+        nameViRef.current.classList.add('border_danger');
       } else {
-        nameViRef.current.clasList.remove('border_danger');
+        nameViRef.current.classList.remove('border_danger');
       }
     }
     if ('name' in field.categories_translation[1]) {
       messageValid.name_en = !field.categories_translation[1].name ? message.name_en : '';
-      if (messageValid.name_en) {
-        nameEnRef.current.clasList.add('border_danger');
+      if (messageValid.name_en && nameEnRef) {
+        nameEnRef.current.classList.add('border_danger');
       } else {
-        nameEnRef.current.clasList.remove('border_danger');
-      }
-    }
-
-    if ('images' in field) {
-      messageValid.images =
-        !field.images.length !== 6 &&
-        !Object.entries(field.images).filter((d) => d?.name !== '' || d?.data !== '').length === 6
-          ? message.images_cat
-          : '';
-      if (messageValid.images) {
-        imagesRef.current.clasList.add('border_danger');
-      } else {
-        imagesRef.current.clasList.remove('border_danger');
+        nameEnRef.current.classList.remove('border_danger');
       }
     }
 
@@ -140,7 +130,6 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
     });
     return messageValid;
   };
-
   const handleUploadProgress = (event) => {
     const { loaded, total } = event;
     const percent = Math.round((loaded * 100) / total);
@@ -185,8 +174,12 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
       reader.onloadend = async () => {
         setEditCat((draft) => {
           for (let i = 0; i <= 5; i++) {
-            if (!editCat.images[i] || editCat.images[i]['name'] === '') {
-              if (!editCat.images[i]) {
+            if (
+              !draft.images[i] ||
+              (draft.images[i].name === '' && (!draft.images[i].data || draft.images[i].data === '')) ||
+              (draft.images[i].data === '' && !draft.images[i].name)
+            ) {
+              if (!draft.images[i]) {
                 draft.images[i] = {
                   data: '',
                   local: '',
@@ -229,21 +222,23 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
     e.preventDefault();
     const val = await validate();
     if (Object.keys(val).length === 0) {
-      const data = new FormData();
-      data.append('name_vi', editCat.categories_translation[0].name);
-      data.append('name_en', editCat.categories_translation[1].name);
-      data.append('parent_id', editCat.parent_id);
-      data.append('status', editCat.status);
       let images = [];
       //handle data for create
       Object.entries(editCat.images).map(([key, value]) => {
-        if (value.name !== '') {
+        if (value.name && value.name !== '') {
           images.push(value.name);
         } else if (value.data !== '') {
-          images.push(value.data);
+          images.push(value.data.src);
         }
       });
-      data.append('images', images);
+      const data = {
+        name_vi: editCat.categories_translation[0].name,
+        name_en: editCat.categories_translation[1].name,
+        parent_id: editCat.parent_id,
+        industry_code: editCat.industry_code,
+        status: editCat.status,
+        images: images,
+      };
       EditData('admin', 'category', editCat?.id, data)
         .then((result) => {
           if (result.success) {
@@ -279,24 +274,34 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
               <Translate>edit</Translate> <Translate>category</Translate>
             </b>
           </h4>
-          <Button type="button" onClick={handleCloseEditCat} none_size transparent>
+          <Button
+            type="button"
+            onClick={() => {
+              handleCloseEditCat();
+              setEditCat(null);
+            }}
+            none_size
+            transparent
+          >
             <FontAwesomeIcon icon={faClose} />
           </Button>
         </div>
         {editCat && (
           <form className={cx('edit_cat_content', 'd-flex flex-row flex-wrap')} noValidate onSubmit={handleEditCat}>
-            {Object.entries(editCat?.categories_translation).map(([key, value]) => (
-              <div className={cx('name')} key={key}>
-                <FormSearch
-                  title={value?.language_id === 1 ? 'name_vi' : 'name_en'}
-                  name={value?.language_id === 1 ? 'name_vi' : 'name_en'}
-                  Value={value?.name}
-                  useColumn
-                  useTippy={false}
-                  handleOnchange={handleOnchange}
-                />
-              </div>
-            ))}
+            {editCat &&
+              Object.entries(editCat?.categories_translation).map(([key, value]) => (
+                <div className={cx('name')} key={key}>
+                  <FormSearch
+                    ref={value?.language_id === 1 ? nameViRef : nameEnRef}
+                    title={value?.language_id === 1 ? 'name_vi' : 'name_en'}
+                    name={value?.language_id === 1 ? 'name_vi' : 'name_en'}
+                    Value={value?.name}
+                    useColumn
+                    useTippy={false}
+                    handleOnchange={handleOnchange}
+                  />
+                </div>
+              ))}
             <div className="d-flex flex-row flex-wrap">
               <Category
                 title="parent"
@@ -305,6 +310,17 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
                 ValueID={editCat?.parent_id || ''}
                 SearchValue={editCat?.parent?.categories_translation[0]?.name || ''}
                 handleOnclick={HandleSetParent}
+              />
+            </div>
+            <div className={cx('industry_code')}>
+              <FormSearch
+                title="industry_code"
+                useColumn
+                inputType="number"
+                name="industry_code"
+                Value={editCat?.industry_code || ''}
+                useTippy={false}
+                handleOnchange={handleOnchange}
               />
             </div>
             <div className={cx('status')}>
@@ -376,8 +392,11 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
                 </div>
               </div>
             </div>
-            <div className="d-flex flex-row justify-content-center">
-              <MessageText message={editError || editSuccess} />
+            <div className={cx('message_edit')}>
+              <MessageText
+                message={editError || editSuccess}
+                className={cx('message', 'text-capitalize text-center', editError ? 'text-danger' : 'text-success')}
+              />
             </div>
             <div className="d-flex flex-row justify-content-center">
               <Button className={cx('text-capitalize')} gradient_primary type="submit">

@@ -299,251 +299,237 @@ export default function EditLocation({ id, handleToggleEdit, reloadData = () => 
   return (
     <Modal id={id} modalEdit closeModal={closeModal}>
       <ScrollY>
-        {dataEdit.length !== 0 ? (
-          <div className={cx('toggle-edit', 'edit-element text-center')} tabIndex="-1">
-            <div className={cx('edit_location_header', 'd-flex flex-row justify-content-between align-items-center')}>
-              <h4 className="text-capitalize">
-                <b>
-                  <Translate>edit_location</Translate>
-                </b>
-              </h4>
-              <Button
-                className={cx('close')}
-                onClick={(e) => {
-                  setDataEdit({});
-                  handleToggleEdit();
-                }}
-                none_size
-                transparent
-              >
-                <FontAwesomeIcon icon={faClose} />
-              </Button>
-            </div>
-            <div className={cx('edit_location_content', 'd-flex flex-column')}>
-              {dataEdit?.country ? (
-                <form className={cx('country', 'd-flex flex-column')} noValidate>
-                  <h5 className={cx('title', 'text-capitalize')}>
-                    <Translate>country</Translate>
-                  </h5>
-                  <div className={cx('content', 'text-capitalize d-flex flex-row flex-wrap')}>
-                    <div className={cx('country_name')}>
-                      <FormSearch
-                        ref={nameCountryRef}
-                        title="name"
-                        name="name"
-                        type="name"
-                        Value={dataEdit?.country?.name}
-                        handleOnchange={handleOnchangeCountry}
-                        useColumn
-                        useTippy={false}
-                      />
-                      <MessageText message={valid?.name_country} className={cx('message', 'text-danger')} />
-                    </div>
-                    <div className={cx('acronym_country')}>
-                      <FormSearch
-                        ref={acronymRef}
-                        title="acronym"
-                        type="acronym"
-                        name="acronym"
-                        Value={dataEdit?.country?.acronym}
-                        handleOnchange={handleOnchangeCountry}
-                        useColumn
-                        useTippy={false}
-                      />
-                      <MessageText message={valid?.acronym} className={cx('message', 'text-danger')} />
-                    </div>
-                    <div className={cx('internation_code_country')}>
-                      <FormSearch
-                        ref={internationalRef}
-                        type="international_codes"
-                        title="international_codes"
-                        name="international_codes"
-                        Value={dataEdit?.country?.international_codes}
-                        handleOnchange={handleOnchangeCountry}
-                        useColumn
-                        useTippy={false}
-                      />
-                      <MessageText message={valid?.international_codes} className={cx('message', 'text-danger')} />
-                    </div>
-                    <div className={cx('language_country')}>
-                      <FormSearch
-                        ref={languageRef}
-                        title="language"
-                        name="language"
-                        data={languages}
-                        type="language"
-                        handleOnclick={handleOnclickLanguage}
-                        handleResetValue={handleClearLanguage}
-                        valueID={dataEdit?.country?.language_id}
-                        Value={dataEdit?.country?.language?.name}
-                        inputClass={cx('text-capitalize form-control py-2')}
-                        searchValue={(value) => {
-                          setSearchLanguage(value);
-                          if (value === '') {
-                            setDataEdit((draft) => {
-                              draft.country.language_id = '';
-                            });
-                          }
-                        }}
-                        useColumn
-                      />
-                      <MessageText message={valid?.language} className={cx('message', 'text-danger')} />
-                    </div>
-                  </div>
-                </form>
-              ) : (
-                <Fragment></Fragment>
-              )}
-              {dataEdit?.city ? (
-                <form className={cx('city', 'd-flex flex-column')} noValidate>
-                  <h5 className={cx('title', 'text-capitalize')}>
-                    <Translate>city</Translate>
-                  </h5>
-                  <div className={cx('content', 'd-flex flex-row flex-wrap')}>
-                    <div className={cx('name_city')}>
-                      <FormSearch
-                        ref={nameCityRef}
-                        title="name"
-                        name="name"
-                        type="name"
-                        Value={dataEdit?.city?.name}
-                        useTippy={false}
-                        handleOnchange={handleOnchangeCity}
-                        useColumn
-                      />
-                      <MessageText message={valid?.name_city} className={cx('message', 'text-danger')} />
-                    </div>
-                    <div className={cx('area_city')}>
-                      <FormSearch
-                        title="area"
-                        name="area"
-                        type="area"
-                        useTippy={false}
-                        Value={dataEdit?.city?.area}
-                        handleOnchange={handleOnchangeCity}
-                        useColumn
-                      />
-                    </div>
-                  </div>
-                </form>
-              ) : (
-                <Fragment></Fragment>
-              )}
-              {dataEdit?.district ? (
-                <form className={cx('district', 'd-flex flex-column')} noValidate>
-                  <h5 className={cx('title', 'text-capitalize')}>
-                    <Translate>district</Translate>
-                  </h5>
-                  <div className={cx('content', 'd-flex flex-row flex-wrap')}>
-                    <div className={cx('name_district')}>
-                      <FormSearch
-                        ref={nameDistrictRef}
-                        title="name"
-                        name="name"
-                        type="name"
-                        Value={dataEdit?.district?.name}
-                        useTippy={false}
-                        handleOnchange={handleOnchangeDistrict}
-                        useColumn
-                      />
-                      <MessageText message={valid?.name_district} className={cx('message', 'text-danger')} />
-                    </div>
-                    <div className={cx('fee_ship_district')}>
-                      <FormSearch
-                        title="fee_ship"
-                        name="fee_ship"
-                        type="fee_ship"
-                        useTippy={false}
-                        Value={dataEdit?.district?.fee_ship}
-                        handleOnchange={handleOnchangeDistrict}
-                        useColumn
-                      />
-                    </div>
-                  </div>
-                </form>
-              ) : (
-                <Fragment></Fragment>
-              )}
-              {dataEdit?.ward ? (
-                <form className={cx('ward', 'd-flex flex-column')} noValidate>
-                  <h5 className={cx('title', 'text-capitalize')}>
-                    <Translate>ward</Translate>
-                  </h5>
-                  <div className={cx('content', 'd-flex flex-row flex-wrap')}>
-                    <div className={cx('name_ward')}>
-                      <FormSearch
-                        ref={nameWardRef}
-                        title="name"
-                        name="name"
-                        type="name"
-                        Value={dataEdit?.ward?.name}
-                        useTippy={false}
-                        handleOnchange={handleOnchangeWard}
-                        useColumn
-                      />
-                      <MessageText message={valid?.name_ward} className={cx('message', 'text-danger')} />
-                    </div>
-                  </div>
-                </form>
-              ) : (
-                <Fragment></Fragment>
-              )}
-              {dataEdit?.country ? (
-                <>
-                  <div className={cx('btn_select')}>
-                    <FormSelect
-                      ref={selectTypeRef}
-                      containerClass={cx('d-flex flex-column')}
-                      title="select_type"
-                      name="location_type"
-                      data={editType}
-                      handleOnchange={handleSelectType}
-                    />
-                    <MessageText message={valid?.type_edit} className={cx('message', 'text-danger')} />
-                  </div>
-                  <div className={cx('btn_submit_all', 'd-flex flex-row')}>
-                    <div className={cx('btn_delete')}>
-                      <Button
-                        type="button"
-                        className={cx('text-capitalize')}
-                        onClick={handleDelete}
-                        small
-                        gradient_danger
-                      >
-                        <Translate>delete</Translate>
-                      </Button>
-                    </div>
-                    <div className={cx('btn_submit')}>
-                      <Button
-                        type="button"
-                        className={cx('text-capitalize')}
-                        onClick={handleSave}
-                        small
-                        gradient_primary
-                      >
-                        <Translate>update</Translate>
-                      </Button>
-                    </div>
-                    <div className={cx('btn_message')}>
-                      <MessageText
-                        message={success || error || valid?.delete}
-                        className={cx(
-                          'message',
-                          'text-center text-capitalize',
-                          `text-${success ? 'success' : 'danger'}`,
-                        )}
-                      />
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
-            </div>
+        <div className={cx('toggle-edit', 'edit-element text-center')} tabIndex="-1">
+          <div className={cx('edit_location_header', 'd-flex flex-row justify-content-between align-items-center')}>
+            <h4 className="text-capitalize">
+              <b>
+                <Translate>edit_location</Translate>
+              </b>
+            </h4>
+            <Button
+              className={cx('close')}
+              onClick={(e) => {
+                setDataEdit({});
+                handleToggleEdit();
+              }}
+              none_size
+              transparent
+            >
+              <FontAwesomeIcon icon={faClose} />
+            </Button>
           </div>
-        ) : (
-          <></>
-        )}
+          <div className={cx('edit_location_content', 'd-flex flex-column')}>
+            {dataEdit?.country ? (
+              <form className={cx('country', 'd-flex flex-column')} noValidate>
+                <h5 className={cx('title', 'text-capitalize')}>
+                  <Translate>country</Translate>
+                </h5>
+                <div className={cx('content', 'text-capitalize d-flex flex-row flex-wrap')}>
+                  <div className={cx('country_name')}>
+                    <FormSearch
+                      ref={nameCountryRef}
+                      title="name"
+                      name="name"
+                      type="name"
+                      Value={dataEdit?.country?.name}
+                      handleOnchange={handleOnchangeCountry}
+                      useColumn
+                      useTippy={false}
+                    />
+                    <MessageText message={valid?.name_country} className={cx('message', 'text-danger')} />
+                  </div>
+                  <div className={cx('acronym_country')}>
+                    <FormSearch
+                      ref={acronymRef}
+                      title="acronym"
+                      type="acronym"
+                      name="acronym"
+                      Value={dataEdit?.country?.acronym}
+                      handleOnchange={handleOnchangeCountry}
+                      useColumn
+                      useTippy={false}
+                    />
+                    <MessageText message={valid?.acronym} className={cx('message', 'text-danger')} />
+                  </div>
+                  <div className={cx('internation_code_country')}>
+                    <FormSearch
+                      ref={internationalRef}
+                      type="international_codes"
+                      title="international_codes"
+                      name="international_codes"
+                      Value={dataEdit?.country?.international_codes}
+                      handleOnchange={handleOnchangeCountry}
+                      useColumn
+                      useTippy={false}
+                    />
+                    <MessageText message={valid?.international_codes} className={cx('message', 'text-danger')} />
+                  </div>
+                  <div className={cx('language_country')}>
+                    <FormSearch
+                      ref={languageRef}
+                      title="language"
+                      name="language"
+                      data={languages}
+                      type="language"
+                      handleOnclick={handleOnclickLanguage}
+                      handleResetValue={handleClearLanguage}
+                      valueID={dataEdit?.country?.language_id}
+                      Value={dataEdit?.country?.language?.name}
+                      inputClass={cx('text-capitalize form-control py-2')}
+                      searchValue={(value) => {
+                        setSearchLanguage(value);
+                        if (value === '') {
+                          setDataEdit((draft) => {
+                            draft.country.language_id = '';
+                          });
+                        }
+                      }}
+                      useColumn
+                    />
+                    <MessageText message={valid?.language} className={cx('message', 'text-danger')} />
+                  </div>
+                </div>
+              </form>
+            ) : (
+              <Fragment></Fragment>
+            )}
+            {dataEdit?.city ? (
+              <form className={cx('city', 'd-flex flex-column')} noValidate>
+                <h5 className={cx('title', 'text-capitalize')}>
+                  <Translate>city</Translate>
+                </h5>
+                <div className={cx('content', 'd-flex flex-row flex-wrap')}>
+                  <div className={cx('name_city')}>
+                    <FormSearch
+                      ref={nameCityRef}
+                      title="name"
+                      name="name"
+                      type="name"
+                      Value={dataEdit?.city?.name}
+                      useTippy={false}
+                      handleOnchange={handleOnchangeCity}
+                      useColumn
+                    />
+                    <MessageText message={valid?.name_city} className={cx('message', 'text-danger')} />
+                  </div>
+                  <div className={cx('area_city')}>
+                    <FormSearch
+                      title="area"
+                      name="area"
+                      type="area"
+                      useTippy={false}
+                      Value={dataEdit?.city?.area}
+                      handleOnchange={handleOnchangeCity}
+                      useColumn
+                    />
+                  </div>
+                </div>
+              </form>
+            ) : (
+              <Fragment></Fragment>
+            )}
+            {dataEdit?.district ? (
+              <form className={cx('district', 'd-flex flex-column')} noValidate>
+                <h5 className={cx('title', 'text-capitalize')}>
+                  <Translate>district</Translate>
+                </h5>
+                <div className={cx('content', 'd-flex flex-row flex-wrap')}>
+                  <div className={cx('name_district')}>
+                    <FormSearch
+                      ref={nameDistrictRef}
+                      title="name"
+                      name="name"
+                      type="name"
+                      Value={dataEdit?.district?.name}
+                      useTippy={false}
+                      handleOnchange={handleOnchangeDistrict}
+                      useColumn
+                    />
+                    <MessageText message={valid?.name_district} className={cx('message', 'text-danger')} />
+                  </div>
+                  <div className={cx('fee_ship_district')}>
+                    <FormSearch
+                      title="fee_ship"
+                      name="fee_ship"
+                      type="fee_ship"
+                      useTippy={false}
+                      Value={dataEdit?.district?.fee_ship}
+                      handleOnchange={handleOnchangeDistrict}
+                      useColumn
+                    />
+                  </div>
+                </div>
+              </form>
+            ) : (
+              <Fragment></Fragment>
+            )}
+            {dataEdit?.ward ? (
+              <form className={cx('ward', 'd-flex flex-column')} noValidate>
+                <h5 className={cx('title', 'text-capitalize')}>
+                  <Translate>ward</Translate>
+                </h5>
+                <div className={cx('content', 'd-flex flex-row flex-wrap')}>
+                  <div className={cx('name_ward')}>
+                    <FormSearch
+                      ref={nameWardRef}
+                      title="name"
+                      name="name"
+                      type="name"
+                      Value={dataEdit?.ward?.name}
+                      useTippy={false}
+                      handleOnchange={handleOnchangeWard}
+                      useColumn
+                    />
+                    <MessageText message={valid?.name_ward} className={cx('message', 'text-danger')} />
+                  </div>
+                </div>
+              </form>
+            ) : (
+              <Fragment></Fragment>
+            )}
+            {dataEdit?.country ? (
+              <>
+                <div className={cx('btn_select')}>
+                  <FormSelect
+                    ref={selectTypeRef}
+                    containerClass={cx('d-flex flex-column')}
+                    title="select_type"
+                    name="location_type"
+                    data={editType}
+                    handleOnchange={handleSelectType}
+                  />
+                  <MessageText message={valid?.type_edit} className={cx('message', 'text-danger')} />
+                </div>
+                <div className={cx('btn_submit_all', 'd-flex flex-row')}>
+                  <div className={cx('btn_delete')}>
+                    <Button
+                      type="button"
+                      className={cx('text-capitalize')}
+                      onClick={handleDelete}
+                      small
+                      gradient_danger
+                    >
+                      <Translate>delete</Translate>
+                    </Button>
+                  </div>
+                  <div className={cx('btn_submit')}>
+                    <Button type="button" className={cx('text-capitalize')} onClick={handleSave} small gradient_primary>
+                      <Translate>update</Translate>
+                    </Button>
+                  </div>
+                  <div className={cx('btn_message')}>
+                    <MessageText
+                      message={success || error || valid?.delete}
+                      className={cx('message', 'text-center text-capitalize', `text-${success ? 'success' : 'danger'}`)}
+                    />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
       </ScrollY>
     </Modal>
   );

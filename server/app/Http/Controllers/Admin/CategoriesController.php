@@ -121,13 +121,13 @@ class CategoriesController extends Controller
         $name_vi = $request->name_vi;
         $parent_id = $request->parent_id;
         $status = $request->status;
-        $images = explode(',',$request->images);
+        $images = $request->images;
+        $industryCode = $request->industry_code;
         $slug_en = Str::slug($name_en);
         $slug_vi = Str::slug($name_vi);
         $checkTitleEn = CategoriesTranslation::where('name',$name_en)->get();
         $checkTitleVi = CategoriesTranslation::where('name',$name_en)->get();
-        $cat = Categories::find($id);
-
+        $cat = $this->Category($id);
         try{
             foreach($checkTitleEn as $key => $value){
                 if($value->category_id &&  $value->category_id != $cat->id){
@@ -146,21 +146,21 @@ class CategoriesController extends Controller
              * 
              * */
             $newImages = [];
+            $cat_images = $cat->images;
             foreach($images as $key =>$image){
-                if(!in_array($image,$cat->images)){
+                if(!in_array($image,(array)$cat_images)){
                     array_push($newImages,$image);
                 }
             }
-            foreach($cat->images as $key =>$value){
+            foreach($cat_images as $key =>$value){
                 if(!in_array($value->name,$images)){
-                    $this->general->extractPulbicIdFormUrl($value);
+                    $this->general->deleteImagesCloudinary($value->name);
                     $value->update([
                         'name'=>array_pop($newImages),
                     ]);
                 }
                 
-             }
-
+            }
              
             /**
              * handle save name for cat
@@ -180,104 +180,194 @@ class CategoriesController extends Controller
                     ]);
                 }
             }
-            if($cat->parent_id == $parent_id){
-                $cat->update([
-                    'status'=>$status,
+            $cat->update([
+                'industry_code'=>$industryCode,
+                'status'=>$status,
+            ]);
+        
+            $nodeLeft = $cat->_lft;
+            $nodeRight = $cat->_rgt;
+            $parent = Categories::find($parent_id);
+            $catParentOld = Categories::find($cat->parent_id);
+            $width = $cat->_rgt - $cat->_lft + 1;
+
+            
+            if($catParentOld->_rgt < $parent->_lft){
+                $this->Category($parent_id)->update([
+                    '_lft'=>$parent->_lft - $width
                 ]);
                 
-            }
-            else if(!$cat->parent_id && $parent_id){
-                // change cat empty to cat have value
-
-                $parent = Categories::find($parent_id);
-
-                //update _lft for cat
-                $updateNode = DB::table('categories')->where('_lft','>',$parent->_lft)->get();
-                if($updateNode){
-                    foreach($updateNode as $up){
-                        $cat = Categories::find($up->id);
-                        $cat->_lft +=2;
-                        $cat->save();
+                // update cat
+                $editCat = $this->Category($id)->update([
+                    'parent_id'=>$parent_id,
+                    '_lft'=>$parent->_lft + 1,
+                    '_rgt'=>$parent->_lft + $width,
+                ]);
+                
+                if(count($editCat->childrens()) !=0){
+                    $space =  $parent->_lft - $catParentOld->_rgt + 1;
+                    $child = Categories::where([['_lft','>',$nodeLeft],['_rgt','<',$nodeRight],['prent_id',$editCat->id]])->get();
+                    foreach($child as $c){
+                        $this->Category($c->id)->update([
+                            '_lft'=>$this->Category($c->id)->_lft - $space,
+                            '_rgt'=>$this->Category($c->id)->_rgt - $space,
+                        ]);
                     }
                 }
 
-                    //update _rgt for cat
-                    $updateNode = DB::table('categories')->where('_rgt','>',$parent->_lft)->get();
-                    if($updateNode){
-                        foreach($updateNode as $up){
-                            $cat = Categories::find($up->id);
-                            $cat->_rgt +=2;
-                            $cat->save();
+                $oldChild = Categories::where([['_lft','>',$nodeLeft],['_rgt','<',$catParentOld->_rgt]])->get();
+                if(count($oldChild) !=0){
+                    foreach($oldChild as $d){
+                        $this->Category($d->id)->update([
+                            '_rgt'=>$this->Category($d->id)->_rgt - $width,
+                            '_lft'=>$this->Category($d->id)->_lft - $width
+                        ]);
+                    }
+                }
+                $this->Category($catParentOld->id)->update([
+                    '_rgt'=>$catParentOld->_rgt - $width
+                ]);
+            }
+
+            if($parent->_rgt < $catParentOld->_lft){
+                $this->Category($parent_id)->update([
+                    '_rgt'=>$parent->_rgt + $width
+                ]);
+
+               // update cat
+               $editCat = $this->Category($id)->update([
+                'parent_id'=>$parent_id,
+                '_lft'=>$parent->_rgt - 1,
+                '_rgt'=>$parent->_rgt - $width,
+                ]);
+                
+                if(count($editCat->childrens()) !=0){
+                    $space = $catParentOld->_lft - $parent->_rgt + 1;
+                    $child = Categories::where([['_lft','>',$nodeLeft],['_rgt','<',$nodeRight],['parent_id',$editCat->id]])->get();
+                    foreach($child as $c){
+                        $this->Category($c->id)->update([
+                            '_lft'=>$this->Category($c->id)->_lft - $space,
+                            '_rgt'=>$this->Category($c->id)->_rgt - $space,
+                        ]);
+                    }
+                }
+
+                $updateNodeSmall = Categories::where([['_lft','>',$catParentOld->_lft],['_lft','<',$nodeLeft],['parent_id',$catParentOld->id]])->get();
+                if(count($updateNodeSmall) !=0){
+                    foreach($updateNodeSmall as $up){
+                        $cat = $this->Category($up->id)->update([
+                            '_rgt'=>Categories::find($up->id)->_rgt + $width,
+                            '_lft'=>Categories::find($up->id)->_lft + $width,
+                        ]);
+                    }
+                }
+
+                $this->Category($catParentOld->id)->update([
+                    '_lft'=>$catParentOld->_lft + $width
+                ]);
+            }
+            if($parent->_lft < $catParentOld->_rgt && $parent->_lft > $catParentOld->_lft){
+                if($parent->_lft > $cat->_rgt){
+                    $this->Category($parent_id)->update([
+                        '_lft'=>$parent->_lft - $width
+                    ]);
+
+                   // update cat
+                   $editCat = $this->Category($id)->update([
+                    'parent_id'=>$parent_id,
+                    '_lft'=>$parent->_lft + 1,
+                    '_rgt'=>$parent->_lft + $width,
+                    ]);
+                    
+                    if(count($editCat->childrens()) !=0){
+                        $space = $catParentOld->_lft - $parent->_rgt + 1;
+                        $child = Categories::where([['_lft','>',$nodeLeft],['_rgt','<',$nodeRight],['parent_id',$editCat->id]])->get();
+                        foreach($child as $c){
+                            $this->Category($c->id)->update([
+                                '_lft'=>$this->Category($c->id)->_lft + $space,
+                                '_rgt'=>$this->Category($c->id)->_rgt + $space,
+                            ]);
                         }
                     }
+    
+                    $updateNodeSmall = Categories::where([['_rgt','<',$parent->_lft + $width],['_lft','>',$nodeLeft],['parent_id',$catParentOld->id]])->get();
+                    if($updateNodeSmall){
+                        foreach($updateNodeSmall as $up){
+                            $cat = $this->Category($up->id)->update([
+                                '_rgt'=>Categories::find($up->id)->_rgt - $width,
+                                '_lft'=>Categories::find($up->id)->_lft - $width,
+                            ]);
+                        }
+                    }
+                }
+                else if($cat->_lft > $parent->_rgt){
+                    $this->Category($parent_id)->update([
+                        '_lft'=>$parent->_lft + $width
+                    ]);
+
+                   // update cat
+                   $editCat = $this->Category($id)->update([
+                    'parent_id'=>$parent_id,
+                    '_lft'=>$parent->rgt - $width,
+                    '_rgt'=>$parent->_rgt - 1,
+                    ]);
+                    
+                    if(count($editCat->childrens()) !=0){
+                        $space = $catParentOld->_lft - $parent->_rgt + 1;
+                        $child = Categories::where([['_lft','>',$nodeLeft],['_rgt','<',$nodeRight],['parent_id',$editCat->id]])->get();
+                        foreach($child as $c){
+                            $this->Category($c->id)->update([
+                                '_lft'=>$this->Category($c->id)->_lft - $space,
+                                '_rgt'=>$this->Category($c->id)->_rgt - $space,
+                            ]);
+                        }
+                    }
+    
+                    $updateNodeSmall = Categories::where([['_rgt','<',$nodeLeft],['_lft','>',$parent->_rgt - $width],['parent_id',$catParentOld->id]])->get();
+                    if($updateNodeSmall){
+                        foreach($updateNodeSmall as $up){
+                            $cat = $this->Category($up->id)->update([
+                                '_rgt'=>Categories::find($up->id)->_rgt + $width,
+                                '_lft'=>Categories::find($up->id)->_lft + $width,
+                            ]);
+                        }
+                    }
+                }
+            }
+            if($parent->_rgt > $catParentOld->_rgt && $parent->_lft < $catParentOld->_lft){
+                $this->Category($catParentOld->id)->update([
+                    '_lft'=>$catParentOld->_lft + $width
+                ]);
 
                 // update cat
-                $cat->update([
-                    'status'=>$status,
-                    '_lft'=>$parent->_lft + 1,
-                    '_rgt'=>$parent->_lft + 2,
+                $editCat = $this->Category($id)->update([
+                'parent_id'=>$parent_id,
+                '_lft'=>$catParentOld->_lft - $width,
+                '_rgt'=>$catParentOld->_lft - 1,
                 ]);
-            }
-            else  if($cat->parent_id < $parent_id){ 
-                $parent = Categories::find($parent_id);
-                $catParentOld = Categories::find($cat->parent_id);
+                
+                if(count($editCat->childrens()) !=0){
+                    $space = $catParentOld->_lft - $parent->_rgt + 1;
+                    $child = Categories::where([['_lft','>',$nodeLeft],['_rgt','<',$nodeRight],['parent_id',$editCat->id]])->get();
+                    foreach($child as $c){
+                        $this->Category($c->id)->update([
+                            '_lft'=>$this->Category($c->id)->_lft - $space,
+                            '_rgt'=>$this->Category($c->id)->_rgt - $space,
+                        ]);
+                    }
+                }
 
-                // update left node
-                $updateNodeSmall = DB::table('categories')->where('_lft','>=',$catParentOld->_lft)->where('_rgt','<',$parent->_rgt)->get();
+                $updateNodeSmall = Categories::where([['_rgt','>',$catParentOld->_lft - $width],['_lft','<',$nodeLeft],['parent_id',$catParentOld->id]])->get();
                 if($updateNodeSmall){
                     foreach($updateNodeSmall as $up){
-                        $cat = Categories::find($up->id);
-                        $cat->_rgt -=2;
-                        $cat->save();
+                        $cat = $this->Category($up->id)->update([
+                            '_rgt'=>Categories::find($up->id)->_rgt + $width,
+                            '_lft'=>Categories::find($up->id)->_lft + $width,
+                        ]);
                     }
                 }
-                //update node for cat larger
-                $updateNode =DB::table('categories')->where('_lft','>',$catParentOld->_lft)->where('_rgt','=<',$parent->_rgt)->get(); 
-                if($updateNode){
-                    foreach($updateNode as $up){
-                        $cat = Categories::find($up->id);
-                        $cat->_lft +=2;
-                        $cat->save();
-                    }
-                }
-                
-                // update cat
-                $cat->update([
-                    'status'=>$status,
-                    '_lft'=>$parent->_lft + 1,
-                    '_rgt'=>$parent->_lft + 2,
-                ]);
             }
-            else{
-                $parent = Categories::find($parent_id);
-                //update _lft for cat
-                $updateNode = DB::table('categories')->where('_lft','>',$parent->_lft)->get();
-                if($updateNode){
-                    foreach($updateNode as $up){
-                        $cat = Categories::find($up->id);
-                        $cat->_lft +=2;
-                        $cat->save();
-                    }
-                }
-
-                //update _rgt for cat
-                $updateNode = DB::table('categories')->where('_rgt','>',$parent->_lft)->get();
-                if($updateNode){
-                    foreach($updateNode as $up){
-                        $cat = Categories::find($up->id);
-                        $cat->_rgt +=2;
-                        $cat->save();
-                    }
-                }
-                
-                // update cat
-                $cat->update([
-                    'status'=>$status,
-                    '_lft'=>$parent->_lft + 1,
-                    '_rgt'=>$parent->_lft + 2,
-                ]);
-            }
-            return response()->json(['success'=>'created success!']);
+            return response()->json(['success'=>"created success!"]);
         }
         catch(Exception $e){
             return response()->json(['error'=>'category is exists!']);
@@ -416,5 +506,8 @@ class CategoriesController extends Controller
             return response()->json(['error'=>'have issue in process data!']);
         }
         
+    }
+    private function Category($id){
+        return Categories::where('id',$id)->first();
     }
 }
