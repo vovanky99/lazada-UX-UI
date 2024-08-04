@@ -16,6 +16,8 @@ const Category = forwardRef(function Category(
     handleOnchange = () => {},
     handleSetName = () => {},
     handleOnclick = () => {},
+    handleResetValue = () => {},
+    placement,
     name,
   },
   ref,
@@ -53,7 +55,9 @@ const Category = forwardRef(function Category(
         Value={searchValue}
         title={title}
         classTitle={classTitle}
+        handleResetValue={handleResetValue}
         data={Data}
+        placement={placement}
         useColumn={useColumn}
         handleOnclick={handleOnclick}
         handleOnchange={handleOnchange}

@@ -12,7 +12,8 @@
       &:nth-child(5),
       &:nth-child(6),
       &:last-child {
-        width: 100%;
+        // width: 100%;
+        flex-basis: 100%;
       }
     }
   }

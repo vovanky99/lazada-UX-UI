@@ -56,6 +56,8 @@ import LinkResetPassSeller from '~/pages/Seller/Auth/LinkResetPassword';
 import ResetPassSeller from '~/pages/Seller/Auth/ResetPassword';
 import RegisterShopSeller from '~/pages/Seller/RegisterShop';
 import SellerAddProducts from '~/pages/Seller/Products/AddProducts';
+import Attributes from '~/pages/ADMIN/Attributes';
+import AttributesProducts from '~/pages/ADMIN/AttributesProducts';
 
 const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages, MainLayout: true },
@@ -253,6 +255,18 @@ const AdminRoutes = [
     components: ResetPass,
     breadcrumbName: '',
     MainLayout: false,
+  },
+  {
+    path: config.adminRoutes.Attributes,
+    components: Attributes,
+    breadcrumbName: 'atributes',
+    MainLayout: true,
+  },
+  {
+    path: config.adminRoutes.Attributes_product,
+    components: AttributesProducts,
+    breadcrumbName: 'atributes products',
+    MainLayout: true,
   },
 ];
 

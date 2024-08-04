@@ -78,10 +78,10 @@ export default function Voucher() {
             <b>filter Data</b>
           </h4>
           <div className={cx('filter_content', 'd-flex flex-row flex-wrap')}>
-            <FormSearch title="name" name="name" handleOnchange={handleOnchange} useTippy={false} />
-            <FormSearch title="code" name="code" handleOnchange={handleOnchange} useTippy={false} />
+            <FormSearch title="name" name="name" useColumn handleOnchange={handleOnchange} useTippy={false} />
+            <FormSearch title="code" name="code" useColumn handleOnchange={handleOnchange} useTippy={false} />
             <FormSelect title="status" name="status" useStatus={true} handleOnchange={handleOnchange} />
-            <Category title="category" name="category_id" handleOnchange={handleOnchange} />
+            <Category title="category" name="category_id" useColumn handleOnchange={handleOnchange} />
             <FormDate title="start day" name="start_day" handleOnchange={handleOnchange} />
             <FormDate title="end day" name="end_day" handleOnchange={handleOnchange} />
           </div>

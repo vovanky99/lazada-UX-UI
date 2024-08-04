@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Languages;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Exception;
 use Illuminate\Http\Request;
@@ -24,5 +25,8 @@ class GeneralRepository {
         catch(Exception $e){
             return false;
         }
+    }
+    public function languages($acronym){
+        return Languages::where('acronym',$acronym)->first();
     }
 }

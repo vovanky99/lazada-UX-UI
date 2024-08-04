@@ -39,25 +39,25 @@ class CategoriesController extends Controller
         $checkTitle = CategoriesTranslation::where('name',$name_vi)->orWhere('name',$name_en)->first();
         if(!$checkTitle){
             if($parent_id){
-                $parent = Categories::where('id',$parent_id)->first();
+                $parent = $this->Category($parent_id);
 
                 //update _lft for cat
-                $updateNode = DB::table('categories')->where('_lft','>',$parent->_lft)->get();
+                $updateNode = Categories::where('_lft','>',$parent->_lft)->get();
                 if(count($updateNode) >0){
                     foreach($updateNode as $up){
-                        $cat = Categories::find($up->id);
-                        $cat->_lft +=2;
-                        $cat->save();
+                        $this->Category($up->id)->update([
+                            '_lft'=>$this->Category($up->id)->_lft + 2,
+                        ]);
                     }
                 }
 
                 //update _rgt for cat
-                $updateNode = DB::table('categories')->where('_rgt','>',$parent->_lft)->get();
+                $updateNode = Categories::where('_rgt','>',$parent->_lft)->get();
                 if(count($updateNode)>0){
                     foreach($updateNode as $up){
-                        $cat = Categories::find($up->id);
-                        $cat->_rgt +=2;
-                        $cat->save();
+                        $this->Category($up->id)->update([
+                            '_rgt'=>$this->Category($up->id)->_rgt + 2,
+                        ]);
                     }
                 }
                 
@@ -412,6 +412,9 @@ class CategoriesController extends Controller
         
     }
 
+    /**
+     * show category
+     */
     public function show($id,$language){
         try{
             if(count(Languages::where('acronym',$language)->get()) ==0){
@@ -462,6 +465,10 @@ class CategoriesController extends Controller
          }
        
     }
+
+    /**
+     * delete category
+     */
     public function delete($id){
         try{
             $cat = Categories::find($id);
@@ -490,6 +497,10 @@ class CategoriesController extends Controller
             return response()->json(['error'=>'have issue in process data!']);
         }
     }
+
+    /**
+     * use todolist for select 
+     */
     public function TodoListCat(){
         $name = request()->get('name');
         $id = request()->get('id');
@@ -507,6 +518,10 @@ class CategoriesController extends Controller
         }
         
     }
+
+    /**
+     * get single category 
+     */
     private function Category($id){
         return Categories::where('id',$id)->first();
     }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AttributesController;
 use App\Http\Controllers\Admin\BlogsController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DepartmentController;
@@ -182,6 +183,13 @@ Route::prefix('/admin')->group(function(){
             Route::get('show-manu/{id}','show');
             Route::patch('edit-manu/{id}','update');
             Route::delete('delete-manu/{id}','delete');
+        });
+        Route::controller(AttributesController::class)->group(function(){
+            Route::get('get-attribute','index');
+            Route::post('create-attribute','store');
+            Route::post('show-attribute/{id}','show');
+            Route::post('edit-attribute/{id]','update');
+            Route::post('delete-attribute/{id]','delete');
         });
     });
 });

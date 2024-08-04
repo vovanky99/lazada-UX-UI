@@ -60,7 +60,13 @@ export default function AllCategory() {
   const handleSetParentCat = (e) => {
     const { id, name } = e.target.dataset;
     setFilterCat((draft) => {
-      draft[name] = id;
+      draft.parent_id = id;
+    });
+  };
+
+  const handleResetValue = (e) => {
+    setFilterCat((draft) => {
+      draft.parent_id = '';
     });
   };
 
@@ -105,6 +111,7 @@ export default function AllCategory() {
               name="parent_id"
               language={language}
               useColumn={true}
+              handleResetValue={handleResetValue}
               handleOnclick={handleSetParentCat}
             />
           </div>
@@ -143,7 +150,7 @@ export default function AllCategory() {
           handleReloadData={handleReloadData}
           handleCloseEditCat={handleHideEditCat}
         />
-        <AddCat closeModal={addCat} handleReload={handleReloadData} handleClose={handleClose} language={language} />
+        <AddCat closeModal={addCat} handleReloadData={handleReloadData} handleClose={handleClose} language={language} />
       </WrapperMain>
     </>
   );
