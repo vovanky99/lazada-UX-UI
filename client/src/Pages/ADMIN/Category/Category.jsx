@@ -133,7 +133,7 @@ export default function AllCategory() {
                   <Translate>status</Translate>
                 </th>
                 <th>
-                  <Translate>tolls</Translate>
+                  <Translate>tools</Translate>
                 </th>
               </tr>
             </thead>

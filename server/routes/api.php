@@ -185,7 +185,7 @@ Route::prefix('/admin')->group(function(){
             Route::delete('delete-manu/{id}','delete');
         });
         Route::controller(AttributesController::class)->group(function(){
-            Route::get('get-attribute','index');
+            Route::get('get-attribute/{language}','index');
             Route::post('create-attribute','store');
             Route::post('show-attribute/{id}','show');
             Route::post('edit-attribute/{id]','update');

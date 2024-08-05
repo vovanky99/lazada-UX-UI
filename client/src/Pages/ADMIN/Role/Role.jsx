@@ -40,7 +40,7 @@ export default function Role() {
               <tr>
                 <th>Name</th>
                 <th>descriptions</th>
-                <th>tolls</th>
+                <th>tools</th>
               </tr>
             </thead>
             <tbody>{dataTable ? dataTable.map((dt, index) => <ListRole data={dt} key={index} />) : <></>}</tbody>

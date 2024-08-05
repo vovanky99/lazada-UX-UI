@@ -29,3 +29,21 @@
     width: 100%;
   }
 }
+
+.filter {
+  gap: 10px;
+  margin-bottom: 20px;
+  > div {
+    flex-basis: calc((100% - 10px) / 2);
+  }
+}
+
+.toll-edit {
+  gap: 5px;
+  border-left: none;
+  button,
+  a {
+    font-size: 1.4rem;
+    padding: 5px 10px;
+  }
+}

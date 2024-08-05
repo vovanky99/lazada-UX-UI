@@ -110,7 +110,7 @@ export default function Blog() {
                 <th>status</th>
                 <th>category</th>
                 <th>descriptions</th>
-                <th>tolls</th>
+                <th>tools</th>
               </tr>
             </thead>
             <tbody>

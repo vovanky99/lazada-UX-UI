@@ -96,7 +96,7 @@ export default function AllShop() {
                   <th>owner</th>
                   <th>country-city</th>
                   <th>descriptions</th>
-                  <th>tolls</th>
+                  <th>tools</th>
                 </tr>
               </thead>
               <tbody>

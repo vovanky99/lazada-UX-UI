@@ -164,7 +164,7 @@ export default function ListLocation({ reloadData = () => {} }) {
               <Translate>ward</Translate>
             </th>
             <th>
-              <Translate>tolls</Translate>
+              <Translate>tools</Translate>
             </th>
           </tr>
         </thead>

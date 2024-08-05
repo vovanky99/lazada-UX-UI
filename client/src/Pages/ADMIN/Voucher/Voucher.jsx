@@ -98,7 +98,7 @@ export default function Voucher() {
                 <th>category </th>
                 <th>start day </th>
                 <th>end day </th>
-                <th>tolls</th>
+                <th>tools</th>
               </tr>
             </thead>
             <tbody>

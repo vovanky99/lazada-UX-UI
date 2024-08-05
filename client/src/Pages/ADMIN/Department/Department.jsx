@@ -36,7 +36,7 @@ export default function Department() {
               <tr>
                 <th>Name</th>
                 <th>status</th>
-                <th>tolls</th>
+                <th>tools</th>
               </tr>
             </thead>
             <tbody>

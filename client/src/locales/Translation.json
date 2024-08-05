@@ -53,7 +53,7 @@
     "name_en": "tên tiếng anh",
     "add_category": "thêm thể loại",
     "status": "trạng thái",
-    "tolls": "công cụ",
+    "tools": "công cụ",
     "category": "thể loại",
     "register": "đăng ký",
     "register_note": "Có một tài khoản?",
@@ -207,7 +207,8 @@
     },
     "message": {
       "_message": "translation for message",
-      "sigup_success": "Đăng ký thành công"
+      "sigup_success": "Đăng ký thành công",
+      "delete_success": "xóa thành công!"
     },
     "notofication": {
       "title": "thông báo",
@@ -342,7 +343,7 @@
     "update": "update",
     "add_category": "add category",
     "status": "status",
-    "tolls": "tolls",
+    "tools": "tools",
     "collapse": "collapse",
     "expand": "expand",
     "add_email": "add email",
@@ -478,7 +479,8 @@
     },
     "message": {
       "_message": "translation for message",
-      "sigup_success": "Sign Up Success"
+      "sigup_success": "Sign Up Success",
+      "delete_success": "Deleted successfully!"
     },
     "notofication": {
       "title": "notificetion",
