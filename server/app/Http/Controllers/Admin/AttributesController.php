@@ -123,6 +123,35 @@ class AttributesController extends Controller{
             return response()->json($e);
         }
     }
+    public function getAttrsBar(Request $request,$language){
+        $name = $request->get('name');
+        $attr_id = $request->get('attr_id');
+        $cat_id = $request->get('cat_id');
+        try{
+            if($language){
+                $lang_id = $this->general->languages($language)->id;
+            }
+            else{
+                $lang_id = $this->general->languages('en')->id;
+            }
+            $attr =  DB::table('attributes')->select('attributes.id','attributes_translation.name as name')->join('attributes_translation',function($join)use($name,$lang_id){
+                $join->on('attributes_translation.attribute_id','=','attributes.id');
+                $join->on('attributes_translation.name','like',DB::raw("'$name%'"));
+                $join->on('attributes_translation.language_id','=',DB::raw("$lang_id"));
+            });
+            if($attr_id){
+                $attr->where('id',$attr_id);
+            }
+            if($cat_id){
+                $attr->where('attributes.cat_id',$cat_id);
+            }
+            $attrs = $attr->get();
+            return response()->json(['attrs'=>$attrs]);
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
+    }
     private function Attribute($id){
         return Attributes::where('id',$id)->first();
     }

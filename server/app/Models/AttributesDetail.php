@@ -17,7 +17,7 @@ class AttributesDetail extends Model
     public function attributes_product(){
         return $this->hasMany(AttributesProduct::class,'attributes_detail_id');
     }
-    public function attribute_detail_translation(){
+    public function attributes_detail_translation(){
         return $this->hasMany(AttributesDetailTranslation::class,'attribute_detail_id');
     }
 }

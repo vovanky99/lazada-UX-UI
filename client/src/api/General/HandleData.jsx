@@ -139,3 +139,16 @@ export async function GetCatBar(data, language) {
     console.log(e);
   }
 }
+
+export async function GetAttrsBar(data, language) {
+  try {
+    const res = await axios.get(`/api/admin/attrs-bar/${language}`, {
+      params: {
+        ...data,
+      },
+    });
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+}

@@ -95,18 +95,23 @@ export default function Attributes() {
         </Button>
       }
     >
-      <div className={cx('filter', 'd-flex flex-row')}>
-        <div className={cx('name')}>
-          <FormSearch title="name" name="name" useColumn useTippy={false} searchValue={handlSetName} />
-        </div>
-        <div className={cx('category')}>
-          <Category
-            useColumn
-            title="category"
-            name="category_id"
-            handleOnclick={handleOnclick}
-            handleResetValue={handleResetValue}
-          />
+      <div className={cx('filter', 'd-flex flex-column')}>
+        <h4 className="text-capitalize">
+          <Translate>filter_data</Translate>
+        </h4>
+        <div className={cx('filter_content', 'd-flex flex-row')}>
+          <div className={cx('name')}>
+            <FormSearch title="name" name="name" useColumn useTippy={false} searchValue={handlSetName} />
+          </div>
+          <div className={cx('category')}>
+            <Category
+              useColumn
+              title="category"
+              name="category_id"
+              handleOnclick={handleOnclick}
+              handleResetValue={handleResetValue}
+            />
+          </div>
         </div>
       </div>
       <div className={cx('data_content')}>

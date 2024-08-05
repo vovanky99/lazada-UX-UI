@@ -280,11 +280,11 @@ export default function AddCat({ handleReloadData = () => {}, handleClose, langu
     <Modal closeModal={closeModal}>
       <div className={cx('add_category')} tabIndex="-1">
         <div className={cx('add_cat_header', 'd-flex flex-row justify-content-between')}>
-          <h5 className="text-center text-capitalize">
+          <h4 className="text-center text-capitalize">
             <b>
               <Translate>category</Translate>
             </b>
-          </h5>
+          </h4>
           <div className={cx('close')}>
             <FontAwesomeIcon icon={faClose} onClick={handleClose} />
           </div>

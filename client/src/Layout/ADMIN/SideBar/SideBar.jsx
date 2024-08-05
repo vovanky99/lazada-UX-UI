@@ -143,10 +143,10 @@ export default function SideBar() {
           <FontAwesomeIcon icon={faGlobe} />
         </NavLink>
         <NavLink
-          to={config.adminRoutes.Attributes_product}
+          to={config.adminRoutes.Attributes_details}
           className={cx('sidebar_element', 'd-flex flex-row align-items-center justify-content-between ')}
         >
-          <p className="text-capitalize">Attributes Product</p>
+          <p className="text-capitalize">Attributes Details</p>
           <FontAwesomeIcon icon={faGlobe} />
         </NavLink>
       </aside>

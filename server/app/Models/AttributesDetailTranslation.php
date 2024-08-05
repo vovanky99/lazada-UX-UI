@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AttributesDetailTranslation extends Model
 {
-    protected $table="attribute_detail_translation";
+    protected $table="attributes_detail_translation";
     protected $fillable = [
         'name',
         'attribute_detail_id',

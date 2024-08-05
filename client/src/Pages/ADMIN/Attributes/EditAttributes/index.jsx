@@ -183,7 +183,7 @@ export default function EditAttributes({ closeModal, language, handleReloadData 
       .catch((e) => console.log(e));
   }, [searchParam.get('sp_atk'), searchParam.get('uuid')]);
   return (
-    <Modal id="add_attributes" modalEdit closeModal={closeModal}>
+    <Modal id="edit_attributes" modalEdit closeModal={closeModal}>
       <form onSubmit={HandleEditAttributes} className={cx('edit_attributes', 'd-flex flex-column')} noValidate>
         {editData && (
           <Fragment>

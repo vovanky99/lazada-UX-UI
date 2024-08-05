@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AttributesController;
+use App\Http\Controllers\Admin\AttributesDetailsController;
 use App\Http\Controllers\Admin\BlogsController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DepartmentController;
@@ -185,11 +186,19 @@ Route::prefix('/admin')->group(function(){
             Route::delete('delete-manu/{id}','delete');
         });
         Route::controller(AttributesController::class)->group(function(){
+            Route::get('attrs-bar/{language}','getAttrsBar');
             Route::get('get-attribute/{language}','index');
             Route::post('create-attribute','store');
             Route::get('show-attribute/{id}/{language}','show');
             Route::patch('edit-attribute/{id]','update');
             Route::delete('delete-attribute/{id]','delete');
+        });
+        Route::controller(AttributesDetailsController::class)->group(function(){
+            Route::get('get-attr-details/{language}','index');
+            Route::post('create-attr-details','store');
+            Route::get('show-attr-details/{id}/{language}','show');
+            Route::patch('edit-attr-details/{id}','update');
+            Route::delete('delete-attr-details/{id}','delete');
         });
     });
 });

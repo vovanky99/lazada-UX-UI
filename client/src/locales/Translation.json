@@ -81,9 +81,9 @@
     "category_images": "hình ảnh cho thể loại",
     "select_image": "chọn ảnh",
     "attributes": "thuộc tính",
-    "attributes_products": "thuộc tính sản phẩm",
+    "attributes_details": "thuộc tính chi tiết",
     "add_attributes": "thêm thuộc tính",
-    "add_attributes_products": "thêm thuộc tính sản phẩm",
+    "add_attributes_details": "thêm thuộc tính chi tiết",
     "edit_attributes": "chỉnh sửa thuộc tính",
     "verify_notification": {
       "one_line": "Một liên kết xác minh mới đã được gửi đến địa chỉ email của bạn.",
@@ -127,7 +127,8 @@
       "type_location": "Vui lòng chọn loại dữ liệu!",
       "delete_location": "Vui lòng chọn lại kiểu dữ liệu, kiểu dữ liệu hiện tại là null!",
       "images_cat": "Không đủ 6 bức ảnh!",
-      "category": "Vui lòng chọn một danh mục!"
+      "category": "Vui lòng chọn một danh mục!",
+      "attributes": "Vui lòng chọn một thuộc tính!"
     },
     "component": {
       "form_text": "Vui lòng nhập "
@@ -360,9 +361,9 @@
     "image_scale_1_1": "1:1 scale image",
     "image_scale_3_4": "3:4 scale image",
     "attributes": "attributes",
-    "attributes_products": "attributes products",
+    "attributes_details": "attributes details",
     "add_attributes": "add attributes",
-    "add_attributes_products": "add attributes products",
+    "add_attributes_details": "add attributes details",
     "edit_attributes": "edit attributes",
     "verify_notification": {
       "one_line": "A fresh verification link has been sent to your email address.",
@@ -405,7 +406,8 @@
       "delete_location": "Please select the data type again, the current data type is null!",
 
       "images_cat": "Not enough 6 photos!",
-      "category": "Please select a category!"
+      "category": "Please select a category!",
+      "attributes": "Please select a attributes!"
     },
     "component": {
       "form_text": "Enter keyword for "

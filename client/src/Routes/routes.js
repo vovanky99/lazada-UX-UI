@@ -57,7 +57,7 @@ import ResetPassSeller from '~/pages/Seller/Auth/ResetPassword';
 import RegisterShopSeller from '~/pages/Seller/RegisterShop';
 import SellerAddProducts from '~/pages/Seller/Products/AddProducts';
 import Attributes from '~/pages/ADMIN/Attributes';
-import AttributesProducts from '~/pages/ADMIN/AttributesProducts';
+import AttributesDetails from '~/pages/ADMIN/AttributesDetails';
 
 const LifeShopRoutes = [
   { path: config.routes.home, components: HomePages, MainLayout: true },
@@ -263,9 +263,9 @@ const AdminRoutes = [
     MainLayout: true,
   },
   {
-    path: config.adminRoutes.Attributes_product,
-    components: AttributesProducts,
-    breadcrumbName: 'atributes products',
+    path: config.adminRoutes.Attributes_details,
+    components: AttributesDetails,
+    breadcrumbName: 'atributes Details',
     MainLayout: true,
   },
 ];
