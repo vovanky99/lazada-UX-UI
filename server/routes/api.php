@@ -187,9 +187,9 @@ Route::prefix('/admin')->group(function(){
         Route::controller(AttributesController::class)->group(function(){
             Route::get('get-attribute/{language}','index');
             Route::post('create-attribute','store');
-            Route::post('show-attribute/{id}','show');
-            Route::post('edit-attribute/{id]','update');
-            Route::post('delete-attribute/{id]','delete');
+            Route::get('show-attribute/{id}/{language}','show');
+            Route::patch('edit-attribute/{id]','update');
+            Route::delete('delete-attribute/{id]','delete');
         });
     });
 });

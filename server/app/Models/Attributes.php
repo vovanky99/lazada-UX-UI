@@ -8,10 +8,10 @@ class Attributes extends Model
 {
     public $table = 'attributes';
     protected $fillable = [
-        'category_id',
+        'cat_id',
     ];
     public function category(){
-        return $this->belongsTo(Categories::class,'category_id');
+        return $this->belongsTo(Categories::class,'cat_id');
     }
     public function attributes_detail(){
         return $this->hasMany(AttributesDetail::class,'attribute_id');

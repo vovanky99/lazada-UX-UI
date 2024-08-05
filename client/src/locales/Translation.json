@@ -84,6 +84,7 @@
     "attributes_products": "thuộc tính sản phẩm",
     "add_attributes": "thêm thuộc tính",
     "add_attributes_products": "thêm thuộc tính sản phẩm",
+    "edit_attributes": "chỉnh sửa thuộc tính",
     "verify_notification": {
       "one_line": "Một liên kết xác minh mới đã được gửi đến địa chỉ email của bạn.",
       "two_line": "Trước khi tiếp tục, vui lòng kiểm tra email của bạn để lấy liên kết xác minh.",
@@ -111,17 +112,11 @@
       "ward": "Vui lòng chọn phường!",
       "name_vi": "Vui lòng nhập tên tiếng Việt!",
       "name_en": "Vui lòng nhập tên tiếng anh!",
-      "create_cat_success": "Tạo thành công thể loại!",
-      "create_cat_error": "Tạo thể loại không thành công",
       "category_exists": "Thể loại đã tồn tại!",
       "image_exists": "Bức ảnh đã có trong thư viện!",
       "international_codes": "Vui lòng nhập mã vùng quốc tế",
       "acronym": "Vui lòng nhập tên viết tắt",
       "country": "Vui lòng chọn quốc gia!",
-      "create_error": "tạo không thành công!",
-      "create_success": "tạo thành công!",
-      "delete_success": "xóa thành công!",
-      "delete_error": "xóa thất bại!",
       "city": "Vui lòng chọn thành phố!",
       "district": "Vui lòng chọn quận!",
       "name_country": "Vui lòng nhập tên quốc gia!",
@@ -208,7 +203,16 @@
     "message": {
       "_message": "translation for message",
       "sigup_success": "Đăng ký thành công",
-      "delete_success": "xóa thành công!"
+      "delete_success": "xóa thành công!",
+      "create_cat_success": "Tạo thành công thể loại!",
+      "create_cat_error": "Tạo thể loại không thành công",
+      "edit_cat_success": "Chỉnh sửa thể loại thành công!",
+      "edit_cat_error": "Chỉnh sửa thể loại không thành công!",
+      "create_error": "tạo không thành công!",
+      "create_success": "tạo thành công!",
+      "edit_error": "Chỉnh sửa không thành công!",
+      "edit_success": "Chỉnh sửa thành công!",
+      "delete_error": "xóa thất bại!"
     },
     "notofication": {
       "title": "thông báo",
@@ -359,6 +363,7 @@
     "attributes_products": "attributes products",
     "add_attributes": "add attributes",
     "add_attributes_products": "add attributes products",
+    "edit_attributes": "edit attributes",
     "verify_notification": {
       "one_line": "A fresh verification link has been sent to your email address.",
       "two_line": "Before proceeding, please check your email for a verification link.",
@@ -384,8 +389,6 @@
       "address": "Please enter address!",
       "name_vi": "Please enter vietnamese name",
       "name_en": "Please enter english name",
-      "create_cat_success": "create category success!",
-      "create_cat_error": "create category error!",
       "image_exists": "The photo is already in the gallery!",
       "international_codes": "Please enter international area codes!",
       "acronym": "Please enter an abbreviation!",
@@ -393,8 +396,6 @@
       "city": "Please select city!",
       "ward": "Please select ward!",
       "district": "Please select district!",
-      "create_error": "creation failed!",
-      "create_success": "create success!",
       "name_country": "Please enter country name!",
       "name_city": "Please enter city name!",
       "name_district": "Please enter district name!",
@@ -402,8 +403,7 @@
       "language": "Please select language!",
       "type_location": "Please select data type!",
       "delete_location": "Please select the data type again, the current data type is null!",
-      "delete_success": "Deleted successfully!",
-      "delete_error": "Delete failed!",
+
       "images_cat": "Not enough 6 photos!",
       "category": "Please select a category!"
     },
@@ -480,7 +480,16 @@
     "message": {
       "_message": "translation for message",
       "sigup_success": "Sign Up Success",
-      "delete_success": "Deleted successfully!"
+      "delete_success": "Deleted successfully!",
+      "create_error": "creation failed!",
+      "create_success": "create success!",
+      "delete_error": "Delete failed!",
+      "create_cat_success": "create category success!",
+      "create_cat_error": "create category error!",
+      "edit_cat_success": "edit category success!",
+      "edit_cat_error": "edit category error!",
+      "edit_error": "edit failed!",
+      "edit_success": "edit success!"
     },
     "notofication": {
       "title": "notificetion",

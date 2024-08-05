@@ -11,7 +11,8 @@ import Category from '~/layout/Component/Category';
 import Element from './Element';
 import { GetData } from '~/api/General/HandleData';
 import { useSelector } from 'react-redux';
-import Pagination from '~/layout/Component/Pagination';
+import PaginationMain from '~/layout/Component/Pagination/PaginationMain';
+import EditAttributes from './EditAttributes';
 
 const cx = classNames.bind(styles);
 
@@ -20,12 +21,19 @@ export default function Attributes() {
   const [toggleAdd, setToggleAdd] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
   const [reloadData, setReloadData] = useState(1);
+  const [data, setData] = useState(null);
   const [messageDelete, setMessageDelete] = useState('');
+
+  const [currentPage, setCurrentPage] = useState(1);
+  let pageSize = 15;
+  const firstPageIndex = (currentPage - 1) * pageSize;
+  const lastPageIndex = firstPageIndex + pageSize;
+  const dataTable = data ? data?.slice(firstPageIndex, lastPageIndex) : null;
+
   const [filter, setFilter] = useImmer({
     name: '',
     category_id: '',
   });
-  const [data, setData] = useState(null);
 
   const handleTonggleAdd = (e) => {
     if (toggleAdd) {
@@ -72,8 +80,8 @@ export default function Attributes() {
   useEffect(() => {
     GetData('admin', 'attribute', filter, language)
       .then((reslut) => {
-        if (reslut) {
-          setData(reslut);
+        if (reslut?.attrs) {
+          setData(reslut?.attrs);
         }
       })
       .catch((e) => console.log(e));
@@ -117,8 +125,8 @@ export default function Attributes() {
             </tr>
           </thead>
           <tbody>
-            {data &&
-              data.map((d, index) => (
+            {dataTable &&
+              dataTable.map((d, index) => (
                 <Element
                   data={d}
                   key={index}
@@ -130,7 +138,24 @@ export default function Attributes() {
           </tbody>
         </table>
       </div>
-      <div className={cx('pagiantion')}>{data && <Pagination data={data} pageSize={30} />}</div>
+      <div className={cx('pagiantion')}>
+        {dataTable && (
+          <PaginationMain
+            totalCount={data?.length}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            onPageChange={(page) => {
+              setCurrentPage(page);
+            }}
+          />
+        )}
+      </div>
+      <EditAttributes
+        closeModal={toggleEdit}
+        language={language}
+        handleReloadData={handleReloadData}
+        handleClose={handleTonggleEdit}
+      />
       <AddAttributes closeModal={toggleAdd} handleReloadData={handleReloadData} handleClose={handleTonggleAdd} />
     </WrapperMain>
   );

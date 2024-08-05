@@ -31,8 +31,8 @@ export default function Country({
     name: Translate({ children: 'valid.name' }),
     international_codes: Translate({ children: 'valid.international_codes' }),
     acronym: Translate({ children: 'valid.acronym' }),
-    createError: Translate({ children: 'valid.create_error' }),
-    createSuccess: Translate({ children: 'valid.create_success' }),
+    createError: Translate({ children: 'message.create_error' }),
+    createSuccess: Translate({ children: 'message.create_success' }),
   };
   const [valid, setValid] = useState({});
   const [createSuccess, setCreateSuccess] = useState('');

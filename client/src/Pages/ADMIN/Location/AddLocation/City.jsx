@@ -30,8 +30,8 @@ export default function City({
   const messageValid = {
     name: Translate({ children: 'valid.name' }),
     country: Translate({ children: 'valid.country' }),
-    createError: Translate({ children: 'valid.create_error' }),
-    createSuccess: Translate({ children: 'valid.create_success' }),
+    createError: Translate({ children: 'message.create_error' }),
+    createSuccess: Translate({ children: 'message.create_success' }),
   };
   const [valid, setValid] = useState({});
   const [createSuccess, setCreateSuccess] = useState('');

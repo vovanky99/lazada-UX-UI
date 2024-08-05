@@ -27,8 +27,8 @@ export default function AddCat({ handleReloadData = () => {}, handleClose, langu
   const message = {
     name_vi: Translate({ children: 'valid.name_vi' }),
     name_en: Translate({ children: 'valid.name_en' }),
-    success: Translate({ children: 'valid.create_cat_success' }),
-    error: Translate({ children: 'valid.create_cat_error' }),
+    success: Translate({ children: 'message.create_cat_success' }),
+    error: Translate({ children: 'message.create_cat_error' }),
     category_exists: Translate({ children: 'valid.category_exists' }),
     image_exists: Translate({ children: 'valid.image_exists' }),
   };

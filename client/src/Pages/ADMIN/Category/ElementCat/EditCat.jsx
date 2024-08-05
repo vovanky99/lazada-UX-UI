@@ -33,8 +33,8 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
   const message = {
     name_vi: Translate({ children: 'valid.name_vi' }),
     name_en: Translate({ children: 'valid.name_en' }),
-    success: Translate({ children: 'valid.create_cat_success' }),
-    error: Translate({ children: 'valid.create_cat_error' }),
+    success: Translate({ children: 'message.edit_cat_success' }),
+    error: Translate({ children: 'message.edit_cat_error' }),
     image_exists: Translate({ children: 'valid.image_exists' }),
     images_cat: Translate({ children: 'valid.images_cat' }),
   };

@@ -42,8 +42,8 @@ export default function EditLocation({ id, handleToggleEdit, reloadData = () => 
     delete: Translate({ children: 'valid.delete_location' }),
     international_codes: Translate({ children: 'valid.international_codes' }),
     acronym: Translate({ children: 'valid.acronym' }),
-    delete_success: Translate({ children: 'valid.delete_success' }),
-    delete_error: Translate({ children: 'valid.delete_error' }),
+    delete_success: Translate({ children: 'message.delete_success' }),
+    delete_error: Translate({ children: 'message.delete_error' }),
   };
   const [valid, setValid] = useImmer({});
   const [success, setSucess] = useState('');

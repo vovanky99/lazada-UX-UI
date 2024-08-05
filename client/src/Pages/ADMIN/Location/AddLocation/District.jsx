@@ -39,8 +39,8 @@ export default function District({
     city: Translate({ children: 'valid.city' }),
     ward: Translate({ children: 'valid.ward' }),
     country: Translate({ children: 'valid.country' }),
-    createError: Translate({ children: 'valid.create_error' }),
-    createSuccess: Translate({ children: 'valid.create_success' }),
+    createError: Translate({ children: 'message.create_error' }),
+    createSuccess: Translate({ children: 'message.create_success' }),
   };
   const [valid, setValid] = useState({});
   const [createSuccess, setCreateSuccess] = useState('');

@@ -45,7 +45,7 @@ class Categories extends Model
         return $this->belongsTo(Voucher::class,'category_id','id');
     }
     public function attributes(){
-        return $this->hasMany(Attributes::class,'category_id');
+        return $this->hasMany(Attributes::class,'cat_id');
     }
     public function article(){
         return $this->hasMany(Article::class,'category_id');

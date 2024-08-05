@@ -38,6 +38,13 @@
   }
 }
 
+.pagiantion {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .toll-edit {
   gap: 5px;
   border-left: none;
@@ -45,5 +52,37 @@
   a {
     font-size: 1.4rem;
     padding: 5px 10px;
+  }
+}
+
+.edit_attributes {
+  width: 45vw;
+  padding: 15px;
+  height: 100vh;
+  margin-right: 15px;
+  background-color: var(--white);
+  .header {
+    margin-bottom: 20px;
+    h4 {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+    button {
+      color: var(--alert_word_color);
+      &:hover {
+        color: var(--primary);
+      }
+    }
+  }
+  .content {
+    gap: 10px;
+    margin-bottom: 20px;
+    > div {
+      flex-basis: calc((100% - 10px) / 2);
+    }
+  }
+  .btn_submit {
+    flex-basis: 100%;
   }
 }

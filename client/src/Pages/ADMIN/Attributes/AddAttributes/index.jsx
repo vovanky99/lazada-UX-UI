@@ -27,8 +27,8 @@ export default function AddAttributes({ closeModal, handleReloadData = () => {},
   const messageValid = {
     name_vi: Translate({ children: 'valid.name_vi' }),
     name_en: Translate({ children: 'valid.name_en' }),
-    success: Translate({ children: 'valid.create_success' }),
-    error: Translate({ children: 'valid.create_error' }),
+    success: Translate({ children: 'message.create_success' }),
+    error: Translate({ children: 'message.create_error' }),
   };
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
@@ -88,10 +88,13 @@ export default function AddAttributes({ closeModal, handleReloadData = () => {},
     e.preventDefault();
     const val = await validate();
     if (Object.keys(val).length === 0) {
+      setSuccess('');
+      setError('');
       CreateData('admin', 'attribute', addData)
         .then((result) => {
           if (result.success) {
             setSuccess(messageValid.success);
+            handleReloadData(1);
           } else {
             setError(messageValid.error);
           }

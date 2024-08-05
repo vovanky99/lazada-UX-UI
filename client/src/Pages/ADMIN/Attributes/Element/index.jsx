@@ -29,7 +29,7 @@ export default function Element({
   };
   return (
     <tr>
-      <td>{data?.attr_name}</td>
+      <td>{data?.name}</td>
       <td>{data?.cat_name}</td>
       <td>
         <div className={cx('toll-edit', 'd-flex flex-row justify-content-center flex-wrap')}>
