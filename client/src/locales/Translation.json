@@ -85,6 +85,7 @@
     "add_attributes": "thêm thuộc tính",
     "add_attributes_details": "thêm thuộc tính chi tiết",
     "edit_attributes": "chỉnh sửa thuộc tính",
+    "note": "lưu ý",
     "verify_notification": {
       "one_line": "Một liên kết xác minh mới đã được gửi đến địa chỉ email của bạn.",
       "two_line": "Trước khi tiếp tục, vui lòng kiểm tra email của bạn để lấy liên kết xác minh.",
@@ -213,7 +214,8 @@
       "create_success": "tạo thành công!",
       "edit_error": "Chỉnh sửa không thành công!",
       "edit_success": "Chỉnh sửa thành công!",
-      "delete_error": "xóa thất bại!"
+      "delete_error": "xóa thất bại!",
+      "delete": "nội dung đã được xóa!"
     },
     "notofication": {
       "title": "thông báo",
@@ -225,6 +227,7 @@
       "_message": "translation for dialog",
       "logout": "bạn muốn đăng xuât?",
       "register_shop_logout": "Thông tin được cung cấp sẽ không được lưu. Bạn có chắc chắn vẫn muốn đăng xuất không?",
+      "delete_alert": "bạn chắc chắn muốn xóa mục này?",
       "setting_shipping": {
         "close": "Kênh vận chuyển này sẽ bị tắt trên tất cả các sản phẩm hiện có của shop. Người mua sẽ không thể hoàn tất đơn đặt hàng hoặc sản phẩm sẽ không hiển thị với người mua nếu không có bất kỳ phương thức vận chuyển nào có sẵn",
         "open": "Để hoàn tất việc kích hoạt phương thức vận chuyển, vui lòng đi tới Tất cả sản phẩm, chọn chỉnh sửa từng sản phẩm hoặc chọn Công cụ xử lý hàng loạt để kích hoạt tính năng này cho các sản phẩm của Shop"
@@ -365,6 +368,7 @@
     "add_attributes": "add attributes",
     "add_attributes_details": "add attributes details",
     "edit_attributes": "edit attributes",
+    "note": "note",
     "verify_notification": {
       "one_line": "A fresh verification link has been sent to your email address.",
       "two_line": "Before proceeding, please check your email for a verification link.",
@@ -491,7 +495,8 @@
       "edit_cat_success": "edit category success!",
       "edit_cat_error": "edit category error!",
       "edit_error": "edit failed!",
-      "edit_success": "edit success!"
+      "edit_success": "edit success!",
+      "delete": "content has been removed!"
     },
     "notofication": {
       "title": "notificetion",
@@ -502,6 +507,7 @@
     "dialog": {
       "_message": "translation for dialog",
       "logout": "do you want logout?",
+      "delete_alert": "you definitely want to delete this entry?",
       "register_shop_logout": "The information provided will not be saved. Are you sure you still want to sign out?",
       "setting_shipping": {
         "close": "This shipping channel will be turned off on all existing products of the shop. The buyer will not be able to complete the order or the product will not be visible to the buyer without any available shipping methods",

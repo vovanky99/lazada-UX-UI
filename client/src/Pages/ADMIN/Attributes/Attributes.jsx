@@ -25,7 +25,7 @@ export default function Attributes() {
   const [messageDelete, setMessageDelete] = useState('');
 
   const [currentPage, setCurrentPage] = useState(1);
-  let pageSize = 15;
+  let pageSize = 30;
   const firstPageIndex = (currentPage - 1) * pageSize;
   const lastPageIndex = firstPageIndex + pageSize;
   const dataTable = data ? data?.slice(firstPageIndex, lastPageIndex) : null;

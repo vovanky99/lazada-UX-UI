@@ -218,7 +218,7 @@ export default function AddAttributes({ closeModal, handleReloadData = () => {},
         <div className={cx('Notification')}>
           <MessageText
             message={error || success}
-            className={cx('message', 'text-center text-capitalize', error ? 'tex-danger' : 'text-success')}
+            className={cx('message', 'text-center text-capitalize', error ? 'text-danger' : 'text-success')}
           />
         </div>
         <div className={cx('btn_submit', 'text-center')}>

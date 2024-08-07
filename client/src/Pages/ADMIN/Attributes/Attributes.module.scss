@@ -33,6 +33,9 @@
 .filter {
   gap: 10px;
   margin-bottom: 20px;
+  h4 {
+    font-weight: bold;
+  }
   .filter_content {
     gap: 10px;
     > div {

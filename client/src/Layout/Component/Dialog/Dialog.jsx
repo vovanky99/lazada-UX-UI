@@ -21,7 +21,7 @@ export default function Dialog({
 }) {
   const handleConfirmDialog = (e) => {
     const { type } = e.currentTarget.dataset;
-    console.log(IsFunctionEmpty(handleFunction()));
+    // console.log(typeof handleFunction === 'function');
     if (type === 'no') {
       if (onCancel) {
         onCancel(e);
@@ -44,7 +44,9 @@ export default function Dialog({
           <Fragment>
             <div id="" className={cx('container', 'text-center d-flex flex-column justify-content-between')}>
               <div className={cx('confirm_header', 'd-flex flex-row justify-content-between align-items-center')}>
-                <div className={cx('confirm_note')}>Note</div>
+                <div className={cx('confirm_note', 'text-capitalize')}>
+                  <Translate>note</Translate>
+                </div>
                 <div className={cx('confirm_close')}>
                   <FontAwesomeIcon icon={faClose} onClick={handleConfirmDialog} data-type="no" />
                 </div>

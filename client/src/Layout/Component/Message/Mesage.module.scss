@@ -1,3 +1,18 @@
 .message {
   font-size: 1.4rem;
 }
+.message_notification {
+  padding: 10px;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  color: var(--black);
+  box-shadow: 0px 0px 5px 1px var(--background_color_shadow);
+  background-color: var(--white);
+  min-height: 60px;
+  min-width: 200px;
+  position: fixed;
+  z-index: 99999;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+}

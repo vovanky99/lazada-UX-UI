@@ -16,7 +16,12 @@ import { CreateData } from '~/api/General/HandleData';
 
 const cx = classNames.bind(styles);
 
-export default function AddAttrDetails({ language, closeModal, handleToggleAdd = () => {} }) {
+export default function AddAttrDetails({
+  language,
+  closeModal,
+  handleToggleAdd = () => {},
+  handleReloadData = () => {},
+}) {
   const nameViRef = useRef();
   const nameEnRef = useRef();
   const attrRef = useRef();
@@ -115,6 +120,7 @@ export default function AddAttrDetails({ language, closeModal, handleToggleAdd =
         .then((result) => {
           if (result.success) {
             setSuccess(messageValid.success);
+            handleReloadData(1);
           } else {
             setError(messageValid.error);
           }
