@@ -262,7 +262,7 @@ export default function AddAttrDetails({
           />
         </div>
         <div className={cx('btn_submit', 'text-center')}>
-          <Button type="submit" gradient_primary className={cx('text-capitalize')}>
+          <Button type="submit" gradient_primary small className={cx('text-capitalize')}>
             <Translate>create</Translate>
           </Button>
         </div>

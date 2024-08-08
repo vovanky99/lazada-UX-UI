@@ -84,6 +84,7 @@
     "attributes_details": "thuộc tính chi tiết",
     "add_attributes": "thêm thuộc tính",
     "add_attributes_details": "thêm thuộc tính chi tiết",
+    "edit_attributes_details": "chỉnh sửa thuộc tính chi tiết",
     "edit_attributes": "chỉnh sửa thuộc tính",
     "note": "lưu ý",
     "verify_notification": {
@@ -367,6 +368,7 @@
     "attributes_details": "attributes details",
     "add_attributes": "add attributes",
     "add_attributes_details": "add attributes details",
+    "edit_attributes_details": "edit attributes details",
     "edit_attributes": "edit attributes",
     "note": "note",
     "verify_notification": {

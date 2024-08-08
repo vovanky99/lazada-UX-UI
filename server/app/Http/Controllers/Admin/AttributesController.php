@@ -115,6 +115,7 @@ class AttributesController extends Controller{
                     ]);
                 }
             }
+            return response()->json(['success'=>'update success!']);
         }
         catch(Exception $e){
             return response()->json($e);

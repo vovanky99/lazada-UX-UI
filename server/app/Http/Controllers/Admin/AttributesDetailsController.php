@@ -70,6 +70,58 @@ class AttributesDetailsController extends Controller{
         }
     }
 
+    public function show($id,$language){
+        try{
+            if($language){
+                $langId = $this->general->languages($language)->id;
+            }
+            else{
+                $langId = $this->general->languages('en')->id;
+            }
+            $attr = AttributesDetail::where('id',$id)->with(['attributes_detail_translation','attribute'=>function($query)use($langId){
+                $query->with(['attributes_translation'=>function($query) use($langId){
+                    $query->where('language_id',$langId);
+                }]);
+            }])->first();    
+
+            return response()->json(['attr'=>$attr]);
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
+    }
+
+    public function update(Request $request,$id){
+        $name_vi = $request->name_vi;
+        $name_en = $request->name_en;
+        $attribute_id = $request->attribute_id;
+        $en = $this->general->languages('en');
+        $vi = $this->general->languages('vi');
+        try{
+            $attr = $this->AttributeDetail($id)->update([
+                'attribute_id'=>$attribute_id,
+            ]);
+
+            $attr_tran = AttributesDetailTranslation::where('attribute_detail_id',$attr->id)->get();
+            foreach($attr_tran as $a){
+                if($a->language_id == $en->id){
+                    AttributesDetailTranslation::where('id',$a->id)->first()->update([
+                        'name'=>$name_en
+                    ]);
+                }
+                if($a->language_id == $vi->id){
+                    AttributesDetailTranslation::where('id',$a->id)->first()->update([
+                        'name'=>$name_vi
+                    ]);
+                }
+            }
+            return response()->json(['success'=>'update success!']);
+        }
+        catch(Exception $e){
+            return response()->json($e);
+        }
+    }
+
 
     public function delete($id){
         try{

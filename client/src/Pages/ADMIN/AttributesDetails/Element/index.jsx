@@ -10,22 +10,17 @@ const cx = classNames.bind(styles);
 
 export default function Element({
   data,
-  deleteSuccess = () => {},
   handleReloadData = () => {},
   deleteAlert = async () => {},
   handleToggleEdit = () => {},
 }) {
   const id = v4();
-  const message = {
-    success: Translate({ children: 'message.delete_success' }),
-  };
   const handleDeleteCat = async (e) => {
     const alert = await deleteAlert();
     if (alert) {
       DeleteData('admin', 'attr-details', e.target.dataset.id)
         .then((result) => {
           if (result.success) {
-            deleteSuccess(message.success);
             handleReloadData(1);
           }
         })
@@ -43,7 +38,7 @@ export default function Element({
           <Button
             gradient_primary
             onClick={handleToggleEdit}
-            to={`${config.adminRoutes.Attributes}?${data?.name}&uuid=${id}&sp_atk=${data?.id}`}
+            to={`${config.adminRoutes.Attributes_details}?${data?.name}&uuid=${id}&sp_atk=${data?.id}`}
           >
             Edit
           </Button>

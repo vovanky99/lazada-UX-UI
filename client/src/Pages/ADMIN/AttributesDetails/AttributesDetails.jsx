@@ -14,7 +14,7 @@ import Element from './Element';
 import { GetData } from '~/api/General/HandleData';
 import PaginationMain from '~/layout/Component/Pagination/PaginationMain';
 import Dialog from '~/layout/Component/Dialog';
-import MessageNotification from '~/layout/Component/Message/MessageNotification';
+import EditAttrDetail from './EditAttrDetail';
 
 const cx = classNames.bind(styles);
 
@@ -26,11 +26,9 @@ export default function AttributesDetails() {
   const [reload, setReload] = useState(1);
   const [messageDeleteAlert, setMessageDeleteAlert] = useState();
   const [resolvePromise, setResolvePromise] = useState(null);
-  const [deleteSuccess, setDeleteSuccess] = useState('');
 
   const messageNotification = {
     DeleteAlert: Translate({ children: 'dialog.delete_alert' }),
-    delete: Translate({ children: 'message.delete' }),
   };
   const [data, setData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -91,15 +89,10 @@ export default function AttributesDetails() {
     });
   };
 
-  const handleDeleteSuccess = (value) => {
-    setDeleteSuccess(value);
-  };
-
   const handleDeletealeart = async () => {
     return new Promise((resolve) => {
       setResolvePromise(() => resolve);
       setDialog(true);
-      setDeleteSuccess('');
       setMessageDeleteAlert(messageNotification.DeleteAlert);
     });
   };
@@ -187,7 +180,6 @@ export default function AttributesDetails() {
                     handleToggleEdit={handleToggleEdit}
                     handleReloadData={handleReloadData}
                     deleteAlert={handleDeletealeart}
-                    deleteSuccess={handleDeleteSuccess}
                   />
                 ))}
             </tbody>
@@ -209,6 +201,12 @@ export default function AttributesDetails() {
           onCancel={handleConfirmDelete}
           onConfirm={handleConfirmDelete}
         />
+        <EditAttrDetail
+          closeModal={toggleEdit}
+          handleToggleEdit={handleToggleEdit}
+          language={language}
+          handleReloadData={handleReloadData}
+        />
         <AddAttrDetails
           handleReloadData={handleReloadData}
           handleToggleAdd={handleToggleAdd}
@@ -216,7 +214,6 @@ export default function AttributesDetails() {
           language={language}
         />
       </WrapperMain>
-      <MessageNotification message={deleteSuccess} />
     </>
   );
 }
