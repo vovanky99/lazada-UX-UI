@@ -2,6 +2,7 @@ import { forwardRef, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './FormGroup.module.scss';
 import Translate from '../Translate';
+import useDebounce from '~/hooks/Debounce/Debounce';
 
 const cx = classNames.bind(styles);
 
@@ -10,8 +11,10 @@ export const FormText = forwardRef(function Form(
     title,
     name,
     useLabel = true,
+    usePlaceholder = true,
     containerClass,
     rows,
+    placeholder,
     handleOnchange = () => {},
     cols,
     textClassname,
@@ -21,10 +24,11 @@ export const FormText = forwardRef(function Form(
   ref,
 ) {
   const [value, setValue] = useState(data || '');
+  const Debouce = useDebounce(value, 500);
 
   useEffect(() => {
-    handleSetValue(value);
-  }, [value]);
+    handleSetValue(Debouce);
+  }, [Debouce]);
   return (
     <div className={cx('form-text', containerClass || 'form-group flex-grow-1')}>
       {useLabel ? <label className={cx('form-label text-capitalize')}>{Translate({ children: title })}</label> : ''}
@@ -35,7 +39,13 @@ export const FormText = forwardRef(function Form(
         name={name}
         rows={rows}
         value={value}
-        placeholder={Translate({ children: 'component.form_text' }) + Translate({ children: title })}
+        placeholder={
+          usePlaceholder
+            ? placeholder
+              ? Translate({ children: placeholder })
+              : Translate({ children: 'component.form_text' }) + Translate({ children: title })
+            : ''
+        }
         onChange={(e) => {
           setValue(e.target.value);
           handleOnchange(e);

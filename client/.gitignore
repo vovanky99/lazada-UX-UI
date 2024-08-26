@@ -11,7 +11,6 @@
 # production
 /build
 
-/src/pages/Seller
 
 # misc
 .DS_Store

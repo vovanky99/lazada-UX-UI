@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { useImmer } from 'use-immer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +7,6 @@ import styles from '../RegisterShop.module.scss';
 import Button from '~/components/Button';
 import LocalStorageService from '~/services/LocalStorageService';
 import { faExclamation, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import Radio from '~/components/Radio';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import Images from '~/components/Images';
 import Checkbox from '~/components/Checkbox';
@@ -16,6 +15,7 @@ import MessageText from '~/layout/Component/Message/MessageText';
 import Progress from '~/components/Progress';
 import { RegisterShop } from '~/api/Seller/Profile';
 import Translate from '~/layout/Component/Translate';
+import RadioList from '~/layout/Component/RadioList';
 
 const cx = classNames.bind(styles);
 
@@ -24,6 +24,11 @@ export default function IdentityInfo({ seller }) {
   const identityNumberRef = useRef();
   const fullnameRef = useRef();
   const sellerIdentity = seller?.identity_info[0];
+  const identityRadioTittle = [
+    { type: 1, title: 'citizen_identification_card' },
+    { type: 2, title: 'id_card' },
+    { type: 3, title: 'passport' },
+  ];
   const [valid, setValid] = useImmer({});
   const [identityInfo, setIdentityInfo] = useImmer({
     form_of_identity: sellerIdentity?.type || 1,
@@ -146,6 +151,19 @@ export default function IdentityInfo({ seller }) {
     }
   };
 
+  /* handle remove active for Form of identification radio when select other radio */
+  const handleSelectIdentityContent = (e) => {
+    const { type, color } = e.currentTarget.dataset;
+
+    setIdentityInfo((draft) => {
+      draft.form_of_identity = parseInt(type);
+    });
+    setValid((draft) => {
+      delete draft.identity_number;
+    });
+    identityNumberRef.current.classList.remove('border_danger');
+  };
+
   /*set default value for radio identity form of identification */
   useEffect(() => {
     const radioItem = document.querySelectorAll('.form_of_identity_content_item');
@@ -154,35 +172,6 @@ export default function IdentityInfo({ seller }) {
         radioItem[i].classList.add(`radio_${radioItem[i].dataset.color}_active`);
       }
     }
-  }, []);
-
-  /* handle remove active for Form of identification radio when select other radio */
-  useEffect(() => {
-    const radioItem = document.querySelectorAll('.form_of_identity_content_item');
-    const handleRemoveActive = (e) => {
-      const { type, color } = e.currentTarget.dataset;
-      for (let i = 0; i < radioItem.length; i++) {
-        if (radioItem[i].classList.contains(`radio_${color}_active`)) {
-          radioItem[i].classList.remove(`radio_${color}_active`);
-        }
-      }
-
-      setIdentityInfo((draft) => {
-        draft.form_of_identity = parseInt(type);
-      });
-      setValid((draft) => {
-        delete draft.identity_number;
-      });
-      identityNumberRef.current.classList.remove('border_danger');
-    };
-    if (radioItem) {
-      radioItem.forEach((d) => d.addEventListener('click', handleRemoveActive));
-    }
-    return () => {
-      if (radioItem) {
-        radioItem.forEach((d) => d.addEventListener('click', handleRemoveActive));
-      }
-    };
   }, []);
 
   /* handle upload identity images */
@@ -225,6 +214,7 @@ export default function IdentityInfo({ seller }) {
       }
     };
   }, []);
+
   /* validate when blur identity number  */
   useEffect(() => {
     const identity = identityNumberRef.current;
@@ -370,17 +360,17 @@ export default function IdentityInfo({ seller }) {
           <div className={cx('form_header_content', 'd-flex flex-column')}>
             <div className={cx('form_of_identity', 'd-flex flex-row')}>
               <label className={cx('form-label')}>
-                <Translate>pages.register_shop.form_of_identification</Translate>
+                <Translate>pages.seller.register_shop.form_of_identification</Translate>
               </label>
               <div className={cx('form_of_identity_content', 'd-flex flex-row')}>
-                <Radio
-                  title="citizen_identification_card"
-                  type="1"
+                <RadioList
+                  data={identityRadioTittle}
                   className={cx('form_of_identity_content_item')}
-                  primary
+                  titleClass="form_of_identity_content_item"
+                  color="primary"
+                  defaultValue={identityInfo?.form_of_identity}
+                  onClick={handleSelectIdentityContent}
                 />
-                <Radio title="id_card" type="2" className={cx('form_of_identity_content_item')} primary />
-                <Radio title="passport" type="3" className={cx('form_of_identity_content_item')} primary />
               </div>
             </div>
             <div className={cx('identity_number', 'd-flex flex-row')}>
@@ -432,13 +422,13 @@ export default function IdentityInfo({ seller }) {
                   <MessageText message={valid?.fullname} className={cx('message', 'text-danger')} />
                 </div>
                 <div className={cx('note')}>
-                  <Translate>pages.register_shop.fullname_note</Translate>
+                  <Translate>pages.seller.register_shop.fullname_note</Translate>
                 </div>
               </div>
             </div>
             <div className={cx('photo_of_identity', 'd-flex flex-row')}>
               <label className="form-label">
-                <Translate>pages.register_shop.photo_of_id</Translate>
+                <Translate>pages.seller.register_shop.photo_of_id</Translate>
               </label>
               <div className={cx('photo_of_identity_content')}>
                 <div className={cx('content_header', 'd-flex flex-row align-items-end')}>
@@ -479,13 +469,13 @@ export default function IdentityInfo({ seller }) {
                 </div>
                 <MessageText message={valid?.identity_images} className={cx('message', 'text-danger')} />
                 <div className={cx('note')}>
-                  <Translate>pages.register_shop.photo_note</Translate>
+                  <Translate>pages.seller.register_shop.photo_note</Translate>
                 </div>
               </div>
             </div>
             <div className={cx('photo_hold_your_identity', 'd-flex flex-row')}>
               <label className="form-label">
-                <Translate>pages.register_shop.photo_of_id</Translate>
+                <Translate>pages.seller.register_shop.photo_of_id</Translate>
               </label>
               <div className={cx('photo_hold_your_identity_content')}>
                 <div className={cx('content_header', 'd-flex flex-row align-items-end')}>
@@ -529,7 +519,7 @@ export default function IdentityInfo({ seller }) {
                 </div>
                 <MessageText message={valid?.identity_hold_images} className={cx('message', 'text-danger')} />
                 <div className={cx('note')}>
-                  <Translate>pages.register_shop.photo_hold_note</Translate>
+                  <Translate>pages.seller.register_shop.photo_hold_note</Translate>
                 </div>
               </div>
             </div>
@@ -540,7 +530,7 @@ export default function IdentityInfo({ seller }) {
                   requir={false}
                   className={cx('check_policies_content')}
                   checkboxclass={cx('check_item')}
-                  Label={Translate({ children: 'pages.register_shop.policy_note' })}
+                  Label={Translate({ children: 'pages.seller.register_shop.policy_note' })}
                 />
               </div>
               <MessageText message={valid?.checked} className={cx('message', 'text-danger')} />

@@ -24,9 +24,9 @@ export default function Home() {
       <section className={cx('seller_home_left', 'd-flex flex-column')}>
         <section className={cx('home_todolist')}>
           <div className={cx('title', 'd-flex flex-column')}>
-            <Translate>pages.home.todo_list</Translate>
+            <Translate>pages.seller.home.todo_list</Translate>
             <span>
-              <Translate>pages.home.note</Translate>
+              <Translate>pages.seller.home.note</Translate>
             </span>
           </div>
           {order && (

@@ -171,7 +171,7 @@ export default function RegisterShop() {
                       <Translate>completed</Translate>
                     </h3>
                     <p>
-                      <Translate>pages.register_shop.completed_title</Translate>
+                      <Translate>pages.seller.register_shop.completed_title</Translate>
                     </p>
                     <Button className="text-capitalize" to={config.ShopSeller.SettingIdentityInfo} primary small>
                       <Translate>completed</Translate>

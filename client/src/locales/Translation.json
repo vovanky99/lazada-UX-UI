@@ -52,12 +52,13 @@
     "select_type": "lựa chọn loại",
     "name_en": "tên tiếng anh",
     "add_category": "thêm thể loại",
+    "edit_category": "chỉnh sửa ngành hàng",
     "status": "trạng thái",
     "tools": "công cụ",
-    "category": "thể loại",
+    "category": "Ngành hàng",
     "register": "đăng ký",
     "register_note": "Có một tài khoản?",
-    "sign_in_note": "Bạn mới sử dụng Shopee?",
+    "sign_in_note": "Bạn mới sử dụng Life Shop?",
     "forget_password": "Quên mật khẩu?",
     "pickup_address": "Chọn địa chỉ",
     "filter": "lọc",
@@ -74,6 +75,7 @@
     "passport": "Hộ chiếu",
     "cat_parent": "danh mục cha",
     "name": "tên",
+    "name_product": "Tên sản phẩm",
     "image_scale_1_1": "Hình ảnh tỷ lệ 1:1",
     "image_scale_3_4": "Hình ảnh tỷ lệ 3:4",
     "send_link": "gửi liên kết",
@@ -87,6 +89,14 @@
     "edit_attributes_details": "chỉnh sửa thuộc tính chi tiết",
     "edit_attributes": "chỉnh sửa thuộc tính",
     "note": "lưu ý",
+    "list_category": "danh sách ngành hàng",
+    "product_video": "Video sản phẩm",
+    "add_video": "Thêm video",
+    "add_image": "Thêm hình ảnh",
+    "image_cover": "Ảnh bìa",
+    "industry": "Ngành hàng",
+    "selected": "đã chọn",
+    "no_select_category": "Chưa chọn ngành hàng",
     "verify_notification": {
       "one_line": "Một liên kết xác minh mới đã được gửi đến địa chỉ email của bạn.",
       "two_line": "Trước khi tiếp tục, vui lòng kiểm tra email của bạn để lấy liên kết xác minh.",
@@ -137,7 +147,9 @@
     },
     "placeholder": {
       "text": "Vui lòng nhập tên của bạn...",
-      "default": "Vui lòng nhập"
+      "default": "Vui lòng nhập",
+      "product_name": "Tên sản phẩm + Thương hiệu + Model + Thông số kỹ thuật",
+      "category": "Vui lòng chọn một ngành hàng!"
     },
     "shop": {
       "title": "cửa hàng",
@@ -235,46 +247,123 @@
       }
     },
     "pages": {
-      "register_shop": {
-        "completed_title": "Đăng sản phẩm đầu tiên của bạn để bắt đầu hành trình bán hàng với LifeShop!",
-        "edit_address": "chỉnh sửa địa chỉ",
-        "select_address": "chọn địa chỉ",
-        "location": "Vui lòng chọn lựa địa chỉ...",
-        "location_title": "thành phố/thị xã/phường",
-        "setting_shipping_note": "Kích hoạt phương thức vận chuyển thích hợp.",
-        "business_type": "loại doanh nghiệp",
-        "registered_business_address": "địa chỉ kinh doanh đã đăng ký",
-        "email_receive_electronic_invoice": "Email nhận hóa đơn điện tử",
-        "tax_code": "mã số thuế",
-        "fullname_note": "Theo CMND/CCCD/Hộ chiếu",
-        "form_of_identification": "Hình thức nhận dạng",
-        "photo_of_id": "Photo CMND/CCCD/hộ chiếu",
-        "photo_note": "Vui lòng cung cấp ảnh cận cảnh CMND/CCCD/Hộ chiếu Thông tin trong CMND/CCCD/Hộ chiếu phải được hiển thị rõ ràng (Kích thước ảnh không quá 5,0 MB)",
-        "photo_hold_note": "Vui lòng cung cấp ảnh bạn cầm CMND/CCCD/Hộ chiếu làm ảnh mẫu. Các thông tin trong CMND/CCCD/Hộ chiếu và ảnh phải được hiển thị rõ ràng (Kích thước ảnh không quá 5,0 MB)",
-        "policy_note": "Tôi xác nhận tất cả dữ liệu được cung cấp là chính xác và trung thực. Tôi đã đọc và đồng ý với Chính sách quyền riêng tư của Shopify."
-      },
-      "add_product": {
-        "add_image": "Thêm hình ảnh",
-        "basic_info": "Thông tin cơ bản",
-        "sales_info": "Thông tin bán hàng",
-        "transport": "Vận chuyển",
-        "note": "Có thể điều chỉnh sau khi chọn ngành hàng",
-        "other_info": "Thông tin khác",
-        "product_image": {
-          "title": "Hình ảnh sản phẩm"
+      "seller": {
+        "register_shop": {
+          "completed_title": "Đăng sản phẩm đầu tiên của bạn để bắt đầu hành trình bán hàng với LifeShop!",
+          "edit_address": "chỉnh sửa địa chỉ",
+          "select_address": "chọn địa chỉ",
+          "location": "Vui lòng chọn lựa địa chỉ...",
+          "location_title": "thành phố/thị xã/phường",
+          "setting_shipping_note": "Kích hoạt phương thức vận chuyển thích hợp.",
+          "business_type": "loại doanh nghiệp",
+          "registered_business_address": "địa chỉ kinh doanh đã đăng ký",
+          "email_receive_electronic_invoice": "Email nhận hóa đơn điện tử",
+          "tax_code": "mã số thuế",
+          "fullname_note": "Theo CMND/CCCD/Hộ chiếu",
+          "form_of_identification": "Hình thức nhận dạng",
+          "photo_of_id": "Photo CMND/CCCD/hộ chiếu",
+          "photo_note": "Vui lòng cung cấp ảnh cận cảnh CMND/CCCD/Hộ chiếu Thông tin trong CMND/CCCD/Hộ chiếu phải được hiển thị rõ ràng (Kích thước ảnh không quá 5,0 MB)",
+          "photo_hold_note": "Vui lòng cung cấp ảnh bạn cầm CMND/CCCD/Hộ chiếu làm ảnh mẫu. Các thông tin trong CMND/CCCD/Hộ chiếu và ảnh phải được hiển thị rõ ràng (Kích thước ảnh không quá 5,0 MB)",
+          "policy_note": "Tôi xác nhận tất cả dữ liệu được cung cấp là chính xác và trung thực. Tôi đã đọc và đồng ý với Chính sách quyền riêng tư của Shopify."
         },
-        "suggest": {
-          "title": "Gợi ý điền Thông tin",
-          "add_image": "Thêm ít nhất 3 hình ảnh",
-          "add_video": "Thêm video sản phẩm",
-          "product_title": "Tên sản phẩm có ít nhất 25~100 kí tự",
-          "descriptions": "Thêm ít nhất 100 kí tự hoặc 1 hình ảnh trong mô tả sản phẩm",
-          "add_brand": "Thêm thương hiệu"
+        "add_product": {
+          "add_image": "Thêm hình ảnh",
+          "basic_info": "Thông tin cơ bản",
+          "sales_info": "Thông tin bán hàng",
+          "transport": "Vận chuyển",
+          "other_info": "Thông tin khác",
+          "product_image": {
+            "title": "Hình ảnh sản phẩm",
+            "first": "- Tham khảo hướng dẫn hình ảnh sản phẩm khi đăng bán",
+            "second": "- Tham khảo hướng dẫn dành cho Life Shop Mall"
+          },
+          "note": {
+            "title": "ghi chú",
+            "no_category": "Có thể điều chỉnh sau khi chọn dòng sản phẩm",
+            "image_cover_first": "Tải lên hình ảnh 1:1.",
+            "image_cover_second": "Ảnh bìa sẽ được hiển thị trên các trang Kết quả tìm kiếm, Gợi ý hôm nay, v.v. Sử dụng ảnh bìa đẹp sẽ thu hút nhiều lượt truy cập vào sản phẩm của bạn hơn.",
+            "video_product_maximum": "Kích thước tối đa 30Mb, độ phân giải không quá 1280x1280px",
+            "video_product_length": "Độ dài: 10s-60s",
+            "video_product_format": "Định dạng: MP4",
+            "video_product_note": "Lưu ý: sản phẩm có thể hiển thị trong khi video đang được xử lý. Video sẽ tự động hiển thị sau khi xử lý thành công.",
+            "info_sell": "Mua nhiều giảm giá sẽ bị ẩn khi sản phẩm đang tham gia Mua Với Khuyến Mãi Sốc hoặc Khuyến Mãi Combo",
+            "carrier_setting": "Cài đặt nhà mạng ở đây chỉ áp dụng cho sản phẩm này."
+          },
+          "time_to_prepare_goods": {
+            "title": "Thời gian chuẩn bị hàng hóa",
+            "content": "Học cách tính thời hạn giao hàng để tránh điểm phạt Sao Quá Ta"
+          },
+          "shipping_fee": {
+            "title": "phí vận chuyển",
+            "first": "Tìm hiểu cách tính phí vận chuyển",
+            "second": "Người bán cần xác định chính xác khối lượng sản phẩm cần vận chuyển để tính chính xác phí vận chuyển"
+          },
+          "packaging_size": {
+            "title": "Kích thước đóng gói (Phí vận chuyển thực tế sẽ thay đổi nếu bạn nhập sai kích thước)",
+            "first": "Tham khảo mẹo cài đặt cân nặng chính xác",
+            "second": "⚠️Người vận chuyển có quyền từ chối nhận hàng nếu số lượng thực tế cao hơn số lượng quy định"
+          },
+          "weight": {
+            "title": "Trọng lượng (Sau khi đóng gói)",
+            "first": "Là thể tích của sản phẩm SAU KHI ĐÓNG GÓI. Xem thêm về quy định kích thước đóng gói sản phẩm tiêu chuẩn của Shop",
+            "second": "⚠️Người vận chuyển có quyền từ chối nhận hàng nếu số lượng thực tế cao hơn số lượng quy định."
+          },
+          "classify": {
+            "title": "Phân loại",
+            "first": "Điền phân loại sản phẩm nếu sản phẩm có màu sắc, kích cỡ khác nhau để khách hàng dễ dàng lựa chọn.",
+            "second": "Xem hướng dẫn cách phân loại sản phẩm trên Life Shop"
+          },
+          "price": {
+            "title": "giá",
+            "first": "Giá sản phẩm phải được tính bằng VNĐ",
+            "second": "⚠️Lưu ý khi đăng nhiều sản phẩm, Giá phải phân loại rõ ràng theo size, màu sắc, chất lượng"
+          },
+          "ware_house": {
+            "title": "kho hàng",
+            "first": "Cập nhật tình trạng tồn kho thực tế của sản phẩm để tránh tình trạng hủy/chậm đơn hàng."
+          },
+          "brand": {
+            "title": "thương hiệu",
+            "first": "Sản phẩm có thương hiệu:",
+            "second": "- Chọn từ danh sách/đăng ký thương hiệu",
+            "third": "Sản phẩm không có thương hiệu:",
+            "fourth": "- Chọn 'Không có thương hiệu'",
+            "fifth": "⚠️Sản phẩm của Mall phải có thương hiệu"
+          },
+          "product_description": {
+            "title": "Mô tả sản phẩm",
+            "first": "Hướng dẫn đăng ký/tải SÁCH tại Life Shop Mall",
+            "second": "Đối với một số mặt hàng nhất định, thông tin phải được cung cấp tại phần “Mô tả sản phẩm” theo Nghị định 85/2021/ND-CP",
+            "third": "- Số chứng chỉ phê duyệt kiểu",
+            "fourth": "- Khuyến cáo - Hướng dẫn sử dụng",
+            "fifth": "- Thông số kỹ thuật",
+            "sixth": "- Thông tin cảnh báo"
+          },
+          "category": {
+            "title": "ngành hàng",
+            "first": "- Đăng sản phẩm đúng chuyên mục giúp người mua dễ dàng tìm thấy sản phẩm của Shop khi tìm kiếm tại chuyên mục đó.",
+            "second": "- Người bán có thể dễ dàng tìm kiếm danh mục phù hợp cho sản phẩm của Shop tại",
+            "third": "- Tham khảo hướng dẫn chọn chủng loại sản phẩm"
+          },
+          "product_name": {
+            "title": "tên sản phẩm",
+            "first": "- Tham khảo quy định đặt tên",
+            "second": "- Đối với Life Shop Mall, xem thêm quy định",
+            "third": "Sử dụng tiếng Việt có dấu, không viết tắt, tối thiểu 10 ký tự, 20 ký tự đối với Life Shop Mall. Độ dài tối đa của tên sản phẩm cho tất cả Cửa hàng là 120 ký tự (bao gồm cả dấu cách)."
+          },
+          "suggest": {
+            "title": "Gợi ý điền Thông tin",
+            "add_image": "Thêm ít nhất 3 hình ảnh",
+            "add_video": "Thêm video sản phẩm",
+            "product_title": "Tên sản phẩm có ít nhất 25~100 kí tự",
+            "descriptions": "Thêm ít nhất 100 kí tự hoặc 1 hình ảnh trong mô tả sản phẩm",
+            "add_brand": "Thêm thương hiệu"
+          }
+        },
+        "home": {
+          "todo_list": "Danh sách cần làm",
+          "note": "Những việc bạn sẽ phải làm"
         }
-      },
-      "home": {
-        "todo_list": "Danh sách cần làm",
-        "note": "Những việc bạn sẽ phải làm"
       }
     },
     "database": {}
@@ -306,7 +395,7 @@
     "link_reset_note": " if you don't want reset password can back",
     "resend_email": "resend email",
     "register_note": "Have an account?",
-    "sign_in_note": "New to Shopee?",
+    "sign_in_note": "New to Life Shop?",
     "forget_password": "forget password",
     "reset_password": "Reset Password",
     "change_password": "Change Password",
@@ -351,6 +440,7 @@
     "edit": "edit",
     "update": "update",
     "add_category": "add category",
+    "edit_category": "edit category",
     "status": "status",
     "tools": "tools",
     "collapse": "collapse",
@@ -371,6 +461,14 @@
     "edit_attributes_details": "edit attributes details",
     "edit_attributes": "edit attributes",
     "note": "note",
+    "click_here": "Click here",
+    "list_category": "list category",
+    "product_video": "product video",
+    "add_video": "add video",
+    "add_image": "add image",
+    "name_product": "name product",
+    "selected": "selected",
+    "no_select_category": "No industry has been selected yet",
     "verify_notification": {
       "one_line": "A fresh verification link has been sent to your email address.",
       "two_line": "Before proceeding, please check your email for a verification link.",
@@ -410,7 +508,6 @@
       "language": "Please select language!",
       "type_location": "Please select data type!",
       "delete_location": "Please select the data type again, the current data type is null!",
-
       "images_cat": "Not enough 6 photos!",
       "category": "Please select a category!",
       "attributes": "Please select a attributes!"
@@ -420,7 +517,9 @@
     },
     "placeholder": {
       "text": "Please enter name... ",
-      "default": "Please enter"
+      "default": "Please enter",
+      "product_name": "Product name + Brand + Model + Specifications",
+      "category": "Please select a category!"
     },
     "identity": {
       "title": "identity",
@@ -434,7 +533,7 @@
     "tax": {
       "title": "tax",
       "tax_info": "tax infomation",
-      "note": "The collection of Tax Information and Identification Information is mandatory according to the regulations of Vietnam's Cybersecurity, E-commerce, and Tax laws. Tax Information and Identification Information will be protected according to Shopee's privacy policy. The seller is fully responsible for the accuracy of the information.",
+      "note": "The collection of Tax Information and Identification Information is mandatory according to the regulations of Vietnam's Cybersecurity, E-commerce, and Tax laws. Tax Information and Identification Information will be protected according to Life Shop's privacy policy. The seller is fully responsible for the accuracy of the information.",
       "email_note": "Your electronic invoice will be sent to this email address",
       "tax_code_note": "According to Vietnam E-commerce Regulations (Decree 52/2013/ND-CP), Sellers must provide Tax Code information to the e-commerce platform.",
       "business_name": "business name",
@@ -517,46 +616,125 @@
       }
     },
     "pages": {
-      "register_shop": {
-        "completed_title": "Post your first product to start your sales journey with LifeShop!",
-        "edit_address": "edit address",
-        "select_address": "select address",
-        "location": "Please select address...",
-        "location_title": "city/district/ward",
-        "setting_shipping_note": "Activate the appropriate shipping method.",
-        "business_type": "business type",
-        "registered_business_address": "registered business address",
-        "email_receive_electronic_invoice": "email receive electronic invoice",
-        "tax_code": "tax code",
-        "form_of_identification": "Form of identification",
-        "fullname_note": "According to ID card/CCCD/Passport",
-        "photo_of_id": "Photo of ID card/CCCD/passport",
-        "photo_note": "Please provide a close-up photo of your ID card/CCCD/Passport Information in ID card/CCCD/Passport must be clearly displayed (Photo size must not exceed 5.0 MB)",
-        "photo_hold_note": "Please provide a photo of you holding your ID card/CCCD/Passport as a sample photo. The information in your ID card/CCCD/Passport and photos must be clearly displayed (Photo size must not exceed 5.0 MB)",
-        "policy_note": "I confirm all data provided is accurate and truthful. I have read and agree to Shopee's Privacy Policy."
-      },
-      "add_product": {
-        "add_image": "add images",
-        "baisc_info": "Basic information",
-        "sales_info": "Sales information",
-        "transport": "Transport",
-        "note": "Can be adjusted after selecting a product line",
-        "other_info": "other information",
-        "product_image": {
-          "title": "product images"
+      "seller": {
+        "register_shop": {
+          "completed_title": "Post your first product to start your sales journey with LifeShop!",
+          "edit_address": "edit address",
+          "select_address": "select address",
+          "location": "Please select address...",
+          "location_title": "city/district/ward",
+          "setting_shipping_note": "Activate the appropriate shipping method.",
+          "business_type": "business type",
+          "registered_business_address": "registered business address",
+          "email_receive_electronic_invoice": "email receive electronic invoice",
+          "tax_code": "tax code",
+          "form_of_identification": "Form of identification",
+          "fullname_note": "According to ID card/CCCD/Passport",
+          "photo_of_id": "Photo of ID card/CCCD/passport",
+          "photo_note": "Please provide a close-up photo of your ID card/CCCD/Passport Information in ID card/CCCD/Passport must be clearly displayed (Photo size must not exceed 5.0 MB)",
+          "photo_hold_note": "Please provide a photo of you holding your ID card/CCCD/Passport as a sample photo. The information in your ID card/CCCD/Passport and photos must be clearly displayed (Photo size must not exceed 5.0 MB)",
+          "policy_note": "I confirm all data provided is accurate and truthful. I have read and agree to Life Shop's Privacy Policy."
         },
-        "suggest": {
-          "title": "Suggestions for filling out Information",
-          "add_image": "Add at least 3 images",
-          "add_video": "Add product videos",
-          "product_title": "Product name must be at least 25~100 characters",
-          "descriptions": "Add at least 100 characters or 1 image in the product description",
-          "add_brand": "Add brand"
+        "add_product": {
+          "add_image": "add images",
+          "baisc_info": "Basic information",
+          "sales_info": "Sales information",
+          "transport": "Transport",
+          "carrier_setting_can_first": "Shop can",
+          "carrier_setting_can_second": "to enable additional shipping methods for the product.",
+          "note": {
+            "title": "note",
+            "no_category": "Can be adjusted after selecting a product line",
+            "image_cover_first": "Upload a 1:1 image.",
+            "image_cover_second": "The cover photo will be displayed on the Search Results pages, Today's Suggestions, etc. Using a beautiful cover photo will attract more visits to your products.",
+            "video_product_maximum": "Maximum size 30Mb, resolution not exceeding 1280x1280px",
+            "video_product_length": "Length: 10s-60s",
+            "video_product_format": "Format: MP4",
+            "video_product_note": "Note: the product may display while the video is being processed. The video will automatically display after successful processing.",
+            "info_sell": "Buy multiple discounts will be hidden when the product is participating in Buy With Shock Deal or Combo Promotion",
+            "carrier_setting": "The carrier settings here apply to this product only."
+          },
+          "other_info": "other information",
+          "product_image": {
+            "title": "product images",
+            "first": "- Refer to product image instructions when posting for sale",
+            "second": "- Refer to the guide for Life Shop Mall"
+          },
+          "time_to_prepare_goods": {
+            "title": "Time to prepare goods",
+            "content": "Learn how to calculate delivery deadlines to avoid Star Qua Ta penalty points"
+          },
+          "shipping_fee": {
+            "title": "Shipping fee",
+            "first": "Learn how shipping rates are calculated",
+            "second": "Sellers need to determine the correct volume of products to be shipped to accurately calculate shipping fees"
+          },
+          "packaging_size": {
+            "title": "Packaging size (Actual shipping fee will vary if you enter the wrong size)",
+            "first": "Refer to tips for setting the correct weight",
+            "second": "⚠️The carrier has the right to refuse to pick up goods if the actual volume is higher than the set volume"
+          },
+          "weight": {
+            "title": "Weight (After packing)",
+            "first": "Is the volume of the product AFTER PACKAGING. See more about Life Shop standard product packaging size regulations",
+            "second": "⚠️The carrier has the right to refuse to pick up goods if the actual volume is higher than the set volume."
+          },
+          "classify": {
+            "title": "Classify",
+            "first": "Fill in product classification if the product has different colors and sizes so customers can easily choose.",
+            "second": "See instructions on how to classify products on Life Shop"
+          },
+          "price": {
+            "title": "price",
+            "first": "Product prices must be calculated in VND",
+            "second": "⚠️Note with posts for multiple products, Prices must be clearly classified based on size, color, quality"
+          },
+          "ware_house": {
+            "title": "ware house",
+            "first": "Update the actual inventory of the product to avoid order cancellations/delays."
+          },
+          "brand": {
+            "title": "brand",
+            "first": "Branded products:",
+            "second": "- Choose from the list/brand registration",
+            "third": "Non-branded products:",
+            "fourth": "- Select 'No brand'",
+            "fifth": "⚠️Mall products must have a brand"
+          },
+          "product_description": {
+            "title": "Product description",
+            "first": "Instructions for Life Shop Mall to register/upload BOOKS",
+            "second": "For certain items, information must be provided in the 'Product description' section according to Decree 85/2021/ND-CP ",
+            "third": "- Type approval certificate number",
+            "fourth": "- Recommendations - Instructions for use",
+            "fifth": "- Specifications",
+            "sixth": "- Warning information"
+          },
+          "category": {
+            "title": "category",
+            "first": "- Posting products in the right category helps buyers easily find the Shop's products when searching in that category.",
+            "second": "- Sellers can easily find the appropriate category for the Shop's products at",
+            "third": "- Refer to the instructions for choosing a product category"
+          },
+          "product_name": {
+            "title": "product name",
+            "first": "- Refer to naming regulations",
+            "second": "- For Life Shop Mall, see more regulations",
+            "third": "Use Vietnamese with accents, no abbreviations, minimum 10 characters, 20 characters for Life Shop Mall. The maximum length of product names for all Shops is 120 characters (including spaces)."
+          },
+          "suggest": {
+            "title": "Suggestions for filling out Information",
+            "add_image": "Add at least 3 images",
+            "add_video": "Add product videos",
+            "product_title": "Product name must be at least 25~100 characters",
+            "descriptions": "Add at least 100 characters or 1 image in the product description",
+            "add_brand": "Add brand"
+          }
+        },
+        "home": {
+          "todo_list": "Todo List",
+          "note": "Things you will have to do"
         }
-      },
-      "home": {
-        "todo_list": "Todo List",
-        "note": "Things you will have to do"
       }
     },
     "database": {}

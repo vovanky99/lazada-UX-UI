@@ -29,6 +29,7 @@ export const FormSearch = forwardRef(function FormSearch(
     title,
     classTitle,
     labelClass,
+    placeholder,
     useForgetPassword = false,
     useColumn = false,
     useLabel = true,
@@ -214,7 +215,11 @@ export const FormSearch = forwardRef(function FormSearch(
                 name={name}
                 className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
                 onClick={handleClickSelect}
-                placeholder={Translate({ children: 'component.form_text' }) + Translate({ children: title })}
+                placeholder={
+                  placeholder
+                    ? Translate({ children: placeholder })
+                    : Translate({ children: 'component.form_text' }) + Translate({ children: title })
+                }
                 value={search}
                 onChange={(e) => {
                   const { value, maxLength } = e.target;
@@ -251,7 +256,11 @@ export const FormSearch = forwardRef(function FormSearch(
               max={max}
               disabled={disabled}
               className={cx('search', inputClass ? `${inputClass}` : ' form-control py-2')}
-              placeholder={Translate({ children: 'component.form_text' }) + Translate({ children: title })}
+              placeholder={
+                placeholder
+                  ? Translate({ children: placeholder })
+                  : Translate({ children: 'component.form_text' }) + Translate({ children: title })
+              }
               value={search}
               autoComplete={inputType === 'password' ? `on` : ''}
               onBlur={handleBlur}

@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { useImmer } from 'use-immer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamation, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faExclamation, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import styles from '../RegisterShop.module.scss';
 import Button from '~/components/Button';
-import Radio from '~/components/Radio';
 import Location from '../Location';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import { FormSearch } from '~/layout/Component/FormSearch';
@@ -15,6 +14,7 @@ import MessageDanger from '~/layout/Component/Message/MessageDanger';
 import LocalStorageService from '~/services/LocalStorageService';
 import { RegisterShop } from '~/api/Seller/Profile';
 import Translate from '~/layout/Component/Translate';
+import RadioList from '~/layout/Component/RadioList';
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +22,11 @@ export default function TaxInfo({ email, location }) {
   const locationRef = useRef();
   const businessNameRef = useRef();
   const addressRef = useRef();
+  const businessTypeOption = [
+    { type: 1, title: 'business_type_option' },
+    { type: 2, title: 'household_business' },
+    { type: 3, title: 'company' },
+  ];
   const [valid, setValid] = useImmer({});
   const [taxInfo, setTaxInfo] = useImmer(() => {
     if (LocalStorageService.getItem('taxInfoValue')) {
@@ -166,6 +171,14 @@ export default function TaxInfo({ email, location }) {
     }
   };
 
+  /* handle remove active for radio when select other radio */
+  const handleClickBusinessOption = (e) => {
+    const { type, color } = e.currentTarget.dataset;
+    setTaxInfo((draft) => {
+      draft.business_type = parseInt(type);
+    });
+  };
+
   /*set default value for radio identity form of identification */
   useEffect(() => {
     const radioItem = document.querySelectorAll('.business_type_item');
@@ -174,30 +187,6 @@ export default function TaxInfo({ email, location }) {
         radioItem[i].classList.add(`radio_${radioItem[i].dataset.color}_active`);
       }
     }
-  }, []);
-
-  /* handle remove active for radio when select other radio */
-  useEffect(() => {
-    const radioItem = document.querySelectorAll('.business_type_item');
-    const handleRemoveActive = (e) => {
-      const { type, color } = e.currentTarget.dataset;
-      for (let i = 0; i < radioItem.length; i++) {
-        if (radioItem[i].classList.contains(`radio_${color}_active`)) {
-          radioItem[i].classList.remove(`radio_${color}_active`);
-        }
-      }
-      setTaxInfo((draft) => {
-        draft.business_type = parseInt(type);
-      });
-    };
-    if (radioItem) {
-      radioItem.forEach((d) => d.addEventListener('click', handleRemoveActive));
-    }
-    return () => {
-      if (radioItem) {
-        radioItem.forEach((d) => d.removeEventListener('click', handleRemoveActive));
-      }
-    };
   }, []);
 
   /* handle valid for location  */
@@ -329,12 +318,17 @@ export default function TaxInfo({ email, location }) {
         <div className={cx('form_header_content', 'd-flex flex-column')}>
           <div className={cx('business_type', 'd-flex flex-row')}>
             <label htmlFor="business_type_option" className="form-label">
-              <Translate>pages.register_shop.business_type</Translate>
+              <Translate>pages.seller.register_shop.business_type</Translate>
             </label>
             <div id="business_type_option" className={cx('business_type_option', 'd-flex flex-row')}>
-              <Radio title="individual" type={1} className={cx('business_type_item')} primary />
-              <Radio title="household_business" type={2} className={cx('business_type_item')} primary />
-              <Radio title="company" type={3} className={cx('business_type_item')} primary />
+              <RadioList
+                data={businessTypeOption}
+                titleClass="business_type_item"
+                color="primary"
+                className={cx('business_type_item')}
+                defaultValue={taxInfo?.business_type || 1}
+                onClick={handleClickBusinessOption}
+              />
             </div>
           </div>
           {taxInfo.business_type !== 1 ? (
@@ -367,7 +361,7 @@ export default function TaxInfo({ email, location }) {
           )}
           <div className={cx('registered_business_address', 'd-flex flex-row')}>
             <label htmlFor="registered_business_address_content" className="form-label">
-              <Translate>pages.register_shop.registered_business_address</Translate>
+              <Translate>pages.seller.register_shop.registered_business_address</Translate>
             </label>
             <div
               id="registered_business_address_content"
@@ -399,7 +393,7 @@ export default function TaxInfo({ email, location }) {
           </div>
           <div className={cx('email_receive_electronic_invoice', 'd-flex flex-row')}>
             <label htmlFor="email_receive_electronic_invoice_content" className="form-label">
-              <Translate>pages.register_shop.email_receive_electronic_invoice</Translate>
+              <Translate>pages.seller.register_shop.email_receive_electronic_invoice</Translate>
             </label>
             <div
               id="email_receive_electronic_invoice_content"
@@ -435,7 +429,7 @@ export default function TaxInfo({ email, location }) {
           </div>
           <div className={cx('tax_code', 'd-flex flex-row')}>
             <label htmlFor="tax_code_content" className="form-label">
-              <Translate>pages.register_shop.tax_code</Translate>
+              <Translate>pages.seller.register_shop.tax_code</Translate>
             </label>
             <div id="tax_code_content" className={cx('tax_code_content', 'd-flex flex-column')}>
               <FormSearch

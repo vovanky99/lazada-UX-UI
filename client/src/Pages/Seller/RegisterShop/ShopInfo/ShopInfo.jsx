@@ -129,9 +129,9 @@ export default function ShopInfo({ handleResetComponent, country, seller, addres
                 )}
                 <Button className={cx('pickup_address_edit')} type="button" onClick={handleEditAddress} transparent>
                   {addressDetail ? (
-                    <Translate>pages.register_shop.edit_address</Translate>
+                    <Translate>pages.seller.register_shop.edit_address</Translate>
                   ) : (
-                    <Translate>pages.register_shop.select_address</Translate>
+                    <Translate>pages.seller.register_shop.select_address</Translate>
                   )}
                 </Button>
               </div>

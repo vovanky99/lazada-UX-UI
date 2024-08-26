@@ -15,14 +15,25 @@ class CloudinaryController extends Controller
     {
         $this->general = $general;
     }
-   public function generateSignature(){
-
+   public function generateSignature(Request $request){
     $timestamp = time();
-    $params = [
-        'timestamp' => $timestamp,
-        'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
-        // 'return_delete_token' => true
-    ];
+    if($request->get('type') == 'video'){
+        $params = [
+            'timestamp' => $timestamp,
+            'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET_VIDEO'),
+            // 'return_delete_token' => true
+        ];
+    }
+    else{
+        $params = [
+            'timestamp' => $timestamp,
+            'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET_IMAGE'),
+            // 'return_delete_token' => true
+        ];
+    }
+
+    
+   
     $signature = $this->signParams($params, env('CLOUDINARY_API_SECRET'));
     return response()->json([ 
         'signature' => $signature,

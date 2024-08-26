@@ -97,7 +97,7 @@ export default function Popover() {
                     <ChartsIcon />
                   </div>
                   <span>
-                    <Translate>data.business_insights</Translate>
+                    <Translate>data_center.business_insights</Translate>
                   </span>
                 </Button>
                 <Button

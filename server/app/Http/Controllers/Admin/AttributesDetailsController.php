@@ -50,7 +50,10 @@ class AttributesDetailsController extends Controller{
         $en = $this->general->languages('en');
         $vi = $this->general->languages('vi');
         try{
-            if(count(AttributesDetailTranslation::where('name',$name_en)->orWhere('name',$name_vi)->where('attribute_id',$attr_id)->get()) >0){
+            if(count(AttributesDetailTranslation::where('name',$name_en)->orWhere('name',$name_vi)->join('attributes_detail',function($join)use($attr_id){
+                $join->on('attributes_detail.id','=','attributes_detail_translation.attribute_detail_id');
+                $join->on('attributes_detail.attribute_id','=',DB::raw("$attr_id"));
+            })->get()) >0){
                 return response()->json(['error'=>'attr is exist!']);
             }
             $attr = AttributesDetail::create([

@@ -2,6 +2,10 @@
   color: var(--primary) !important;
 }
 
+.tabs_active {
+  color: var(--primary) !important;
+  font-weight: bold;
+}
 .hide-scrollbar {
   &::-webkit-scrollbar-thumb {
     background-color: var(--white) !important;
@@ -20,6 +24,19 @@
 //   animation-name: closeModal;
 //   animation-duration: 1s;
 // }
+
+/* componnet*/
+#radio.radio_primary_active {
+  div {
+    &:first-child {
+      background-color: var(--primary) !important;
+      border-color: var(--primary) !important;
+      &::before {
+        background-color: var(--white) !important;
+      }
+    }
+  }
+}
 
 /* life shop */
 .sticky_header {
@@ -287,17 +304,4 @@ button.reviews_score.score_active {
   .setting_shipping_btn:has(.lifeshop_switch_close)
   + .setting_shipping_item {
   display: none;
-}
-
-/* componnet*/
-#radio.radio_primary_active {
-  div {
-    &:first-child {
-      background-color: var(--primary) !important;
-      border-color: var(--primary) !important;
-      &::before {
-        background-color: var(--white) !important;
-      }
-    }
-  }
 }

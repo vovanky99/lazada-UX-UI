@@ -379,7 +379,7 @@ const Location = forwardRef(function Location(
             onClick={handleSelectLocation}
           >
             <div>
-              {location.city_name ? location.city_name : <Translate>pages.register_shop.location</Translate>}
+              {location.city_name ? location.city_name : <Translate>pages.seller.register_shop.location</Translate>}
               {location.district_name ? '/' + location.district_name : ''}
               {location.ward_name ? '/' + location.ward_name : ''}
             </div>

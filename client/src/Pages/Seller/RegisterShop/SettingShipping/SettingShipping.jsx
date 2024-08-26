@@ -253,7 +253,7 @@ export default function SettingShipping({ seller }) {
             <Translate>setting.setting_shipping</Translate>
           </h4>
           <div>
-            <Translate>pages.register_shop.setting_shipping_note</Translate>
+            <Translate>pages.seller.register_shop.setting_shipping_note</Translate>
           </div>
         </div>
         <div className={cx('setting_shipping_form_content')} noValidate>
