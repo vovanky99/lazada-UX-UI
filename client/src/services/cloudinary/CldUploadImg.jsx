@@ -61,15 +61,12 @@ export async function DeleteImageCld(publicId) {
 
 export async function CldUploadVideo(file, handleUploadProgress = () => {}) {
   const cloud_preset = process.env.REACT_APP_CLOUDINARY_PRESET_VIDEO;
-  let signature = null;
   try {
     const data = new FormData();
     data.append('file', file);
     data.append('upload_preset', `${cloud_preset}`);
     data.append('api_key', `${cloud_key}`);
     // data.append('api_secret', `${cloud_secret}`);
-    data.append('signature', `${signature?.signature}`);
-    data.append('timestamp', `${signature?.timestamp}`);
     const dataSignature = {
       timestamp: Math.floor(Date.now() / 1000),
       eager: 'w_400,h_300,c_pad|w_260,h_200,c_crop',
@@ -77,26 +74,26 @@ export async function CldUploadVideo(file, handleUploadProgress = () => {}) {
       type: 'video',
     };
     await GenerateSignatureCloudinary(dataSignature)
-      .then((result) => {
+      .then(async (result) => {
         if (result?.signature) {
-          signature = result;
+          data.append('signature', `${result?.signature}`);
+          data.append('timestamp', `${result?.timestamp}`);
+          axios.defaults.withCredentials = '';
+          const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/upload`, data, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+            onUploadProgress: (progressEvent) => {
+              handleUploadProgress(progressEvent);
+            },
+          });
+          // return res;
         } else {
           return null;
         }
       })
       .catch((e) => console.log(e));
-    if (signature) {
-      // data.append('return_delete_token', true);
-      const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/upload`, data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (progressEvent) => {
-          handleUploadProgress(progressEvent);
-        },
-      });
-      return res;
-    }
+
     return null;
   } catch (e) {
     console.log(e);

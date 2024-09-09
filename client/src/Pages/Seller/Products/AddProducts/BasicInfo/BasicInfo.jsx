@@ -15,6 +15,7 @@ import CldUploadImg, { CldUploadVideo, DeleteImageCld } from '~/services/cloudin
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import EditVideo from '../EditVideo';
 
 const cx = classNames.bind(styles);
 
@@ -23,12 +24,22 @@ export default function BasicInfo() {
   const selectImagesRef = useRef();
   const selectVideoRef = useRef();
   const [editCategory, setEditCategory] = useState(false);
+  const message = {
+    video_type: Translate({ children: 'valid.video_type' }),
+    video_length: Translate({ children: 'valid.video_length' }),
+    video_size: Translate({ children: 'valid.video_size' }),
+    video_resolution: Translate({ children: 'valid.video_resolution' }),
+    image_require: Translate({ children: 'valid.image_require' }),
+  };
+  const [valid, setValid] = useImmer({});
   const imagesProductsTitle = [
     { type: 1, title: 'image_scale_1_1' },
     { type: 2, title: 'image_scale_3_4' },
   ];
   const [product, setProduct] = useImmer({
-    video: '',
+    video_value: '',
+    video: false,
+    video_temporary: '',
     name: '',
     product_description: '',
     images: {},
@@ -107,19 +118,81 @@ export default function BasicInfo() {
     selectVideoRef.current.click();
   };
 
-  const handleOnchangeVideo = (e) => {
+  const validateVideo = async (file) => {
+    /* delete before handle valid */
+    if (valid?.video) {
+      setValid((draft) => {
+        delete draft.video;
+      });
+    }
+
+    /* check lenght of video */
+    if (file) {
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+
+      //set the video source to the selected file
+      const url = URL.createObjectURL(file);
+      video.src = url;
+      //Listen for loadedMetadata to get the duration
+      video.onloadeddata = function () {
+        const duration = video.duration;
+        const width = video.videoWidth;
+        const height = video.videoHeight;
+        //check duration of video. length of video in 600 second
+        if (!(duration < 600 && duration > 10)) {
+          setValid((draft) => {
+            draft['video'] = message.video_length;
+          });
+          return false;
+        }
+        // check resolution of video
+        if (width > 1280 || height > 1280) {
+          setValid((draft) => {
+            draft['video'] = message.video_resolution;
+          });
+          return false;
+        }
+      };
+    }
+
+    /* check type of video */
+    if (file?.type !== 'video/mp4') {
+      setValid((draft) => {
+        draft['video'] = message.video_type;
+      });
+      return false;
+    }
+    /* check size of video */
+    if (file?.size / 1024 / 1024 > 30) {
+      setValid((draft) => {
+        draft['video'] = message.video_size;
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const handleOnchangeVideo = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      CldUploadVideo(file)
-        .then((result) => {
-          if (result) {
-            setProduct((draft) => {
-              draft.video = result;
-            });
-          }
-        })
-        .catch((e) => console.log(e));
+      const val = await validateVideo(file);
+      if (val) {
+        setProduct((draft) => {
+          draft.video_temporary = file;
+        });
+        // CldUploadVideo(file)
+        //   .then((result) => {
+        //     if (result) {
+        //       setProduct((draft) => {
+        //         draft.video = result;
+        //       });
+        //     }
+        //   })
+        //   .catch((e) => console.log(e));
+      }
     }
+    e.target.value = '';
   };
 
   const handleSetName = (value) => {
@@ -134,6 +207,12 @@ export default function BasicInfo() {
     });
   };
 
+  const handleCancelVideo = (e) => {
+    setProduct((draft) => {
+      draft.video_value = '';
+      draft.video_temporary = '';
+    });
+  };
   return (
     <div className={cx('seller_basic_info', 'd-flex flex-column')}>
       <h4 className={cx('title')}>
@@ -241,7 +320,7 @@ export default function BasicInfo() {
           <div className={cx('video', 'd-flex flex-row')}>
             {product.video ? (
               <div className={cx('video_contain')}>
-                <Video src={product.video?.src} />
+                <Video src={product.video?.url} />
               </div>
             ) : (
               <Fragment>
@@ -303,7 +382,7 @@ export default function BasicInfo() {
             <div className={cx('name_lenght')}>{Object.values(product.name).length}/120</div>
           </FormSearch>
         </div>
-        <div className={cx('product_name', 'd-flex flex-row align-items-center')}>
+        <div className={cx('category', 'd-flex flex-row align-items-center')}>
           <label>
             <Translate>category</Translate>
           </label>
@@ -331,6 +410,9 @@ export default function BasicInfo() {
           </div>
         </div>
       </div>
+      {!product.video && product.video_temporary && (
+        <EditVideo data={product.video_temporary} onToggle={handleCancelVideo} />
+      )}
     </div>
   );
 }

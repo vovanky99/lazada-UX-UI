@@ -18,7 +18,6 @@ export default function Home() {
       })
       .catch((e) => console.log(e));
   }, []);
-  console.log(order);
   return (
     <section className={cx('seller_wrapper', 'd-flex flex-row ')}>
       <section className={cx('seller_home_left', 'd-flex flex-column')}>

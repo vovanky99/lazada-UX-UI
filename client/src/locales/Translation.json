@@ -97,6 +97,10 @@
     "industry": "Ngành hàng",
     "selected": "đã chọn",
     "no_select_category": "Chưa chọn ngành hàng",
+    "edit_video": "chỉnh sửa video",
+    "confirm": "Xác nhận",
+    "cancel": "Hủy",
+
     "verify_notification": {
       "one_line": "Một liên kết xác minh mới đã được gửi đến địa chỉ email của bạn.",
       "two_line": "Trước khi tiếp tục, vui lòng kiểm tra email của bạn để lấy liên kết xác minh.",
@@ -358,7 +362,8 @@
             "product_title": "Tên sản phẩm có ít nhất 25~100 kí tự",
             "descriptions": "Thêm ít nhất 100 kí tự hoặc 1 hình ảnh trong mô tả sản phẩm",
             "add_brand": "Thêm thương hiệu"
-          }
+          },
+          "edit_category_note": "Kéo để chọn cắt video theo đoạn video từ 10s-60s"
         },
         "home": {
           "todo_list": "Danh sách cần làm",
@@ -469,6 +474,9 @@
     "name_product": "name product",
     "selected": "selected",
     "no_select_category": "No industry has been selected yet",
+    "edit_video": "edit video",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
     "verify_notification": {
       "one_line": "A fresh verification link has been sent to your email address.",
       "two_line": "Before proceeding, please check your email for a verification link.",
@@ -729,7 +737,8 @@
             "product_title": "Product name must be at least 25~100 characters",
             "descriptions": "Add at least 100 characters or 1 image in the product description",
             "add_brand": "Add brand"
-          }
+          },
+          "edit_category_note": "Drag to choose to cut video by video length from 10s to 60s"
         },
         "home": {
           "todo_list": "Todo List",

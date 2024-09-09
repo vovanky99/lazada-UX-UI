@@ -305,3 +305,23 @@ button.reviews_score.score_active {
   + .setting_shipping_item {
   display: none;
 }
+
+#add_product_edit_video #main .play_item.active {
+  display: block !important;
+}
+
+#add_product_edit_video #main #play {
+  &:hover {
+    .pause_item.active {
+      display: block !important;
+    }
+  }
+}
+
+// #add_product_edit_video .fragment-left {
+//   left: 0;
+// }
+
+// #add_product_edit_video .fragment-right {
+//   right: 0;
+// }

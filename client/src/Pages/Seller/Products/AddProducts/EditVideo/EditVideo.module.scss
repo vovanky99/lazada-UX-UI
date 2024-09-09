@@ -1,0 +1,212 @@
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--background_color_shadow);
+  .contain {
+    overflow: hidden;
+    background-color: var(--white);
+    position: relative;
+    border-radius: 5px;
+    width: 800px;
+    height: 565px;
+    .header {
+      padding: 25px;
+      h4 {
+        font-size: 2rem;
+      }
+      button {
+        font-size: 2rem;
+        color: var(--grey);
+      }
+    }
+  }
+}
+.main {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  min-height: 32px;
+  padding: 0 25px;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scroll_bar_color);
+    border-radius: 10px;
+    &:hover {
+      background-color: var(--scroll_bar_hover_color);
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background-color: var(--scroll_bar_background);
+  }
+}
+
+.main {
+  height: 400px;
+  --width_duration: 85%;
+  .video {
+    margin-bottom: 20px;
+    position: relative;
+    width: 568px;
+    .btn_video {
+      display: none;
+    }
+    video {
+      width: 100%;
+    }
+    .play {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 40px;
+      height: 40px;
+      z-index: 99;
+      background-color: transparent;
+      margin: auto;
+      svg {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        color: var(--white);
+      }
+    }
+  }
+  .handle_video {
+    width: 568px;
+  }
+  .progress_container {
+    width: 100%;
+    padding: var(--padding_of_progress);
+    gap: 20px;
+    border-radius: 3px;
+    height: 32px;
+    background-color: #f6f6f6;
+    .progress_bars {
+      background-color: #e0e0e0;
+      width: var(--width_duration);
+      padding: 3px;
+      height: 6px;
+      border-radius: var(--padding_of_progress);
+      position: relative;
+      .progress_point {
+        top: 50%;
+        left: 0;
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        transform: translateY(-50%);
+        border-radius: 50%;
+        border: 2px solid var(--primary);
+        background-color: var(--white);
+        cursor: pointer;
+        z-index: 9;
+      }
+      .progress_line {
+        background-color: var(--primary);
+        width: 100%;
+        top: 0;
+        left: 0;
+        padding: 3px 0;
+        cursor: all-scroll;
+        height: 6px;
+        border-radius: 5px;
+        position: absolute;
+        &:hover {
+          &::after {
+            background-color: var(--primary);
+            opacity: 0.12;
+          }
+        }
+        &::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 32px;
+          top: -13px;
+        }
+      }
+    }
+    .progress_time {
+      display: inline-block;
+      font-size: 1.3rem;
+    }
+  }
+  .video_cropper_container {
+    width: var(--width_duration);
+    padding-top: 20px;
+    .fragment_container {
+      position: relative;
+      min-height: 50px;
+      .fragment {
+        top: -3px;
+        height: 24px;
+        position: absolute;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        width: var(--width_of_fragment);
+        background-color: var(--primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          width: calc(var(--width_of_fragment) - 6px);
+          height: calc(var(--width_of_fragment) - 6px);
+          transform: rotate(45deg);
+          top: -8px;
+          left: 3px;
+          background-color: var(--primary);
+        }
+        &:hover {
+          .fragment_fill {
+            opacity: 1;
+          }
+        }
+        .fragment_fill {
+          position: relative;
+          z-index: 1;
+          background-color: transparent;
+          width: 8px;
+          opacity: 0.5;
+          height: 13px;
+          border-left: 2px solid var(--white);
+          border-right: 2px solid var(--white);
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 25px;
+  z-index: 999;
+  box-shadow: 0 -4px 4px 0 var(--box_shadow_light_color);
+  .footer_left {
+    span {
+      font-size: 1.5rem;
+    }
+  }
+  .footer_right {
+    gap: 20px;
+    button {
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
+  }
+}
