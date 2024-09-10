@@ -90,7 +90,7 @@
     .progress_bars {
       background-color: #e0e0e0;
       width: var(--width_duration);
-      padding: 3px;
+      padding: 3px 0px;
       height: 6px;
       border-radius: var(--padding_of_progress);
       position: relative;
@@ -98,8 +98,8 @@
         top: 50%;
         left: 0;
         position: absolute;
-        width: 15px;
-        height: 15px;
+        width: var(--width_of_point);
+        height: var(--width_of_point);
         transform: translateY(-50%);
         border-radius: 50%;
         border: 2px solid var(--primary);
@@ -142,7 +142,7 @@
     padding-top: 20px;
     .fragment_container {
       position: relative;
-      min-height: 50px;
+      min-height: 30px;
       .fragment {
         top: -3px;
         height: 24px;
@@ -184,6 +184,9 @@
           border-right: 2px solid var(--white);
         }
       }
+    }
+    .duration {
+      font-size: 1.4rem;
     }
   }
 }

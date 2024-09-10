@@ -12,7 +12,7 @@ import Unsigned from '~/hooks/Unsigned';
 
 const cx = classNames.bind(styles);
 
-export default function EditVideo({ data, onToggle = () => {} }) {
+export default function EditVideo({ data, onToggle = () => {}, handlePassVideo = () => {} }) {
   const videoRef = useRef();
   const playRef = useRef();
   const pauseRef = useRef();
@@ -41,11 +41,21 @@ export default function EditVideo({ data, onToggle = () => {} }) {
   const paddingOfProgressContainer = 15; // use padding for ui and minus it in handle UI line,point,fragment
   const widthOfFragment = 22; // use padding for ui and minus it in handle UI line,point,fragment
   const instanceFragAndBarsLine = paddingOfProgressContainer - widthOfFragment / 2; // value for position fragment
+  const widthOfPoint = 15;
 
   /** handle play video */
   const handlePlayVideo = (e) => {
     const video = videoRef.current;
+    const line = progressLineRef.current;
+    const point = dragPointRef.current;
+    const bars = dragParentRef.current;
     video.play();
+    if (durationVideo.watching === durationVideo.min + durationVideo.cut) {
+      setdurationVideo((draft) => {
+        draft.watching = durationVideo.min;
+      });
+      point.style.left = line.getBoundingClientRect().left - bars.getBoundingClientRect().left + 'px';
+    }
     setIsRunning(true);
     playRef.current.classList.remove('active');
     pauseRef.current.classList.add('active');
@@ -86,7 +96,7 @@ export default function EditVideo({ data, onToggle = () => {} }) {
     const line = progressLineRef.current;
     const bars = dragParentRef.current;
     const point = dragPointRef.current;
-    const eachPoint = (line.offsetWidth - paddingOfProgressContainer * 2) / durationVideo.cut; //each point of width on quantity of video cut
+    const eachPoint = (line.offsetWidth - widthOfPoint) / durationVideo.cut;
     const left = line.getBoundingClientRect().left - bars.getBoundingClientRect().left;
     if (video) {
       point.style.left = left + (durationVideo.watching - durationVideo.min) * eachPoint + 'px';
@@ -113,7 +123,7 @@ export default function EditVideo({ data, onToggle = () => {} }) {
 
   /**
    *when video start time will start
-   * @param {} time
+   *
    */
   const TimeOfStart = (time) => {
     if (time >= 0) {
@@ -127,7 +137,38 @@ export default function EditVideo({ data, onToggle = () => {} }) {
     }
   };
 
-  const handleConfirmSelectCat = (e) => {};
+  const trimVideo = (videoFile, timeStart, timeEnd) => {
+    const videoElement = document.createElement('video');
+    videoElement.src = URL.createObjectURL(videoFile);
+    videoElement.onloadedmetadata = () => {};
+    if (timeEnd > videoElement.duration) {
+      timeEnd = videoElement.duration;
+    }
+    // Create a canvas to draw the trimmed video
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const frameRate = 30; //Number of frames to capture per second
+    const frames = [];
+    let currentTime = timeStart;
+    const captureFrame = () => {
+      if (currentTime > timeEnd) {
+        return;
+      }
+
+      canvas.width = videoElement.videoWidth;
+      canvas.height = videoElement.videoHeight;
+
+      ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+      frames.push(canvas.toDataURL());
+
+      currentTime += 1 / frameRate;
+      videoElement.currentTime = currentTime;
+    };
+    videoElement.onTimeUpdate = captureFrame;
+  };
+  const handleConfirmSelectVideo = (e) => {
+    trimVideo(data, durationVideo.min, durationVideo.min + durationVideo.cut);
+  };
 
   // handle data to FileReader for Video
   useEffect(() => {
@@ -189,19 +230,20 @@ export default function EditVideo({ data, onToggle = () => {} }) {
     let direction = '', //move diredtion of mouse
       totalPoint = 0, //total point when mouse move
       oldX = 0; // old of mouse point
-    const handleLineMouseDown = () => {
+    const handleLineMouseDown = (e) => {
       setMouseDown((draft) => {
         draft.line = true;
       });
+      oldX = e.clientX;
     };
     const handleLineMouseMove = (e) => {
       if (mouseDown.line) {
-        totalPoint = oldX - e.pageX;
+        totalPoint = oldX - e.clientX;
         const positionLeft = line.getBoundingClientRect().left - bars.getBoundingClientRect().left; //use position for fragment left, point, line
         const positionRight = line.getBoundingClientRect().right - bars.getBoundingClientRect().left; //use position for fragmentRight
         const right = bars.getBoundingClientRect().right - line.getBoundingClientRect().right;
         const eachPoint = bars.offsetWidth / durationVideo.video;
-        if (e.pageX < oldX) {
+        if (e.clientX < oldX) {
           direction = 'left';
         } else {
           direction = 'right';
@@ -240,7 +282,7 @@ export default function EditVideo({ data, onToggle = () => {} }) {
           draft.min = Unsigned.toUnsignedZero(parseFloat((positionLeft / eachPoint).toFixed()));
           draft.watching = Unsigned.toUnsignedZero(parseFloat((positionLeft / eachPoint).toFixed()));
         });
-        oldX = e.pageX;
+        oldX = e.clientX;
       }
     };
     const handleLineMouseUp = () => {
@@ -268,34 +310,30 @@ export default function EditVideo({ data, onToggle = () => {} }) {
     const line = progressLineRef.current;
     const bars = dragParentRef.current;
     let direction = '',
-      oldX = 0; // old of mouse point
+      oldX = 0;
 
-    const handleMouseDown = () => {
+    const handleMouseDown = (e) => {
       setMouseDown((draft) => {
         draft.point = true;
       });
     };
     const handleMouseMove = (event) => {
+      if (direction === '') {
+        oldX = point.getBoundingClientRect().left;
+      }
       if (mouseDown.point) {
         const minLeft = line.getBoundingClientRect().left - bars.getBoundingClientRect().left;
-        const maxRight = minLeft + line.offsetWidth - paddingOfProgressContainer;
-        const position = event.clientX - bars.getBoundingClientRect().left;
+        const maxRight =
+          line.getBoundingClientRect().right - bars.getBoundingClientRect().left - paddingOfProgressContainer;
         const left = event.clientX - bars.getBoundingClientRect().left;
-        const eachPoint = (line.offsetWidth - paddingOfProgressContainer * 2) / durationVideo.cut;
-        //when mouse point less than position left of line
-        if (event.pageX < oldX) {
-          direction = 'left';
-        } else {
-          direction = 'right';
-        }
+        const eachPoint = (line.offsetWidth - widthOfPoint) / durationVideo.cut;
+        direction = event.clientX < oldX ? 'left' : 'right';
         if (left < minLeft) {
           point.style.left = minLeft + 'px';
-        }
-        //when  mouse point more than position right of line
-        else if (left > maxRight) {
+        } else if (left > maxRight) {
           point.style.left = maxRight + 'px';
         } else {
-          point.style.left = position + 'px';
+          point.style.left = left + 'px';
         }
         //set value for  watching
         if (direction === 'left') {
@@ -320,7 +358,7 @@ export default function EditVideo({ data, onToggle = () => {} }) {
             );
           });
         }
-        oldX = event.pageX;
+        oldX = event.clientX;
       }
     };
     const handleMouseUp = (e) => {
@@ -341,8 +379,7 @@ export default function EditVideo({ data, onToggle = () => {} }) {
         window.removeEventListener('mouseup', handleMouseUp);
       }
     };
-  }, [value, durationVideo.min, mouseDown.point]);
-  console.log(durationVideo);
+  }, [value, mouseDown.point]);
 
   /**
    * handle move for cut video
@@ -354,51 +391,59 @@ export default function EditVideo({ data, onToggle = () => {} }) {
     const fragmentRight = fragmentRightRef.current;
     const line = progressLineRef.current;
     const point = dragPointRef.current;
-    const lengthMaxOfVideo = durationVideo.video <= 60 ? durationVideo.video : 60; //second
+    const lengthMaxOfVideo = durationVideo.video <= 60 ? parseInt(parseFloat(durationVideo.video).toFixed()) : 60; //second
     const lengthMinOfVideo = 10; //second
-    let eachPoint = 0;
-    if (bars) {
-      eachPoint = bars.offsetWidth / durationVideo.video;
-    }
-
+    let eachPoint = bars ? bars.offsetWidth / durationVideo.video : 0,
+      direction = '',
+      fragmentLeftX = 0,
+      fragmentRightX = 0;
     const handleFragmentLeftMouseDown = (e) => {
       setMouseDown((draft) => {
         draft.fragment_left = true;
       });
     };
     const handleFragmentLeftMouseMove = (e) => {
+      if (direction === '') {
+        fragmentLeftX = fragmentLeft.getBoundingClientRect().left + widthOfFragment / 2;
+      }
       if (mouseDown.fragment_left) {
-        const left = e.clientX - parent.getBoundingClientRect().left;
-        const maxRight =
-          fragmentRight.getBoundingClientRect().left -
-          parent.getBoundingClientRect().left -
-          lengthMinOfVideo * eachPoint;
-        const minLeft =
-          line.getBoundingClientRect().left -
-          bars.getBoundingClientRect().left +
-          (lengthMaxOfVideo - durationVideo.cut) * eachPoint;
-        if (left < minLeft && line.getBoundingClientRect().left - bars.getBoundingClientRect().left === 0) {
-          fragmentLeft.style.left = instanceFragAndBarsLine + 'px';
-        } else if (left > maxRight) {
-          fragmentLeft.style.left = maxRight + 'px';
-          setdurationVideo((draft) => {
-            draft.min = durationVideo.min + durationVideo.cut - 10;
-          });
-        } else {
-          setdurationVideo((draft) => {
-            draft.min = Unsigned.toUnsignedZero(parseInt(left / eachPoint));
-          });
-          line.style.width =
-            fragmentRight.getBoundingClientRect().left - parent.getBoundingClientRect().left - left + 'px';
-          line.style.left = left + paddingOfProgressContainer + 'px';
-          point.style.left = left + paddingOfProgressContainer + 'px';
-          fragmentLeft.style.left = left + 'px';
+        const left = e.clientX - bars.getBoundingClientRect().left;
+        const minValue = parseInt(
+          (fragmentRight.getBoundingClientRect().left - fragmentLeft.getBoundingClientRect().left) / eachPoint,
+        );
+
+        if (e.clientX < fragmentLeftX - widthOfFragment / 2) {
+          direction = 'left';
         }
+        if (e.clientX > fragmentLeftX + widthOfFragment / 2) {
+          direction = 'right';
+        }
+        if (minValue <= lengthMinOfVideo && direction === 'right') {
+          fragmentLeft.style.left =
+            line.getBoundingClientRect().left - bars.getBoundingClientRect().left + instanceFragAndBarsLine + 'px';
+        } else if (
+          !(
+            fragmentRight.getBoundingClientRect().left - e.clientX >
+            lengthMaxOfVideo * eachPoint - widthOfFragment / 2
+          ) &&
+          line.getBoundingClientRect().left - bars.getBoundingClientRect().left !== 0
+        ) {
+          fragmentLeft.style.left = left + instanceFragAndBarsLine + 'px';
+          point.style.left = line.getBoundingClientRect().left - bars.getBoundingClientRect().left + 'px';
+          line.style.left = left + 'px';
+          line.style.width =
+            fragmentRight.getBoundingClientRect().left - fragmentLeft.getBoundingClientRect().left + 'px';
+        }
+
         setdurationVideo((draft) => {
-          draft.watching =
-            durationVideo.min >= durationVideo.watching
-              ? (draft.watching = durationVideo.min + durationVideo.cut - 10)
-              : '';
+          draft.cut = parseInt(line.offsetWidth / eachPoint);
+          draft.min = durationVideo.min + parseInt(durationVideo.cut - line.offsetWidth / eachPoint);
+          if (
+            durationVideo.watching <
+            durationVideo.min + parseInt(durationVideo.cut - (line.offsetWidth / eachPoint).toFixed())
+          ) {
+            draft.watching = durationVideo.min + parseInt(durationVideo.cut - (line.offsetWidth / eachPoint).toFixed());
+          }
         });
       }
     };
@@ -415,21 +460,44 @@ export default function EditVideo({ data, onToggle = () => {} }) {
     };
 
     const handleFragmentRightMouseMove = (e) => {
+      if (direction === '') {
+        fragmentRightX = fragmentRight.getBoundingClientRect().left + widthOfFragment / 2;
+      }
       if (mouseDown.fragment_right) {
-        const right = e.clientX - parent.getBoundingClientRect().left;
-        const maxRight =
-          line.getBoundingClientRect().right - bars.getBoundingClientRect().left - paddingOfProgressContainer;
-        const minLeft =
-          fragmentLeft.getBoundingClientRect().left -
-          parent.getBoundingClientRect().left +
-          line.offsetWidth / durationVideo.cut;
-        if (right > maxRight) {
-          fragmentRight.style.left = maxRight + 'px';
-        } else if (right < minLeft) {
-          fragmentRight.style.left = minLeft + 'px';
-        } else {
-          fragmentRight.style.left = right + 'px';
+        const right = e.clientX - bars.getBoundingClientRect().left;
+        const minValue = parseInt(
+          (fragmentRight.getBoundingClientRect().left - fragmentLeft.getBoundingClientRect().left) / eachPoint,
+        );
+        if (e.clientX < fragmentRightX - widthOfFragment / 2) {
+          direction = 'left';
         }
+        if (e.clientX > fragmentRightX + widthOfFragment / 2) {
+          direction = 'right';
+        }
+        console.log(line.getBoundingClientRect().right - bars.getBoundingClientRect().right);
+        if (minValue <= lengthMinOfVideo && direction === 'left') {
+          fragmentRight.style.left =
+            line.getBoundingClientRect().right - bars.getBoundingClientRect().left + instanceFragAndBarsLine + 'px';
+        } else if (
+          !(
+            e.clientX - fragmentLeft.getBoundingClientRect().left - widthOfFragment / 2 >
+            lengthMaxOfVideo * eachPoint
+          ) &&
+          line.getBoundingClientRect().right - bars.getBoundingClientRect().right < 0 - 0.2
+        ) {
+          if (point.getBoundingClientRect().left >= line.getBoundingClientRect().right) {
+            point.style.left = line.getBoundingClientRect().left - bars.getBoundingClientRect().left + 'px';
+          }
+          fragmentRight.style.left = right + instanceFragAndBarsLine + 'px';
+          line.style.width =
+            fragmentRight.getBoundingClientRect().left - fragmentLeft.getBoundingClientRect().left + 'px';
+        }
+        setdurationVideo((draft) => {
+          draft.cut = parseInt(line.offsetWidth / eachPoint);
+          if (point.getBoundingClientRect().left >= line.getBoundingClientRect().right) {
+            draft.watching = durationVideo.min;
+          }
+        });
       }
     };
 
@@ -474,7 +542,7 @@ export default function EditVideo({ data, onToggle = () => {} }) {
     if (mouseDown.fragment_left || mouseDown.fragment_right || mouseDown.line || mouseDown.point) {
       handlePauseVideo();
     }
-  }, [mouseDown.point, mouseDown.fragment_left, mouseDown.fragment_right, mouseDown.line]);
+  }, [isRunning, mouseDown.point, mouseDown.fragment_left, mouseDown.fragment_right, mouseDown.line]);
   return (
     value && (
       <section
@@ -509,7 +577,11 @@ export default function EditVideo({ data, onToggle = () => {} }) {
             <div className={cx('handle_video')}>
               <div className={cx('progress_container', 'd-flex flex-row align-items-center justify-content-between')}>
                 <div ref={dragParentRef} className={cx('progress_bars')}>
-                  <span ref={dragPointRef} className={cx('progress_point')}></span>
+                  <span
+                    ref={dragPointRef}
+                    className={cx('progress_point')}
+                    style={{ '--width_of_point': `${widthOfPoint}px` }}
+                  ></span>
                   <span ref={progressLineRef} className={cx('progress_line')}></span>
                 </div>
                 <div className={cx('progress_time')}>
@@ -529,12 +601,12 @@ export default function EditVideo({ data, onToggle = () => {} }) {
                     <span className={cx('fragment_fill')}></span>
                   </div>
                 </div>
-                <p className={cx('duration')}>Đã chọn {durationVideo.cut}</p>
+                <p className={cx('duration', 'text-capitalize text-center')}>Đã chọn {durationVideo.cut}</p>
               </div>
             </div>
           </div>
           <div className={cx('footer', 'd-flex flex-row justify-content-between flex-end')}>
-            <div className={cx('footer_left', 'd-flex flex-row align-items-center')}>
+            <div className={cx('footer_left', 'd-flex flex-row align-items-center ')}>
               <span>
                 <Translate>pages.seller.add_product.edit_category_note</Translate>
               </span>
@@ -550,7 +622,7 @@ export default function EditVideo({ data, onToggle = () => {} }) {
               >
                 <Translate>cancel</Translate>
               </Button>
-              <Button onClick={handleConfirmSelectCat} primary type="button" small>
+              <Button onClick={handleConfirmSelectVideo} primary type="button" small>
                 <Translate>confirm</Translate>
               </Button>
             </div>

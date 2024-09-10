@@ -213,6 +213,13 @@ export default function BasicInfo() {
       draft.video_temporary = '';
     });
   };
+
+  const handlePassVideo = (value) => {
+    setProduct((draft) => {
+      draft.video = true;
+      draft.video_value = value;
+    });
+  };
   return (
     <div className={cx('seller_basic_info', 'd-flex flex-column')}>
       <h4 className={cx('title')}>
@@ -411,7 +418,7 @@ export default function BasicInfo() {
         </div>
       </div>
       {!product.video && product.video_temporary && (
-        <EditVideo data={product.video_temporary} onToggle={handleCancelVideo} />
+        <EditVideo data={product.video_temporary} onToggle={handleCancelVideo} handlePassVideo={handlePassVideo} />
       )}
     </div>
   );
