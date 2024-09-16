@@ -37,15 +37,3 @@ export const ChangeLanguage = (value) => {
     });
   };
 };
-
-export const GetSignatureCloudinary = (signature, timestamp) => {
-  return async (dispatch) => {
-    dispatch({
-      type: SIGNATURE_CLOUDINARY,
-      payload: {
-        signature,
-        timestamp,
-      },
-    });
-  };
-};

@@ -9,6 +9,9 @@ import Video from '~/components/Video';
 import PlayIcon from '~/layout/Component/Icon/PlayIcon';
 import PauseIcon from '~/layout/Component/Icon/PauseIcon';
 import Unsigned from '~/hooks/Unsigned';
+import FFMPEG from '~/services/FFMPEG';
+import { CldUploadVideo } from '~/services/cloudinary/CldUploadImg';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
@@ -23,6 +26,7 @@ export default function EditVideo({ data, onToggle = () => {}, handlePassVideo =
   const fragmentRightRef = useRef();
   const fragmentLeftRef = useRef();
 
+  const { seller } = useSelector((state) => state.Auth);
   const [value, setValue] = useState('');
   const [isRunning, setIsRunning] = useState(false);
   const [mouseDown, setMouseDown] = useImmer({
@@ -31,6 +35,7 @@ export default function EditVideo({ data, onToggle = () => {}, handlePassVideo =
     fragment_left: false,
     fragment_right: false,
   });
+  const [isProcessing, setIsProcessing] = useState(false);
   const [durationVideo, setdurationVideo] = useImmer({
     cut: '',
     video: '',
@@ -136,38 +141,23 @@ export default function EditVideo({ data, onToggle = () => {}, handlePassVideo =
       );
     }
   };
-
-  const trimVideo = (videoFile, timeStart, timeEnd) => {
-    const videoElement = document.createElement('video');
-    videoElement.src = URL.createObjectURL(videoFile);
-    videoElement.onloadedmetadata = () => {};
-    if (timeEnd > videoElement.duration) {
-      timeEnd = videoElement.duration;
-    }
-    // Create a canvas to draw the trimmed video
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const frameRate = 30; //Number of frames to capture per second
-    const frames = [];
-    let currentTime = timeStart;
-    const captureFrame = () => {
-      if (currentTime > timeEnd) {
-        return;
+  const handleConfirmSelectVideo = async (e) => {
+    await FFMPEG(
+      data,
+      durationVideo.min,
+      durationVideo.min + durationVideo.cut,
+      seller.shop.name + '_' + data?.name,
+    ).then((result) => {
+      if (result) {
+        CldUploadVideo(result)
+          .then((result) => {
+            if (result) {
+              handlePassVideo(result?.url);
+            }
+          })
+          .catch((e) => console.log(e));
       }
-
-      canvas.width = videoElement.videoWidth;
-      canvas.height = videoElement.videoHeight;
-
-      ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-      frames.push(canvas.toDataURL());
-
-      currentTime += 1 / frameRate;
-      videoElement.currentTime = currentTime;
-    };
-    videoElement.onTimeUpdate = captureFrame;
-  };
-  const handleConfirmSelectVideo = (e) => {
-    trimVideo(data, durationVideo.min, durationVideo.min + durationVideo.cut);
+    });
   };
 
   // handle data to FileReader for Video

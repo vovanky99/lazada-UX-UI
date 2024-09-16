@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\GeneralRepository;
+use Cloudinary\Cloudinary;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary as FacadesCloudinary;
 use Exception;
 use Illuminate\Http\Request;
@@ -21,14 +22,12 @@ class CloudinaryController extends Controller
         $params = [
             'timestamp' => $timestamp,
             'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET_VIDEO'),
-            // 'return_delete_token' => true
         ];
     }
     else{
         $params = [
             'timestamp' => $timestamp,
             'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET_IMAGE'),
-            // 'return_delete_token' => true
         ];
     }
 
@@ -40,17 +39,6 @@ class CloudinaryController extends Controller
         'timestamp' => $timestamp,
     ]);
    }
-   private function signParams($params){
-    ksort($params);
-    $to_sign = [];
-    foreach($params as $key =>$value){
-        $to_sign[] = $key . '='.$value;
-    }
-    $to_sign = implode('&',$to_sign);
-    $api_secret = env('CLOUDINARY_API_SECRET');
-    return sha1($to_sign . $api_secret);
-   }
-   
    public function deleteImage(Request $request){
     $url = $request->url;
     try{
@@ -66,5 +54,15 @@ class CloudinaryController extends Controller
     catch(Exception $e){
         return response()->json(['error' => $e->getMessage()], 500);
     }
+   }
+   private function signParams($params){
+    ksort($params);
+    $to_sign = [];
+    foreach($params as $key =>$value){
+        $to_sign[] = $key . '='.$value;
+    }
+    $to_sign = implode('&',$to_sign);
+    $api_secret = env('CLOUDINARY_API_SECRET');
+    return sha1($to_sign . $api_secret);
    }
 }

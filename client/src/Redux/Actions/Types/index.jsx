@@ -9,7 +9,7 @@ export const LOGOUT_ADMIN = 'LOGOUT_ADMIN';
 export const GET_SELLER = 'GET_SELLER';
 export const LOGOUT_SELLER = 'LOGOUT_SELLER';
 
-export const SIGNATURE_CLOUDINARY = 'SIGNATURE_CLOUDINARY';
+export const SHOP = 'SHOP';
 export const GET_ID_PRODUCT = 'GET_ID_PRODUCT';
 export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
 export const GET_COUNTRY = 'GET_COUNTRY';
