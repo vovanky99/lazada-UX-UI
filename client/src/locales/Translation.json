@@ -349,6 +349,14 @@
             "second": "- Người bán có thể dễ dàng tìm kiếm danh mục phù hợp cho sản phẩm của Shop tại",
             "third": "- Tham khảo hướng dẫn chọn chủng loại sản phẩm"
           },
+          "edit_cat": {
+            "search": "Vui lòng nhập tối thiểu 1 ký tự.",
+            "note": {
+              "one": "Chọn ngành hàng chính xác",
+              "two": "Bấm vào đây để tìm hiểu"
+            },
+            "no_support": "Không hỗ trợ"
+          },
           "product_name": {
             "title": "tên sản phẩm",
             "first": "- Tham khảo quy định đặt tên",
@@ -724,6 +732,15 @@
             "second": "- Sellers can easily find the appropriate category for the Shop's products at",
             "third": "- Refer to the instructions for choosing a product category"
           },
+          "edit_cat": {
+            "search": "Please enter at least 1 character.",
+            "note": {
+              "one": "Choose the correct industry",
+              "two": "Click here to find out"
+            },
+            "no_support": "Not supported"
+          },
+
           "product_name": {
             "title": "product name",
             "first": "- Refer to naming regulations",

@@ -12,6 +12,7 @@ import Unsigned from '~/hooks/Unsigned';
 import FFMPEG from '~/services/FFMPEG';
 import { CldUploadVideo } from '~/services/cloudinary/CldUploadImg';
 import { useSelector } from 'react-redux';
+import LazyLoadind from '~/layout/Component/LazyLoadind';
 
 const cx = classNames.bind(styles);
 
@@ -142,6 +143,9 @@ export default function EditVideo({ data, onToggle = () => {}, handlePassVideo =
     }
   };
   const handleConfirmSelectVideo = async (e) => {
+    const main = document.getElementById('main');
+    main.style.overflow = 'hidden';
+    setIsProcessing(true);
     await FFMPEG(
       data,
       durationVideo.min,
@@ -153,6 +157,7 @@ export default function EditVideo({ data, onToggle = () => {}, handlePassVideo =
           .then((result) => {
             if (result) {
               handlePassVideo(result?.url);
+              setIsProcessing(false);
             }
           })
           .catch((e) => console.log(e));
@@ -552,6 +557,7 @@ export default function EditVideo({ data, onToggle = () => {}, handlePassVideo =
               type="button"
               none_size
               transparent
+              disabled={isProcessing}
             >
               <CloseIcon />
             </Button>
@@ -594,6 +600,11 @@ export default function EditVideo({ data, onToggle = () => {}, handlePassVideo =
                 <p className={cx('duration', 'text-capitalize text-center')}>Đã chọn {durationVideo.cut}</p>
               </div>
             </div>
+            {isProcessing && (
+              <div className={cx('loading')}>
+                <LazyLoadind />
+              </div>
+            )}
           </div>
           <div className={cx('footer', 'd-flex flex-row justify-content-between flex-end')}>
             <div className={cx('footer_left', 'd-flex flex-row align-items-center ')}>
@@ -609,10 +620,11 @@ export default function EditVideo({ data, onToggle = () => {}, handlePassVideo =
                 type="button"
                 small
                 outline
+                disabled={isProcessing}
               >
                 <Translate>cancel</Translate>
               </Button>
-              <Button onClick={handleConfirmSelectVideo} primary type="button" small>
+              <Button onClick={handleConfirmSelectVideo} disabled={isProcessing} primary type="button" small>
                 <Translate>confirm</Translate>
               </Button>
             </div>

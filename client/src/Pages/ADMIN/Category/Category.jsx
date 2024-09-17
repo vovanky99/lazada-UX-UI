@@ -80,7 +80,9 @@ export default function AllCategory() {
   useEffect(() => {
     GetData('admin', 'category', filterCat, language)
       .then((result) => {
-        setDataTable(result);
+        if (result?.cats) {
+          setDataTable(result.cats);
+        }
       })
       .catch((e) => console.log(e));
   }, [filterCat, deleteSuccess, reloadData]);

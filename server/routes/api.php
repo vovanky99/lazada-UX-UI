@@ -26,6 +26,7 @@ use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;
 use App\Http\Controllers\CloudinaryController;
 use App\Http\Controllers\Seller\HomeController as SellerHomeController;
+use App\Http\Controllers\Seller\ProductsController as SellerProductController;
 use App\Http\Controllers\Seller\ProfileController as SellerProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -225,6 +226,9 @@ Route::prefix('/seller')->group(function () {
         Route::controller(SellerHomeController::class)->group(function(){
             Route::get('/home/todo-list','todoList');
             Route::get('/home/sales-analysis','salesAnalysis');
+        });
+        Route::controller(SellerProductController::class)->group(function(){
+            Route::get('/get-cat','getCat');
         });
     });
 

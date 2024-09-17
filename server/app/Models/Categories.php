@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Categories extends Model
 {
     public $table = 'categories';
+    protected $language_id=null,$search='';
     protected $fillable = [
         'name',
         'slug',
@@ -31,6 +33,12 @@ class Categories extends Model
     }
     public function children_recursive(){
         return $this->childrens()->with('children_recursive');
+    }
+    public function children_recursives(){
+        $lanugage = Auth::user()->language;
+        return $this->childrens()->with(['categories_translation'=>function($query)use($lanugage){
+            $query->select('category_id','name')->where('language_id',$lanugage->id);
+        },'children_recursives']);
     }
     public function blogs(){
         return $this->hasManyThrough(Blogs::class,CategoryBlog::class);

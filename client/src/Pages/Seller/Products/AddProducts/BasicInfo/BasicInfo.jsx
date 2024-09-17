@@ -2,20 +2,23 @@ import classNames from 'classnames/bind';
 
 import styles from '../../Products.module.scss';
 import Translate from '~/layout/Component/Translate';
-import RadioList from '~/layout/Component/RadioList';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faPlayCircle } from '@fortawesome/fontawesome-free-regular';
-import { faCrop, faPen, faPlus, faVideo } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Images from '~/components/Images';
 import { useImmer } from 'use-immer';
 import Video from '~/components/Video';
-import CldUploadImg, { CldUploadVideo, DeleteImageCld } from '~/services/cloudinary/CldUploadImg';
+import CldUploadImg, { DeleteImageCld } from '~/services/cloudinary/CldUploadImg';
 import { FormSearch } from '~/layout/Component/FormSearch';
 import { FormText } from '~/layout/Component/FormGroup/FormText';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import EditVideo from '../EditVideo';
+import Body from '~/layout/Component/Body';
+import EditCategory from '../EditCategory';
+import { useSelector } from 'react-redux';
+import GetCat from './GetCat';
 
 const cx = classNames.bind(styles);
 
@@ -23,7 +26,7 @@ export default function BasicInfo() {
   const imageRef = useRef();
   const selectImagesRef = useRef();
   const selectVideoRef = useRef();
-  const [editCategory, setEditCategory] = useState(false);
+  const { language } = useSelector((state) => state.Auth);
   const message = {
     video_type: Translate({ children: 'valid.video_type' }),
     video_length: Translate({ children: 'valid.video_length' }),
@@ -31,7 +34,10 @@ export default function BasicInfo() {
     video_resolution: Translate({ children: 'valid.video_resolution' }),
     image_require: Translate({ children: 'valid.image_require' }),
   };
+  const [catData, setCatData] = useState(null);
   const [valid, setValid] = useImmer({});
+  const [editCategory, setEditCategory] = useState(false);
+  const [searchCat, setSearchCat] = useState('');
   const imagesProductsTitle = [
     { type: 1, title: 'image_scale_1_1' },
     { type: 2, title: 'image_scale_3_4' },
@@ -43,7 +49,12 @@ export default function BasicInfo() {
     name: '',
     product_description: '',
     images: {},
+    category: '',
   });
+
+  const handleSearchCat = (value) => {
+    setSearchCat(value);
+  };
 
   /**
    *
@@ -52,7 +63,9 @@ export default function BasicInfo() {
   const handleToggleCategory = (type = '') => {
     if (editCategory && type === 'close') {
       setEditCategory(false);
+      Body.overflow('auto');
     } else {
+      Body.overflow('hidden');
       setEditCategory(true);
     }
   };
@@ -181,15 +194,7 @@ export default function BasicInfo() {
         setProduct((draft) => {
           draft.video_temporary = file;
         });
-        // CldUploadVideo(file)
-        //   .then((result) => {
-        //     if (result) {
-        //       setProduct((draft) => {
-        //         draft.video = result;
-        //       });
-        //     }
-        //   })
-        //   .catch((e) => console.log(e));
+        Body.overflow('hidden');
       }
     }
     e.target.value = '';
@@ -208,6 +213,7 @@ export default function BasicInfo() {
   };
 
   const handleCancelVideo = (e) => {
+    Body.overflow('auto');
     setProduct((draft) => {
       draft.video_value = '';
       draft.video_temporary = '';
@@ -215,11 +221,26 @@ export default function BasicInfo() {
   };
 
   const handlePassVideo = (value) => {
+    Body.overflow('auto');
     setProduct((draft) => {
       draft.video = true;
       draft.video_value = value;
     });
   };
+
+  const handlePassCatgory = (value) => {
+    setProduct((draft) => {
+      draft.category = value;
+    });
+  };
+
+  useEffect(() => {
+    GetCat(searchCat).then((result) => {
+      if (result?.cats) {
+        setCatData(result.cats);
+      }
+    });
+  }, [searchCat]);
   return (
     <div className={cx('seller_basic_info', 'd-flex flex-column')}>
       <h4 className={cx('title')}>
@@ -419,6 +440,14 @@ export default function BasicInfo() {
       </div>
       {!product.video && product.video_temporary && (
         <EditVideo data={product.video_temporary} onToggle={handleCancelVideo} handlePassVideo={handlePassVideo} />
+      )}
+      {editCategory && (
+        <EditCategory
+          onToggle={handleToggleCategory}
+          handleSearchCat={handleSearchCat}
+          data={catData}
+          handlePassData={handlePassCatgory}
+        />
       )}
     </div>
   );

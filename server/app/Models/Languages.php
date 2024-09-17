@@ -24,4 +24,7 @@ class Languages extends Model
     public function attribute_translation(){
         return $this->hasMany(AttributesTranslation::class,'language_id');
     }
+    public function seller(){
+        return $this->hasMany(Seller::class,'language_id','id');
+    }
 }

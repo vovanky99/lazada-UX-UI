@@ -25,6 +25,7 @@ class Seller extends Authenticatable implements MustVerifyEmail
         'status',
         'is_owner',
         'address_id',
+        'language_id',
         'shop_id',
     ];
 
@@ -45,6 +46,9 @@ class Seller extends Authenticatable implements MustVerifyEmail
     }
     public function shop_owner(){
         return $this->hasOne(Shop::class,'seller_id');
+    }
+    public function language(){
+        return $this->belongsTo(Languages::class,'language_id','id');
     }
     public function sendEmailVerificationNotification()
     {

@@ -404,7 +404,7 @@ class CategoriesController extends Controller
                 $cat->where('categories.status',$status);
             }
             $cats = $cat->get();
-            return response()->json($cats);
+            return response()->json(['cats'=>$cats]);
         }
         catch(Exception $e){
             return response()->json(['error'=>'have issue in process data!']);

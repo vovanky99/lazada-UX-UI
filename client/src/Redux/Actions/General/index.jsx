@@ -8,20 +8,37 @@ export const GetCountry = () => {
       navigator.geolocation.getCurrentPosition(function (position) {
         Nominatim(position.coords.latitude, position.coords.longitude)
           .then((result) => {
-            GetLocation('country', result.address.country)
-              .then((result) => {
-                dispatch({
-                  type: GET_COUNTRY,
-                  payload: result[0],
-                });
-                if (result[0]?.acronym) {
+            if (result.address) {
+              GetLocation('country', result.address.country)
+                .then((result) => {
                   dispatch({
-                    type: CHANGE_LANGUAGE,
-                    payload: result[0]?.acronym,
+                    type: GET_COUNTRY,
+                    payload: result[0],
                   });
-                }
-              })
-              .catch((e) => console.log(e));
+                  if (result[0]?.acronym) {
+                    dispatch({
+                      type: CHANGE_LANGUAGE,
+                      payload: result[0]?.acronym,
+                    });
+                  }
+                })
+                .catch((e) => console.log(e));
+            } else {
+              GetLocation('country', 'Vietnam')
+                .then((result) => {
+                  dispatch({
+                    type: GET_COUNTRY,
+                    payload: result[0],
+                  });
+                  if (result[0]?.acronym) {
+                    dispatch({
+                      type: CHANGE_LANGUAGE,
+                      payload: result[0]?.acronym,
+                    });
+                  }
+                })
+                .catch((e) => console.log(e));
+            }
           })
           .catch((e) => console.log(e));
       });

@@ -20,6 +20,7 @@ export const initialState = {
   admin: null,
   country: null,
   shop: null,
+  timeDelay: 500,
   language: 'en',
 };
 export default function AuthReducer(state = initialState, action) {
