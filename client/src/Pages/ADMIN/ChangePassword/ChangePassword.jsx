@@ -30,20 +30,20 @@ export default function ChangePassword() {
   const validate = () => {
     if (changePass.new_password !== changePass.re_password) {
       setMessageError(`re password don't correct!`);
-      reRef.current.classList.add('border_danger');
+      reRef.current.classList.add('input_danger');
     } else {
       setMessageError(``);
-      reRef.current.classList.remove('border_danger');
+      reRef.current.classList.remove('input_danger');
     }
     if (changePass.old_password === '') {
-      oldRef.current.classList.add('border_danger');
+      oldRef.current.classList.add('input_danger');
     } else {
-      oldRef.current.classList.remove('border_danger');
+      oldRef.current.classList.remove('input_danger');
     }
     if (changePass.new_password === '') {
-      newRef.current.classList.add('border_danger');
+      newRef.current.classList.add('input_danger');
     } else {
-      newRef.current.classList.remove('border_danger');
+      newRef.current.classList.remove('input_danger');
     }
   };
   const handlChangePass = (e) => {

@@ -155,4 +155,9 @@ export const ShopSeller = {
   MarketingShopCampaign: '/seller/shop/marketing/campaign',
 };
 
+export const shopEdu = {
+  home: '/edu',
+  articleShippingMethod: '/edu/article/:id',
+};
+
 export default routes;

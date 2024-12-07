@@ -64,9 +64,9 @@ export default function DetailAddress({ handleResetComponent, country, seller, h
     if ('fullname' in field) {
       errorMessage.fullname = !field.fullname ? messageValid.fullname : '';
       if (errorMessage.fullname) {
-        fullNameRef.current.classList.add('border_danger');
+        fullNameRef.current.classList.add('input_danger');
       } else {
-        fullNameRef.current.classList.remove('border_danger');
+        fullNameRef.current.classList.remove('input_danger');
       }
     }
     if ('phone_number' in field) {
@@ -76,25 +76,25 @@ export default function DetailAddress({ handleResetComponent, country, seller, h
           ? ''
           : messageValid.phone_number;
       if (errorMessage.phone_number) {
-        phoneNumberRef.current.classList.add('border_danger');
+        phoneNumberRef.current.classList.add('input_danger');
       } else {
-        phoneNumberRef.current.classList.remove('border_danger');
+        phoneNumberRef.current.classList.remove('input_danger');
       }
     }
     if ('address' in field) {
       errorMessage.address = !field.address ? messageValid.address : '';
       if (errorMessage.address) {
-        addressRef.current.classList.add('border_danger');
+        addressRef.current.classList.add('input_danger');
       } else {
-        addressRef.current.classList.remove('border_danger');
+        addressRef.current.classList.remove('input_danger');
       }
     }
     if ('ward_name' in field) {
       errorMessage.ward_name = !field.ward_name ? messageValid.ward : '';
       if (errorMessage.ward_name) {
-        locationValueRef.current.classList.add('border_danger');
+        locationValueRef.current.classList.add('input_danger');
       } else {
-        locationValueRef.current.classList.remove('border_danger');
+        locationValueRef.current.classList.remove('input_danger');
       }
     }
     if (field === addressDetail) {

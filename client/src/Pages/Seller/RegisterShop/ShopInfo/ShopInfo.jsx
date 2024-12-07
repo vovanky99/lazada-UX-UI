@@ -61,7 +61,7 @@ export default function ShopInfo({ handleResetComponent, country, seller, addres
         })
         .catch((e) => console.log(e));
     } else {
-      nameRef.current.classList.add('border_danger');
+      nameRef.current.classList.add('input_danger');
       setNameValid(messageValid.name);
     }
   };
@@ -71,10 +71,10 @@ export default function ShopInfo({ handleResetComponent, country, seller, addres
     const name = nameRef.current;
     const handleBlur = (e) => {
       if (e.target.value === '') {
-        name.classList.add('border_danger');
+        name.classList.add('input_danger');
         setNameValid(messageValid.name);
       } else {
-        name.classList.remove('border_danger');
+        name.classList.remove('input_danger');
         setNameValid('');
       }
     };

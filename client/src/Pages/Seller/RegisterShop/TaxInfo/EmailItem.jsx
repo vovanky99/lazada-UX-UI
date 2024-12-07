@@ -36,7 +36,7 @@ const EmailItem = forwardRef(function EmailItem(
             }}
             autoComplete="true"
             placeholder={Translate({ children: 'placeholder.default' })}
-            className={cx(`${dt?.name}`, dt?.error ? 'border_danger' : '', ' email_item form-control')}
+            className={cx(`${dt?.name}`, dt?.error ? 'input_danger' : '', ' email_item form-control')}
             maxLength={MaxLength}
           />
           <div className={cx('email_length')}>

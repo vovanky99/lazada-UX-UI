@@ -88,18 +88,18 @@ export default function Ward({
     }
 
     if (messageError.name) {
-      nameRef.current.classList.add('border_danger');
+      nameRef.current.classList.add('input_danger');
     } else {
-      nameRef.current.classList.remove('border_danger');
+      nameRef.current.classList.remove('input_danger');
     }
 
     // valid country
     if (countryRef) {
       const t = countryRef.current;
       if (t.dataset.id === '') {
-        t.classList.add('border_danger');
+        t.classList.add('input_danger');
       } else {
-        t.classList.remove('border_danger');
+        t.classList.remove('input_danger');
       }
     }
 
@@ -107,9 +107,9 @@ export default function Ward({
     if (cityRef) {
       const t = cityRef.current;
       if (t.dataset.id === '') {
-        t.classList.add('border_danger');
+        t.classList.add('input_danger');
       } else {
-        t.classList.remove('border_danger');
+        t.classList.remove('input_danger');
       }
     }
 
@@ -117,9 +117,9 @@ export default function Ward({
     if (districtRef) {
       const t = districtRef.current;
       if (t.dataset.id === '') {
-        t.classList.add('border_danger');
+        t.classList.add('input_danger');
       } else {
-        t.classList.remove('border_danger');
+        t.classList.remove('input_danger');
       }
     }
     setValid(messageError);

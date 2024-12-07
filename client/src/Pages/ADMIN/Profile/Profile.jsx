@@ -102,11 +102,11 @@ export default function Profile() {
     const handleKeyUp = (e) => {
       if (e.target.value === '') {
         setNameValid(`name don't empty`);
-        n.classList.add('border_danger');
+        n.classList.add('input_danger');
       } else if (nameValid !== '') {
-        n.classList.add('border_danger');
+        n.classList.add('input_danger');
         setNameValid('');
-        n.classList.remove('border_danger');
+        n.classList.remove('input_danger');
       }
     };
     if (n) {
@@ -125,10 +125,10 @@ export default function Profile() {
     const handleKeyUp = (e) => {
       if (e.target.value === '') {
         setPhoneValid(`phone don't empty`);
-        p.classList.add('border_danger');
+        p.classList.add('input_danger');
       } else if (phoneValid !== '') {
         setPhoneValid('');
-        p.classList.remove('border_danger');
+        p.classList.remove('input_danger');
       }
     };
     if (p) {
@@ -147,10 +147,10 @@ export default function Profile() {
     const handleKeyUp = (e) => {
       if (e.target.value === '') {
         setAddressValid(`address don't empty`);
-        a.classList.add('border_danger');
+        a.classList.add('input_danger');
       } else if (addressValid !== '') {
         setAddressValid('');
-        a.classList.remove('border_danger');
+        a.classList.remove('input_danger');
       }
     };
     if (a) {

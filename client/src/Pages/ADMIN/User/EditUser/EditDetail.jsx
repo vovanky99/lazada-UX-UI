@@ -91,57 +91,57 @@ export default function EditDetail({ data }) {
   const validate = (valid) => {
     // valid Name
     if (user.name.length < 6) {
-      nameRef.current.classList.add('border_danger');
+      nameRef.current.classList.add('input_danger');
     } else {
-      nameRef.current.classList.remove('border_danger');
+      nameRef.current.classList.remove('input_danger');
     }
 
     if (user.email === '' || !valid) {
-      emailRef.current.classList.add('border_danger');
+      emailRef.current.classList.add('input_danger');
     } else {
-      emailRef.current.classList.remove('border_danger');
+      emailRef.current.classList.remove('input_danger');
     }
 
     // valid Phone
     if (user.phone_number === '') {
-      phoneRef.current.classList.add('border_danger');
+      phoneRef.current.classList.add('input_danger');
     } else {
-      phoneRef.current.classList.remove('border_danger');
+      phoneRef.current.classList.remove('input_danger');
     }
 
     // valid status
     if (user.status === '') {
-      statusRef.current.classList.add('border_danger');
+      statusRef.current.classList.add('input_danger');
     } else {
-      statusRef.current.classList.remove('border_danger');
+      statusRef.current.classList.remove('input_danger');
     }
 
     // valid gender
     if (user.gender === '') {
-      genderRef.current.classList.add('border_danger');
+      genderRef.current.classList.add('input_danger');
     } else {
-      genderRef.current.classList.remove('border_danger');
+      genderRef.current.classList.remove('input_danger');
     }
 
     // valid Birthday
     if (user.birthday === '') {
-      birthdayRef.current.classList.add('border_danger');
+      birthdayRef.current.classList.add('input_danger');
     } else {
-      birthdayRef.current.classList.remove('border_danger');
+      birthdayRef.current.classList.remove('input_danger');
     }
 
     // valid  Ward
     if (user.ward_id === '') {
-      wardRef.current.classList.add('border_danger');
+      wardRef.current.classList.add('input_danger');
     } else {
-      wardRef.current.classList.remove('border_danger');
+      wardRef.current.classList.remove('input_danger');
     }
 
     // valid Address live
     if (user.address_live === '') {
-      addressRef.current.classList.add('border_danger');
+      addressRef.current.classList.add('input_danger');
     } else {
-      addressRef.current.classList.remove('border_danger');
+      addressRef.current.classList.remove('input_danger');
     }
   };
   const handleSubmitForm = (e) => {

@@ -100,7 +100,20 @@
     "edit_video": "chỉnh sửa video",
     "confirm": "Xác nhận",
     "cancel": "Hủy",
-
+    "yes": "đồng ý",
+    "no": "không",
+    "new": "mới",
+    "used": "đã sử dụng",
+    "sku_product": "SKU sản phẩm",
+    "weight": "Cân nặng (Sau khi đóng gói)",
+    "shipping_fee": "Phí vận chuyển",
+    "fast": "nhanh",
+    "shipping_fee_save": "tiết kiệm",
+    "express": "hỏa tốc",
+    "bulky_goods": "hàng cồng kềnh",
+    "shipping_unit": "life shop vận chuyển",
+    "click_here": "nhấn vào đây",
+    "package_size": "Kích thước đóng gói (Phí vận chuyển thực tế sẽ thay đổi nếu bạn nhập sai kích thước)",
     "verify_notification": {
       "one_line": "Một liên kết xác minh mới đã được gửi đến địa chỉ email của bạn.",
       "two_line": "Trước khi tiếp tục, vui lòng kiểm tra email của bạn để lấy liên kết xác minh.",
@@ -144,7 +157,10 @@
       "delete_location": "Vui lòng chọn lại kiểu dữ liệu, kiểu dữ liệu hiện tại là null!",
       "images_cat": "Không đủ 6 bức ảnh!",
       "category": "Vui lòng chọn một danh mục!",
-      "attributes": "Vui lòng chọn một thuộc tính!"
+      "attributes": "Vui lòng chọn một thuộc tính!",
+      "shipping_fee": "Sản phẩm không thể lưu vì chưa có kênh vận chuyển nào được bật. Cài đặt đơn vị vận chuyển ở đây chỉ áp dụng cho sản phẩm này.",
+      "weight": "Nhập cân nặng",
+      "the_box_can't_empty": "Không được để trống ô"
     },
     "component": {
       "form_text": "Vui lòng nhập "
@@ -153,7 +169,11 @@
       "text": "Vui lòng nhập tên của bạn...",
       "default": "Vui lòng nhập",
       "product_name": "Tên sản phẩm + Thương hiệu + Model + Thông số kỹ thuật",
-      "category": "Vui lòng chọn một ngành hàng!"
+      "category": "Vui lòng chọn một ngành hàng!",
+      "height": "C",
+      "long": "D",
+      "wide": "R",
+      "weight": "Input"
     },
     "shop": {
       "title": "cửa hàng",
@@ -274,8 +294,15 @@
           "add_image": "Thêm hình ảnh",
           "basic_info": "Thông tin cơ bản",
           "sales_info": "Thông tin bán hàng",
+          "detail_info": "Thông tin chi tiết",
           "transport": "Vận chuyển",
           "other_info": "Thông tin khác",
+          "save_hide": "lưu & ẩn",
+          "save_show": "lưu & hiển thị",
+          "pre_order": "Hàng Đặt Trước",
+          "status": "Trạng thái",
+          "pre_order_note": "Tôi sẽ gửi hàng trong 2 ngày (không bao gồm các ngày nghỉ lễ, Tết và những ngày đơn vị vận chuyển không làm việc)",
+          "valid_wieght": "Nhập cân nặng",
           "product_image": {
             "title": "Hình ảnh sản phẩm",
             "first": "- Tham khảo hướng dẫn hình ảnh sản phẩm khi đăng bán",
@@ -291,7 +318,10 @@
             "video_product_format": "Định dạng: MP4",
             "video_product_note": "Lưu ý: sản phẩm có thể hiển thị trong khi video đang được xử lý. Video sẽ tự động hiển thị sau khi xử lý thành công.",
             "info_sell": "Mua nhiều giảm giá sẽ bị ẩn khi sản phẩm đang tham gia Mua Với Khuyến Mãi Sốc hoặc Khuyến Mãi Combo",
-            "carrier_setting": "Cài đặt nhà mạng ở đây chỉ áp dụng cho sản phẩm này."
+            "carrier_setting": "Cài đặt nhà mạng ở đây chỉ áp dụng cho sản phẩm này.",
+            "transport_first": "Cài đặt đơn vị vận chuyển ở đây chỉ áp dụng cho sản phẩm này.",
+            "transport_second": "Shop có thể",
+            "transport_third": "để kích hoạt thêm phương thức vận chuyển cho sản phẩm."
           },
           "time_to_prepare_goods": {
             "title": "Thời gian chuẩn bị hàng hóa",
@@ -371,7 +401,8 @@
             "descriptions": "Thêm ít nhất 100 kí tự hoặc 1 hình ảnh trong mô tả sản phẩm",
             "add_brand": "Thêm thương hiệu"
           },
-          "edit_category_note": "Kéo để chọn cắt video theo đoạn video từ 10s-60s"
+          "edit_category_note": "Kéo để chọn cắt video theo đoạn video từ 10s-60s",
+          "have_not_select_cat": "Có thể điều chỉnh sau khi chọn ngành hàng"
         },
         "home": {
           "todo_list": "Danh sách cần làm",
@@ -485,6 +516,19 @@
     "edit_video": "edit video",
     "confirm": "Confirm",
     "cancel": "Cancel",
+    "yes": "yes",
+    "no": "no",
+    "new": "new",
+    "used": "used",
+    "sku_product": "SKU product",
+    "weight": "Weight (After packaging)",
+    "shipping_fee": "shipping fee",
+    "fast": "fast",
+    "shipping_fee_save": "save",
+    "express": "express",
+    "bulky_goods": "bulky goods",
+    "shipping_unit": "shipping unit",
+    "package_size": "Packaging size (Actual shipping fee will vary if you enter the wrong size)",
     "verify_notification": {
       "one_line": "A fresh verification link has been sent to your email address.",
       "two_line": "Before proceeding, please check your email for a verification link.",
@@ -526,7 +570,10 @@
       "delete_location": "Please select the data type again, the current data type is null!",
       "images_cat": "Not enough 6 photos!",
       "category": "Please select a category!",
-      "attributes": "Please select a attributes!"
+      "attributes": "Please select a attributes!",
+      "shipping_fee": "The product cannot be saved because no shipping channels are enabled yet. The carrier settings here apply to this product only.",
+      "weight": "Enter weight",
+      "the_box_can't_empty": "The box cannot be left blank"
     },
     "component": {
       "form_text": "Enter keyword for "
@@ -535,7 +582,11 @@
       "text": "Please enter name... ",
       "default": "Please enter",
       "product_name": "Product name + Brand + Model + Specifications",
-      "category": "Please select a category!"
+      "category": "Please select a category!",
+      "height": "C",
+      "long": "D",
+      "wide": "R",
+      "weight": "Input"
     },
     "identity": {
       "title": "identity",
@@ -656,8 +707,15 @@
           "baisc_info": "Basic information",
           "sales_info": "Sales information",
           "transport": "Transport",
+          "detail_info": "Detail information",
           "carrier_setting_can_first": "Shop can",
+          "save_hide": "save & hide",
+          "save_show": "save & show",
+          "pre_order": "Pre-Order Items",
+          "pre_order_note": "I will send the goods within 2 days (excluding holidays, Tet and days when the shipping unit is not working)",
           "carrier_setting_can_second": "to enable additional shipping methods for the product.",
+          "valid_wieght": "Enter your weight",
+          "status": "Status",
           "note": {
             "title": "note",
             "no_category": "Can be adjusted after selecting a product line",
@@ -668,7 +726,10 @@
             "video_product_format": "Format: MP4",
             "video_product_note": "Note: the product may display while the video is being processed. The video will automatically display after successful processing.",
             "info_sell": "Buy multiple discounts will be hidden when the product is participating in Buy With Shock Deal or Combo Promotion",
-            "carrier_setting": "The carrier settings here apply to this product only."
+            "carrier_setting": "The carrier settings here apply to this product only.",
+            "transport_first": "The carrier settings here apply to this product only.",
+            "transport_second": "Shop can",
+            "transport_third": "to enable additional shipping methods for the product."
           },
           "other_info": "other information",
           "product_image": {
@@ -755,7 +816,9 @@
             "descriptions": "Add at least 100 characters or 1 image in the product description",
             "add_brand": "Add brand"
           },
-          "edit_category_note": "Drag to choose to cut video by video length from 10s to 60s"
+
+          "edit_category_note": "Drag to choose to cut video by video length from 10s to 60s",
+          "have_not_select_cat": "Can be adjusted after selecting a product line"
         },
         "home": {
           "todo_list": "Todo List",

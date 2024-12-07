@@ -72,19 +72,19 @@ export default function Country({
     }
 
     if (messageError.name) {
-      nameRef.current.classList.add('border_danger');
+      nameRef.current.classList.add('input_danger');
     } else {
-      nameRef.current.classList.remove('border_danger');
+      nameRef.current.classList.remove('input_danger');
     }
     if (messageError.international_codes) {
-      InternationCodeRef.current.classList.add('border_danger');
+      InternationCodeRef.current.classList.add('input_danger');
     } else {
-      InternationCodeRef.current.classList.remove('border_danger');
+      InternationCodeRef.current.classList.remove('input_danger');
     }
     if (messageError.acronym) {
-      acronymRef.current.classList.add('border_danger');
+      acronymRef.current.classList.add('input_danger');
     } else {
-      acronymRef.current.classList.remove('border_danger');
+      acronymRef.current.classList.remove('input_danger');
     }
     setValid(messageError);
     return messageError;

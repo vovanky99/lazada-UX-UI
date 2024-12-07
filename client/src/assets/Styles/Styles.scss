@@ -116,28 +116,28 @@ img.zoom_out {
 // add danger login and register
 
 input.danger_validated {
-  border-color: var(--border_danger_client) !important;
+  border-color: var(--danger_color_client) !important;
 }
 input.danger_validated:focus {
-  border-color: var(--border_danger_client) !important;
+  border-color: var(--danger_color_client) !important;
 }
 
 select.danger_validated {
-  border-color: var(--border_danger_client) !important;
+  border-color: var(--danger_color_client) !important;
 }
 
 select.danger_validated:focus {
-  border-color: var(--border_danger_client) !important ;
+  border-color: var(--danger_color_client) !important ;
 }
 
 // add active validated page account bank
 input.active_validated:focus + label,
 input.active_validated:required:valid + label {
-  color: var(--border_danger_client) !important;
+  color: var(--danger_color_client) !important;
 }
 
 input.active_validated {
-  border-color: var(--border_danger_client) !important;
+  border-color: var(--danger_color_client) !important;
 }
 
 // active button submit account credit
@@ -158,8 +158,8 @@ button.reviews_score.score_active {
 }
 
 /* admin */
-.border_danger {
-  border-color: var(--border_danger) !important ;
+.input_danger {
+  border-color: var(--danger_color) !important ;
   background-color: #fff6f7 !important;
 }
 
@@ -331,4 +331,58 @@ button.reviews_score.score_active {
   svg {
     fill: var(--primary);
   }
+}
+
+#product_header.active {
+  box-shadow: 0px 2px 3px 1px var(--box_shadow_seller);
+  border-radius: 0 !important;
+}
+
+#product_footer.active {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  padding: 0px 25px;
+}
+
+#seller_add_product #other_info #status .toggle {
+  .status-toggle {
+    display: flex !important;
+    z-index: 1;
+    transform: rotateX(0deg);
+    opacity: 1 !important;
+  }
+  .status-title {
+    svg {
+      rotate: 180deg;
+    }
+  }
+}
+
+.disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5;
+  // background-color: var(--color_disabled) !important;
+}
+
+.radio-switch-close {
+  &::before {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    border-radius: 50%;
+    width: 25%;
+    height: 80%;
+    background-color: var(--white);
+  }
+}
+
+.radio-switch-active {
+  background-color: var(--background_radio_switch_color) !important;
+  &::before {
+    left: auto !important;
+    right: 2px;
+  }
+}
+.border_danger {
+  border-color: var(--danger_color) !important;
 }

@@ -74,17 +74,17 @@ export default function City({
     }
 
     if (messageError.name) {
-      nameRef.current.classList.add('border_danger');
+      nameRef.current.classList.add('input_danger');
     } else {
-      nameRef.current.classList.remove('border_danger');
+      nameRef.current.classList.remove('input_danger');
     }
 
     if (countryRef) {
       const t = countryRef.current;
       if (t.dataset.id === '') {
-        t.classList.add('border_danger');
+        t.classList.add('input_danger');
       } else {
-        t.classList.remove('border_danger');
+        t.classList.remove('input_danger');
       }
     }
     setValid(messageError);

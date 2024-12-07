@@ -29,9 +29,9 @@ export default function LinkResetPassword() {
 
   const validate = () => {
     if (!resetSeller.email.match(/@gmail.com$/g) || !resetSeller.email) {
-      emailRef.current.classList.add('border_danger');
+      emailRef.current.classList.add('input_danger');
     } else {
-      emailRef.current.classList.remove('border_danger');
+      emailRef.current.classList.remove('input_danger');
     }
   };
   const handleSendEmail = (e) => {

@@ -6,12 +6,23 @@ import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import BasicInfo from './BasicInfo';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import SalesInfo from './SalesInfo';
+import DetailInfo from './DetailInfo';
+import OtherInfo from './OtherInfo';
+import TransportInfo from './TransportInfo';
 
 const cx = classNames.bind(styles);
 
 export default function AddProducts() {
   const tabsContentRef = useRef();
+  const [disabled, setDisabled] = useState(true);
+  const [hasCat, setHasCat] = useState(false);
+
+  const passHasCat = () => {
+    setHasCat(true);
+  };
+
   useEffect(() => {
     const btnItem = document.querySelectorAll('.btn_item');
     const border = document.getElementById('tabs_border');
@@ -48,8 +59,38 @@ export default function AddProducts() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    const scroll = document.getElementById('product_footer');
+    const topScroll = document.getElementById('product_header');
+
+    const handleScroll = (e) => {
+      const scrollPosition = window.screenY + window.innerHeight;
+      const elementBottom = scroll.getBoundingClientRect().bottom + window.screenY;
+      const elementTop = topScroll.getBoundingClientRect().top + window.screenY;
+      if (elementTop !== 56) {
+        // 56 is height of header or top position when sticky
+        topScroll.classList.remove('active');
+      } else {
+        topScroll.classList.add('active');
+      }
+      if (elementBottom === scrollPosition) {
+        scroll.classList.remove('active');
+      } else {
+        scroll.classList.add('active');
+      }
+    };
+    if (scroll) {
+      window.addEventListener('scroll', handleScroll);
+    }
+    return () => {
+      if (scroll) {
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
   return (
-    <section className={cx('seller_product', 'd-flex flex-row')}>
+    <section id="seller_add_product" className={cx('seller_product', 'd-flex flex-row')}>
       <section className={cx('sellet_product_left', 'd-flex flex-column')}>
         <div className={cx('seller_note')}>
           <div className={cx('layer_top')}></div>
@@ -149,7 +190,33 @@ export default function AddProducts() {
           <div id="tabs_border" className={cx('tabs_border')}></div>
         </div>
         <div id="basic_info" className={cx('basic_info', 'add_product_item')}>
-          <BasicInfo />
+          <BasicInfo cat={hasCat} passHasCat={passHasCat} />
+        </div>
+        <div id="detail_info">
+          <DetailInfo cat={hasCat} />
+        </div>
+        <div id="sales_info">
+          <SalesInfo cat={hasCat} />
+        </div>
+        <div id="transport">
+          <TransportInfo cat={hasCat} />
+        </div>
+        <div id="other_info">
+          <OtherInfo cat={hasCat} />
+        </div>
+        <div
+          id="product_footer"
+          className={cx('add_product_footer', 'active product_button d-flex flex-row justify-content-end')}
+        >
+          <Button outline small>
+            <Translate>cancel</Translate>
+          </Button>
+          <Button outline small disabled={disabled}>
+            <Translate>pages.seller.add_product.save_hide</Translate>
+          </Button>
+          <Button small primary disabled={disabled}>
+            <Translate>pages.seller.add_product.save_show</Translate>
+          </Button>
         </div>
       </section>
     </section>

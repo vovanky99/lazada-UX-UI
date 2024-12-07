@@ -38,17 +38,17 @@ export default function AddAttributes({ closeModal, handleReloadData = () => {},
     if ('name_vi' in field) {
       message.name_vi = !field.name_vi ? messageValid.name_vi : '';
       if (message.name_vi) {
-        nameViRef.current.classList.add('border_danger');
+        nameViRef.current.classList.add('input_danger');
       } else {
-        nameViRef.current.classList.remove('border_danger');
+        nameViRef.current.classList.remove('input_danger');
       }
     }
     if ('name_en' in field) {
       message.name_en = !field.name_en ? messageValid.name_en : '';
       if (message.name_en) {
-        nameEnRef.current.classList.add('border_danger');
+        nameEnRef.current.classList.add('input_danger');
       } else {
-        nameEnRef.current.classList.remove('border_danger');
+        nameEnRef.current.classList.remove('input_danger');
       }
     }
     Object.entries(message).map(([key, value]) => {
@@ -117,12 +117,12 @@ export default function AddAttributes({ closeModal, handleReloadData = () => {},
         setValid((draft) => {
           draft['name_vi'] = messageValid.name_vi;
         });
-        nameVi.classList.add('border_danger');
+        nameVi.classList.add('input_danger');
       } else {
         setValid((draft) => {
           delete draft['name_vi'];
         });
-        nameVi.classList.remove('border_danger');
+        nameVi.classList.remove('input_danger');
       }
     };
     if (nameVi) {
@@ -146,12 +146,12 @@ export default function AddAttributes({ closeModal, handleReloadData = () => {},
         setValid((draft) => {
           draft['name_en'] = messageValid.name_en;
         });
-        nameEn.classList.add('border_danger');
+        nameEn.classList.add('input_danger');
       } else {
         setValid((draft) => {
           delete draft['name_en'];
         });
-        nameEn.classList.remove('border_danger');
+        nameEn.classList.remove('input_danger');
       }
     };
     if (nameEn) {

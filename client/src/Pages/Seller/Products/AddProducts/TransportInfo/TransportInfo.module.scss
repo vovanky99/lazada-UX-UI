@@ -1,0 +1,174 @@
+.transport {
+  background-color: var(--white);
+  box-shadow: 0 1px 4px var(--box_shadow_seller);
+  padding: 25px;
+  border-radius: 5px;
+  h4 {
+    font-size: 2rem;
+    font-weight: bolder;
+    color: var(--grey);
+  }
+  .none_content {
+    font-size: 1.5rem;
+    color: var(--grey);
+    margin-top: 20px;
+  }
+  .content {
+    margin-top: 30px;
+    gap: 20px;
+    > div {
+      gap: 20px;
+      > label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        width: 144px;
+        flex: 0 0 144px;
+        font-size: 1.5rem;
+        &::first-letter {
+          text-transform: uppercase;
+        }
+      }
+      .package_content {
+        gap: 10px;
+      }
+      .wide,
+      .long,
+      .height {
+        width: 160px;
+        flex: 0 0 160px;
+        min-height: 40px;
+        input {
+          padding: 0px 10px;
+          height: 40px;
+        }
+      }
+      .barrier {
+        svg {
+          height: 1.6rem;
+          fill: var(--border_color_hover);
+        }
+      }
+      .symbol {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        height: 40px;
+        font-size: 1.5rem;
+        color: var(--grey);
+        span {
+          display: block;
+          margin-right: 8px;
+          height: 20px;
+          width: 1px;
+          border-left: 1px solid var(--grey);
+        }
+      }
+    }
+    .shipping_fee {
+      label {
+        align-items: flex-start;
+      }
+      .shipping_fee_content {
+        .validata_shipping {
+          background-color: #fafafa;
+          font-size: 1.3rem !important;
+          color: var(--red) !important;
+          padding: 10px;
+        }
+      }
+      .shipping_fee_box {
+        border: 1px solid #e8e8e8;
+        border-radius: var(--border_radius);
+        > div {
+          label {
+            background-color: #fafafa;
+            width: 100%;
+            padding: 20px 30px;
+            line-height: 2rem;
+            font-size: 1.5rem;
+            text-transform: capitalize;
+          }
+          > div {
+            width: 100%;
+            padding: 30px 20px;
+            line-height: 2rem;
+          }
+          .content_left {
+          }
+        }
+        .btn_switch {
+          height: 24px;
+          width: 50px;
+        }
+        margin-bottom: 10px;
+      }
+      .shipping_fee_note {
+        gap: 10px;
+        span {
+          font-size: 1.3rem;
+          color: var(--grey);
+          > a {
+            text-decoration: underline;
+            font-size: 1.3rem;
+            padding: 0 2px;
+          }
+          &::first-letter {
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+    .weight {
+      min-height: 40px;
+      width: calc(160px + 144px + 20px);
+      input {
+        height: 40px;
+        width: 160px;
+        padding: 0px 10px;
+        flex: 0 0 160px;
+      }
+    }
+    &_left {
+      gap: 20px;
+      min-width: 300px;
+      span {
+        font-size: 1.5rem;
+        width: auto;
+        display: block;
+        &:first-child {
+          text-transform: capitalize;
+        }
+      }
+      .shipping_unit {
+        border-radius: 2px;
+        font-size: 1.2rem;
+        border: 1px solid #ffc0be;
+        height: 20px;
+        color: #ee4d2d;
+        text-transform: uppercase;
+        padding: 0 4px;
+        background-color: #fff1f0;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex: 0 0 160px;
+        max-width: 160px;
+      }
+    }
+    &_right {
+      gap: 25px;
+      .validated_transport_fee {
+        font-size: 1.5rem;
+        color: var(--grey);
+      }
+    }
+  }
+}
+
+label {
+  cursor: auto;
+}

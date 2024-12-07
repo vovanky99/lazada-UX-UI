@@ -41,9 +41,9 @@ export default function Login() {
     const u = usernameRef.current;
     const handleKeyupUsername = (e) => {
       if (e.target.value === '') {
-        e.target.classList.add('border_danger');
+        e.target.classList.add('input_danger');
       } else {
-        e.target.classList.remove('border_danger');
+        e.target.classList.remove('input_danger');
       }
     };
     if (u) {
@@ -61,9 +61,9 @@ export default function Login() {
     const p = passwordRef.current;
     const handleKeyupPass = (e) => {
       if (e.target.value === '') {
-        e.target.classList.add('border_danger');
+        e.target.classList.add('input_danger');
       } else {
-        e.target.classList.remove('border_danger');
+        e.target.classList.remove('input_danger');
       }
     };
     if (p) {
@@ -85,8 +85,8 @@ export default function Login() {
           dispatch(setSession(result.token, 'adminToken'));
           navigate(`${config.adminRoutes.Home}`);
         } else {
-          passwordRef.current.classList.add('border_danger');
-          usernameRef.current.classList.add('border_danger');
+          passwordRef.current.classList.add('input_danger');
+          usernameRef.current.classList.add('input_danger');
           setMessageSubmitError();
         }
       });

@@ -21,6 +21,7 @@ export const initialState = {
   country: null,
   shop: null,
   timeDelay: 500,
+  volumeConvertedFromSize: 6000, //defaul value for divide converted
   language: 'en',
 };
 export default function AuthReducer(state = initialState, action) {

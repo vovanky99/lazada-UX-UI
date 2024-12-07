@@ -21,6 +21,7 @@ use App\Http\Controllers\Auth\Client\SocialAuthController;
 use App\Http\Controllers\Auth\Seller\SellerAuthController;
 use App\Http\Controllers\Auth\Seller\EmailVerifyController as SellerEmailVerifyController;
 use App\Http\Controllers\CheckController;
+use App\Http\Controllers\CheckShippingFeeController;
 use App\Http\Controllers\front_end\HomeController;
 use App\Http\Controllers\front_end\SearchController;
 use App\Http\Controllers\front_end\ProductDetailController;
@@ -272,4 +273,11 @@ Route::controller(CloudinaryController::class)->group(function(){
 
 Route::controller(AdminController::class)->group(function(){
     Route::get('get-languages','languages');
+});
+
+/**
+ * get shipping fee
+ */
+Route::controller(CheckShippingFeeController::class)->group(function(){
+    Route::get('seller-pd-shipping-fee','CheckFeeSellerProduct');
 });

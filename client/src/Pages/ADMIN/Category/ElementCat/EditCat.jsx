@@ -105,17 +105,17 @@ export default function EditCat({ closeModal, handleReloadData = () => {}, handl
     if ('name' in field.categories_translation[0]) {
       messageValid.name_vi = !field.categories_translation[0].name ? message.name_vi : '';
       if (messageValid.name_vi && nameViRef) {
-        nameViRef.current.classList.add('border_danger');
+        nameViRef.current.classList.add('input_danger');
       } else {
-        nameViRef.current.classList.remove('border_danger');
+        nameViRef.current.classList.remove('input_danger');
       }
     }
     if ('name' in field.categories_translation[1]) {
       messageValid.name_en = !field.categories_translation[1].name ? message.name_en : '';
       if (messageValid.name_en && nameEnRef) {
-        nameEnRef.current.classList.add('border_danger');
+        nameEnRef.current.classList.add('input_danger');
       } else {
-        nameEnRef.current.classList.remove('border_danger');
+        nameEnRef.current.classList.remove('input_danger');
       }
     }
 

@@ -107,10 +107,10 @@ export default function EditLocation({ id, handleToggleEdit, reloadData = () => 
     let message = { ...valid };
     if (typeEdit === '') {
       message.type_edit = messageValid.type_location;
-      selectTypeRef.current.classList.add('border_danger');
+      selectTypeRef.current.classList.add('input_danger');
     } else {
-      if (selectTypeRef.current.classList.contains('border_danger')) {
-        selectTypeRef.current.classList.remove('border_danger');
+      if (selectTypeRef.current.classList.contains('input_danger')) {
+        selectTypeRef.current.classList.remove('input_danger');
         message.type_edit = '';
       }
       if (type === 'delete') {
@@ -122,56 +122,56 @@ export default function EditLocation({ id, handleToggleEdit, reloadData = () => 
           if ('name' in field[location]) {
             message[`name_${location}`] = !field[location].name ? messageValid[`name_${location}`] : '';
             if (message?.name_country) {
-              nameCountryRef.current.classList.add('border_danger');
+              nameCountryRef.current.classList.add('input_danger');
             } else {
               if (nameCountryRef) {
-                nameCountryRef.current.classList.remove('border_danger');
+                nameCountryRef.current.classList.remove('input_danger');
               }
             }
             if (message?.name_city) {
-              nameCityRef.current.classList.add('border_danger');
+              nameCityRef.current.classList.add('input_danger');
             } else {
               if (nameCityRef) {
-                nameCityRef.current.classList.remove('border_danger');
+                nameCityRef.current.classList.remove('input_danger');
               }
             }
             if (message?.name_district) {
-              nameDistrictRef.current.classList.add('border_danger');
+              nameDistrictRef.current.classList.add('input_danger');
             } else {
               if (nameDistrictRef) {
-                nameDistrictRef.current.classList.remove('border_danger');
+                nameDistrictRef.current.classList.remove('input_danger');
               }
             }
             if (message?.name_ward) {
-              nameWardRef.current.classList.add('border_danger');
+              nameWardRef.current.classList.add('input_danger');
             } else {
               if (nameWardRef) {
-                nameWardRef.current.classList.remove('border_danger');
+                nameWardRef.current.classList.remove('input_danger');
               }
             }
           }
           if ('language_id' in field[location]) {
             message.language = !field[location].language_id ? messageValid.language : '';
             if (languageRef && message?.language) {
-              languageRef.current.classList.add('border_danger');
+              languageRef.current.classList.add('input_danger');
             } else {
-              languageRef.current.classList.remove('border_danger');
+              languageRef.current.classList.remove('input_danger');
             }
           }
           if ('international_codes' in field[location]) {
             message.international_codes = !field[location].international_codes ? messageValid.international_codes : '';
             if (internationalRef && message?.international_codes) {
-              internationalRef.current.classList.add('border_danger');
+              internationalRef.current.classList.add('input_danger');
             } else {
-              internationalRef.current.classList.remove('border_danger');
+              internationalRef.current.classList.remove('input_danger');
             }
           }
           if ('acronym' in field[location]) {
             message.acronym = !field[location].acronym ? messageValid.acronym : '';
             if (acronymRef && message?.acronym) {
-              acronymRef.current.classList.add('border_danger');
+              acronymRef.current.classList.add('input_danger');
             } else {
-              acronymRef.current.classList.remove('border_danger');
+              acronymRef.current.classList.remove('input_danger');
             }
           }
         }

@@ -66,19 +66,19 @@ export default function EditElement({ data }) {
 
   const validate = () => {
     if (editBlog.content.length < 300) {
-      contentRef.current.editor.container.classList.add('border_danger');
+      contentRef.current.editor.container.classList.add('input_danger');
     } else {
-      contentRef.current.editor.container.classList.remove('border_danger');
+      contentRef.current.editor.container.classList.remove('input_danger');
     }
     if (editBlog.descriptions.length < 100) {
-      descriptionsRef.current.classList.add('border_danger');
+      descriptionsRef.current.classList.add('input_danger');
     } else {
-      descriptionsRef.current.classList.remove('border_danger');
+      descriptionsRef.current.classList.remove('input_danger');
     }
     if (editBlog.title.length < 20) {
-      titleRef.current.classList.add('border_danger');
+      titleRef.current.classList.add('input_danger');
     } else {
-      titleRef.current.classList.remove('border_danger');
+      titleRef.current.classList.remove('input_danger');
     }
   };
   /*handle submit edit blog */

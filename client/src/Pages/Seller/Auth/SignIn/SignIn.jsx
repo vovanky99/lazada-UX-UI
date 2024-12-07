@@ -52,9 +52,9 @@ export default function SignIn() {
         ? 'email must be @gmail.com!'
         : '';
       if (errorMessage.email !== '') {
-        emailRef.current.classList.add('border_danger');
+        emailRef.current.classList.add('input_danger');
       } else {
-        emailRef.current.classList.remove('border_danger');
+        emailRef.current.classList.remove('input_danger');
       }
     }
     if ('password' in field) {
@@ -64,9 +64,9 @@ export default function SignIn() {
         ? ''
         : `password can't short 7 character!`;
       if (errorMessage.password !== '') {
-        passwordRef.current.classList.add('border_danger');
+        passwordRef.current.classList.add('input_danger');
       } else {
-        passwordRef.current.classList.remove('border_danger');
+        passwordRef.current.classList.remove('input_danger');
       }
     }
     if (field === seller) {

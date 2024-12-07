@@ -101,19 +101,19 @@ export default function TaxInfo({ email, location }) {
       messageError.business_name =
         !field.business_name && field.business_type !== 1 ? 'Please enter business name!' : '';
       if (businessNameRef.current && !field.business_name && field.business_type !== 1) {
-        businessNameRef.current.classList.add('border_danger');
+        businessNameRef.current.classList.add('input_danger');
       }
     }
     if ('ward_id' in field.register_bussiness_address) {
       messageError.location = !field.register_bussiness_address.ward_id ? 'Please select location!' : '';
       if (locationRef.current && !field.register_bussiness_address.ward_id) {
-        locationRef.current.classList.add('border_danger');
+        locationRef.current.classList.add('input_danger');
       }
     }
     if ('address' in field.register_bussiness_address) {
       messageError.address = !field.register_bussiness_address.address ? 'Please enter address!' : '';
       if (addressRef.current && !field.register_bussiness_address.address) {
-        addressRef.current.classList.add('border_danger');
+        addressRef.current.classList.add('input_danger');
       }
     }
     Object.values(taxInfo.email_receive_electronic_invoice).map((d) => {
@@ -198,12 +198,12 @@ export default function TaxInfo({ email, location }) {
         setValid((draft) => {
           draft[name] = 'please select location before enter address!';
         });
-        classList.add('border_danger');
+        classList.add('input_danger');
       } else {
         setValid((draft) => {
           delete draft[name];
         });
-        classList.remove('border_danger');
+        classList.remove('input_danger');
       }
     };
     if (location) {
@@ -226,12 +226,12 @@ export default function TaxInfo({ email, location }) {
         setValid((draft) => {
           draft[name] = 'please enter address!';
         });
-        classList.add('border_danger');
+        classList.add('input_danger');
       } else {
         setValid((draft) => {
           delete draft[name];
         });
-        classList.remove('border_danger');
+        classList.remove('input_danger');
       }
     };
     if (address) {
@@ -254,12 +254,12 @@ export default function TaxInfo({ email, location }) {
         setValid((draft) => {
           draft[name] = 'please enter business name!';
         });
-        classList.add('border_danger');
+        classList.add('input_danger');
       } else {
         setValid((draft) => {
           delete draft[name];
         });
-        classList.remove('border_danger');
+        classList.remove('input_danger');
       }
     };
     if (taxInfo.business_type == 1) {

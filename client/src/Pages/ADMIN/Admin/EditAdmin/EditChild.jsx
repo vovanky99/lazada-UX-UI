@@ -125,86 +125,86 @@ export default function EditChild({ data }) {
   const validated = () => {
     // valid Name
     if (admin.name.length < 6) {
-      nameRef.current.classList.add('border_danger');
+      nameRef.current.classList.add('input_danger');
     } else {
-      nameRef.current.classList.remove('border_danger');
+      nameRef.current.classList.remove('input_danger');
     }
 
     // valid Phone
     if (admin.phone_number === '') {
-      phoneRef.current.classList.add('border_danger');
+      phoneRef.current.classList.add('input_danger');
     } else {
-      phoneRef.current.classList.remove('border_danger');
+      phoneRef.current.classList.remove('input_danger');
     }
 
     // valid status
     if (admin.status === '') {
-      statusRef.current.classList.add('border_danger');
+      statusRef.current.classList.add('input_danger');
     } else {
-      statusRef.current.classList.remove('border_danger');
+      statusRef.current.classList.remove('input_danger');
     }
 
     // valid gender
     if (admin.gender === '') {
-      genderRef.current.classList.add('border_danger');
+      genderRef.current.classList.add('input_danger');
     } else {
-      genderRef.current.classList.remove('border_danger');
+      genderRef.current.classList.remove('input_danger');
     }
 
     // valid Birthday
     if (admin.birthday === '') {
-      birthdayRef.current.classList.add('border_danger');
+      birthdayRef.current.classList.add('input_danger');
     } else {
-      birthdayRef.current.classList.remove('border_danger');
+      birthdayRef.current.classList.remove('input_danger');
     }
 
     // valid Citizen Card
     if (admin.citizen_identification_card === '') {
-      citizenCardRef.current.classList.add('border_danger');
+      citizenCardRef.current.classList.add('input_danger');
     } else {
-      citizenCardRef.current.classList.remove('border_danger');
+      citizenCardRef.current.classList.remove('input_danger');
     }
 
     // valid Role
     if (admin.role_id === '') {
-      roleRef.current.classList.add('border_danger');
+      roleRef.current.classList.add('input_danger');
     } else {
-      roleRef.current.classList.remove('border_danger');
+      roleRef.current.classList.remove('input_danger');
     }
 
     // valid Department
     if (admin.department_id === '') {
-      departmentRef.current.classList.add('border_danger');
+      departmentRef.current.classList.add('input_danger');
     } else {
-      departmentRef.current.classList.remove('border_danger');
+      departmentRef.current.classList.remove('input_danger');
     }
 
     // valid born at Ward
     if (admin.born_ward_id === '') {
-      wardBornRef.current.classList.add('border_danger');
+      wardBornRef.current.classList.add('input_danger');
     } else {
-      wardBornRef.current.classList.remove('border_danger');
+      wardBornRef.current.classList.remove('input_danger');
     }
 
     // valid live at Ward
     if (admin.live_ward_id === '') {
-      wardLiveRef.current.classList.add('border_danger');
+      wardLiveRef.current.classList.add('input_danger');
     } else {
-      wardLiveRef.current.classList.remove('border_danger');
+      wardLiveRef.current.classList.remove('input_danger');
     }
 
     // valid Address born
     if (admin.address_born === '') {
-      addressBornRef.current.classList.add('border_danger');
+      addressBornRef.current.classList.add('input_danger');
     } else {
-      addressBornRef.current.classList.remove('border_danger');
+      addressBornRef.current.classList.remove('input_danger');
     }
 
     // valid Address live
     if (admin.address_live === '') {
-      addressLiveRef.current.classList.add('border_danger');
+      addressLiveRef.current.classList.add('input_danger');
     } else {
-      addressLiveRef.current.classList.remove('border_danger');
+      addressLiveRef.current.classList.remove('input_danger');
     }
   };
   const handleSubmitForm = (e) => {

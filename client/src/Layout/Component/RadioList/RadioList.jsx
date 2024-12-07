@@ -32,7 +32,6 @@ export default function RadioList({
   useEffect(() => {
     if (defaultValue && titleClass) {
       const radioItems = document.querySelectorAll(`.${titleClass}`);
-      console.log(radioItems);
       for (let i = 0; i < radioItems.length; i++) {
         if (parseInt(radioItems[i].dataset.type) === defaultValue) {
           radioItems[i].classList.add(`radio_${color}_active`);

@@ -46,22 +46,22 @@ export default function ResetPass() {
   };
   const validateRequestphone = () => {
     if (requestPhone.phone_number.length !== 11) {
-      phoneRef.current.classList.add('border_danger');
+      phoneRef.current.classList.add('input_danger');
     } else {
-      phoneRef.current.classList.remove('border_danger');
+      phoneRef.current.classList.remove('input_danger');
     }
   };
 
   const validateResetPass = () => {
     if (resetPass.password.length < 8) {
-      passRef.current.classList.add('border_danger');
+      passRef.current.classList.add('input_danger');
     } else {
-      passRef.current.classList.remove('border_danger');
+      passRef.current.classList.remove('input_danger');
     }
     if (resetPass.password !== resetPass.password_confirmation) {
-      passConfirmRef.current.classList.add('border_danger');
+      passConfirmRef.current.classList.add('input_danger');
     } else {
-      passConfirmRef.current.classList.remove('border_danger');
+      passConfirmRef.current.classList.remove('input_danger');
     }
   };
   const handleSubmitRequestPhone = (e) => {

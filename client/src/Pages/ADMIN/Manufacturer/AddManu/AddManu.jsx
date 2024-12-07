@@ -49,14 +49,14 @@ export default function AddManu() {
   const handleCreateManu = (e) => {
     e.preventDefault();
     if (addManu.name === '') {
-      nameRef.current.classList.add('border_danger');
+      nameRef.current.classList.add('input_danger');
     } else {
-      nameRef.current.classList.remove('border_danger');
+      nameRef.current.classList.remove('input_danger');
     }
     if (addManu.descriptions.length <= 50) {
-      descriptionsRef.current.classList.add('border_danger');
+      descriptionsRef.current.classList.add('input_danger');
     } else {
-      descriptionsRef.current.classList.remove('border_danger');
+      descriptionsRef.current.classList.remove('input_danger');
     }
     if (addManu.name && addManu.descriptions.length > 50 && addManu.logo) {
       setCreateError('');

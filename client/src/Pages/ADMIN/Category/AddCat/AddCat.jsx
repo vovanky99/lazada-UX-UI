@@ -201,20 +201,20 @@ export default function AddCat({ handleReloadData = () => {}, handleClose, langu
         if (value === '') {
           delete messageError[key];
           if (key === 'name_vi') {
-            nameViRef.current.classList.remove('border_danger');
+            nameViRef.current.classList.remove('input_danger');
           }
           if (key === 'name_en') {
-            nameEnRef.current.classList.remove('border_danger');
+            nameEnRef.current.classList.remove('input_danger');
           }
         } else {
           setValid((draft) => {
             draft[key] = value;
           });
           if (key === 'name_vi') {
-            nameViRef.current.classList.add('border_danger');
+            nameViRef.current.classList.add('input_danger');
           }
           if (key === 'name_en') {
-            nameEnRef.current.classList.add('border_danger');
+            nameEnRef.current.classList.add('input_danger');
           }
         }
       });

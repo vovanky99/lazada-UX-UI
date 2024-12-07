@@ -1,0 +1,29 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  label {
+    font-size: 1.5rem;
+  }
+  input {
+    border: 1px solid var(--border_input);
+    border-radius: var(--border_radius);
+    font-size: 1.5rem;
+    width: 100%;
+    flex: 1 1 100%;
+    &:focus {
+      outline: none;
+      border-color: var(--input_focus_admin) !important;
+    }
+    &:hover {
+      border-color: var(--grey) !important;
+    }
+  }
+  .content {
+    position: relative;
+    height: 100%;
+    .valid {
+      color: #ee4d2d !important;
+    }
+  }
+}

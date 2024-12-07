@@ -161,7 +161,7 @@ export default function IdentityInfo({ seller }) {
     setValid((draft) => {
       delete draft.identity_number;
     });
-    identityNumberRef.current.classList.remove('border_danger');
+    identityNumberRef.current.classList.remove('input_danger');
   };
 
   /*set default value for radio identity form of identification */
@@ -224,12 +224,12 @@ export default function IdentityInfo({ seller }) {
         setValid((draft) => {
           draft[name] = 'Please enter your identity!';
         });
-        classList.add('border_danger');
+        classList.add('input_danger');
       } else {
         setValid((draft) => {
           delete draft[name];
         });
-        classList.remove('border_danger');
+        classList.remove('input_danger');
       }
     };
     if (identity) {
@@ -251,12 +251,12 @@ export default function IdentityInfo({ seller }) {
         setValid((draft) => {
           draft[name] = 'Please enter your full name!';
         });
-        classList.add('border_danger');
+        classList.add('input_danger');
       } else {
         setValid((draft) => {
           delete draft[name];
         });
-        classList.remove('border_danger');
+        classList.remove('input_danger');
       }
     };
     if (fullname) {

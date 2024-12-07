@@ -19,10 +19,11 @@ import Body from '~/layout/Component/Body';
 import EditCategory from '../EditCategory';
 import { useSelector } from 'react-redux';
 import GetCat from './GetCat';
+import SessionStorageService from '~/services/SessionStorageService';
 
 const cx = classNames.bind(styles);
 
-export default function BasicInfo() {
+export default function BasicInfo({ passHasCat = () => {} }) {
   const imageRef = useRef();
   const selectImagesRef = useRef();
   const selectVideoRef = useRef();
@@ -232,6 +233,7 @@ export default function BasicInfo() {
     setProduct((draft) => {
       draft.category = value;
     });
+    passHasCat();
   };
 
   useEffect(() => {
@@ -241,11 +243,21 @@ export default function BasicInfo() {
       }
     });
   }, [searchCat]);
+  useEffect(() => {
+    const handleDeleteSession = () => {
+      SessionStorageService.removeItem('selected');
+      SessionStorageService.removeItem('selecCat');
+    };
+    window.addEventListener('beforeunload', handleDeleteSession);
+    return () => {
+      window.removeEventListener('beforeunload', handleDeleteSession);
+    };
+  }, []);
   return (
     <div className={cx('seller_basic_info', 'd-flex flex-column')}>
       <h4 className={cx('title')}>
         <strong>
-          <Translate>pages.seller.add_product.basic_info</Translate>:
+          <Translate>pages.seller.add_product.basic_info</Translate>
         </strong>
       </h4>
       <div className={cx('content', 'd-flex flex-column')}>
@@ -415,7 +427,17 @@ export default function BasicInfo() {
             <Translate>category</Translate>
           </label>
           <div className={cx('select_category')} onClick={handleToggleCategory}>
-            <Translate>placeholder.category</Translate>
+            {Object.keys(product.category).length === 0 ? (
+              <div className={cx('none_cat')}>
+                <Translate>placeholder.category</Translate>
+              </div>
+            ) : (
+              <div className={cx('cat_content', 'd-flex flex-row align-items-center')}>
+                {Object.entries(product.category).map(([key, value], index) => (
+                  <span key={index}>{value.name}</span>
+                ))}
+              </div>
+            )}
             <div className={cx('pick')}>
               <FontAwesomeIcon icon={faPen} />
             </div>

@@ -70,9 +70,9 @@ export default function Register() {
         ? validMessage.email_not_valid
         : '';
       if (errorMessage.email !== '') {
-        emailRef.current.classList.add('border_danger');
+        emailRef.current.classList.add('input_danger');
       } else {
-        emailRef.current.classList.remove('border_danger');
+        emailRef.current.classList.remove('input_danger');
       }
     }
     if ('password' in field) {
@@ -82,9 +82,9 @@ export default function Register() {
         ? ''
         : validMessage.password_length;
       if (errorMessage.password !== '') {
-        passwordRef.current.classList.add('border_danger');
+        passwordRef.current.classList.add('input_danger');
       } else {
-        passwordRef.current.classList.remove('border_danger');
+        passwordRef.current.classList.remove('input_danger');
       }
     }
     if ('phone_number' in field) {
@@ -96,17 +96,17 @@ export default function Register() {
         ? ''
         : validMessage.phone_not_valid;
       if (errorMessage.phone_number !== '') {
-        phoneRef.current.classList.add('border_danger');
+        phoneRef.current.classList.add('input_danger');
       } else {
-        phoneRef.current.classList.remove('border_danger');
+        phoneRef.current.classList.remove('input_danger');
       }
     }
     if ('fullname' in field) {
       errorMessage.fullname = !field.fullname ? validMessage.fullname_empty : '';
       if (errorMessage.fullname !== '') {
-        fullnameRef.current.classList.add('border_danger');
+        fullnameRef.current.classList.add('input_danger');
       } else {
-        fullnameRef.current.classList.remove('border_danger');
+        fullnameRef.current.classList.remove('input_danger');
       }
     }
     if (field === seller) {

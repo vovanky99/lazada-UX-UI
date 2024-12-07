@@ -50,14 +50,14 @@ export default function EditElement({ data }) {
   const handleUpdateManu = (e) => {
     e.preventDefault();
     if (editManu.name === '') {
-      nameRef.current.classList.add('border_danger');
+      nameRef.current.classList.add('input_danger');
     } else {
-      nameRef.current.classList.remove('border_danger');
+      nameRef.current.classList.remove('input_danger');
     }
     if (editManu.descriptions.length <= 50) {
-      descriptionsRef.current.classList.add('border_danger');
+      descriptionsRef.current.classList.add('input_danger');
     } else {
-      descriptionsRef.current.classList.remove('border_danger');
+      descriptionsRef.current.classList.remove('input_danger');
     }
     if (editManu.name && editManu.descriptions.length > 50 && editManu.logo) {
       setEditError('');

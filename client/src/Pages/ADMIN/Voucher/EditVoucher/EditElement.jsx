@@ -54,34 +54,34 @@ export default function EditElement({ data }) {
   /* valid voucher */
   const validVoucher = () => {
     if (voucher.name === '') {
-      nameRef.current.classList.add('border_danger');
+      nameRef.current.classList.add('input_danger');
     } else {
-      nameRef.current.classList.remove('border_danger');
+      nameRef.current.classList.remove('input_danger');
     }
     if (voucher.code === '') {
-      codeRef.current.classList.add('border_danger');
+      codeRef.current.classList.add('input_danger');
     } else {
-      codeRef.current.classList.remove('border_danger');
+      codeRef.current.classList.remove('input_danger');
     }
     if (voucher.descriptions === '' && voucher.descriptions.length <= 14) {
-      descriptionsRef.current.classList.add('border_danger');
+      descriptionsRef.current.classList.add('input_danger');
     } else {
-      descriptionsRef.current.classList.remove('border_danger');
+      descriptionsRef.current.classList.remove('input_danger');
     }
     if (voucher.end_day === '') {
-      EndDayRef.current.classList.add('border_danger');
+      EndDayRef.current.classList.add('input_danger');
     } else {
-      EndDayRef.current.classList.remove('border_danger');
+      EndDayRef.current.classList.remove('input_danger');
     }
     if (voucher.start_day === '') {
-      startDayRef.current.classList.add('border_danger');
+      startDayRef.current.classList.add('input_danger');
     } else {
-      startDayRef.current.classList.remove('border_danger');
+      startDayRef.current.classList.remove('input_danger');
     }
     if (voucher.percents === '') {
-      percentsRef.current.classList.add('border_danger');
+      percentsRef.current.classList.add('input_danger');
     } else {
-      percentsRef.current.classList.remove('border_danger');
+      percentsRef.current.classList.remove('input_danger');
     }
   };
   const handleSubmitCreateVoucher = (e) => {

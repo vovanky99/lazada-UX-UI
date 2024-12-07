@@ -45,26 +45,26 @@ export default function EditAttrDetail({
     if ('name_vi' in field.attributes_detail_translation[0]) {
       message.name_vi = !field.attributes_detail_translation[0].name ? messageValid.name_vi : '';
       if (message.name_vi) {
-        nameViRef.current.classList.add('border_danger');
+        nameViRef.current.classList.add('input_danger');
       } else {
-        nameViRef.current.classList.remove('border_danger');
+        nameViRef.current.classList.remove('input_danger');
       }
     }
     if ('name_en' in field.attributes_detail_translation[1]) {
       message.name_en = !field.attributes_detail_translation[1].name ? messageValid.name_en : '';
       if (message.name_en) {
-        nameEnRef.current.classList.add('border_danger');
+        nameEnRef.current.classList.add('input_danger');
       } else {
-        nameEnRef.current.classList.remove('border_danger');
+        nameEnRef.current.classList.remove('input_danger');
       }
     }
 
     if ('attribute_id' in field) {
       message.attr = !field.attribute_id ? messageValid.attributes : '';
       if (message.name_en) {
-        attrRef.current.classList.add('border_danger');
+        attrRef.current.classList.add('input_danger');
       } else {
-        attrRef.current.classList.remove('border_danger');
+        attrRef.current.classList.remove('input_danger');
       }
     }
     Object.entries(message).map(([key, value]) => {
@@ -152,12 +152,12 @@ export default function EditAttrDetail({
         setValid((draft) => {
           draft['name_vi'] = messageValid.name_vi;
         });
-        nameVi.classList.add('border_danger');
+        nameVi.classList.add('input_danger');
       } else {
         setValid((draft) => {
           delete draft['name_vi'];
         });
-        nameVi.classList.remove('border_danger');
+        nameVi.classList.remove('input_danger');
       }
     };
     if (nameVi) {
@@ -181,12 +181,12 @@ export default function EditAttrDetail({
         setValid((draft) => {
           draft['name_en'] = messageValid.name_en;
         });
-        nameEn.classList.add('border_danger');
+        nameEn.classList.add('input_danger');
       } else {
         setValid((draft) => {
           delete draft['name_en'];
         });
-        nameEn.classList.remove('border_danger');
+        nameEn.classList.remove('input_danger');
       }
     };
     if (nameEn) {

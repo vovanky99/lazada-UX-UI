@@ -8,6 +8,7 @@ import CloseIcon from '~/layout/Component/Icon/CloseIcon';
 import SearchCat from './SearchCat';
 import { Fragment } from 'react';
 import ArrowRightIcon from '~/layout/Component/Icon/ArrowRightIcon';
+import SessionStorageService from '~/services/SessionStorageService';
 
 const cx = classNames.bind(styles);
 
@@ -17,17 +18,32 @@ export default function EditCategory({
   handleSearchCat = () => {},
   handlePassData = () => {},
 }) {
-  const [selectCat, setSelectCat] = useImmer({});
-  const [selected, setSelected] = useImmer({});
-
   const [disabled, setDisabled] = useState(false);
+  const [selectCat, setSelectCat] = useImmer(() => {
+    if (SessionStorageService.getItem('selecCat')) {
+      return SessionStorageService.getItem('selecCat');
+    } else {
+      return {};
+    }
+  });
+  const [selected, setSelected] = useImmer(() => {
+    if (SessionStorageService.getItem('selected')) {
+      setDisabled(true);
+      return SessionStorageService.getItem('selected');
+    } else {
+      return {};
+    }
+  });
+
   const handleConfirmSelectCat = (e) => {
     handlePassData(selected);
+    SessionStorageService.setItem('selected', selected);
+    SessionStorageService.setItem('selecCat', selectCat);
     onToggle('close');
   };
 
   const handleSelectCat = (e) => {
-    const { id, level, index } = e.currentTarget.dataset;
+    const { id, level, index, name } = e.currentTarget.dataset;
     const item = document.querySelectorAll(`.${level}`);
     for (let i = 0; i < item.length; i++) {
       if (item[i].classList.contains('active_cat')) {
@@ -62,14 +78,29 @@ export default function EditCategory({
         }
         delete draft[i];
       }
-      draft[`${parseInt(index)}`] = parseInt(id);
+      draft[`${parseInt(index)}`] = { id: parseInt(id), name: name };
     });
     e.currentTarget.classList.add('active_cat');
   };
+
   useEffect(() => {
-    if (data) {
+    const cat = document.querySelectorAll('.cat-element');
+    //set Category data
+    if (data && !SessionStorageService.getItem('selectCat')) {
       setSelectCat((draft) => {
         draft['level_1'] = data.filter((x) => x.parent_id === null);
+      });
+    }
+
+    //active for value when have value in local
+    if (Object.keys(selected).length !== 0 && cat) {
+      Object.entries(selected).map(([key, value]) => {
+        for (let i = 0; i < cat.length; i++) {
+          if (parseInt(cat[i].dataset.id) === value.id) {
+            cat[i].classList.add('active_cat');
+            break;
+          }
+        }
       });
     }
   }, [data]);
@@ -116,12 +147,13 @@ export default function EditCategory({
                         <li
                           className={cx(
                             'cat_items',
-                            key + ' d-flex flex-row justify-content-between align-items-center',
+                            key + ' cat-element d-flex flex-row justify-content-between align-items-center',
                           )}
                           data-index={index}
                           key={data?.id}
                           onClick={handleSelectCat}
                           data-id={data.id}
+                          data-name={data.categories_translation[0].name}
                           data-level={key}
                         >
                           <p>{data.categories_translation[0].name}</p>
@@ -136,14 +168,29 @@ export default function EditCategory({
           </Fragment>
         )}
         <div className={cx('footer', 'd-flex flex-row justify-content-between')}>
-          <div className={cx('category_selected', 'd-flex flex-row align-items-center')}>
+          <div className={cx('category_selected', 'd-flex flex-row align-items-center ')}>
             <span>
               <Translate>selected</Translate> :
             </span>
-            <span className={cx('no_select')}>
-              <Translate>no_select_category</Translate>
-            </span>
-            {/* <div className={cx('cat_selected_item')}></div> */}
+            {Object.keys(selected).length === 0 && (
+              <span className={cx('no_select')}>
+                <Translate>no_select_category</Translate>
+              </span>
+            )}
+            {Object.keys(selected).length !== 0 && (
+              <div
+                className={cx(
+                  'cat_selected_item',
+                  'd-flex flex-row justify-content-start align-items-center flex-wrap',
+                )}
+              >
+                {Object.entries(selected).map(([key, value], index) => (
+                  <span key={index}>
+                    {value.name} <ArrowRightIcon />
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
           <div className={cx('btn', 'd-flex flex-row')}>
             <Button
